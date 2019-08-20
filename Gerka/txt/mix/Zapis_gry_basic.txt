@@ -1,0 +1,33 @@
+Nazwa postaci
+aleksy
+Poziom gracza
+100
+Ilosc z³ota
+99999499
+Punkty ¿ycia
+50
+Max punktów ¿ycia
+50
+Punkty si³y
+6
+Punkty zrêcznoœci
+6
+Punkty inteligencji
+6
+Punkty szczêœcia
+5
+Punkty charyzmy
+5
+Punkty najedzenia
+10
+Punkty upojenia alkoholowego
+0
+Punkty doœwiadczenia
+0
+Punkty doœwiadczenia do nastêpnego poziomu
+50
+Licznik dnia
+1
+Zadanie
+
+Umiejêtnoœæ

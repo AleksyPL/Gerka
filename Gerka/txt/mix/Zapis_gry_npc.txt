@@ -1,0 +1,29 @@
+Barman - poziom reputacji
+1
+Barman - punkty reputacji
+0
+Barman - punkty reputacji do nastêpnego poziomu
+500
+Barman - iloœæ z³ota
+5000Handlarz - poziom reputacji
+0
+Handlarz - punkty reputacji
+0
+Handlarz - punkty reputacji do nastêpnego poziomu
+0
+Handlarz - iloœæ z³ota
+500Kowal - poziom reputacji
+5000
+Kowal - punkty reputacji
+0
+Kowal - punkty reputacji do nastêpnego poziomu
+0
+Kowal - iloœæ z³ota
+0Alchemik - poziom reputacji
+0
+Alchemik - punkty reputacji
+0
+Alchemik - punkty reputacji do nastêpnego poziomu
+500
+Alchemik - iloœæ z³ota
+5000
