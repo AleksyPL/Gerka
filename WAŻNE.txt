@@ -1,5 +1,0 @@
-Gra korzysta z plików dzwiêkowych
-¯eby program siê odpali³ i nie wysypa³ b³êdu nale¿y
-dodaæ w linkerze bibliotekê Winmm.lib
-
-w³aœciwoœci->konsolidator->Dane wejœciowe->Dodatkowe zale¿noœci
