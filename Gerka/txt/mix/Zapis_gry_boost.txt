@@ -1,0 +1,40 @@
+Licznik os³abienia si³y
+0
+Przed os³abieniem si³y
+0
+Licznik wzmocnienia si³y
+0
+Przed wzmocnieniem si³y
+0
+Licznik os³abienia zrêcznoœci
+0
+Przed os³abieniem zrêcznoœci
+0
+Licznik wzmocnienia zrêcznoœci
+0
+Przed wzmocnieniem zrêcznoœci
+0
+Licznik os³abienia inteligencji
+0
+Przed os³abieniem inteligencji
+0
+Licznik wzmocnienia inteligencji
+0
+Przed wzmocnieniem inteligencji
+0
+Licznik os³abienia szczêœcia
+0
+Przed os³abieniem szczêœcia
+0
+Licznik wzmocnienia szczêœcia
+0
+Przed wzmocnieniem szczêœcia
+0
+Licznik os³abienia charyzmy
+0
+Przed os³abieniem charyzmy
+0
+Licznik wzmocnienia charyzmy
+0
+Przed wzmocnieniem charyzmy
+0
