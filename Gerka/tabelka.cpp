@@ -2,6 +2,8 @@
 #include "tawerna.h"
 #include "walka.h"
 #include "dwellers.h"
+#include "trade_tab.h"
+#include "tabelka.h"
 
 
 void tab(player gracz, string info[8], string menu[100], long ceny[20])
@@ -667,8 +669,7 @@ void tab_items(player gracz,string menu[60])
 	cout << "|                                                | W: WYJD Z EKWIPUNKU  |                        |                                                |" << endl;
 	cout << "X-----------------------X------------------------X-----------------------X------------------------X-----------------------X------------------------X" << endl;
 }
-
-void tab_trade(player &gracz, seller &handlarz, string temp_table[80], string info[7],int temp_table_price[80], int temp_table_amount[80])
+void tab_trade(player &gracz, seller &handlarz, table &menu)
 {
 	system("cls");
 	cout << "X-----------------------X-------------------------------------------------X------------------------------------------------X-----------------------X" << endl;
@@ -831,26 +832,26 @@ void tab_trade(player &gracz, seller &handlarz, string temp_table[80], string in
 	int pomoc_lokacja;
 	for (int i = 0; i < 20; i++)
 	{
-		if (temp_table[i] != "" || temp_table[40 + i] != "")
+		if (menu.temp_table[i] != "" || menu.temp_table[40 + i] != "")
 		{
 			string pomoc2;
 			cout << "|";
 			if (i < 9)
 			{
-				pomoc2 = "  " + to_string(i + 1) + ": " + temp_table[i];
+				pomoc2 = "  " + to_string(i + 1) + ": " + menu.temp_table[i];
 			}
 			else
 			{
-				pomoc2 = " " + to_string(i + 1) + ": " + temp_table[i];
+				pomoc2 = " " + to_string(i + 1) + ": " + menu.temp_table[i];
 			}
-			if (temp_table_amount[i] > 1)
+			if (menu.temp_table_amount[i] > 1)
 			{
-				pomoc2 = pomoc2 + " x" +to_string(temp_table_amount[i]);
+				pomoc2 = pomoc2 + " x" +to_string(menu.temp_table_amount[i]);
 			}
 			cout << pomoc2;
-			if (temp_table_price[i] == 0)
+			if (menu.temp_table_price[i] == 0)
 			{
-				pomoc_lokacja = 68 - temp_table[i].length();
+				pomoc_lokacja = 68 - menu.temp_table[i].length();
 				for (int j = 0; j < pomoc_lokacja; j++)
 				{
 					cout << " ";
@@ -859,7 +860,7 @@ void tab_trade(player &gracz, seller &handlarz, string temp_table[80], string in
 			else
 			{
 				
-				string pom3 = "[" + to_string(temp_table_price[i] * temp_table_amount[i]) + " Z£OTA]";
+				string pom3 = "[" + to_string(menu.temp_table_price[i] * menu.temp_table_amount[i]) + " Z£OTA]";
 				pomoc_lokacja = 73 - (pomoc2.length() + pom3.length());
 				for (int j = 0; j < pomoc_lokacja; j++)
 				{
@@ -868,15 +869,15 @@ void tab_trade(player &gracz, seller &handlarz, string temp_table[80], string in
 				cout << pom3;
 			}
 			cout << "|";
-			pomoc2 = " " + to_string(i + 41) + ": " + temp_table[40 + i];
-			if (temp_table_amount[40 + i] > 1)
+			pomoc2 = " " + to_string(i + 41) + ": " + menu.temp_table[40 + i];
+			if (menu.temp_table_amount[40 + i] > 1)
 			{
-				pomoc2 = pomoc2 + " x" + to_string(temp_table_amount[40 + i]);
+				pomoc2 = pomoc2 + " x" + to_string(menu.temp_table_amount[40 + i]);
 			}
 			cout << pomoc2;
-			if (temp_table_price[40 + i] == 0)
+			if (menu.temp_table_price[40 + i] == 0)
 			{
-				pomoc_lokacja = 67 - temp_table[40 + i].length();
+				pomoc_lokacja = 67 - menu.temp_table[40 + i].length();
 				for (int j = 0; j < pomoc_lokacja; j++)
 				{
 					cout << " ";
@@ -884,7 +885,7 @@ void tab_trade(player &gracz, seller &handlarz, string temp_table[80], string in
 			}
 			else
 			{
-				string pom3 = "[" + to_string(temp_table_price[40 + i] * temp_table_amount[40 + i]) + " Z£OTA]";
+				string pom3 = "[" + to_string(menu.temp_table_price[40 + i] * menu.temp_table_amount[40 + i]) + " Z£OTA]";
 				pomoc_lokacja = 72 - (pomoc2.length() + pom3.length());
 				for (int j = 0; j < pomoc_lokacja; j++)
 				{
@@ -901,7 +902,7 @@ void tab_trade(player &gracz, seller &handlarz, string temp_table[80], string in
 		int suma = 0;
 		for (int i = 0; i < 20; i++)
 		{
-			suma = suma + temp_table_price[i]*temp_table_amount[i];
+			suma = suma + menu.temp_table_price[i]* menu.temp_table_amount[i];
 		}
 		string pom1 = "SUMA: " + to_string(suma);
 		pomoc_lokacja = 73 - pom1.length();
@@ -931,7 +932,7 @@ void tab_trade(player &gracz, seller &handlarz, string temp_table[80], string in
 		int suma = 0;
 		for (int i = 0; i < 20; i++)
 		{
-			suma = suma + temp_table_price[40 + i] * temp_table_amount[40 + i];
+			suma = suma + menu.temp_table_price[40 + i] * menu.temp_table_amount[40 + i];
 		}
 		string pom1 = "SUMA: " + to_string(suma);
 		pomoc_lokacja = 72 - pom1.length();
@@ -1015,15 +1016,15 @@ void tab_trade(player &gracz, seller &handlarz, string temp_table[80], string in
 	cout << "X-------------------------------------------------------------------------X------------------------------------------------------------------------X" << endl;
 	for (int i = 0; i < 20; i++)
 	{
-		if (temp_table[20 + i] != "" || temp_table[60 + i] != "")
+		if (menu.temp_table[20 + i] != "" || menu.temp_table[60 + i] != "")
 		{
 			string pomoc2;
 			cout << "|";
-			pomoc2 = " " + to_string(i + 21) + ": " + temp_table[20 + i];
+			pomoc2 = " " + to_string(i + 21) + ": " + menu.temp_table[20 + i];
 			cout << pomoc2;
-			if (temp_table_price[20 + i] == 0)
+			if (menu.temp_table_price[20 + i] == 0)
 			{
-				pomoc_lokacja = 68 - temp_table[20 + i].length();
+				pomoc_lokacja = 68 - menu.temp_table[20 + i].length();
 				for (int j = 0; j < pomoc_lokacja; j++)
 				{
 					cout << " ";
@@ -1031,7 +1032,7 @@ void tab_trade(player &gracz, seller &handlarz, string temp_table[80], string in
 			}
 			else
 			{
-				string pom3 = "[" + to_string(temp_table_price[20 + i]) + " Z£OTA]";
+				string pom3 = "[" + to_string(menu.temp_table_price[20 + i]) + " Z£OTA]";
 				pomoc_lokacja = 73 - (pomoc2.length() + pom3.length());
 				for (int j = 0; j < pomoc_lokacja; j++)
 				{
@@ -1040,15 +1041,15 @@ void tab_trade(player &gracz, seller &handlarz, string temp_table[80], string in
 				cout << pom3;
 			}
 			cout << "|";
-			pomoc2 = " " + to_string(i + 61) + ": " + temp_table[60 + i];
-			if (temp_table_amount[60 + i] > 1)
+			pomoc2 = " " + to_string(i + 61) + ": " + menu.temp_table[60 + i];
+			if (menu.temp_table_amount[60 + i] > 1)
 			{
-				pomoc2 = pomoc2 + " x" + to_string(temp_table_amount[60 + i]);
+				pomoc2 = pomoc2 + " x" + to_string(menu.temp_table_amount[60 + i]);
 			}
 			cout << pomoc2;
-			if (temp_table_price[60 + i] == 0)
+			if (menu.temp_table_price[60 + i] == 0)
 			{
-				pomoc_lokacja = 67 - temp_table[60 + i].length();
+				pomoc_lokacja = 67 - menu.temp_table[60 + i].length();
 				for (int j = 0; j < pomoc_lokacja; j++)
 				{
 					cout << " ";
@@ -1056,7 +1057,7 @@ void tab_trade(player &gracz, seller &handlarz, string temp_table[80], string in
 			}
 			else
 			{
-				string pom3 = "[" + to_string(temp_table_price[60 + i]) + " Z£OTA]";
+				string pom3 = "[" + to_string(menu.temp_table_price[60 + i]) + " Z£OTA]";
 				pomoc_lokacja = 72 - (pomoc2.length() + pom3.length());
 				for (int j = 0; j < pomoc_lokacja; j++)
 				{
@@ -1069,44 +1070,44 @@ void tab_trade(player &gracz, seller &handlarz, string temp_table[80], string in
 	}
 	cout << "X-------------------------------------------------------------------------X------------------------------------------------------------------------X" << endl;
 	{
-		cout << "| " << info[0];
-		pomoc_lokacja = 19 - info[0].length();
+		cout << "| " << menu.info[0];
+		pomoc_lokacja = 19 - menu.info[0].length();
 		for (int j = 0; j < pomoc_lokacja; j++)
 		{
 			cout << " ";
 		}
-		cout << "| " << info[1];
-		pomoc_lokacja = 19 - info[1].length();
+		cout << "| " << menu.info[1];
+		pomoc_lokacja = 19 - menu.info[1].length();
 		for (int j = 0; j < pomoc_lokacja; j++)
 		{
 			cout << " ";
 		}
-		cout << "| " << info[2];
-		pomoc_lokacja = 19 - info[2].length();
+		cout << "| " << menu.info[2];
+		pomoc_lokacja = 19 - menu.info[2].length();
 		for (int j = 0; j < pomoc_lokacja; j++)
 		{
 			cout << " ";
 		}
-		cout << "| " << info[3];
-		pomoc_lokacja = 19 - info[3].length();
+		cout << "| " << menu.info[3];
+		pomoc_lokacja = 19 - menu.info[3].length();
 		for (int j = 0; j < pomoc_lokacja; j++)
 		{
 			cout << " ";
 		}
-		cout << "| " << info[4];
-		pomoc_lokacja = 19 - info[4].length();
+		cout << "| " << menu.info[4];
+		pomoc_lokacja = 19 - menu.info[4].length();
 		for (int j = 0; j < pomoc_lokacja; j++)
 		{
 			cout << " ";
 		}
-		cout << "| " << info[5];
-		pomoc_lokacja = 19 - info[5].length();
+		cout << "| " << menu.info[5];
+		pomoc_lokacja = 19 - menu.info[5].length();
 		for (int j = 0; j < pomoc_lokacja; j++)
 		{
 			cout << " ";
 		}
-		cout << "| " << info[6];
-		pomoc_lokacja = 19 - info[6].length();
+		cout << "| " << menu.info[6];
+		pomoc_lokacja = 19 - menu.info[6].length();
 		for (int j = 0; j < pomoc_lokacja; j++)
 		{
 			cout << " ";

@@ -2,6 +2,7 @@
 #include "tabelka.h"
 #include "zakres.h"
 #include "dwellers.h"
+#include "szpital.h"
 
 player enter_hospital(player gracz, doctor lekarz)
 {

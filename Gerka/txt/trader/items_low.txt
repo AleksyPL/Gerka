@@ -2,3 +2,7 @@ Twoja stara
 500
 Kapsle
 1000
+Wóda
+1000
+Whiskey
+1000

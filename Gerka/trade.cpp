@@ -1,151 +1,18 @@
 #include "biblioteki.h"
 #include "tabelka.h"
 #include "dwellers.h"
+#include "trade_tab.h"
+#include "trade.h"
 
-
-player trade_mode(player &gracz, seller &handlarz)
+player trade_mode(player &gracz, seller &handlarz, table &menu)
 {
-	handlarz.load_merch();
-	handlarz.add_prices(gracz);
-	string temp_table[80];
-	int temp_table_price[80];
-	int temp_table_amount[80];
-	int strona_1 = 0;
-	int strona_2 = 0;
-	int counter_seller;
-	int counter_player;
-	for (int i = 0; i < 80; i++)
-	{
-		temp_table_amount[i] = 0;
-		if (temp_table_amount[i] == 0)
-		{
-			temp_table_price[i] = 0;
-		}
-	}
-	for (int i = 0; i < 20; i++)
-	{
-		temp_table_price[20 + i] = 0;
-		temp_table_price[60 + i] = 0;
-		temp_table[20 + i] = handlarz.menu_items[i];
-		temp_table_price[20 + i] = handlarz.menu_price[i];
-		temp_table[60 + i] = gracz.inventory_usage[i];
-		temp_table_price[60 + i] = gracz.inventory_usage_price[i];
-		temp_table_amount[60 + i] = gracz.inventory_usage_amount[i];
-	}
-	string info2[7];
-	info2[0] = "";
-	info2[1] = "";
-	info2[2] = "W: ZAKOÑCZ HANDEL";
-	info2[3] = "Z: ZAAKCEPTUJ";
-	info2[4] = "";
-	info2[5] = "";
-	info2[6] = "";
+	menu.load_merch_trader(handlarz, gracz);
 	while (1)
 	{
-		if (strona_1 == 0)
-		{
-			info2[0] = "";
-			info2[1] = "N1: NASTÊPNA STR";
-		}
-		else if(strona_1 == 1)
-		{
-			info2[0] = "P1: POPRZEDNIA STR";
-			info2[1] = "N1: NASTÊPNA STR";
-		}
-		else if (strona_1 == 2)
-		{
-			info2[0] = "P1: POPRZEDNIA STR";
-			info2[1] = "N1: NASTÊPNA STR";
-		}
-		else if (strona_1 == 3)
-		{
-			info2[0] = "P1: POPRZEDNIA STR";
-			info2[1] = "";
-		}
-		if (strona_2 == 0)
-		{
-			info2[5] = "";
-			info2[6] = "N2: NASTÊPNA STR";
-		}
-		else if (strona_2 == 1)
-		{
-			info2[5] = "P2: POPRZEDNIA STR";
-			info2[6] = "";
-		}
-		int licznik = 0;
-		int licznik1 = 0;
-		int licznik3 = 0;
-		int licznik4 = 0;
-		for (int i = 0; i < 20; i++)
-		{
-			//wybrane itemy do transakcji
-			if (temp_table[i] == "" && temp_table_amount[i] == 0 && temp_table_price[i] == 0)
-			{
-				licznik++;
-			}
-			if (temp_table[40 + i] == "" && temp_table_amount[40 + i] == 0 && temp_table_price[40 + i] == 0)
-			{
-				licznik1++;
-			}
-			if (licznik == 20)
-			{
-				temp_table[0] = "BRAK WYBRANYCH PRZEDMIOTÓW";
-			}
-			if (licznik1 == 20)
-			{
-				temp_table[40] = "BRAK WYBRANYCH PRZEDMIOTÓW";
-			}
-			//reszta itemów z plecaka
-			if (temp_table[20 + i] == "" && temp_table_amount[20 + i] == 0)
-			{
-				temp_table_price[20 + i] = 0;
-				licznik3++;
-			}
-			if (temp_table[60 + i] == "" && temp_table_amount[60 + i] == 0)
-			{
-				temp_table_price[60 + i] = 0;
-				licznik4++;
-			}
-			if (licznik3 == 20)
-			{
-				temp_table[20] = "HANDLARZ NIC NIE SPRZEDAJE";
-			}
-			if (licznik4 == 20)
-			{
-				temp_table[60] = "PLECAK JEST PUSTY";
-			}
-		}
-		counter_seller = 0;
-		counter_player = 0;
-		if (temp_table[0] == "BRAK WYBRANYCH PRZEDMIOTÓW")
-		{
-			counter_seller = 0;
-		}
-		else
-		{
-			for (int i = 0; i < 20; i++)
-			{
-				if (temp_table[i] != "")
-				{
-					counter_seller++;
-				}
-			}
-		}
-		if (temp_table[40 + 0] == "BRAK WYBRANYCH PRZEDMIOTÓW")
-		{
-			counter_player = 0;
-		}
-		else
-		{
-			for (int i = 0; i < 20; i++)
-			{
-				if (temp_table[40 + i] !="")
-				{
-					counter_player++;
-				}
-			}
-		}
-		tab_trade(gracz, handlarz, temp_table, info2, temp_table_price, temp_table_amount);
+		menu.check_info_boxes();
+		menu.check_free_fields();
+		//menu.count_free_fields_seller();
+		tab_trade(gracz, handlarz, menu);
 		cout << "Twój wybór to: ";
 		string wyb;
 		cin >> wyb;
@@ -155,46 +22,57 @@ player trade_mode(player &gracz, seller &handlarz)
 		{
 			if (wyb.size() == 1)
 			{
+				menu.delete_from_selected_to_buy(1);
 				break;
 			}
 			if (wyb[1] == '0')
 			{
+				menu.delete_from_selected_to_buy(10);
 				break;
 			}
 			if (wyb[1] == '1')
 			{
+				menu.delete_from_selected_to_buy(11);
 				break;
 			}
 			if (wyb[1] == '2')
 			{
+				menu.delete_from_selected_to_buy(12);
 				break;
 			}
 			if (wyb[1] == '3')
 			{
+				menu.delete_from_selected_to_buy(13);
 				break;
 			}
 			if (wyb[1] == '4')
 			{
+				menu.delete_from_selected_to_buy(14);
 				break;
 			}
 			if (wyb[1] == '5')
 			{
+				menu.delete_from_selected_to_buy(15);
 				break;
 			}
 			if (wyb[1] == '6')
 			{
+				menu.delete_from_selected_to_buy(16);
 				break;
 			}
 			if (wyb[1] == '7')
 			{
+				menu.delete_from_selected_to_buy(17);
 				break;
 			}
 			if (wyb[1] == '8')
 			{
+				menu.delete_from_selected_to_buy(18);
 				break;
 			}
 			if (wyb[1] == '9')
 			{
+				menu.delete_from_selected_to_buy(19);
 				break;
 			}
 			break;
@@ -203,69 +81,57 @@ player trade_mode(player &gracz, seller &handlarz)
 		{
 			if (wyb.size() == 1)
 			{
+				menu.delete_from_selected_to_buy(2);
 				break;
 			}
 			if (wyb[1] == '0')
 			{
+				menu.delete_from_selected_to_buy(20);
 				break;
 			}
 			if (wyb[1] == '1')
 			{
-				for (int i = 0; i < 20; i++)
-				{
-					if (temp_table[i] == temp_table[20])
-					{
-						temp_table_amount[i]++;
-						temp_table_price[i] = temp_table_price[20];
-						break;
-					}
-					else if (temp_table[i] == "BRAK WYBRANYCH PRZEDMIOTÓW")
-					{
-						temp_table[i] = temp_table[20];
-						temp_table_price[i] = temp_table_price[20];
-						temp_table_amount[i]++;
-						break;
-					}
-					else if (temp_table[i] == "")
-					{
-						temp_table[i] = temp_table[20];
-						temp_table_price[i] = temp_table_price[20];
-						temp_table_amount[i]++;
-						break;
-					}
-				}
+				menu.select_item_to_buy(21,gracz,handlarz);
 				break;
 			}
 			if (wyb[1] == '2')
 			{
+				menu.select_item_to_buy(22, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '3')
 			{
+				menu.select_item_to_buy(23, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '4')
 			{
+				menu.select_item_to_buy(24, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '5')
 			{
+				menu.select_item_to_buy(25, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '6')
 			{
+				menu.select_item_to_buy(26, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '7')
 			{
+				menu.select_item_to_buy(27, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '8')
 			{
+				menu.select_item_to_buy(28, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '9')
 			{
+				menu.select_item_to_buy(29, gracz, handlarz);
 				break;
 			}
 			break;
@@ -274,46 +140,57 @@ player trade_mode(player &gracz, seller &handlarz)
 		{
 			if (wyb.size() == 1)
 			{
+				menu.delete_from_selected_to_buy(3);
 				break;
 			}
 			if (wyb[1] == '0')
 			{
+				menu.select_item_to_buy(30, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '1')
 			{
+				menu.select_item_to_buy(31, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '2')
 			{
+				menu.select_item_to_buy(32, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '3')
 			{
+				menu.select_item_to_buy(33, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '4')
 			{
+				menu.select_item_to_buy(34, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '5')
 			{
+				menu.select_item_to_buy(35, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '6')
 			{
+				menu.select_item_to_buy(36, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '7')
 			{
+				menu.select_item_to_buy(37, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '8')
 			{
+				menu.select_item_to_buy(38, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '9')
 			{
+				menu.select_item_to_buy(39, gracz, handlarz);
 				break;
 			}
 			break;
@@ -322,46 +199,57 @@ player trade_mode(player &gracz, seller &handlarz)
 		{
 			if (wyb.size() == 1)
 			{
+				menu.delete_from_selected_to_buy(4);
 				break;
 			}
 			if (wyb[1] == '0')
 			{
+				menu.select_item_to_buy(40, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '1')
 			{
+				menu.delete_from_selected_to_sell(41,gracz,handlarz);
 				break;
 			}
 			if (wyb[1] == '2')
 			{
+				menu.delete_from_selected_to_sell(42, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '3')
 			{
+				menu.delete_from_selected_to_sell(43, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '4')
 			{
+				menu.delete_from_selected_to_sell(44, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '5')
 			{
+				menu.delete_from_selected_to_sell(45, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '6')
 			{
+				menu.delete_from_selected_to_sell(46, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '7')
 			{
+				menu.delete_from_selected_to_sell(47, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '8')
 			{
+				menu.delete_from_selected_to_sell(48, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '9')
 			{
+				menu.delete_from_selected_to_sell(49, gracz, handlarz);
 				break;
 			}
 			break;
@@ -370,46 +258,57 @@ player trade_mode(player &gracz, seller &handlarz)
 		{
 			if (wyb.size() == 1)
 			{
+				menu.delete_from_selected_to_buy(5);
 				break;
 			}
 			if (wyb[1] == '0')
 			{
+				menu.delete_from_selected_to_sell(50, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '1')
 			{
+				menu.delete_from_selected_to_sell(51, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '2')
 			{
+				menu.delete_from_selected_to_sell(52, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '3')
 			{
+				menu.delete_from_selected_to_sell(53, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '4')
 			{
+				menu.delete_from_selected_to_sell(54, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '5')
 			{
+				menu.delete_from_selected_to_sell(55, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '6')
 			{
+				menu.delete_from_selected_to_sell(56, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '7')
 			{
+				menu.delete_from_selected_to_sell(57, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '8')
 			{
+				menu.delete_from_selected_to_sell(58, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '9')
 			{
+				menu.delete_from_selected_to_sell(59, gracz, handlarz);
 				break;
 			}
 			break;
@@ -418,434 +317,57 @@ player trade_mode(player &gracz, seller &handlarz)
 		{
 			if (wyb.size() == 1)
 			{
+				menu.delete_from_selected_to_buy(6);
 				break;
 			}
 			if (wyb[1] == '0')
 			{
+				menu.delete_from_selected_to_sell(60, gracz, handlarz);
 				break;
 			}
 			if (wyb[1] == '1')
 			{
-				for (int i = 0; i < 20; i++)
-				{
-					if (temp_table[40 + i] == temp_table[60])
-					{
-						temp_table_amount[40 + i]++;
-						temp_table_price[40 + i] = temp_table_price[60];
-						temp_table_amount[60]--;
-						if (temp_table_amount[60] == 0)
-						{
-							temp_table[60] = "";
-							if (strona_2 == 0)
-							{
-								for (int i = 0; i < 20; i++)
-								{
-									if (temp_table[60 + i] != "")
-									{
-										continue;
-									}
-									else
-									{
-										for (int j = i + 1; j < 20; j++)
-										{
-											if (temp_table[60 + j] != "")
-											{
-												temp_table[60 + i] = temp_table[60 + j];
-												temp_table_amount[60 + i] = temp_table_amount[60 + j];
-												temp_table_price[60 + i] = temp_table_price[60 + j];
-												temp_table[60 + j] = "";
-												temp_table_amount[60 + j] = 0;
-												temp_table_price[60 + j] = 0;
-												break;
-											}
-										}
-									}
-								}
-							}
-							else if (strona_2 == 1)
-							{
-								for (int i = 0; i < 20; i++)
-								{
-									if (temp_table[60 + i] != "")
-									{
-										continue;
-									}
-									else
-									{
-										for (int j = i + 1; j < 20; j++)
-										{
-											if (temp_table[60 + j] != "")
-											{
-												temp_table[60 + i] = temp_table[60 + j];
-												temp_table_amount[60 + i] = temp_table_amount[60 + j];
-												temp_table_price[60 + i] = temp_table_price[60 + j];
-												temp_table[60 + j] = "";
-												temp_table_amount[60 + j] = 0;
-												temp_table_price[60 + j] = 0;
-												break;
-											}
-										}
-									}
-								}
-							}
-						}
-						break;
-					}
-					else if (temp_table[40 + i] == "BRAK WYBRANYCH PRZEDMIOTÓW")
-					{
-						temp_table[40 + i] = temp_table[60];
-						temp_table_price[40 + i] = temp_table_price[60];
-						temp_table_amount[40 + i]++;
-						temp_table_amount[60]--;
-						if (temp_table_amount[60] == 0)
-						{
-							temp_table[60] = "";
-							if (strona_2 == 0)
-							{
-								for (int i = 0; i < 20; i++)
-								{
-									if (temp_table[60 + i] != "")
-									{
-										continue;
-									}
-									else
-									{
-										for (int j = i + 1; j < 20; j++)
-										{
-											if (temp_table[60 + j] != "")
-											{
-												temp_table[60 + i] = temp_table[60 + j];
-												temp_table_amount[60 + i] = temp_table_amount[60 + j];
-												temp_table_price[60 + i] = temp_table_price[60 + j];
-												temp_table[60 + j] = "";
-												temp_table_amount[60 + j] = 0;
-												temp_table_price[60 + j] = 0;
-												break;
-											}
-										}
-									}
-								}
-							}
-							else if (strona_2 == 1)
-							{
-								for (int i = 0; i < 20; i++)
-								{
-									if (temp_table[60 + i] != "")
-									{
-										continue;
-									}
-									else
-									{
-										for (int j = i + 1; j < 20; j++)
-										{
-											if (temp_table[60 + j] != "")
-											{
-												temp_table[60 + i] = temp_table[60 + j];
-												temp_table_amount[60 + i] = temp_table_amount[60 + j];
-												temp_table_price[60 + i] = temp_table_price[60 + j];
-												temp_table[60 + j] = "";
-												temp_table_amount[60 + j] = 0;
-												temp_table_price[60 + j] = 0;
-												break;
-											}
-										}
-									}
-								}
-							}
-						}
-						break;
-					}
-					else if (temp_table[40 + i] == "")
-					{
-						temp_table[40 + i] = temp_table[60];
-						temp_table_price[40 + i] = temp_table_price[60];
-						temp_table_amount[40 + i]++;
-						temp_table_amount[60]--;
-						if (temp_table_amount[60] == 0)
-						{
-							temp_table[60] = "";
-							if (strona_2 == 0)
-							{
-								for (int i = 0; i < 20; i++)
-								{
-									if (temp_table[60 + i] != "")
-									{
-										continue;
-									}
-									else
-									{
-										for (int j = i + 1; j < 20; j++)
-										{
-											if (temp_table[60 + j] != "")
-											{
-												temp_table[60 + i] = temp_table[60 + j];
-												temp_table_amount[60 + i] = temp_table_amount[60 + j];
-												temp_table_price[60 + i] = temp_table_price[60 + j];
-												temp_table[60 + j] = "";
-												temp_table_amount[60 + j] = 0;
-												temp_table_price[60 + j] = 0;
-												break;
-											}
-										}
-									}
-								}
-							}
-							else if (strona_2 == 1)
-							{
-								for (int i = 0; i < 20; i++)
-								{
-									if (temp_table[60 + i] != "")
-									{
-										continue;
-									}
-									else
-									{
-										for (int j = i + 1; j < 20; j++)
-										{
-											if (temp_table[60 + j] != "")
-											{
-												temp_table[60 + i] = temp_table[60 + j];
-												temp_table_amount[60 + i] = temp_table_amount[60 + j];
-												temp_table_price[60 + i] = temp_table_price[60 + j];
-												temp_table[60 + j] = "";
-												temp_table_amount[60 + j] = 0;
-												temp_table_price[60 + j] = 0;
-												break;
-											}
-										}
-									}
-								}
-							}
-						}
-						break;
-					}
-				}
+				menu.select_item_to_sell(61);
 				break;
 			}
 			if (wyb[1] == '2')
 			{
-				for (int i = 0; i < 20; i++)
-				{
-					if (temp_table[40 + i] == temp_table[61])
-					{
-						temp_table_amount[40 + i]++;
-						temp_table_price[40 + i] = temp_table_price[61];
-						temp_table_amount[61]--;
-						if (temp_table_amount[61] == 0)
-						{
-							temp_table[61] = "";
-							if (strona_2 == 0)
-							{
-								for (int i = 0; i < 20; i++)
-								{
-									if (temp_table[60 + i] != "")
-									{
-										continue;
-									}
-									else
-									{
-										for (int j = i + 1; j < 20; j++)
-										{
-											if (temp_table[60 + j] != "")
-											{
-												temp_table[60 + i] = temp_table[60 + j];
-												temp_table_amount[60 + i] = temp_table_amount[60 + j];
-												temp_table_price[60 + i] = temp_table_price[60 + j];
-												temp_table[60 + j] = "";
-												temp_table_amount[60 + j] = 0;
-												temp_table_price[60 + j] = 0;
-												break;
-											}
-										}
-									}
-								}
-							}
-							else if (strona_2 == 1)
-							{
-								for (int i = 0; i < 20; i++)
-								{
-									if (temp_table[60 + i] != "")
-									{
-										continue;
-									}
-									else
-									{
-										for (int j = i + 1; j < 20; j++)
-										{
-											if (temp_table[60 + j] != "")
-											{
-												temp_table[60 + i] = temp_table[60 + j];
-												temp_table_amount[60 + i] = temp_table_amount[60 + j];
-												temp_table_price[60 + i] = temp_table_price[60 + j];
-												temp_table[60 + j] = "";
-												temp_table_amount[60 + j] = 0;
-												temp_table_price[60 + j] = 0;
-												break;
-											}
-										}
-									}
-								}
-							}
-						}
-						break;
-					}
-					else if (temp_table[40 + i] == "BRAK WYBRANYCH PRZEDMIOTÓW")
-					{
-						temp_table[40 + i] = temp_table[61];
-						temp_table_price[40 + i] = temp_table_price[61];
-						temp_table_amount[40 + i]++;
-						temp_table_amount[61]--;
-						if (temp_table_amount[61] == 0)
-						{
-							temp_table[61] = "";
-							if (strona_2 == 0)
-							{
-								for (int i = 0; i < 20; i++)
-								{
-									if (temp_table[60 + i] != "")
-									{
-										continue;
-									}
-									else
-									{
-										for (int j = i + 1; j < 20; j++)
-										{
-											if (temp_table[60 + j] != "")
-											{
-												temp_table[60 + i] = temp_table[60 + j];
-												temp_table_amount[60 + i] = temp_table_amount[60 + j];
-												temp_table_price[60 + i] = temp_table_price[60 + j];
-												temp_table[60 + j] = "";
-												temp_table_amount[60 + j] = 0;
-												temp_table_price[60 + j] = 0;
-												break;
-											}
-										}
-									}
-								}
-							}
-							else if (strona_2 == 1)
-							{
-								for (int i = 0; i < 20; i++)
-								{
-									if (temp_table[60 + i] != "")
-									{
-										continue;
-									}
-									else
-									{
-										for (int j = i + 1; j < 20; j++)
-										{
-											if (temp_table[60 + j] != "")
-											{
-												temp_table[60 + i] = temp_table[60 + j];
-												temp_table_amount[60 + i] = temp_table_amount[60 + j];
-												temp_table_price[60 + i] = temp_table_price[60 + j];
-												temp_table[60 + j] = "";
-												temp_table_amount[60 + j] = 0;
-												temp_table_price[60 + j] = 0;
-												break;
-											}
-										}
-									}
-								}
-							}
-						}
-						break;
-					}
-					else if (temp_table[40 + i] == "")
-					{
-						temp_table[40 + i] = temp_table[61];
-						temp_table_price[40 + i] = temp_table_price[61];
-						temp_table_amount[40 + i]++;
-						temp_table_amount[61]--;
-						if (temp_table_amount[61] == 0)
-						{
-							temp_table[61] = "";
-							if (strona_2 == 0)
-							{
-								for (int i = 0; i < 20; i++)
-								{
-									if (temp_table[60 + i] != "")
-									{
-										continue;
-									}
-									else
-									{
-										for (int j = i + 1; j < 20; j++)
-										{
-											if (temp_table[60 + j] != "")
-											{
-												temp_table[60 + i] = temp_table[60 + j];
-												temp_table_amount[60 + i] = temp_table_amount[60 + j];
-												temp_table_price[60 + i] = temp_table_price[60 + j];
-												temp_table[60 + j] = "";
-												temp_table_amount[60 + j] = 0;
-												temp_table_price[60 + j] = 0;
-												break;
-											}
-										}
-									}
-								}
-							}
-							else if (strona_2 == 1)
-							{
-								for (int i = 0; i < 20; i++)
-								{
-									if (temp_table[60 + i] != "")
-									{
-										continue;
-									}
-									else
-									{
-										for (int j = i + 1; j < 20; j++)
-										{
-											if (temp_table[60 + j] != "")
-											{
-												temp_table[60 + i] = temp_table[60 + j];
-												temp_table_amount[60 + i] = temp_table_amount[60 + j];
-												temp_table_price[60 + i] = temp_table_price[60 + j];
-												temp_table[60 + j] = "";
-												temp_table_amount[60 + j] = 0;
-												temp_table_price[60 + j] = 0;
-												break;
-											}
-										}
-									}
-								}
-							}
-						}
-						break;
-					}
-				}
+				menu.select_item_to_sell(62);
 				break;
 			}
 			if (wyb[1] == '3')
 			{
+				menu.select_item_to_sell(63);
 				break;
 			}
 			if (wyb[1] == '4')
 			{
+				menu.select_item_to_sell(64);
 				break;
 			}
 			if (wyb[1] == '5')
 			{
+				menu.select_item_to_sell(65);
 				break;
 			}
 			if (wyb[1] == '6')
 			{
+				menu.select_item_to_sell(66);
 				break;
 			}
 			if (wyb[1] == '7')
 			{
+				menu.select_item_to_sell(67);
 				break;
 			}
 			if (wyb[1] == '8')
 			{
+				menu.select_item_to_sell(68);
 				break;
 			}
 			if (wyb[1] == '9')
 			{
+				menu.select_item_to_sell(69);
 				break;
 			}
 			break;
@@ -854,46 +376,57 @@ player trade_mode(player &gracz, seller &handlarz)
 		{
 			if (wyb.size() == 1)
 			{
+				menu.delete_from_selected_to_buy(7);
 				break;
 			}
 			if (wyb[1] == '0')
 			{
+				menu.select_item_to_sell(70);
 				break;
 			}
 			if (wyb[1] == '1')
 			{
+				menu.select_item_to_sell(71);
 				break;
 			}
 			if (wyb[1] == '2')
 			{
+				menu.select_item_to_sell(72);
 				break;
 			}
 			if (wyb[1] == '3')
 			{
+				menu.select_item_to_sell(73);
 				break;
 			}
 			if (wyb[1] == '4')
 			{
+				menu.select_item_to_sell(74);
 				break;
 			}
 			if (wyb[1] == '5')
 			{
+				menu.select_item_to_sell(75);
 				break;
 			}
 			if (wyb[1] == '6')
 			{
+				menu.select_item_to_sell(76);
 				break;
 			}
 			if (wyb[1] == '7')
 			{
+				menu.select_item_to_sell(77);
 				break;
 			}
 			if (wyb[1] == '8')
 			{
+				menu.select_item_to_sell(78);
 				break;
 			}
 			if (wyb[1] == '9')
 			{
+				menu.select_item_to_sell(79);
 				break;
 			}
 			break;
@@ -902,386 +435,70 @@ player trade_mode(player &gracz, seller &handlarz)
 		{
 			if (wyb.size() == 1)
 			{
+				menu.delete_from_selected_to_buy(8);
 				break;
 			}
 			if (wyb[1] == '0')
 			{
+				menu.select_item_to_sell(80);
+				break;
+			}
+			break;
+		}
+		case '9':
+		{
+			if (wyb.size() == 1)
+			{
+				menu.delete_from_selected_to_buy(9);
 				break;
 			}
 			break;
 		}
 		case 'w':
 		{
-			int tryb = 1;
-			do
+			if (menu.exit_trade_mode() == 1)
 			{
-				cout << "Transakcja nie zostanie zaakceptowana" << endl;
-				cout << "Czy na pewno chcesz j¹ zakoñczyæ?" << endl;
-				cout << "1. Tak" << endl;
-				cout << "2. Nie" << endl;
-				cout << "Twój wybór to: ";
-				string wyb;
-				cin >> wyb;
-				switch (wyb[0])
-				{
-				case '1':
-				{
-					return gracz;
-				}
-				case '2':
-				{
-					tryb = 0;
-					break;
-				}
-				default:
-				{
-					system("cls");
-				}
-				}
-			} while (tryb = 0);
-			break;
+				return gracz;
+			}
+			else
+			{
+				break;
+			}
 		}
 		case 'W':
 		{
-			int tryb = 1;
-			do
+			if (menu.exit_trade_mode() == 1)
 			{
-				cout << "Transakcja nie zostanie zaakceptowana" << endl;
-				cout << "Czy na pewno chcesz j¹ zakoñczyæ?" << endl;
-				cout << "1. Tak" << endl;
-				cout << "2. Nie" << endl;
-				cout << "Twój wybór to: ";
-				string wyb;
-				cin >> wyb;
-				switch (wyb[0])
-				{
-				case '1':
-				{
-					return gracz;
-				}
-				case '2':
-				{
-					tryb = 0;
-					break;
-				}
-				default:
-				{
-					system("cls");
-				}
-				}
-			} while (tryb = 0);
-			break;
+				return gracz;
+			}
+			else
+			{
+				break;
+			}
 		}
 		case 'n':
 		{
-			if(wyb[1]=='1')
-			{
-				if (strona_1 == 0)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[20 + i] = handlarz.menu_items[20 + i];
-						temp_table_price[20 + i] = handlarz.menu_price[20 + i];
-					}
-					strona_1 = 1;
-					break;
-				}
-				if (strona_1 == 1 && gracz.level > 10)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[20 + i] = handlarz.menu_items[40 + i];
-						temp_table_price[20 + i] = handlarz.menu_price[40 + i];
-					}
-					strona_1 = 2;
-					break;
-				}
-				if (strona_1 == 2 && gracz.level > 20)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[20 + i] = handlarz.menu_items[60 + i];
-						temp_table_price[20 + i] = handlarz.menu_price[60 + i];
-					}
-					strona_1 = 3;
-					break;
-				}
-			}
-			if (wyb[1] == '2')
-			{
-				if (strona_2 == 0)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[60 + i] = gracz.inventory_crafting[i];
-						temp_table_price[60 + i] = gracz.inventory_crafting_price[i];
-						temp_table_amount[60 + i] = gracz.inventory_crafting_amount[i];
-					}
-					strona_2 = 1;
-					break;
-				}
-			}
+			menu.switch_page_next(gracz,handlarz,wyb);
 			break;
 		}
 		case 'N':
 		{
-			if (wyb[1] == '1')
-			{
-				//0 - no_level_req
-				//1 - no_level_req
-				//2 - 10 level
-				//3 - 20 level
-
-				//0-1
-				if (strona_1 == 0)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[20 + i] = handlarz.menu_items[20 + i];
-						temp_table_price[20 + i] = handlarz.menu_price[20 + i];
-					}
-					strona_1 = 1;
-					break;
-				}
-				//1-2
-				if (strona_1 == 1 && gracz.level > 10)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[20 + i] = handlarz.menu_items[40 + i];
-						temp_table_price[20 + i] = handlarz.menu_price[40 + i];
-					}
-					strona_1 = 2;
-					break;
-				}
-				//2-3
-				if (strona_1 == 2 && gracz.level > 20)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[20 + i] = handlarz.menu_items[60 + i];
-						temp_table_price[20 + i] = handlarz.menu_price[60 + i];
-					}
-					strona_1 = 3;
-					break;
-				}
-			}
-			if (wyb[1] == '2')
-			{
-				if (strona_2 == 0)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[60 + i] = gracz.inventory_crafting[i];
-						temp_table_price[60 + i] = gracz.inventory_crafting_price[i];
-						temp_table_amount[60 + i] = gracz.inventory_crafting_amount[i];
-					}
-					strona_2 = 1;
-					break;
-				}
-			}
+			menu.switch_page_next(gracz, handlarz, wyb);
 			break;
 		}
 		case 'p':
 		{
-			//0 - no_level_req
-			//1 - no_level_req
-			//2 - 10 level
-			//3 - 20 level
-			if (wyb[1] == '1')
-			{
-				if (strona_1 == 3 && gracz.level > 20)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[20 + i] = handlarz.menu_items[40 + i];
-						temp_table_price[20 + i] = handlarz.menu_price[40 + i];
-					}
-					strona_1 = 2;
-					break;
-				}
-				if (strona_1 == 2 && gracz.level > 10)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[20 + i] = handlarz.menu_items[20 + i];
-						temp_table_price[20 + i] = handlarz.menu_price[20 + i];
-					}
-					strona_1 = 1;
-					break;
-				}
-				if (strona_1 == 1)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[20 + i] = handlarz.menu_items[i];
-						temp_table_price[20 + i] = handlarz.menu_price[i];
-					}
-					strona_1 = 0;
-					break;
-				}
-			}
-			if (wyb[1] == '2')
-			{
-				if (strona_2 == 1)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[60 + i] = gracz.inventory_usage[i];
-						temp_table_price[60 + i] = gracz.inventory_usage_price[i];
-						temp_table_amount[60 + i] = gracz.inventory_usage_amount[i];
-					}
-					strona_2 = 0;
-					break;
-				}
-			}
+			menu.switch_page_previous(gracz, handlarz, wyb);
+			break;
 		}
 		case 'P':
 		{
-			//0 - no_level_req
-			//1 - no_level_req
-			//2 - 10 level
-			//3 - 20 level
-			if (wyb[1] == '1')
-			{
-				if (strona_1 == 3 && gracz.level > 20)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[20 + i] = handlarz.menu_items[40 + i];
-						temp_table_price[20 + i] = handlarz.menu_price[40 + i];
-					}
-					strona_1 = 2;
-					break;
-				}
-				if (strona_1 == 2 && gracz.level > 10)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[20 + i] = handlarz.menu_items[20 + i];
-						temp_table_price[20 + i] = handlarz.menu_price[20 + i];
-					}
-					strona_1 = 1;
-					break;
-				}
-				if (strona_1 == 1)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[20 + i] = handlarz.menu_items[i];
-						temp_table_price[20 + i] = handlarz.menu_price[i];
-					}
-					strona_1 = 0;
-					break;
-				}
-			}
-			if (wyb[1] == '2')
-			{
-				if (strona_2 == 1)
-				{
-					for (int i = 0; i < 20; i++)
-					{
-						temp_table[60 + i] = gracz.inventory_usage[i];
-						temp_table_price[60 + i] = gracz.inventory_usage_price[i];
-						temp_table_amount[60 + i] = gracz.inventory_usage_amount[i];
-					}
-					strona_2 = 0;
-					break;
-				}
-			}
+			menu.switch_page_previous(gracz, handlarz, wyb);
+			break;
 		}
 		case 'z':
 		{
-			int tryb = 1;
-			do
-			{
-				cout << "Czy na pewno chcesz zfinalizowaæ transakcje?" << endl;
-				cout << "1. Tak" << endl;
-				cout << "2. Nie" << endl;
-				cout << "Twój wybór to:";
-				string wyb;
-				cin >> wyb;
-				switch (wyb[0])
-				{
-				case '1':
-				{
-					if (temp_table[40] != "BRAK WYBRANYCH PRZEDMIOTÓW" || temp_table[0] != "BRAK WYBRANYCH PRZEDMIOTÓW")
-					{
-						cout << endl << "Transakcja zfinalizowana" << endl;
-						//sprzeda¿
-						{
-							for (int i = 0; i < counter_player; i++)
-							{
-								if (gracz.find_item_usage(temp_table[40 + i]) == 1)
-								{
-									int index = gracz.find_usage_item_index(temp_table[40 + i]);
-									gracz.gold = gracz.gold + (temp_table_price[40 + i] * temp_table_amount[40 + i]);
-									if (gracz.inventory_usage_amount[index] == temp_table_amount[40 + i])
-									{
-										gracz.inventory_usage[index] = "";
-										gracz.inventory_usage_price[index] = 0;
-										gracz.inventory_usage_amount[index] = 0;
-									}
-									else
-									{
-										gracz.inventory_usage_amount[index] = gracz.inventory_usage_amount[index] - temp_table_amount[40 + i];
-									}
-									temp_table[40 + i] = "";
-									temp_table_amount[40 + i] = 0;
-									temp_table_price[40 + i] = 0;
-									gracz.sort_backpack_usage();
-								}
-								else if (gracz.find_item_crafting(temp_table[40 + i]) == 1)
-								{
-									int index = gracz.find_crafting_item_index(temp_table[40 + i]);
-									gracz.gold = gracz.gold + (temp_table_price[40 + i] * temp_table_amount[40 + i]);
-									if (gracz.inventory_crafting_amount[index] == temp_table_amount[40 + i])
-									{
-										gracz.inventory_crafting[index] = "";
-										gracz.inventory_crafting_amount[index] = 0;
-										gracz.inventory_crafting_price[index] = 0;
-									}
-									else
-									{
-										gracz.inventory_crafting_amount[index] = gracz.inventory_crafting_amount[index] - temp_table_amount[40 + i];
-									}
-									temp_table[40 + i] = "";
-									temp_table_amount[40 + i] = 0;
-									temp_table_price[40 + i] = 0;
-									gracz.sort_backpack_crafting();
-								}
-							}
-						}
-						//kupno
-						{
-							for (int i = 0; i < counter_seller; i++)
-							{
-
-							}
-						}
-					}
-					else
-					{
-						cout << endl << "Transakcja nie zfinalizowana" << endl;
-					}
-					tryb = 0;
-					system("PAUSE");
-					break;
-				}
-				case '2':
-				{
-					cout << endl << "Transakcja nie zfinalizowana" << endl;
-					tryb = 0;
-					system("PAUSE");
-					break;
-				}
-				default:
-				{
-					system("cls");
-					break;
-				}
-				}
-			} while (tryb = 0);
+			menu.accept_transaction(gracz,handlarz);
 			break;
 		}
 		case 'Z':

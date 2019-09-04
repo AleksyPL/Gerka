@@ -1,5 +1,6 @@
 #include "biblioteki.h"
 #include "tabelka.h"
+#include "inventory.h"
 
 void print_option(string item)
 {

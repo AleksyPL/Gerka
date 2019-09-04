@@ -1,4 +1,5 @@
 #include "biblioteki.h"
+#include "ui.h"
 #include "tawerna.h"
 #include "kowal.h"
 #include "burdel.h"
@@ -12,6 +13,7 @@
 #include "shamans_house.h"
 #include "szpital.h"
 #include "inventory.h"
+
 
 int ui(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist alchemik,shaman szaman, doctor lekarz)
 {

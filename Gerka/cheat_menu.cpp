@@ -3,6 +3,7 @@
 #include "tabelka.h"
 #include "zakres.h"
 #include "level_up.h"
+#include "cheat_menu.h"
 
 
 player enter_cheat_menu(player gracz)

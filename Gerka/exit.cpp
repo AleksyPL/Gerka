@@ -1,8 +1,10 @@
 #include "Biblioteki.h"
 #include "ui.h"
 #include "save.h"
+#include "exit.h"
+#include "dwellers.h"
 
-void exit(player gracz)
+void exit(player gracz, barman bobby, seller handlarz, blacksmith kowal, alchemist alchemik, shaman szaman, doctor lekarz)
 {
 	char zapis = 0;
 	cout << "Wychodze do menu" << endl;
@@ -15,7 +17,7 @@ void exit(player gracz)
 	{
 	case '1':
 	{
-		save(gracz);
+		save(gracz,bobby,handlarz,kowal,alchemik);
 		cout << "Gra zostala zapisana" << endl;
 	}
 	default:

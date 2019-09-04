@@ -2,6 +2,7 @@
 #include "ui.h"
 #include "boost-syf.h"
 #include "seksik.h"
+#include "burdel.h"
 
 
 player enter_brothel(player gracz)

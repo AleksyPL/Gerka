@@ -3,6 +3,7 @@
 #include "kowal.h"
 #include "alchemik.h"
 #include "burdel.h"
+#include "zakres.h"
 
 void range(player &gracz)
 {

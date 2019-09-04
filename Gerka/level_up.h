@@ -1,6 +1,6 @@
 #pragma once
 #include "biblioteki.h"
-#include "ui.h"
+//#include "ui.h"
 #include "tytul.h"
 #include "boost-syf.h"
 

@@ -8,113 +8,173 @@ Przedmiot u퓓tkowy numer 3
 Kapsle
 3
 Przedmiot u퓓tkowy numer 4
-
-0
+Kupa
+1
 Przedmiot u퓓tkowy numer 5
-
-0
+Kupa1
+1
 Przedmiot u퓓tkowy numer 6
-
-0
+Kupa2
+1
 Przedmiot u퓓tkowy numer 7
-
-0
+Kupa3
+1
 Przedmiot u퓓tkowy numer 8
-
-0
+Kupa4
+1
 Przedmiot u퓓tkowy numer 9
-
-0
+Kupa5
+1
 Przedmiot u퓓tkowy numer 10
-
-0
+Kupa6
+1
 Przedmiot u퓓tkowy numer 11
-
-0
+Kupa7
+1
 Przedmiot u퓓tkowy numer 12
-
-0
+Kupa8
+1
 Przedmiot u퓓tkowy numer 13
-
-0
+Kupa9
+1
 Przedmiot u퓓tkowy numer 14
-
-0
+Kupa10
+1
 Przedmiot u퓓tkowy numer 15
-
-0
+Kupa11
+1
 Przedmiot u퓓tkowy numer 16
-
-0
+Kupa12
+1
 Przedmiot u퓓tkowy numer 17
-
-0
+Kupa13
+1
 Przedmiot u퓓tkowy numer 18
-
-0
+Kupa14
+1
 Przedmiot u퓓tkowy numer 19
-
-0
+Szampan
+1
 Przedmiot u퓓tkowy numer 20
 
 0
-Przedmiot rzemie쐋niczy numer 1
-Sztabka z쿽ta
-2
-Przedmiot rzemie쐋niczy numer 2
+Przedmiot rzemie쐋niczy alchemiczny numer 1
 
 0
-Przedmiot rzemie쐋niczy numer 3
+Przedmiot rzemie쐋niczy alchemiczny numer 2
 
 0
-Przedmiot rzemie쐋niczy numer 4
+Przedmiot rzemie쐋niczy alchemiczny numer 3
 
 0
-Przedmiot rzemie쐋niczy numer 5
+Przedmiot rzemie쐋niczy alchemiczny numer 4
 
 0
-Przedmiot rzemie쐋niczy numer 6
+Przedmiot rzemie쐋niczy alchemiczny numer 5
 
 0
-Przedmiot rzemie쐋niczy numer 7
+Przedmiot rzemie쐋niczy alchemiczny numer 6
 
 0
-Przedmiot rzemie쐋niczy numer 8
+Przedmiot rzemie쐋niczy alchemiczny numer 7
 
 0
-Przedmiot rzemie쐋niczy numer 9
+Przedmiot rzemie쐋niczy alchemiczny numer 8
 
 0
-Przedmiot rzemie쐋niczy numer 10
+Przedmiot rzemie쐋niczy alchemiczny numer 9
 
 0
-Przedmiot rzemie쐋niczy numer 11
+Przedmiot rzemie쐋niczy alchemiczny numer 10
 
 0
-Przedmiot rzemie쐋niczy numer 12
+Przedmiot rzemie쐋niczy alchemiczny numer 11
 
 0
-Przedmiot rzemie쐋niczy numer 13
+Przedmiot rzemie쐋niczy alchemiczny numer 12
 
 0
-Przedmiot rzemie쐋niczy numer 14
+Przedmiot rzemie쐋niczy alchemiczny numer 13
 
 0
-Przedmiot rzemie쐋niczy numer 15
+Przedmiot rzemie쐋niczy alchemiczny numer 14
 
 0
-Przedmiot rzemie쐋niczy numer 16
+Przedmiot rzemie쐋niczy alchemiczny numer 15
 
 0
-Przedmiot rzemie쐋niczy numer 17
+Przedmiot rzemie쐋niczy alchemiczny numer 16
+Kwiatek
+3
+Przedmiot rzemie쐋niczy alchemiczny numer 17
 
 0
-Przedmiot rzemie쐋niczy numer 18
+Przedmiot rzemie쐋niczy alchemiczny numer 18
 
 0
-Przedmiot rzemie쐋niczy numer 19
+Przedmiot rzemie쐋niczy alchemiczny numer 19
 
 0
-Przedmiot rzemie쐋niczy numer 20
+Przedmiot rzemie쐋niczy alchemiczny numer 20
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 1
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 2
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 3
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 4
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 5
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 6
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 7
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 8
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 9
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 10
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 11
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 12
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 13
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 14
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 15
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 16
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 17
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 18
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 19
+
+0
+Przedmiot rzemie쐋niczy kowalski numer 20
 
 0

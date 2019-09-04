@@ -36,9 +36,9 @@ class player
 		string inventory_usage[20];
 		int inventory_usage_amount[20];
 		int inventory_usage_price[20];
-		string inventory_crafting[20];
-		int inventory_crafting_amount[20];
-		int inventory_crafting_price[20];
+		string inventory_crafting[40];
+		int inventory_crafting_amount[40];
+		int inventory_crafting_price[40];
 		string pseudonym;
 		int counter_nerf_str;
 		int counter_boost_str;
@@ -120,8 +120,11 @@ class player
 				inventory_usage_amount[i] = 0;
 				inventory_usage_price[i] = 0;
 				inventory_crafting[i] = "";
+				inventory_crafting[20 + i] = "";
 				inventory_crafting_amount[i] = 0;
+				inventory_crafting_amount[20 + i] = 0;
 				inventory_crafting_price[i] = 0;
+				inventory_crafting_price[20 + i] = 0;
 			}
 		}
 		void use_hp_potion()
@@ -156,7 +159,7 @@ class player
 				system("PAUSE");
 			}
 		}
-		int find_item_usage(string nazwa)
+		int find_usage_item(string nazwa)
 		{
 			for (int i = 0; i < 20; i++)
 			{
@@ -174,7 +177,7 @@ class player
 				}
 			}
 		}
-		int find_item_crafting(string nazwa)
+		int find_crafting_alchemy_item(string nazwa)
 		{
 			for (int i = 0; i < 20; i++)
 			{
@@ -183,6 +186,24 @@ class player
 					return 1;
 				}
 				else if (inventory_crafting[i] != nazwa)
+				{
+					continue;
+				}
+				else
+				{
+					return 0;
+				}
+			}
+		}
+		int find_crafting_forge_item(string nazwa)
+		{
+			for (int i = 0; i < 20; i++)
+			{
+				if (inventory_crafting[20 + i] == nazwa)
+				{
+					return 1;
+				}
+				else if (inventory_crafting[20 + i] != nazwa)
 				{
 					continue;
 				}
@@ -202,7 +223,7 @@ class player
 				}
 			}
 		}
-		int find_crafting_item_index(string nazwa)
+		int find_crafting_alchemy_item_index(string nazwa)
 		{
 			for (int i = 0; i < 20; i++)
 			{
@@ -212,30 +233,50 @@ class player
 				}
 			}
 		}
-		void add_item_usage(string nazwa, int ilosc)
+		int find_crafting_forge_item_index(string nazwa)
 		{
-			int i = 0;
-			for (i; i < 20; i++)
+			for (int i = 0; i < 20; i++)
 			{
-				if (inventory_usage[i] == nazwa)
+				if (inventory_crafting[20 + i] == nazwa)
 				{
-					inventory_usage_amount[i] = inventory_usage_amount[i] + ilosc;
-					break;
-				}
-				else if (inventory_usage[i] == "")
-				{
-					inventory_usage[i] = nazwa;
-					inventory_usage_amount[i] = ilosc;
-					break;
+					return i;
 				}
 			}
-			if(inventory_usage[19]!="")
+		}
+		void add_usage_item(string nazwa, int ilosc)
+		{
+			int licznik = 0;
+			for (int i = 0; i < 20; i++)
+			{
+				if (inventory_usage[i] != "" && inventory_usage_amount[i] != 0)
+				{
+					licznik = licznik + 1;
+				}
+			}
+			if (licznik == 20)
 			{
 				cout << "TWÓJ PLECAK JEST PE£EN, NIE MO¯ESZ WZI¥Æ TEGO PRZEDMIOTU" << endl;
 				system("PAUSE");
 			}
+			else
+			{
+				for (int i = 0; i < 20; i++)
+				{
+					if (inventory_usage[i] == nazwa)
+					{
+						inventory_usage_amount[i] = inventory_usage_amount[i] + ilosc;
+						break;
+					}
+					else if (inventory_usage[i] == "")
+					{
+						inventory_usage[i] = nazwa;
+						inventory_usage_amount[i] = ilosc;
+						break;
+					}
+				}
+			}
 		}
-		void add_item_crafting(string nazwa, int ilosc)
+		void add_crafting_alchemy_item(string nazwa, int ilosc)
 		{
 			int i = 0;
 			for (i; i < 20; i++)
@@ -252,13 +293,36 @@ class player
 					break;
 				}
 			}
-			if (inventory_crafting[19] != "")
+			if (inventory_crafting[19] != ""&& i == 20)
 			{
 				cout << "TWÓJ PLECAK JEST PE£EN, NIE MO¯ESZ WZI¥Æ TEGO PRZEDMIOTU" << endl;
 				system("PAUSE");
 			}
 		}
-		void sort_backpack_usage()
+		void add_crafting_forge_item(string nazwa, int ilosc)
+		{
+			int i = 0;
+			for (i; i < 20; i++)
+			{
+				if (inventory_crafting[20 + i] == nazwa)
+				{
+					inventory_crafting_amount[20 + i] = inventory_crafting_amount[20 + i] + ilosc;
+					break;
+				}
+				else if (inventory_crafting[20 + i] == "")
+				{
+					inventory_crafting[20 + i] = nazwa;
+					inventory_crafting_amount[20 + i] = ilosc;
+					break;
+				}
+			}
+			if (inventory_crafting[39] != ""&& i == 20)
+			{
+				cout << "TWÓJ PLECAK JEST PE£EN, NIE MO¯ESZ WZI¥Æ TEGO PRZEDMIOTU" << endl;
+				system("PAUSE");
+			}
+		}
+		void sort_usage_backpack()
 		{
 			for (int i = 0; i < 20; i++)
 			{
@@ -284,7 +348,7 @@ class player
 				}
 			}
 		}
-		void sort_backpack_crafting()
+		void sort_crafting_alchemy_backpack()
 		{
 			for (int i = 0; i < 20; i++)
 			{
@@ -309,6 +373,68 @@ class player
 					}
 				}
 			}
+		}
+		void sort_crafting_forge_backpack()
+		{
+			for (int i = 0; i < 20; i++)
+			{
+				if (inventory_crafting[i] != "")
+				{
+					continue;
+				}
+				else
+				{
+					for (int j = i + 1; j < 20; j++)
+					{
+						if (inventory_crafting[j] != "")
+						{
+							inventory_crafting[20 + i] = inventory_crafting[20 + j];
+							inventory_crafting_amount[20 + i] = inventory_crafting_amount[20 + j];
+							inventory_crafting_price[20 + i] = inventory_crafting_price[20 + j];
+							inventory_crafting[20 + j] = "";
+							inventory_crafting_amount[20 + j] = 0;
+							inventory_crafting_price[20 + j] = 0;
+							break;
+						}
+					}
+				}
+			}
+		}
+		int count_free_fields_usage()
+		{
+			int counter = 0;
+			for (int i = 0; i < 20; i++)
+			{
+				if (inventory_usage[i] == "")
+				{
+					counter++;
+				}
+			}
+			return counter;
+		}
+		int count_free_fields_alchemy()
+		{
+			int counter = 0;
+			for (int i = 0; i < 20; i++)
+			{
+				if (inventory_crafting[i] == "")
+				{
+					counter++;
+				}
+			}
+			return counter;
+		}
+		int count_free_fields_forge()
+		{
+			int counter = 0;
+			for (int i = 0; i < 20; i++)
+			{
+				if (inventory_crafting[20 + i] == "")
+				{
+					counter++;
+				}
+			}
+			return counter;
 		}
 		string return_amount_of_hp_potions()
 		{

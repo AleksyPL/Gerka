@@ -2,6 +2,9 @@
 #include "tabelka.h"
 #include "dwellers.h"
 #include "trade.h"
+#include "trade_tab.h"
+#include "trader.h"
+
 
 player enter_shop(player gracz, seller handlarz)
 {
@@ -10,6 +13,7 @@ player enter_shop(player gracz, seller handlarz)
 	{
 		level_up(gracz);
 		system("cls");
+		table menuu;
 		string menu[100];
 		string info[8];
 		long ceny[20];
@@ -229,7 +233,7 @@ player enter_shop(player gracz, seller handlarz)
 			}
 			else
 			{
-				gracz = trade_mode(gracz, handlarz);
+				gracz = trade_mode(gracz, handlarz, menuu);
 			}
 			break;
 		}

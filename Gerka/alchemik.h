@@ -5,5 +5,6 @@
 #include "tabelka.h"
 #include "level_up.h"
 #include "boost-syf.h"
+#include "dwellers.h"
 
 player enter_laboratory(player gracz,alchemist alchemik);

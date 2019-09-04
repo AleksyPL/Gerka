@@ -3,6 +3,7 @@
 #include "player.h"
 #include "tabelka.h"
 #include "zakres.h"
+#include "walka.h"
 
 player fight(player gracz, int nr)
 {

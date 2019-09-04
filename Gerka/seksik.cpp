@@ -3,6 +3,7 @@
 #include "boost-syf.h"
 #include "koniec_tury.h"
 #include "zakres.h"
+#include "seksik.h"
 
 void have_sex(player &gracz, int cena)
 {
@@ -63,7 +64,7 @@ void have_sex(player &gracz, int cena)
 		gracz.exp = gracz.exp + 1;
 		level_up(gracz);
 		int chance_for_std = rand() % 10;
-		if (gracz.find_item_usage("Durexy") == 1)
+		if (gracz.find_usage_item("Durexy") == 1)
 		{
 			int index = gracz.find_usage_item_index("Durexy");
 			gracz.inventory_usage_amount[index] = gracz.inventory_usage_amount[index] - 1;
@@ -73,7 +74,7 @@ void have_sex(player &gracz, int cena)
 			if (gracz.inventory_usage_amount[index] == 0)
 			{
 				gracz.inventory_usage[index] = "";
-				gracz.sort_backpack_usage();
+				gracz.sort_usage_backpack();
 			}
 		}
 		if (chance_for_std == 0)

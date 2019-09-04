@@ -2,6 +2,7 @@
 #include "player.h"
 #include "zakres.h"
 #include "level_up.h"
+#include "karty.h"
 
 void gambling(player &gracz)
 {

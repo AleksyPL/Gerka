@@ -2,6 +2,7 @@
 #include "tabelka.h"
 #include "zakres.h"
 #include "dwellers.h"
+#include "kowal.h"
 
 player enter_forge(player gracz,blacksmith kowal)
 {

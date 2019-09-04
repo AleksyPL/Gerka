@@ -1,6 +1,7 @@
 #include "biblioteki.h"
 #include "start.h"
 #include "ui.h"
+#include "save.h"
 
 void save(player gracz,barman bobby,seller handlarz,blacksmith kowal, alchemist alchemik)
 {
@@ -54,8 +55,9 @@ void save(player gracz,barman bobby,seller handlarz,blacksmith kowal, alchemist 
 			plik << "Nazwa broni" << endl << gracz.weapon_name;//25-26
 			plik.close();
 			remove("./txt/mix/Zapis_gry_backpack.txt");
-			gracz.sort_backpack_usage();
-			gracz.sort_backpack_crafting();
+			gracz.sort_usage_backpack();
+			gracz.sort_crafting_alchemy_backpack();
+			gracz.sort_crafting_forge_backpack();
 			plik.open("./txt/mix/Zapis_gry_backpack.txt", ios::out);
 			plik << "Przedmiot u퓓tkowy numer 1" << endl << gracz.inventory_usage[0] << endl << gracz.inventory_usage_amount[0] << endl;//1-3
 			plik << "Przedmiot u퓓tkowy numer 2" << endl << gracz.inventory_usage[1] << endl << gracz.inventory_usage_amount[1] << endl;//4-6
@@ -77,26 +79,46 @@ void save(player gracz,barman bobby,seller handlarz,blacksmith kowal, alchemist 
 			plik << "Przedmiot u퓓tkowy numer 18" << endl << gracz.inventory_usage[17] << endl << gracz.inventory_usage_amount[17] << endl;//52-54
 			plik << "Przedmiot u퓓tkowy numer 19" << endl << gracz.inventory_usage[18] << endl << gracz.inventory_usage_amount[18] << endl;//55-57
 			plik << "Przedmiot u퓓tkowy numer 20" << endl << gracz.inventory_usage[19] << endl << gracz.inventory_usage_amount[19] << endl;//58-60
-			plik << "Przedmiot rzemie쐋niczy numer 1" << endl << gracz.inventory_crafting[0] << endl << gracz.inventory_crafting_amount[0] << endl;//61-63
-			plik << "Przedmiot rzemie쐋niczy numer 2" << endl << gracz.inventory_crafting[1] << endl << gracz.inventory_crafting_amount[1] << endl;//64-66
-			plik << "Przedmiot rzemie쐋niczy numer 3" << endl << gracz.inventory_crafting[2] << endl << gracz.inventory_crafting_amount[2] << endl;//67-69
-			plik << "Przedmiot rzemie쐋niczy numer 4" << endl << gracz.inventory_crafting[3] << endl << gracz.inventory_crafting_amount[3] << endl;//70-72
-			plik << "Przedmiot rzemie쐋niczy numer 5" << endl << gracz.inventory_crafting[4] << endl << gracz.inventory_crafting_amount[4] << endl;//73-75
-			plik << "Przedmiot rzemie쐋niczy numer 6" << endl << gracz.inventory_crafting[5] << endl << gracz.inventory_crafting_amount[5] << endl;//76-78
-			plik << "Przedmiot rzemie쐋niczy numer 7" << endl << gracz.inventory_crafting[6] << endl << gracz.inventory_crafting_amount[6] << endl;//79-80
-			plik << "Przedmiot rzemie쐋niczy numer 8" << endl << gracz.inventory_crafting[7] << endl << gracz.inventory_crafting_amount[7] << endl;//82-84
-			plik << "Przedmiot rzemie쐋niczy numer 9" << endl << gracz.inventory_crafting[8] << endl << gracz.inventory_crafting_amount[8] << endl;//85-87
-			plik << "Przedmiot rzemie쐋niczy numer 10" << endl << gracz.inventory_crafting[9] << endl << gracz.inventory_crafting_amount[9] << endl;//88-90
-			plik << "Przedmiot rzemie쐋niczy numer 11" << endl << gracz.inventory_crafting[10] << endl << gracz.inventory_crafting_amount[10] << endl;//91-92
-			plik << "Przedmiot rzemie쐋niczy numer 12" << endl << gracz.inventory_crafting[11] << endl << gracz.inventory_crafting_amount[11] << endl;//94-96
-			plik << "Przedmiot rzemie쐋niczy numer 13" << endl << gracz.inventory_crafting[12] << endl << gracz.inventory_crafting_amount[12] << endl;//97-99
-			plik << "Przedmiot rzemie쐋niczy numer 14" << endl << gracz.inventory_crafting[13] << endl << gracz.inventory_crafting_amount[13] << endl;//100-102
-			plik << "Przedmiot rzemie쐋niczy numer 15" << endl << gracz.inventory_crafting[14] << endl << gracz.inventory_crafting_amount[14] << endl;//103-105
-			plik << "Przedmiot rzemie쐋niczy numer 16" << endl << gracz.inventory_crafting[15] << endl << gracz.inventory_crafting_amount[15] << endl;//106-108
-			plik << "Przedmiot rzemie쐋niczy numer 17" << endl << gracz.inventory_crafting[16] << endl << gracz.inventory_crafting_amount[16] << endl;//109-111
-			plik << "Przedmiot rzemie쐋niczy numer 18" << endl << gracz.inventory_crafting[17] << endl << gracz.inventory_crafting_amount[17] << endl;//112-114
-			plik << "Przedmiot rzemie쐋niczy numer 19" << endl << gracz.inventory_crafting[18] << endl << gracz.inventory_crafting_amount[18] << endl;//115-117
-			plik << "Przedmiot rzemie쐋niczy numer 20" << endl << gracz.inventory_crafting[19] << endl << gracz.inventory_crafting_amount[19];//118-120
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 1" << endl << gracz.inventory_crafting[0] << endl << gracz.inventory_crafting_amount[0] << endl;//61-63
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 2" << endl << gracz.inventory_crafting[1] << endl << gracz.inventory_crafting_amount[1] << endl;//64-66
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 3" << endl << gracz.inventory_crafting[2] << endl << gracz.inventory_crafting_amount[2] << endl;//67-69
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 4" << endl << gracz.inventory_crafting[3] << endl << gracz.inventory_crafting_amount[3] << endl;//70-72
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 5" << endl << gracz.inventory_crafting[4] << endl << gracz.inventory_crafting_amount[4] << endl;//73-75
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 6" << endl << gracz.inventory_crafting[5] << endl << gracz.inventory_crafting_amount[5] << endl;//76-78
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 7" << endl << gracz.inventory_crafting[6] << endl << gracz.inventory_crafting_amount[6] << endl;//79-80
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 8" << endl << gracz.inventory_crafting[7] << endl << gracz.inventory_crafting_amount[7] << endl;//82-84
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 9" << endl << gracz.inventory_crafting[8] << endl << gracz.inventory_crafting_amount[8] << endl;//85-87
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 10" << endl << gracz.inventory_crafting[9] << endl << gracz.inventory_crafting_amount[9] << endl;//88-90
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 11" << endl << gracz.inventory_crafting[10] << endl << gracz.inventory_crafting_amount[10] << endl;//91-92
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 12" << endl << gracz.inventory_crafting[11] << endl << gracz.inventory_crafting_amount[11] << endl;//94-96
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 13" << endl << gracz.inventory_crafting[12] << endl << gracz.inventory_crafting_amount[12] << endl;//97-99
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 14" << endl << gracz.inventory_crafting[13] << endl << gracz.inventory_crafting_amount[13] << endl;//100-102
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 15" << endl << gracz.inventory_crafting[14] << endl << gracz.inventory_crafting_amount[14] << endl;//103-105
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 16" << endl << gracz.inventory_crafting[15] << endl << gracz.inventory_crafting_amount[15] << endl;//106-108
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 17" << endl << gracz.inventory_crafting[16] << endl << gracz.inventory_crafting_amount[16] << endl;//109-111
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 18" << endl << gracz.inventory_crafting[17] << endl << gracz.inventory_crafting_amount[17] << endl;//112-114
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 19" << endl << gracz.inventory_crafting[18] << endl << gracz.inventory_crafting_amount[18] << endl;//115-117
+			plik << "Przedmiot rzemie쐋niczy alchemiczny numer 20" << endl << gracz.inventory_crafting[19] << endl << gracz.inventory_crafting_amount[19] << endl;//118-120
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 1" << endl << gracz.inventory_crafting[20] << endl << gracz.inventory_crafting_amount[20] << endl;//121-123
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 2" << endl << gracz.inventory_crafting[21] << endl << gracz.inventory_crafting_amount[21] << endl;//124-126
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 3" << endl << gracz.inventory_crafting[22] << endl << gracz.inventory_crafting_amount[22] << endl;//127-129
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 4" << endl << gracz.inventory_crafting[23] << endl << gracz.inventory_crafting_amount[23] << endl;//130-132
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 5" << endl << gracz.inventory_crafting[24] << endl << gracz.inventory_crafting_amount[24] << endl;//133-135
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 6" << endl << gracz.inventory_crafting[25] << endl << gracz.inventory_crafting_amount[25] << endl;//136-138
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 7" << endl << gracz.inventory_crafting[26] << endl << gracz.inventory_crafting_amount[26] << endl;//139-141
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 8" << endl << gracz.inventory_crafting[27] << endl << gracz.inventory_crafting_amount[27] << endl;//142-144
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 9" << endl << gracz.inventory_crafting[28] << endl << gracz.inventory_crafting_amount[28] << endl;//145-147
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 10" << endl << gracz.inventory_crafting[29] << endl << gracz.inventory_crafting_amount[29] << endl;//148-150
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 11" << endl << gracz.inventory_crafting[30] << endl << gracz.inventory_crafting_amount[30] << endl;//151-153
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 12" << endl << gracz.inventory_crafting[31] << endl << gracz.inventory_crafting_amount[31] << endl;//154-156
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 13" << endl << gracz.inventory_crafting[32] << endl << gracz.inventory_crafting_amount[32] << endl;//157-159
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 14" << endl << gracz.inventory_crafting[33] << endl << gracz.inventory_crafting_amount[33] << endl;//160-162
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 15" << endl << gracz.inventory_crafting[34] << endl << gracz.inventory_crafting_amount[34] << endl;//163-165
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 16" << endl << gracz.inventory_crafting[35] << endl << gracz.inventory_crafting_amount[35] << endl;//166-168
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 17" << endl << gracz.inventory_crafting[36] << endl << gracz.inventory_crafting_amount[36] << endl;//169-171
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 18" << endl << gracz.inventory_crafting[37] << endl << gracz.inventory_crafting_amount[37] << endl;//172-174
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 19" << endl << gracz.inventory_crafting[38] << endl << gracz.inventory_crafting_amount[38] << endl;//175-177
+			plik << "Przedmiot rzemie쐋niczy kowalski numer 20" << endl << gracz.inventory_crafting[39] << endl << gracz.inventory_crafting_amount[39];//178-180
 			plik.close();
 			remove("./txt/mix/Zapis_gry_npc.txt");
 			plik.open("./txt/mix/Zapis_gry_npc.txt", ios::out);

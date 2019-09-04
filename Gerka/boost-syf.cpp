@@ -1,4 +1,5 @@
 #include "player.h"
+#include "boost-syf.h"
 
 void add_nerf_str(player &gracz,int ilosc_tur,int minus)
 {

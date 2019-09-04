@@ -1,7 +1,8 @@
 #include "biblioteki.h"
-#include "ui.h"
+//#include "ui.h"
 #include "tytul.h"
 #include "boost-syf.h"
+#include "level_up.h"
 
 void level_up(player &gracz)
 {

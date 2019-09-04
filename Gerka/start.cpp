@@ -4,6 +4,7 @@
 #include "player.h"
 #include "tytul.h"
 #include "dwellers.h"
+#include "start.h"
 
 int logo(int introo)
 {
@@ -75,8 +76,8 @@ int logo(int introo)
 int main()
 {
 	setlocale(LC_ALL, "polish");
-	system("MODE CON COLS=148 LINES=50");
-	int introo = 0;
+	system("MODE CON COLS=148 LINES=54");
+	int introo = 1;
 	while (1)
 	{
 		system("cls");
@@ -222,7 +223,7 @@ int main()
 			give_the_title(gracz);
 			handlarz.load_merch();
 			handlarz.add_prices(gracz);
-			ui(gracz, bobby, handlarz, kowal, alchemik,szaman,lekarz);
+			ui(gracz, bobby, handlarz, kowal, alchemik, szaman, lekarz);
 			break;
 		}
 		case '2':
@@ -365,12 +366,53 @@ int main()
 				case 117:gracz.inventory_crafting_amount[18] = atoi(linia.c_str()); break;
 				case 119:gracz.inventory_crafting[19] = linia; break;
 				case 120:gracz.inventory_crafting_amount[19] = atoi(linia.c_str()); break;
+				case 122:gracz.inventory_crafting[20] = linia; break;
+				case 123:gracz.inventory_crafting_amount[20] = atoi(linia.c_str()); break;
+				case 125:gracz.inventory_crafting[21] = linia; break;
+				case 126:gracz.inventory_crafting_amount[21] = atoi(linia.c_str()); break;
+				case 128:gracz.inventory_crafting[22] = linia; break;
+				case 129:gracz.inventory_crafting_amount[22] = atoi(linia.c_str()); break;
+				case 131:gracz.inventory_crafting[23] = linia; break;
+				case 132:gracz.inventory_crafting_amount[23] = atoi(linia.c_str()); break;
+				case 134:gracz.inventory_crafting[24] = linia; break;
+				case 135:gracz.inventory_crafting_amount[24] = atoi(linia.c_str()); break;
+				case 137:gracz.inventory_crafting[25] = linia; break;
+				case 138:gracz.inventory_crafting_amount[25] = atoi(linia.c_str()); break;
+				case 140:gracz.inventory_crafting[26] = linia; break;
+				case 141:gracz.inventory_crafting_amount[26] = atoi(linia.c_str()); break;
+				case 143:gracz.inventory_crafting[27] = linia; break;
+				case 144:gracz.inventory_crafting_amount[27] = atoi(linia.c_str()); break;
+				case 146:gracz.inventory_crafting[28] = linia; break;
+				case 147:gracz.inventory_crafting_amount[28] = atoi(linia.c_str()); break;
+				case 149:gracz.inventory_crafting[29] = linia; break;
+				case 150:gracz.inventory_crafting_amount[29] = atoi(linia.c_str()); break;
+				case 152:gracz.inventory_crafting[30] = linia; break;
+				case 153:gracz.inventory_crafting_amount[30] = atoi(linia.c_str()); break;
+				case 155:gracz.inventory_crafting[31] = linia; break;
+				case 156:gracz.inventory_crafting_amount[31] = atoi(linia.c_str()); break;
+				case 158:gracz.inventory_crafting[32] = linia; break;
+				case 159:gracz.inventory_crafting_amount[32] = atoi(linia.c_str()); break;
+				case 161:gracz.inventory_crafting[33] = linia; break;
+				case 162:gracz.inventory_crafting_amount[33] = atoi(linia.c_str()); break;
+				case 164:gracz.inventory_crafting[34] = linia; break;
+				case 165:gracz.inventory_crafting_amount[34] = atoi(linia.c_str()); break;
+				case 167:gracz.inventory_crafting[35] = linia; break;
+				case 168:gracz.inventory_crafting_amount[35] = atoi(linia.c_str()); break;
+				case 170:gracz.inventory_crafting[36] = linia; break;
+				case 171:gracz.inventory_crafting_amount[36] = atoi(linia.c_str()); break;
+				case 173:gracz.inventory_crafting[37] = linia; break;
+				case 174:gracz.inventory_crafting_amount[37] = atoi(linia.c_str()); break;
+				case 176:gracz.inventory_crafting[38] = linia; break;
+				case 177:gracz.inventory_crafting_amount[38] = atoi(linia.c_str()); break;
+				case 179:gracz.inventory_crafting[39] = linia; break;
+				case 180:gracz.inventory_crafting_amount[39] = atoi(linia.c_str()); break;
 				}
 				nr_linii++;
 			}
 			plik.close();
-			gracz.sort_backpack_usage();
-			gracz.sort_backpack_crafting();
+			gracz.sort_usage_backpack();
+			gracz.sort_crafting_alchemy_backpack();
+			gracz.sort_crafting_forge_backpack();
 			nr_linii = 1;
 			plik.open("./txt/mix/Zapis_gry_npc.txt", ios::in);
 			while (getline(plik, linia))
@@ -431,7 +473,7 @@ int main()
 			give_the_title(gracz);
 			handlarz.load_merch();
 			handlarz.add_prices(gracz);
-			ui(gracz, bobby, handlarz, kowal, alchemik,szaman,lekarz);
+			ui(gracz, bobby, handlarz, kowal, alchemik, szaman, lekarz);
 			break;
 		}
 		case '3':

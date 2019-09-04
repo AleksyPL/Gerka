@@ -2,5 +2,7 @@
 #include "biblioteki.h"
 #include "tabelka.h"
 #include "dwellers.h"
+#include "trade_tab.h"
 
-player trade_mode(player &gracz,seller &handlarz);
+class table;
+player trade_mode(player &gracz,seller &handlarz, table &menu);
