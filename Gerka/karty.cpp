@@ -1,8 +1,6 @@
-#include "biblioteki.h"
-#include "player.h"
+#include "karty.h"
 #include "zakres.h"
 #include "level_up.h"
-#include "karty.h"
 
 void gambling(player &gracz)
 {

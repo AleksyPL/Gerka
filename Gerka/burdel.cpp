@@ -1,8 +1,8 @@
-#include "biblioteki.h"
-#include "ui.h"
-#include "boost-syf.h"
+#include "karty.h"
 #include "seksik.h"
 #include "burdel.h"
+#include "level_up.h"
+#include "tabelka.h"
 
 
 player enter_brothel(player gracz)

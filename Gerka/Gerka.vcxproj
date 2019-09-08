@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="alchemik.cpp" />
     <ClCompile Include="biblioteki.cpp" />
-    <ClCompile Include="boost-syf.cpp" />
+    <ClCompile Include="boost_syf.cpp" />
     <ClCompile Include="burdel.cpp" />
     <ClCompile Include="cheat_menu.cpp" />
     <ClCompile Include="dwellers.cpp" />
@@ -32,6 +32,7 @@
     <ClCompile Include="koniec_tury.cpp" />
     <ClCompile Include="kowal.cpp" />
     <ClCompile Include="level_up.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="quest.cpp" />
     <ClCompile Include="save.cpp" />
     <ClCompile Include="seksik.cpp" />
@@ -51,7 +52,7 @@
   <ItemGroup>
     <ClInclude Include="alchemik.h" />
     <ClInclude Include="biblioteki.h" />
-    <ClInclude Include="boost-syf.h" />
+    <ClInclude Include="boost_syf.h" />
     <ClInclude Include="burdel.h" />
     <ClInclude Include="cheat_menu.h" />
     <ClInclude Include="dwellers.h" />

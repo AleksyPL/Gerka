@@ -1,11 +1,7 @@
-#include "biblioteki.h"
-#include "ui.h"
 #include "zakres.h"
 #include "tabelka.h"
 #include "level_up.h"
-#include "boost-syf.h"
 #include "alchemik.h"
-#include "dwellers.h"
 
 player enter_laboratory(player gracz,alchemist alchemik)
 {
@@ -237,7 +233,7 @@ player enter_laboratory(player gracz,alchemist alchemik)
 				if (gracz.gold > ceny[0])
 				{
 					cout << endl << "KUPI£EŒ MIKSTURÊ NOWEGO POZIOMU" << endl;
-					level_up_without_exp(gracz);
+					level_up(gracz,1);
 					gracz.gold = gracz.gold - (gracz.level * 100);
 					alchemik.show_image();
 				}

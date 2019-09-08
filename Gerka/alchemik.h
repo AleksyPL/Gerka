@@ -1,10 +1,6 @@
 #pragma once
 #include "biblioteki.h"
-#include "ui.h"
-#include "zakres.h"
-#include "tabelka.h"
-#include "level_up.h"
-#include "boost-syf.h"
 #include "dwellers.h"
+#include "player.h"
 
 player enter_laboratory(player gracz,alchemist alchemik);

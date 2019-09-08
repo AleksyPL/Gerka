@@ -1,11 +1,74 @@
-#include "biblioteki.h"
-#include "tawerna.h"
-#include "walka.h"
-#include "dwellers.h"
-#include "trade_tab.h"
 #include "tabelka.h"
 
-
+void draw_progress_bar(int min, int max, int how_long, int color)
+{
+	cout << "[";
+	change_color(color);
+	int pos = how_long * min / max;
+	for (int i = 0; i < how_long; ++i) {
+		if (i < pos)
+		{
+			cout << "#";
+		}
+		else
+		{
+			cout << " ";
+		}
+	}
+	change_color(7);
+	cout << "]";
+}
+void draw_spaces(int i)
+{
+	for (int j = 0; j < i; j++)
+	{
+		cout << " ";
+	}
+}
+void draw_on_center(int how_log, string name)
+{
+	int i = how_log % 2;
+	if (i == 0)
+	{
+		for (int j = 0; j < how_log / 2; j++)
+		{
+			cout << " ";
+		}
+	}
+	else
+	{
+		for (int j = 0; j < (how_log / 2) + 1; j++)
+		{
+			cout << " ";
+		}
+	}
+	cout << name;
+	for (int j = 0; j < how_log / 2; j++)
+	{
+		cout << " ";
+	}
+}
+void draw_to_right_with_parameter_and_space_before(string name0, int how_long0, string name1, int how_long1)
+{
+	if (name0 == "")
+	{
+		cout << " " << name0;
+		how_long0++;
+	}
+	else
+	{
+		cout << " " << name0 << ":";
+	}
+	for (int j = 0; j < how_long0; j++)
+	{
+		cout << " ";
+	}
+	cout << name1;
+	for (int j = 0; j < how_long1; j++)
+	{
+		cout << " ";
+	}
+}
 void tab(player gracz, string info[8], string menu[100], long ceny[20])
 {
 	system("cls");
@@ -13,126 +76,50 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 	int pomoc_lokacja;
 	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
 	{
+		cout << "|";
 		pom1 = "~~STATYSTYKI POSTACI~~";
 		pomoc_lokacja = 41 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
+		draw_on_center(pomoc_lokacja, pom1);
 	}
 	{
 		cout << "|";
 		pom1 = "~~DZIEÑ " + to_string(gracz.licznik_dnia) + "~~";
 		pomoc_lokacja = 62 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
+		draw_on_center(pomoc_lokacja, pom1);
 	}
 	{
+		cout << "|";
 		pom1 = "~~EKWIPUNEK POSTACI~~";
 		pomoc_lokacja = 41 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
+		draw_on_center(pomoc_lokacja, pom1);
 	}
 	cout << "|" << endl;
 	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
 	{
-		cout << "| IMIÊ POSTACI:         ";
-		string expikk = gracz.nazwa;
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
+		cout << "|";
+		string name0 = "IMIÊ POSTACI";
+		int how_long0 = 21- name0.length();
+		string name1 = gracz.nazwa;
+		int how_long1= 18 - name1.length();
+		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
 	}
 	{
 		cout << "|";
 		pom1 = "~~ZADANIE: " + gracz.quest + "~~";
-		pomoc_lokacja = 92 - pom1.length();
+		pomoc_lokacja = 62 - pom1.length();
 		if (pomoc_lokacja < 0)
 		{
-			cout << "                     ~~B£¥D ZADANIA!!!~~                      ";
+			pom1 = "~~B£¥D ZADANIA!!!~~";
+			draw_on_center(pomoc_lokacja, pom1);
 		}
-		if (pomoc_lokacja == 79)
+		if (pomoc_lokacja == 49)
 		{
-			cout << "                       ~~BRAK ZADANIA~~                       ";
+			pom1 = "~~BRAK ZADANIA~~";
+			draw_on_center(pomoc_lokacja-3, pom1);
 		}
 		else
 		{
-			int i = pomoc_lokacja % 2;
-			if (i == 0)
-			{
-				for (int j = 0; j < pomoc_lokacja / 2; j++)
-				{
-					cout << " ";
-				}
-			}
-			else
-			{
-				for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-				{
-					cout << " ";
-				}
-			}
-			cout << pom1;
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
+			draw_on_center(pomoc_lokacja, pom1);
 		}
 	}
 	{
@@ -147,22 +134,20 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 		cout << "|" << endl;
 	}
 	{
-		cout << "| UMIEJÊTNOŒÆ POSTACI:  ";
-		string expikk;
+		cout << "|";
+		string name0 = "UMIEJÊTNOŒÆ POSTACI";
+		int how_long0 = 21 - name0.length();
+		string name1;
 		if (gracz.skill == "")
 		{
-			expikk = "BRAK";
+			name1 = "BRAK";
 		}
 		else
 		{
-			expikk = gracz.skill;
+			name1 = gracz.skill;
 		}
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
+		int how_long1 = 18 - name1.length();
+		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
 	}
 	cout << "X--------------------X--------------------X--------------------X";
 	{
@@ -177,31 +162,16 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 		cout << "|" << endl;
 	}
 	{
-		cout << "| PUNKTY ¯YCIA:         ";
-		string expikk = to_string(gracz.hp) + "/" + to_string(gracz.max_hp);
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		int barWidth = 60;
-		cout << "|[";
-		change_color(12);
-		int pos = barWidth * gracz.hp / gracz.max_hp;
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos)
-			{
-				cout << "#";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		change_color(7);
-		cout << "]| PUNKTY NAPIERŒNIKA:    ";
-		expikk = to_string(gracz.chestplate);
+		cout << "|";
+		string name0 = "PUNKTY ¯YCIA";
+		int how_long0 = 21 - name0.length();
+		string name1 = to_string(gracz.hp) + "/" + to_string(gracz.max_hp);
+		int how_long1 = 18 - name1.length();
+		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
+		cout << "|";
+		draw_progress_bar(gracz.hp,gracz.max_hp,60,12);
+		cout << "| PUNKTY NAPIERŒNIKA:    ";
+		string expikk = to_string(gracz.chestplate);
 		pomoc_lokacja = 17 - expikk.length();
 		cout << expikk;
 		for (int j = 0; j < pomoc_lokacja; j++)
@@ -211,31 +181,16 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 		cout << "|" << endl;
 	}
 	{
-		cout << "| PUNKTY DOŒWIADCZENIA: ";
-		string expikk = to_string(gracz.exp) + "/" + to_string(gracz.exp_to_next_level);
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		int barWidth = 60;
-		cout << "|[";
-		change_color(14);
-		int pos = barWidth * gracz.exp / gracz.exp_to_next_level;
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos)
-			{
-				cout << "#";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		change_color(7);
-		cout << "]| PUNKTY RÊKAWIC:        ";
-		expikk = to_string(gracz.gloves);
+		cout << "|";
+		string name0 = "PUNKTY DOŒWIADCZENIA";
+		int how_long0 = 21 - name0.length();
+		string name1 = to_string(gracz.exp) + "/" + to_string(gracz.exp_to_next_level);
+		int how_long1 = 18 - name1.length();
+		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
+		cout << "|";
+		draw_progress_bar(gracz.exp, gracz.exp_to_next_level, 60, 14);
+		cout << "| PUNKTY RÊKAWIC:        ";
+		string expikk = to_string(gracz.gloves);
 		pomoc_lokacja = 17 - expikk.length();
 		cout << expikk;
 		for (int j = 0; j < pomoc_lokacja; j++)
@@ -245,31 +200,16 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 		cout << "|" << endl;
 	}
 	{
-		cout << "| PUNKTY NAJEDZENIA:    ";
-		string expikk = to_string(gracz.hunger) + "/10";
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		int barWidth = 60;
-		cout << "|[";
-		change_color(10);
-		int pos = barWidth * gracz.hunger / 10;
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos)
-			{
-				cout << "#";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		change_color(7);
-		cout << "]| PUNKTY SPODNI:         ";
-		expikk = to_string(gracz.pants);
+		cout << "|";
+		string name0 = "PUNKTY NAJEDZENIA";
+		int how_long0 = 21 - name0.length();
+		string name1 = to_string(gracz.hunger) + "/10";
+		int how_long1 = 18 - name1.length();
+		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
+		cout << "|";
+		draw_progress_bar(gracz.hunger, 10, 60, 10);
+		cout << "| PUNKTY SPODNI:         ";
+		string expikk = to_string(gracz.pants);
 		pomoc_lokacja = 17 - expikk.length();
 		cout << expikk;
 		for (int j = 0; j < pomoc_lokacja; j++)
@@ -279,31 +219,16 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 		cout << "|" << endl;
 	}
 	{
-		cout << "| UPOJENIE ALKOHOLOWE:  ";
-		string expikk = to_string(gracz.alko) + "/10";
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		int barWidth = 60;
-		cout << "|[";
-		change_color(13);
-		int pos = barWidth * gracz.alko / 10;
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos)
-			{
-				cout << "#";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		change_color(7);
-		cout << "]| PUNKTY BUTÓW:          ";
-		expikk = to_string(gracz.shoes);
+		cout << "|";
+		string name0 = "UPOJENIE ALKOHOLOWE";
+		int how_long0 = 21 - name0.length();
+		string name1 = to_string(gracz.alko) + "/10";
+		int how_long1 = 18 - name1.length();
+		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
+		cout << "|";
+		draw_progress_bar(gracz.alko, 10, 60, 13);
+		cout << "| PUNKTY BUTÓW:          ";
+		string expikk = to_string(gracz.shoes);
 		pomoc_lokacja = 17 - expikk.length();
 		cout << expikk;
 		for (int j = 0; j < pomoc_lokacja; j++)
@@ -313,16 +238,14 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 		cout << "|" << endl;
 	}
 	{
-		cout << "| POZIOM POSTACI:       ";
-		string expikk = to_string(gracz.level);
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
+		cout << "|";
+		string name0 = "POZIOM POSTACI";
+		int how_long0 = 21 - name0.length();
+		string name1 = to_string(gracz.level);
+		int how_long1 = 18 - name1.length();
+		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
 		cout << "X--------------------X--------------------X--------------------X OBRA¯ENIA BRONI:       ";
-		expikk = to_string(gracz.weapon);
+		string expikk = to_string(gracz.weapon);
 		pomoc_lokacja = 17 - expikk.length();
 		cout << expikk;
 		for (int j = 0; j < pomoc_lokacja; j++)
@@ -332,37 +255,23 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 		cout << "|" << endl;
 	}
 	{
-		cout << "| RANGA POSTACI:        ";
-		string expikk = gracz.pseudonym;
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
+		cout << "|";
+		string name0 = "RANGA POSTACI";
+		int how_long0 = 21 - name0.length();
+		string name1 = gracz.pseudonym;
+		int how_long1 = 18 - name1.length();
+		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
+	}
+	{
 		cout << "|";
 		pomoc_lokacja = 58 - info[0].length();
-		int i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << "~~" << info[0] << "~~";
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|                                         |"<<endl;
+		pom1 = "~~" + info[0] + "~~";
+		draw_on_center(pomoc_lokacja, pom1);
+	}
+	{
+		cout << "|";
+		draw_spaces(41);
+		cout << "|" << endl;
 	}
 	cout << "X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X" << endl;
 	for (int i = 0; i < 20; i++)
@@ -441,12 +350,8 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 				{
 					cout << menu[i + 20];
 				}
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
+				draw_spaces(pomoc_lokacja);
 			}
-			
 			cout << " |";
 			if (menu[i + 40] != "")
 			{
@@ -463,25 +368,19 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 				if (ceny[i] == 0)
 				{
 					pomoc_lokacja = 62 - pomoc2.length();
-					for (int j = 0; j < pomoc_lokacja; j++)
-					{
-						cout << " ";
-					}
+					draw_spaces(pomoc_lokacja);
 				}
 				else
 				{
 					string pom3 = "[" + to_string(ceny[i]) + " Z£OTA]";
 					pomoc_lokacja = 62 - (pomoc2.length() + pom3.length());
-					for (int j = 0; j < pomoc_lokacja; j++)
-					{
-						cout << " ";
-					}
+					draw_spaces(pomoc_lokacja);
 					cout << pom3;
 				}
 			}
 			else
 			{
-				cout << "                                                              ";
+				draw_spaces(63);
 			}
 			cout << "| " << menu[i + 60];
 			pomoc_lokacja = 22 - menu[i + 60].length();
@@ -499,175 +398,174 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 		}
 	}
 	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
-	cout << "| " << info[1];
-	pomoc_lokacja = 19 - info[1].length();
-	for (int j = 0; j < pomoc_lokacja; j++)
 	{
-		cout << " ";
+		cout << "| " << info[1];
+		pomoc_lokacja = 19 - info[1].length();
+		draw_spaces(pomoc_lokacja);
 	}
-	cout << "| " << info[2];
-	pomoc_lokacja = 19 - info[2].length();
-	for (int j = 0; j < pomoc_lokacja; j++)
 	{
-		cout << " ";
+		cout << "| " << info[2];
+		pomoc_lokacja = 19 - info[2].length();
+		draw_spaces(pomoc_lokacja);
 	}
-	cout << "| " << info[3];
-	pomoc_lokacja = 19 - info[3].length();
-	for (int j = 0; j < pomoc_lokacja; j++)
 	{
-		cout << " ";
+		cout << "| " << info[3];
+		pomoc_lokacja = 19 - info[3].length();
+		draw_spaces(pomoc_lokacja);
 	}
-	cout << "| " << info[4];
-	pomoc_lokacja = 19 - info[4].length();
-	for (int j = 0; j < pomoc_lokacja; j++)
 	{
-		cout << " ";
+		cout << "| " << info[4];
+		pomoc_lokacja = 19 - info[4].length();
+		draw_spaces(pomoc_lokacja);
 	}
-	cout << "| " << info[5];
-	pomoc_lokacja = 19 - info[5].length();
-	for (int j = 0; j < pomoc_lokacja; j++)
 	{
-		cout << " ";
+		cout << "| " << info[5];
+		pomoc_lokacja = 19 - info[5].length();
+		draw_spaces(pomoc_lokacja);
 	}
-	cout << "| " << info[6];
-	pomoc_lokacja = 19 - info[6].length();
-	for (int j = 0; j < pomoc_lokacja; j++)
 	{
-		cout << " ";
+		cout << "| " << info[6];
+		pomoc_lokacja = 19 - info[6].length();
+		draw_spaces(pomoc_lokacja);
 	}
-	cout << "| " << info[7];
-	pomoc_lokacja = 19 - info[7].length();
-	for (int j = 0; j < pomoc_lokacja; j++)
 	{
-		cout << " ";
+		cout << "| " << info[7];
+		pomoc_lokacja = 19 - info[7].length();
+		draw_spaces(pomoc_lokacja);
 	}
-	cout << "|";
+	cout << "|"<<endl;
 	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
 }
-void tab_items(player gracz,string menu[60])
+void tab_items(player gracz,string menu[100], int menu_amount[60], string info[7])
 {
 	system("cls");
-	cout << "X------------------------------------------------X------------------------------------------------X------------------------------------------------X" << endl;
+	cout << "X------------------------------------X------------------------------------X------------------------------------X-----------------------------------X" << endl;
+	//36
+	//36
+	//36
+	//35
 	string pom1;
 	int pomoc_lokacja;
 	{
+		cout << "|";
 		pom1 = "~~PRZEDMIOTY U¯YTKOWE~~";
-		pomoc_lokacja = 48 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
+		pomoc_lokacja = 36 - pom1.length();
+		draw_on_center(pomoc_lokacja,pom1);
 	}
 	{
-		pom1 = "~~PRZEDMIOTY RZEMIEŒLNICZE~~";
-		pomoc_lokacja = 48 - pom1.length();
-		int i = pomoc_lokacja % 2;
 		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
+		pom1 = "~~PRZEDMIOTY ALCHEMICZNE~~";
+		pomoc_lokacja = 36 - pom1.length();
+		draw_on_center(pomoc_lokacja, pom1);
 	}
 	{
-		pom1 = "~~MIKSTURY~~";
-		pomoc_lokacja = 48 - pom1.length();
-		int i = pomoc_lokacja % 2;
 		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
+		pom1 = "~~PRZEDMIOTY KOWALSKIE~~";
+		pomoc_lokacja = 36 - pom1.length();
+		draw_on_center(pomoc_lokacja, pom1);
 	}
-	cout << "X------------------------------------------------X------------------------------------------------X------------------------------------------------X" << endl;
+	{
+		cout << "|";
+		pom1 = "~~EKWIPUNEK POSTACI~~";
+		pomoc_lokacja = 35 - pom1.length();
+		draw_on_center(pomoc_lokacja, pom1);
+	}
+	cout << "|" << endl;
+	cout << "X------------------------------------X------------------------------------X------------------------------------X-----------------------------------X" << endl;
 	for (int i = 0; i < 20; i++)
 	{
-		if (menu[i] != "" || menu[20 + i] != "" || menu[40 + i] != "")
+		if (menu[i] != "" || menu[20 + i] != "" || menu[40 + i] != "" || menu[60 + i] != "" || menu[80 + i] != "")
 		{
-			cout << "|";
-			if (i < 9)
 			{
-				cout << "  " + to_string(i + 1) + ": ";
+				cout << "|";
+				string name;
+				if (i < 9)
+				{
+					name = "  " + to_string(i + 1) + ": " + menu[i];
+				}
+				else
+				{
+					name = " " + to_string(i + 1) + ": " + menu[i];
+				}
+				if (menu_amount[i] > 1)
+				{
+					name = name + " x" + to_string(menu_amount[i]);
+				}
+				pomoc_lokacja = 36 - name.length();
+				cout << name;
+				draw_spaces(pomoc_lokacja);
 			}
-			else
 			{
-				cout << " " + to_string(i + 1) + ": ";
+				cout << "|";
+				string name;
+				name = " " + to_string(i + 21) + ": " + menu[20 + i];
+				if (menu_amount[20 + i] > 1)
+				{
+					name = name + " x" + to_string(menu_amount[20 + i]);
+				}
+				pomoc_lokacja = 36 - name.length();
+				cout << name;
+				draw_spaces(pomoc_lokacja);
 			}
-			cout << menu[i];
-			pomoc_lokacja = 43 - menu[i].length();
-			for (int j = 0; j < pomoc_lokacja; j++)
 			{
-				cout << " ";
+				cout << "|";
+				string name;
+				name = " " + to_string(i + 41) + ": " + menu[40 + i];
+				if (menu_amount[40 + i] > 1)
+				{
+					name = name + " x" + to_string(menu_amount[40 + i]);
+				}
+				pomoc_lokacja = 36 - name.length();
+				cout << name;
+				draw_spaces(pomoc_lokacja);
 			}
-			cout << "|";
-			cout << " " + to_string(i + 21) + ": ";
-			cout << menu[20 + i];
-			pomoc_lokacja = 43 - menu[20 + i].length();
-			for (int j = 0; j < pomoc_lokacja; j++)
 			{
-				cout << " ";
-			}
-			cout << "|";
-			cout << " " + to_string(i + 41) + ": ";
-			cout << menu[40 + i];
-			pomoc_lokacja = 43 - menu[40 + i].length();
-			for (int j = 0; j < pomoc_lokacja; j++)
-			{
-				cout << " ";
+				cout << "|";
+				int how_long0 = 20 - menu[i + 60].length();
+				int how_long1 = 13 - menu[i + 80].length();
+				draw_to_right_with_parameter_and_space_before(menu[i + 60], how_long0, menu[i + 80], how_long1);
 			}
 			cout << "|" << endl;
 		}
 	}
-	cout << "X-----------------------X------------------------X-----------------------X------------------------X-----------------------X------------------------X" << endl;
-	cout << "|                                                | W: WYJD Z EKWIPUNKU  |                        |                                                |" << endl;
-	cout << "X-----------------------X------------------------X-----------------------X------------------------X-----------------------X------------------------X" << endl;
+	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
+	{
+		cout << "| " << info[0];
+		pomoc_lokacja = 19 - info[0].length();
+		draw_spaces(pomoc_lokacja);
+	}
+	{
+		cout << "| " << info[1];
+		pomoc_lokacja = 19 - info[1].length();
+		draw_spaces(pomoc_lokacja);
+	}
+	{
+		cout << "| " << info[2];
+		pomoc_lokacja = 19 - info[2].length();
+		draw_spaces(pomoc_lokacja);
+	}
+	{
+		cout << "| " << info[3];
+		pomoc_lokacja = 19 - info[3].length();
+		draw_spaces(pomoc_lokacja);
+	}
+	{
+		cout << "| " << info[4];
+		pomoc_lokacja = 19 - info[4].length();
+		draw_spaces(pomoc_lokacja);
+	}
+	{
+		cout << "| " << info[5];
+		pomoc_lokacja = 19 - info[5].length();
+		draw_spaces(pomoc_lokacja);
+	}
+	{
+		cout << "| " << info[6];
+		pomoc_lokacja = 19 - info[6].length();
+		draw_spaces(pomoc_lokacja);
+	}
+	cout << "|" << endl;
+	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
 }
 void tab_trade(player &gracz, seller &handlarz, table &menu)
 {

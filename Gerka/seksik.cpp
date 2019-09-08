@@ -1,8 +1,6 @@
-#include "biblioteki.h"
 #include "level_up.h"
-#include "boost-syf.h"
+#include "boost_syf.h"
 #include "koniec_tury.h"
-#include "zakres.h"
 #include "seksik.h"
 
 void have_sex(player &gracz, int cena)

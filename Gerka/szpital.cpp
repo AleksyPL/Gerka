@@ -1,8 +1,7 @@
-#include "biblioteki.h"
 #include "tabelka.h"
 #include "zakres.h"
-#include "dwellers.h"
 #include "szpital.h"
+#include "level_up.h"
 
 player enter_hospital(player gracz, doctor lekarz)
 {

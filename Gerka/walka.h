@@ -1,9 +1,6 @@
 #pragma once
 #include "biblioteki.h"
-#include "mobki1.h"
 #include "player.h"
-#include "tabelka.h"
-#include "zakres.h"
 
 class Przeciwnik
 {

@@ -1,9 +1,7 @@
 #pragma once
 #include "biblioteki.h"
-#include "koniec_tury.h"
-#include "jedzenie.h"
-#include "boost-syf.h"
-#include "level_up.h"
+#include "player.h"
+
 
 class dweller
 {

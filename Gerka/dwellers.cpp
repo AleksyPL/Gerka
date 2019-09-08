@@ -1,9 +1,8 @@
-#include "biblioteki.h"
+#include "dwellers.h"
 #include "koniec_tury.h"
 #include "jedzenie.h"
-#include "boost-syf.h"
+#include "boost_syf.h"
 #include "level_up.h"
-#include "dwellers.h"
 
 
 dweller::dweller()

@@ -1,9 +1,8 @@
-#include "biblioteki.h"
+#include "trader.h"
 #include "tabelka.h"
-#include "dwellers.h"
 #include "trade.h"
 #include "trade_tab.h"
-#include "trader.h"
+#include "level_up.h"
 
 
 player enter_shop(player gracz, seller handlarz)

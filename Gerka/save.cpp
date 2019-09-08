@@ -1,6 +1,3 @@
-#include "biblioteki.h"
-#include "start.h"
-#include "ui.h"
 #include "save.h"
 
 void save(player gracz,barman bobby,seller handlarz,blacksmith kowal, alchemist alchemik)

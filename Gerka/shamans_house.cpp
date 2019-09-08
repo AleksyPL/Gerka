@@ -1,7 +1,7 @@
-#include "biblioteki.h"
+#include "shamans_house.h"
 #include "tabelka.h"
 #include "zakres.h"
-#include "shamans_house.h"
+#include "level_up.h"
 
 player enter_shaman_house(player gracz, shaman szaman)
 {

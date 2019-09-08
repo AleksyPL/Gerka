@@ -1,5 +1,3 @@
-#include "biblioteki.h"
-#include "player.h"
 #include "koniec_tury.h"
 
 void end_of_turn(player &gracz)

@@ -1,7 +1,4 @@
-#include "biblioteki.h"
 #include "tabelka.h"
-#include "dwellers.h"
-#include "trade_tab.h"
 #include "trade.h"
 
 player trade_mode(player &gracz, seller &handlarz, table &menu)
@@ -11,7 +8,6 @@ player trade_mode(player &gracz, seller &handlarz, table &menu)
 	{
 		menu.check_info_boxes();
 		menu.check_free_fields();
-		//menu.count_free_fields_seller();
 		tab_trade(gracz, handlarz, menu);
 		cout << "Twój wybór to: ";
 		string wyb;

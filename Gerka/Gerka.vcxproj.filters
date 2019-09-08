@@ -81,9 +81,6 @@
     <ClCompile Include="karty.cpp">
       <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
-    <ClCompile Include="boost-syf.cpp">
-      <Filter>Pliki źródłowe\Funkcje</Filter>
-    </ClCompile>
     <ClCompile Include="trader.cpp">
       <Filter>Pliki źródłowe\Miejsca</Filter>
     </ClCompile>
@@ -111,10 +108,16 @@
     <ClCompile Include="trade.cpp">
       <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
-    <ClCompile Include="trade_tab.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="dwellers.cpp">
+      <Filter>Pliki źródłowe\Postaci</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Pliki źródłowe\Postaci</Filter>
+    </ClCompile>
+    <ClCompile Include="boost_syf.cpp">
+      <Filter>Pliki źródłowe\Funkcje</Filter>
+    </ClCompile>
+    <ClCompile Include="trade_tab.cpp">
       <Filter>Pliki źródłowe\Postaci</Filter>
     </ClCompile>
   </ItemGroup>
@@ -176,9 +179,6 @@
     <ClInclude Include="karty.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
-    <ClInclude Include="boost-syf.h">
-      <Filter>Pliki nagłówkowe\Funkcje</Filter>
-    </ClInclude>
     <ClInclude Include="seksik.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
@@ -208,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="trade_tab.h">
       <Filter>Pliki nagłówkowe\Postaci</Filter>
+    </ClInclude>
+    <ClInclude Include="boost_syf.h">
+      <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

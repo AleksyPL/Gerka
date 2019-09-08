@@ -1,14 +1,13 @@
-#include "biblioteki.h"
 #include "start.h"
 #include "ui.h"
 #include "player.h"
 #include "tytul.h"
 #include "dwellers.h"
-#include "start.h"
+#include "zakres.h"
 
-int logo(int introo)
+int logo(int tryb)
 {
-	if (introo == 0)
+	if (tryb == 0)
 	{
 		string linia;
 		int nr_linii = 1;
@@ -68,20 +67,20 @@ int logo(int introo)
 			plik.close();
 		}
 		cout << "Twoj wybor to: ";
-		introo = 0;
+		tryb = 0;
 	}
-	return introo;
+	return tryb;
 }
 
 int main()
 {
 	setlocale(LC_ALL, "polish");
 	system("MODE CON COLS=148 LINES=54");
-	int introo = 1;
+	int tryb = 0;
 	while (1)
 	{
 		system("cls");
-		introo = logo(introo);
+		tryb = logo(tryb);
 		char wyb = 0;
 		player gracz;
 		barman bobby;

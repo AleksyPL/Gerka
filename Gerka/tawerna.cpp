@@ -1,12 +1,10 @@
-#include "biblioteki.h"
+#include "tawerna.h"
 #include "tabelka.h"
-//#include "ui.h"
 #include "zakres.h"
 #include "koniec_tury.h"
 #include "karty.h"
 #include "seksik.h"
-#include "dwellers.h"
-#include "tawerna.h"
+#include "level_up.h"
 
 void drunked(player &gracz)
 {

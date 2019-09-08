@@ -1,5 +1,3 @@
-#include "biblioteki.h"
-#include "player.h"
 #include "game_over.h"
 
 void game_over()

@@ -1,6 +1,6 @@
-#include "biblioteki.h"
-#include "tabelka.h"
 #include "inventory.h"
+#include "tabelka.h"
+#include "level_up.h"
 
 void print_option(string item)
 {
@@ -11,7 +11,7 @@ void print_option(string item)
 	cout << "Twój wybór to: ";
 }
 
-player what_to_do(player &gracz,string menu[60],int i)
+player what_to_do(player &gracz,string menu[60], int menu_amount[60], string info[7],int i)
 {
 	if (i == 40)
 	{
@@ -41,7 +41,7 @@ player what_to_do(player &gracz,string menu[60],int i)
 				default:
 				{
 					system("cls");
-					tab_items(gracz, menu);
+					tab_items(gracz, menu, menu_amount, info);
 				}
 				}
 			}
@@ -59,121 +59,110 @@ player enter_inventory(player &gracz)
 	{
 		level_up(gracz);
 		system("cls");
-		string menu[60];
+		string menu[100];
+		int menu_amount[60];
+		string info[7];
+		info[0] = "";
+		info[1] = "";
+		info[2] = "W: WYJD Z EKWIP.";
+		info[3] = "";
+		info[4] = "";
+		info[5] = "";
+		info[6] = "";
+		for (int i = 0; i < 20; i++)
 		{
-			for (int i = 0; i < 20; i++)
+			if (gracz.inventory_usage[i] == "" && gracz.inventory_usage_amount[i] == 0)
 			{
-				if (gracz.inventory_usage[i] == "" && gracz.inventory_usage_amount[i] == 0)
-				{
-					menu[i] = "";
-				}
-				else
-				{
-					menu[i] = gracz.inventory_usage[i] + " x" + to_string(gracz.inventory_usage_amount[i]);
-				}
-				if (gracz.inventory_crafting[i] == "" && gracz.inventory_crafting_amount[i] == 0)
-				{
-					menu[20 + i] = "";
-				}
-				else
-				{
-					menu[20 + i] = gracz.inventory_crafting[i] + " x" + to_string(gracz.inventory_crafting_amount[i]);
-				}
+				menu[i] = "";
+				menu_amount[i] = 0;
 			}
-			
-			menu[40] = gracz.return_amount_of_hp_potions();
-			menu[41] = gracz.return_amount_of_str_potions();
-			menu[42] = gracz.return_amount_of_agility_potions();
-			menu[43] = gracz.return_amount_of_intel_potions();
-			menu[44] = gracz.return_amount_of_charisma_potions();
-			menu[45] = gracz.return_amount_of_luck_potions();
-			menu[46] = "";
-			menu[47] = "";
-			menu[48] = "";
-			menu[49] = "";
-			menu[50] = "";
-			menu[51] = "";
-			menu[52] = "";
-			menu[53] = "";
-			menu[54] = "";
-			menu[55] = "";
-			menu[56] = "";
-			menu[57] = "";
-			menu[58] = "";
-			menu[59] = "";
+			else
 			{
-				int licznik = 0;
-				int licznik1 = 0;
-				int licznik2 = 0;
-				for (int i = 0; i < 20; i++)
-				{
-					if (menu[i] == "")
-					{
-						licznik = licznik +1;
-					}
-					if (menu[20 + i] == "")
-					{
-						licznik1 = licznik1 + 1;
-					}
-					if (menu[40 + i] == "")
-					{
-						licznik2 = licznik2 + 1;
-					}
-					if (licznik == 20)
-					{
-						menu[0] = "BRAK PRZEDMIOTÓW";
-					}
-					if (licznik1 == 20)
-					{
-						menu[20] = "BRAK PRZEDMIOTÓW";
-					}
-					if (licznik2 == 20)
-					{
-						menu[40] = "BRAK MIKSTUR";
-					}
-				}
+				menu[i] = gracz.inventory_usage[i];
+				menu_amount[i] = gracz.inventory_usage_amount[i];
+			}
+			if (gracz.inventory_crafting[i] == "" && gracz.inventory_crafting_amount[i] == 0)
+			{
+				menu[20 + i] = "";
+				menu_amount[20 + i] = 0;
+			}
+			else
+			{
+				menu[20 + i] = gracz.inventory_crafting[i];
+				menu_amount[20 + i] = gracz.inventory_crafting_amount[i];
+			}
+			if (gracz.inventory_crafting[20 + i] == "" && gracz.inventory_crafting_amount[20 + i] == 0)
+			{
+				menu[40 + i] = "";
+				menu_amount[40 + i] = 0;
+			}
+			else
+			{
+				menu[40 + i] = gracz.inventory_crafting[20 + i];
+				menu_amount[40 + i] = gracz.inventory_crafting_amount[20 + i];
 			}
 		}
-		tab_items(gracz,menu);
+		{
+			if (gracz.count_free_fields_usage() == 20)
+			{
+				menu[0] = "BRAK PRZEDMIOTÓW";
+			}
+			if (gracz.count_free_fields_alchemy() == 20)
+			{
+				menu[20] = "BRAK PRZEDMIOTÓW ALCHEMICZNYCH";
+			}
+			if (gracz.count_free_fields_forge() == 20)
+			{
+				menu[40] = "BRAK PRZEDMIOTÓW KOWALSKICH";
+			}
+		}
+		/* 1*/menu[60] = "PUNKTY HE£MU";
+		/* 2*/menu[61] = "PUNKTY NAPIERŒNIKA";
+		/* 3*/menu[62] = "PUNKTY RÊKAWIC";
+		/* 4*/menu[63] = "PUNKTY SPODNI";
+		/* 5*/menu[64] = "PUNKTY BUTÓW";
+		/* 6*/menu[65] = "NAZWA BRONI";
+		/* 7*/menu[66] = "OBRA¯ENIA BRONI";
+		/* 8*/menu[67] = "";
+		/* 9*/menu[68] = "";
+		/*10*/menu[69] = "";
+		/*11*/menu[70] = "";
+		/*12*/menu[71] = "";
+		/*13*/menu[72] = "";
+		/*14*/menu[73] = "";
+		/*15*/menu[74] = "";
+		/*16*/menu[75] = "";
+		/*17*/menu[76] = "";
+		/*18*/menu[77] = "";
+		/*19*/menu[78] = "";
+		/*20*/menu[79] = "";
+
+		/* 1*/menu[80] = to_string(gracz.helmet);
+		/* 2*/menu[81] = to_string(gracz.chestplate);
+		/* 3*/menu[82] = to_string(gracz.gloves);
+		/* 4*/menu[83] = to_string(gracz.pants);
+		/* 5*/menu[84] = to_string(gracz.shoes);
+		/* 6*/menu[85] = gracz.weapon_name;
+		/* 7*/menu[86] = to_string(gracz.weapon);
+		/* 8*/menu[87] = "";
+		/* 9*/menu[88] = "";
+		/*10*/menu[89] = "";
+		/*11*/menu[90] = "";
+		/*12*/menu[91] = "";
+		/*13*/menu[92] = "";
+		/*14*/menu[93] = "";
+		/*15*/menu[94] = "";
+		/*16*/menu[95] = "";
+		/*17*/menu[96] = "";
+		/*18*/menu[97] = "";
+		/*19*/menu[98] = "";
+		/*20*/menu[99] = "";
+		tab_items(gracz,menu, menu_amount,info);
 		cout << "Twój wybór to: ";
 		string wyb;
 		cin >> wyb;
 		switch (wyb[0])
 		{
-		case '4':
-		{
-			if (wyb[1] == '1')
-			{
-				what_to_do(gracz, menu, 40);
-				break;
-			}
-			if (wyb[1] == '2')
-			{
-				what_to_do(gracz, menu, 41);
-				break;
-			}
-			if (wyb[1] == '3')
-			{
-				what_to_do(gracz, menu, 42);
-				break;
-			}
-			if (wyb[1] == '4')
-			{
-				what_to_do(gracz, menu, 43);
-				break;
-			}
-			if (wyb[1] == '5')
-			{
-				what_to_do(gracz, menu, 44);
-				break;
-			}
-			if (wyb[1] == '6')
-			{
-				what_to_do(gracz, menu, 45);
-				break;
-			}
-			break;
-		}
 		case 'W':
 		{
 			return gracz;
