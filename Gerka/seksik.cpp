@@ -2,11 +2,19 @@
 #include "boost_syf.h"
 #include "koniec_tury.h"
 #include "seksik.h"
+#include "items.h"
 
-void have_sex(player &gracz, int cena)
+void have_sex(player &gracz, int cena,string info)
 {
 	if (gracz.gold > cena || gracz.gold == cena)
 	{
+		system("cls");
+		int chance_for_std = rand() % 10;
+		if (gracz.find_usage_item("Durexy") == 1)
+		{
+			chance_for_std = chance_for_std + 1;
+			use_item("Durexy", 1, gracz,info);
+		}
 		system("cls");
 		string linia;
 		int nr_linii = 1;
@@ -60,21 +68,8 @@ void have_sex(player &gracz, int cena)
 		system("PAUSE");
 		gracz.gold = gracz.gold - cena;
 		gracz.exp = gracz.exp + 1;
+		gracz.hunger--;
 		level_up(gracz);
-		int chance_for_std = rand() % 10;
-		if (gracz.find_usage_item("Durexy") == 1)
-		{
-			int index = gracz.find_usage_item_index("Durexy");
-			gracz.inventory_usage_amount[index] = gracz.inventory_usage_amount[index] - 1;
-			cout << "ZU¯YWASZ JEDNEGO DUREXA" << endl;
-			chance_for_std = chance_for_std + 1;
-			system("PAUSE");
-			if (gracz.inventory_usage_amount[index] == 0)
-			{
-				gracz.inventory_usage[index] = "";
-				gracz.sort_usage_backpack();
-			}
-		}
 		if (chance_for_std == 0)
 		{
 			if (gracz.counter_boost_str != 0)

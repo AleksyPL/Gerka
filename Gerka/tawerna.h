@@ -5,5 +5,5 @@
 
 void drunked(player &gracz);
 void robbery(player &gracz);
-void flirting(player &gracz);
-player enter_tavern(player gracz,barman bobby);
+void flirting(player &gracz,string info);
+player enter_tavern(player gracz,barman bobby, chest &krzynka);

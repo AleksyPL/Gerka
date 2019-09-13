@@ -300,6 +300,7 @@ void table::select_item_to_buy(int numer, player gracz, seller handlarz)
 	}
 	else
 	{
+		sound_rejection();
 		cout << "Nie mo¿esz wybraæ tego przedmiotu" << endl;
 		system("PAUSE");
 	}
@@ -552,11 +553,7 @@ void table::check_selected_to_buy_field(player gracz,seller handlarz)
 	{
 		if (handlarz.search_on_lists(temp_table[i]) == 0)
 		{
-			if (gracz.find_usage_item(temp_table[i]) == 1)
-			{
-				;
-			}
-			else
+			if (gracz.find_usage_item(temp_table[i]) == 0)
 			{
 				counter_selected_to_buy_usage++;
 			}
@@ -641,14 +638,14 @@ void table::accept_transaction(player &gracz, seller handlarz)
 	int tryb = 1;
 	if (temp_table[0] == "BRAK WYBRANYCH PRZEDMIOTÓW" && temp_table[40] == "BRAK WYBRANYCH PRZEDMIOTÓW")
 	{
-		cout << endl << "Transakcja nie mo¿e zostaæ zfinalizowana poniewa¿ nie wybra³eœ przedmiotów do wymiany" << endl;
+		cout << endl << "Transakcja nie mo¿e zostaæ sfinalizowana poniewa¿ nie wybra³eœ przedmiotów do wymiany" << endl;
 		system("PAUSE");
 	}
 	else
 	{
 		do
 		{
-			cout << "Czy na pewno chcesz zfinalizowaæ transakcje?" << endl;
+			cout << "Czy na pewno chcesz sfinalizowaæ transakcje?" << endl;
 			cout << "1. Tak" << endl;
 			cout << "2. Nie" << endl;
 			cout << "Twój wybór to:";
@@ -672,7 +669,7 @@ void table::accept_transaction(player &gracz, seller handlarz)
 				}
 				if (gracz.gold >= (sum1 - sum))
 				{
-					cout << endl << "Transakcja zfinalizowana" << endl;
+					cout << endl << "Transakcja sfinalizowana" << endl;
 					//sprzeda¿
 					{
 						for (int i = 0; i < 20; i++)
@@ -743,8 +740,7 @@ void table::accept_transaction(player &gracz, seller handlarz)
 							if (handlarz.search_on_lists(temp_table[i]) == 0)
 							{
 								int suma = temp_table_amount[i] * temp_table_price[i];
-								gracz.add_usage_item(temp_table[i], temp_table_amount[i],1);
-								gracz.gold = gracz.gold - suma;
+								gracz.add_usage_item(temp_table[i], suma, temp_table_amount[i],1);
 								temp_table[i] = "";
 								temp_table_amount[i] = 0;
 								temp_table_price[i] = 0;
@@ -753,8 +749,7 @@ void table::accept_transaction(player &gracz, seller handlarz)
 							else if (handlarz.search_on_lists(temp_table[i]) == 1)
 							{
 								int suma = temp_table_amount[i] * temp_table_price[i];
-								gracz.add_crafting_alchemy_item(temp_table[i], temp_table_amount[i],1);
-								gracz.gold = gracz.gold - suma;
+								gracz.add_crafting_alchemy_item(temp_table[i], suma, temp_table_amount[i],1);
 								temp_table[i] = "";
 								temp_table_amount[i] = 0;
 								temp_table_price[i] = 0;
@@ -763,8 +758,7 @@ void table::accept_transaction(player &gracz, seller handlarz)
 							else if (handlarz.search_on_lists(temp_table[i]) == 2)
 							{
 								int suma = temp_table_amount[i] * temp_table_price[i];
-								gracz.add_crafting_forge_item(temp_table[i], temp_table_amount[i],1);
-								gracz.gold = gracz.gold - suma;
+								gracz.add_crafting_forge_item(temp_table[i], suma, temp_table_amount[i],1);
 								temp_table[i] = "";
 								temp_table_amount[i] = 0;
 								temp_table_price[i] = 0;
@@ -784,7 +778,7 @@ void table::accept_transaction(player &gracz, seller handlarz)
 			}
 			case '2':
 			{
-				cout << endl << "Transakcja nie zfinalizowana" << endl;
+				cout << endl << "Transakcja nie sfinalizowana" << endl;
 				tryb = 0;
 				system("PAUSE");
 				break;

@@ -29,7 +29,7 @@ public:
 	void rep_points_set(int a);
 	void rep_points_to_next_level_set(int a);
 	void gossip();
-	void sleep(player &gracz);
+	void give_room(player &gracz);
 	void sell_food(player &gracz, int ilosc);
 	void sell_beer(player &gracz);
 };
@@ -91,6 +91,7 @@ public:
 	void rep_points_set(int a);
 	void rep_points_to_next_level_set(int a);
 	void show_image();
+	void buy_new_level_potion(player &gracz);
 	void buy_hp_potion(player &gracz);
 };
 
@@ -132,4 +133,29 @@ public:
 	void heal(player &gracz);
 	void sober(player &gracz);
 	void remove_nerf(player &gracz, int tryb);
+};
+
+class chest
+{
+public:
+	string menu[60];
+	int menu_amount[60];
+	chest();
+	int count_free_fields_usage();
+	int count_free_fields_alchemy();
+	int count_free_fields_forge();
+	int is_in_chest_usage(player gracz, string nazwa);
+	int find_free_usage_index();
+	int find_selected_usage_index(string nazwa);
+	int is_in_chest_alchemy(player gracz, string nazwa);
+	int find_free_alchemy_index();
+	int find_selected_alchemy_index(string nazwa);
+	int is_in_chest_forge(player gracz, string nazwa);
+	int find_free_forge_index();
+	int find_selected_forge_index(string nazwa);
+	void sort_usage();
+	void sort_alchemy();
+	void sort_forge();
+	void move_to_player(int numer, player &gracz);
+	void move_to_chest(int numer, player &gracz);
 };

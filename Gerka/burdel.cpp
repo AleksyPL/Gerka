@@ -9,14 +9,18 @@ player enter_brothel(player gracz)
 {
 	while (1)
 	{
+		if (gracz.hp <= 0)
+		{
+			return gracz;
+		}
 		level_up(gracz);
 		srand((unsigned int)time(NULL));
 		system("cls");
-		string menu[100];
+		string menu[60];
 		string info[8];
 		info[0] = "BURDEL";
 		info[1] = "W: WRÓÆ NA RYNEK";
-		info[2] = "M: MIKSTURA ¯YCIA";
+		info[2] = "";
 		info[3] = "";
 		info[4] = "";
 		info[5] = "";
@@ -90,48 +94,6 @@ player enter_brothel(player gracz)
 		/*19*/menu[58] = "";
 		/*20*/menu[59] = "";
 
-		/* 1*/menu[60] = "MIKSTURY ¯YCIA:";
-		/* 2*/menu[61] = "MIKSTURY SI£Y:";
-		/* 3*/menu[62] = "MIKSTURY ZRÊCZNOŒCI:";
-		/* 4*/menu[63] = "MIKSTURY INTELIGENCJI:";
-		/* 5*/menu[64] = "MIKSTURY CHARYZMY:";
-		/* 6*/menu[65] = "MIKSTURY SZCZÊŒCIA:";
-		/* 7*/menu[66] = "";
-		/* 8*/menu[67] = "";
-		/* 9*/menu[68] = "";
-		/*10*/menu[69] = "";
-		/*11*/menu[70] = "";
-		/*12*/menu[71] = "";
-		/*13*/menu[72] = "";
-		/*14*/menu[73] = "";
-		/*15*/menu[74] = "";
-		/*16*/menu[75] = "";
-		/*17*/menu[76] = "";
-		/*18*/menu[77] = "";
-		/*19*/menu[78] = "";
-		/*20*/menu[79] = "";
-
-		/* 1*/menu[80] = to_string(gracz.hp_potion);
-		/* 2*/menu[81] = to_string(gracz.str_potion);
-		/* 3*/menu[82] = to_string(gracz.agility_potion);
-		/* 4*/menu[83] = to_string(gracz.intel_potion);
-		/* 5*/menu[84] = to_string(gracz.charisma_potion);
-		/* 6*/menu[85] = to_string(gracz.luck_potion);
-		/* 7*/menu[86] = "";
-		/* 8*/menu[87] = "";
-		/* 9*/menu[88] = "";
-		/*10*/menu[89] = "";
-		/*11*/menu[90] = "";
-		/*12*/menu[91] = "";
-		/*13*/menu[92] = "";
-		/*14*/menu[93] = "";
-		/*15*/menu[94] = "";
-		/*16*/menu[95] = "";
-		/*17*/menu[96] = "";
-		/*18*/menu[97] = "";
-		/*19*/menu[98] = "";
-		/*20*/menu[99] = "";
-
 		//Ceny za poszczególne akcje
 		ceny[0] = 300;
 		ceny[1] = 0;
@@ -173,7 +135,7 @@ player enter_brothel(player gracz)
 		{
 		case '1':
 		{
-			have_sex(gracz,ceny[0]);
+			have_sex(gracz,ceny[0],info[0]);
 			break;
 		}
 		case '2':
@@ -181,23 +143,9 @@ player enter_brothel(player gracz)
 			gambling(gracz);
 			break;
 		}
-		case 'W':
-		{
-			return gracz;
-		}
 		case 'w':
 		{
 			return gracz;
-		}
-		case 'M':
-		{
-			gracz.use_hp_potion();
-			break;
-		}
-		case 'm':
-		{
-			gracz.use_hp_potion();
-			break;
 		}
 		default:
 		{

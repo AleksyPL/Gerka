@@ -115,7 +115,7 @@ player fight(player gracz, int nr)
 
 		//Skroty 21 znakow
 		/* 1*/menu[60] = "W: UCIEKAJ";
-		/* 2*/menu[61] = "M: MIKSTURA ¯YCIA";
+		/* 2*/menu[61] = "";
 		/* 3*/menu[62] = "";
 		/* 4*/menu[63] = "";
 		/* 5*/menu[64] = "";
@@ -136,9 +136,10 @@ player fight(player gracz, int nr)
 		/*20*/menu[79] = "";
 		tab_fight(gracz, menu, enemy);
 		cout << "Twój wybor to: ";
-		string wybor;
-		cin >> wybor;
-		switch (wybor[0])
+		string wyb;
+		cin >> wyb;
+		wyb = string_tolower(wyb);
+		switch (wyb[0])
 		{
 		case '1':
 		{
@@ -196,47 +197,6 @@ player fight(player gracz, int nr)
 				}
 			}
 			break;
-		}
-		case 'M':
-		{
-			gracz.use_hp_potion();
-			break;
-		}
-		case 'm':
-		{
-			gracz.use_hp_potion();
-			break;
-		}
-		case 'W':
-		{
-			while (1)
-			{
-				cout << "Czy napewno uciec od walki, mo¿e to nieœæ ze sob¹ konsekwencje?" << endl;
-				cout << "1.Tak" << endl;
-				cout << "2.Nie" << endl;
-				cout << "Twój wybór to: ";
-				string wyb;
-				cin >> wyb;
-				switch (wyb[0])
-				{
-				case '1':
-				{
-					cout << "Uciekasz, jesteœ pizda a nie skoczek" << endl;
-					system("PAUSE");
-					return gracz;
-				}
-				case '2':
-				{
-					break;
-				}
-				default:
-				{
-					break;
-				}
-				break;
-				}
-				break;
-			}
 		}
 		case 'w':
 		{

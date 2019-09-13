@@ -1,4 +1,4 @@
-#include "tabelka.h"
+ï»¿#include "tabelka.h"
 
 void draw_progress_bar(int min, int max, int how_long, int color)
 {
@@ -69,7 +69,7 @@ void draw_to_right_with_parameter_and_space_before(string name0, int how_long0, 
 		cout << " ";
 	}
 }
-void tab(player gracz, string info[8], string menu[100], long ceny[20])
+void tab(player gracz, string info[8], string menu[60], long ceny[20])
 {
 	system("cls");
 	string pom1;
@@ -83,21 +83,21 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 	}
 	{
 		cout << "|";
-		pom1 = "~~DZIEÑ " + to_string(gracz.licznik_dnia) + "~~";
-		pomoc_lokacja = 62 - pom1.length();
+		pom1 = "~~DZIEÅƒ " + to_string(gracz.licznik_dnia) + "~~";
+		pomoc_lokacja = 52 - pom1.length();
 		draw_on_center(pomoc_lokacja, pom1);
 	}
 	{
 		cout << "|";
-		pom1 = "~~EKWIPUNEK POSTACI~~";
-		pomoc_lokacja = 41 - pom1.length();
+		pom1 = "~~ZÅOTO: " + to_string(gracz.gold) + "~~";
+		pomoc_lokacja = 51 - pom1.length();
 		draw_on_center(pomoc_lokacja, pom1);
 	}
 	cout << "|" << endl;
 	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
 	{
 		cout << "|";
-		string name0 = "IMIÊ POSTACI";
+		string name0 = "IMIÄ˜ POSTACI";
 		int how_long0 = 21- name0.length();
 		string name1 = gracz.nazwa;
 		int how_long1= 18 - name1.length();
@@ -106,13 +106,13 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 	{
 		cout << "|";
 		pom1 = "~~ZADANIE: " + gracz.quest + "~~";
-		pomoc_lokacja = 62 - pom1.length();
+		pomoc_lokacja = 104 - pom1.length();
 		if (pomoc_lokacja < 0)
 		{
-			pom1 = "~~B£¥D ZADANIA!!!~~";
+			pom1 = "~~BÅÄ„D ZADANIA!!!~~";
 			draw_on_center(pomoc_lokacja, pom1);
 		}
-		if (pomoc_lokacja == 49)
+		if (pomoc_lokacja == 91)
 		{
 			pom1 = "~~BRAK ZADANIA~~";
 			draw_on_center(pomoc_lokacja-3, pom1);
@@ -122,20 +122,11 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 			draw_on_center(pomoc_lokacja, pom1);
 		}
 	}
-	{
-		cout << "| Z£OTO:                 ";
-		string expikk = to_string(gracz.gold);
-		pomoc_lokacja = 17 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
-	}
+	
+	cout << "|" << endl;
 	{
 		cout << "|";
-		string name0 = "UMIEJÊTNOŒÆ POSTACI";
+		string name0 = "UMIEJÄ˜TNOÅšÄ† POSTACI";
 		int how_long0 = 21 - name0.length();
 		string name1;
 		if (gracz.skill == "")
@@ -149,56 +140,29 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 		int how_long1 = 18 - name1.length();
 		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
 	}
-	cout << "X--------------------X--------------------X--------------------X";
-	{
-		cout << " PUNKTY HE£MU:          ";
-		string expikk = to_string(gracz.helmet);
-		pomoc_lokacja = 17 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
-	}
+	cout << "X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
 	{
 		cout << "|";
-		string name0 = "PUNKTY ¯YCIA";
+		string name0 = "PUNKTY Å»YCIA";
 		int how_long0 = 21 - name0.length();
 		string name1 = to_string(gracz.hp) + "/" + to_string(gracz.max_hp);
 		int how_long1 = 18 - name1.length();
 		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
 		cout << "|";
-		draw_progress_bar(gracz.hp,gracz.max_hp,60,12);
-		cout << "| PUNKTY NAPIERŒNIKA:    ";
-		string expikk = to_string(gracz.chestplate);
-		pomoc_lokacja = 17 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
+		draw_progress_bar(gracz.hp,gracz.max_hp,102,12);
 	}
+	cout << "|" << endl;
 	{
 		cout << "|";
-		string name0 = "PUNKTY DOŒWIADCZENIA";
+		string name0 = "PUNKTY DOÅšWIADCZENIA";
 		int how_long0 = 21 - name0.length();
 		string name1 = to_string(gracz.exp) + "/" + to_string(gracz.exp_to_next_level);
 		int how_long1 = 18 - name1.length();
 		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
 		cout << "|";
-		draw_progress_bar(gracz.exp, gracz.exp_to_next_level, 60, 14);
-		cout << "| PUNKTY RÊKAWIC:        ";
-		string expikk = to_string(gracz.gloves);
-		pomoc_lokacja = 17 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
+		draw_progress_bar(gracz.exp, gracz.exp_to_next_level, 102, 14);
 	}
+	cout << "|" << endl;
 	{
 		cout << "|";
 		string name0 = "PUNKTY NAJEDZENIA";
@@ -207,17 +171,9 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 		int how_long1 = 18 - name1.length();
 		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
 		cout << "|";
-		draw_progress_bar(gracz.hunger, 10, 60, 10);
-		cout << "| PUNKTY SPODNI:         ";
-		string expikk = to_string(gracz.pants);
-		pomoc_lokacja = 17 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
+		draw_progress_bar(gracz.hunger, 10, 102, 10);
 	}
+	cout << "|" << endl;
 	{
 		cout << "|";
 		string name0 = "UPOJENIE ALKOHOLOWE";
@@ -226,17 +182,9 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 		int how_long1 = 18 - name1.length();
 		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
 		cout << "|";
-		draw_progress_bar(gracz.alko, 10, 60, 13);
-		cout << "| PUNKTY BUTÓW:          ";
-		string expikk = to_string(gracz.shoes);
-		pomoc_lokacja = 17 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
+		draw_progress_bar(gracz.alko, 10, 102, 13);
 	}
+	cout << "|" << endl;
 	{
 		cout << "|";
 		string name0 = "POZIOM POSTACI";
@@ -244,16 +192,8 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 		string name1 = to_string(gracz.level);
 		int how_long1 = 18 - name1.length();
 		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
-		cout << "X--------------------X--------------------X--------------------X OBRA¯ENIA BRONI:       ";
-		string expikk = to_string(gracz.weapon);
-		pomoc_lokacja = 17 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
 	}
+	cout << "X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
 	{
 		cout << "|";
 		string name0 = "RANGA POSTACI";
@@ -264,19 +204,15 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 	}
 	{
 		cout << "|";
-		pomoc_lokacja = 58 - info[0].length();
+		pomoc_lokacja = 100 - info[0].length();
 		pom1 = "~~" + info[0] + "~~";
 		draw_on_center(pomoc_lokacja, pom1);
 	}
-	{
-		cout << "|";
-		draw_spaces(41);
-		cout << "|" << endl;
-	}
+	cout << "|" << endl;
 	cout << "X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X" << endl;
 	for (int i = 0; i < 20; i++)
 	{
-		if (menu[i] != "" || menu[20 + i] != "" || menu[40 + i] != "" || menu[60 + i] != "" || menu[80 + i] !="")
+		if (menu[i] != "" || menu[20 + i] != "" || menu[40 + i] != "")
 		{
 			{
 				cout << "| " << menu[i];
@@ -286,25 +222,25 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 					cout << " ";
 				}
 				pomoc_lokacja = 17 - menu[i + 20].length();
-				if (menu[i] == "PUNKTY SI£Y:" && gracz.counter_nerf_str != 0)
+				if (menu[i] == "PUNKTY SIÅY:" && gracz.counter_nerf_str != 0)
 				{
 					change_color(12);
 					cout << menu[i + 20];
 					change_color(7);
 				}
-				else if (menu[i] == "PUNKTY SI£Y:" && gracz.counter_boost_str != 0)
+				else if (menu[i] == "PUNKTY SIÅY:" && gracz.counter_boost_str != 0)
 				{
 					change_color(10);
 					cout << menu[i + 20];
 					change_color(7);
 				}
-				else if (menu[i] == "PUNKTY ZRÊCZNOŒCI:" && gracz.counter_nerf_agility != 0)
+				else if (menu[i] == "PUNKTY ZRÄ˜CZNOÅšCI:" && gracz.counter_nerf_agility != 0)
 				{
 					change_color(12);
 					cout << menu[i + 20];
 					change_color(7);
 				}
-				else if (menu[i] == "PUNKTY ZRÊCZNOŒCI:" && gracz.counter_boost_agility != 0)
+				else if (menu[i] == "PUNKTY ZRÄ˜CZNOÅšCI:" && gracz.counter_boost_agility != 0)
 				{
 					change_color(10);
 					cout << menu[i + 20];
@@ -322,13 +258,13 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 					cout << menu[i + 20];
 					change_color(7);
 				}
-				else if (menu[i] == "PUNKTY SZCZÊŒCIA:" && gracz.counter_nerf_luck != 0)
+				else if (menu[i] == "PUNKTY SZCZÄ˜ÅšCIA:" && gracz.counter_nerf_luck != 0)
 				{
 					change_color(12);
 					cout << menu[i + 20];
 					change_color(7);
 				}
-				else if (menu[i] == "PUNKTY SZCZÊŒCIA:" && gracz.counter_boost_luck != 0)
+				else if (menu[i] == "PUNKTY SZCZÄ˜ÅšCIA:" && gracz.counter_boost_luck != 0)
 				{
 					change_color(10);
 					cout << menu[i + 20];
@@ -367,32 +303,20 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 				cout << pomoc2;
 				if (ceny[i] == 0)
 				{
-					pomoc_lokacja = 62 - pomoc2.length();
+					pomoc_lokacja = 104 - pomoc2.length();
 					draw_spaces(pomoc_lokacja);
 				}
 				else
 				{
-					string pom3 = "[" + to_string(ceny[i]) + " Z£OTA]";
-					pomoc_lokacja = 62 - (pomoc2.length() + pom3.length());
+					string pom3 = "[" + to_string(ceny[i]) + " ZÅOTA]";
+					pomoc_lokacja = 104 - (pomoc2.length() + pom3.length());
 					draw_spaces(pomoc_lokacja);
 					cout << pom3;
 				}
 			}
 			else
 			{
-				draw_spaces(63);
-			}
-			cout << "| " << menu[i + 60];
-			pomoc_lokacja = 22 - menu[i + 60].length();
-			for (int j = 0; j < pomoc_lokacja; j++)
-			{
-				cout << " ";
-			}
-			cout << " " << menu[i + 80];
-			pomoc_lokacja = 17 - menu[i + 80].length();
-			for (int j = 0; j < pomoc_lokacja; j++)
-			{
-				cout << " ";
+				draw_spaces(104);
 			}
 			cout << "|" << endl;
 		}
@@ -436,19 +360,56 @@ void tab(player gracz, string info[8], string menu[100], long ceny[20])
 	cout << "|"<<endl;
 	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
 }
-void tab_items(player gracz,string menu[100], int menu_amount[60], string info[7])
+void tab_items(player gracz, string info[8])
 {
 	system("cls");
 	cout << "X------------------------------------X------------------------------------X------------------------------------X-----------------------------------X" << endl;
-	//36
-	//36
-	//36
-	//35
 	string pom1;
+	string menu[40];
+	/* 1*/menu[0] = "PUNKTY HEÅMU";
+	/* 2*/menu[1] = "PUNKTY NAPIERÅšNIKA";
+	/* 3*/menu[2] = "PUNKTY RÄ˜KAWIC";
+	/* 4*/menu[3] = "PUNKTY SPODNI";
+	/* 5*/menu[4] = "PUNKTY BUTÃ“W";
+	/* 6*/menu[5] = "NAZWA BRONI";
+	/* 7*/menu[6] = "OBRAÅ»ENIA BRONI";
+	/* 8*/menu[7] = "";
+	/* 9*/menu[8] = "";
+	/*10*/menu[9] = "";
+	/*11*/menu[10] = "";
+	/*12*/menu[11] = "";
+	/*13*/menu[12] = "";
+	/*14*/menu[13] = "";
+	/*15*/menu[14] = "";
+	/*16*/menu[15] = "";
+	/*17*/menu[16] = "";
+	/*18*/menu[17] = "";
+	/*19*/menu[18] = "";
+	/*20*/menu[19] = "";
+	/* 1*/menu[20] = to_string(gracz.helmet);
+	/* 2*/menu[21] = to_string(gracz.chestplate);
+	/* 3*/menu[22] = to_string(gracz.gloves);
+	/* 4*/menu[23] = to_string(gracz.pants);
+	/* 5*/menu[24] = to_string(gracz.shoes);
+	/* 6*/menu[25] = gracz.weapon_name;
+	/* 7*/menu[26] = to_string(gracz.weapon);
+	/* 8*/menu[27] = "";
+	/* 9*/menu[28] = "";
+	/*10*/menu[29] = "";
+	/*11*/menu[30] = "";
+	/*12*/menu[31] = "";
+	/*13*/menu[32] = "";
+	/*14*/menu[33] = "";
+	/*15*/menu[34] = "";
+	/*16*/menu[35] = "";
+	/*17*/menu[36] = "";
+	/*18*/menu[37] = "";
+	/*19*/menu[38] = "";
+	/*20*/menu[39] = "";
 	int pomoc_lokacja;
 	{
 		cout << "|";
-		pom1 = "~~PRZEDMIOTY U¯YTKOWE~~";
+		pom1 = "~~PRZEDMIOTY UÅ»YTKOWE~~";
 		pomoc_lokacja = 36 - pom1.length();
 		draw_on_center(pomoc_lokacja,pom1);
 	}
@@ -466,7 +427,7 @@ void tab_items(player gracz,string menu[100], int menu_amount[60], string info[7
 	}
 	{
 		cout << "|";
-		pom1 = "~~EKWIPUNEK POSTACI~~";
+		pom1 = "~~STATYSTYKI EKWIPUNEKU~~";
 		pomoc_lokacja = 35 - pom1.length();
 		draw_on_center(pomoc_lokacja, pom1);
 	}
@@ -474,22 +435,34 @@ void tab_items(player gracz,string menu[100], int menu_amount[60], string info[7
 	cout << "X------------------------------------X------------------------------------X------------------------------------X-----------------------------------X" << endl;
 	for (int i = 0; i < 20; i++)
 	{
-		if (menu[i] != "" || menu[20 + i] != "" || menu[40 + i] != "" || menu[60 + i] != "" || menu[80 + i] != "")
+		if (gracz.count_free_fields_usage() == 20)
+		{
+			gracz.inventory_usage[0] = "BRAK PRZEDMIOTÃ“W UÅ»YTKOWYCH";
+		}
+		if (gracz.count_free_fields_alchemy() == 20)
+		{
+			gracz.inventory_crafting[0] = "BRAK PRZEDMIOTÃ“W ALCHEMICZNYCH";
+		}
+		if (gracz.count_free_fields_forge() == 20)
+		{
+			gracz.inventory_crafting[20] = "BRAK PRZEDMIOTÃ“W KOWALSKICH";
+		}
+		if (gracz.inventory_usage[i] != "" || gracz.inventory_crafting[i] != "" || gracz.inventory_crafting[20 + i] != "" ||menu[i] != "" || menu[20 + i] != "")
 		{
 			{
 				cout << "|";
 				string name;
 				if (i < 9)
 				{
-					name = "  " + to_string(i + 1) + ": " + menu[i];
+					name = "  " + to_string(i + 1) + ": " + gracz.inventory_usage[i];
 				}
 				else
 				{
-					name = " " + to_string(i + 1) + ": " + menu[i];
+					name = " " + to_string(i + 1) + ": " + gracz.inventory_usage[i];
 				}
-				if (menu_amount[i] > 1)
+				if (gracz.inventory_usage_amount[i] > 1)
 				{
-					name = name + " x" + to_string(menu_amount[i]);
+					name = name + " x" + to_string(gracz.inventory_usage_amount[i]);
 				}
 				pomoc_lokacja = 36 - name.length();
 				cout << name;
@@ -498,10 +471,10 @@ void tab_items(player gracz,string menu[100], int menu_amount[60], string info[7
 			{
 				cout << "|";
 				string name;
-				name = " " + to_string(i + 21) + ": " + menu[20 + i];
-				if (menu_amount[20 + i] > 1)
+				name = " " + to_string(i + 21) + ": " + gracz.inventory_crafting[i];
+				if (gracz.inventory_crafting_amount[i] > 1)
 				{
-					name = name + " x" + to_string(menu_amount[20 + i]);
+					name = name + " x" + to_string(gracz.inventory_crafting_amount[i]);
 				}
 				pomoc_lokacja = 36 - name.length();
 				cout << name;
@@ -510,10 +483,10 @@ void tab_items(player gracz,string menu[100], int menu_amount[60], string info[7
 			{
 				cout << "|";
 				string name;
-				name = " " + to_string(i + 41) + ": " + menu[40 + i];
-				if (menu_amount[40 + i] > 1)
+				name = " " + to_string(i + 41) + ": " + gracz.inventory_crafting[20 + i];
+				if (gracz.inventory_crafting_amount[20 + i] > 1)
 				{
-					name = name + " x" + to_string(menu_amount[40 + i]);
+					name = name + " x" + to_string(gracz.inventory_crafting_amount[20 + i]);
 				}
 				pomoc_lokacja = 36 - name.length();
 				cout << name;
@@ -521,19 +494,26 @@ void tab_items(player gracz,string menu[100], int menu_amount[60], string info[7
 			}
 			{
 				cout << "|";
-				int how_long0 = 20 - menu[i + 60].length();
-				int how_long1 = 13 - menu[i + 80].length();
-				draw_to_right_with_parameter_and_space_before(menu[i + 60], how_long0, menu[i + 80], how_long1);
+				int how_long0 = 20 - menu[i].length();
+				int how_long1 = 13 - menu[20 + i].length();
+				draw_to_right_with_parameter_and_space_before(menu[i], how_long0, menu[20 + i], how_long1);
 			}
 			cout << "|" << endl;
 		}
+		if (gracz.inventory_usage[0] == "BRAK PRZEDMIOTÃ“W UÅ»YTKOWYCH")
+		{
+			gracz.inventory_usage[0] = "";
+		}
+		if (gracz.inventory_crafting[0] == "BRAK PRZEDMIOTÃ“W ALCHEMICZNYCH")
+		{
+			gracz.inventory_crafting[0] = "";
+		}
+		if (gracz.inventory_crafting[20] == "BRAK PRZEDMIOTÃ“W KOWALSKICH")
+		{
+			gracz.inventory_crafting[20] = "";
+		}
 	}
 	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
-	{
-		cout << "| " << info[0];
-		pomoc_lokacja = 19 - info[0].length();
-		draw_spaces(pomoc_lokacja);
-	}
 	{
 		cout << "| " << info[1];
 		pomoc_lokacja = 19 - info[1].length();
@@ -564,10 +544,15 @@ void tab_items(player gracz,string menu[100], int menu_amount[60], string info[7
 		pomoc_lokacja = 19 - info[6].length();
 		draw_spaces(pomoc_lokacja);
 	}
+	{
+		cout << "| " << info[7];
+		pomoc_lokacja = 19 - info[7].length();
+		draw_spaces(pomoc_lokacja);
+	}
 	cout << "|" << endl;
 	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
 }
-void tab_trade(player &gracz, seller &handlarz, table &menu)
+void tab_trade(player &gracz, seller &handlarz, table &menu, int strona_1, int strona_2)
 {
 	system("cls");
 	cout << "X-----------------------X-------------------------------------------------X------------------------------------------------X-----------------------X" << endl;
@@ -597,7 +582,7 @@ void tab_trade(player &gracz, seller &handlarz, table &menu)
 		}
 	}
 	{
-		string pom1 = "Z£OTO: " + to_string(handlarz.gold_info());
+		string pom1 = "ZÅOTO: " + to_string(handlarz.gold_info());
 		int pomoc_lokacja = 49 - pom1.length();
 		int i = pomoc_lokacja % 2;
 		cout << "|";
@@ -623,7 +608,7 @@ void tab_trade(player &gracz, seller &handlarz, table &menu)
 		cout << "|";
 	}
 	{
-		string pom1 = "Z£OTO: " + to_string(gracz.gold);
+		string pom1 = "ZÅOTO: " + to_string(gracz.gold);
 		int pomoc_lokacja = 48 - pom1.length();
 		int i = pomoc_lokacja % 2;
 		if (i == 0)
@@ -675,7 +660,7 @@ void tab_trade(player &gracz, seller &handlarz, table &menu)
 	cout << "X-----------------------X-------------------------------------------------X------------------------------------------------X-----------------------X" << endl;
 	{
 		int pomoc_lokacja;
-		string pom1 = "KUPNO TOWARÓW";
+		string pom1 = "KUPNO TOWARÃ“W";
 		pomoc_lokacja = 73 - pom1.length();
 		int i = pomoc_lokacja % 2;
 		cout << "|";
@@ -701,7 +686,7 @@ void tab_trade(player &gracz, seller &handlarz, table &menu)
 	}
 	{
 		int pomoc_lokacja;
-		string pom1 = "SPRZEDA¯ TOWARÓW";
+		string pom1 = "SPRZEDAÅ» TOWARÃ“W";
 		pomoc_lokacja = 72 - pom1.length();
 		int i = pomoc_lokacja % 2;
 		cout << "|";
@@ -758,7 +743,7 @@ void tab_trade(player &gracz, seller &handlarz, table &menu)
 			else
 			{
 				
-				string pom3 = "[" + to_string(menu.temp_table_price[i] * menu.temp_table_amount[i]) + " Z£OTA]";
+				string pom3 = "[" + to_string(menu.temp_table_price[i] * menu.temp_table_amount[i]) + " ZÅOTA]";
 				pomoc_lokacja = 73 - (pomoc2.length() + pom3.length());
 				for (int j = 0; j < pomoc_lokacja; j++)
 				{
@@ -783,7 +768,7 @@ void tab_trade(player &gracz, seller &handlarz, table &menu)
 			}
 			else
 			{
-				string pom3 = "[" + to_string(menu.temp_table_price[40 + i] * menu.temp_table_amount[40 + i]) + " Z£OTA]";
+				string pom3 = "[" + to_string(menu.temp_table_price[40 + i] * menu.temp_table_amount[40 + i]) + " ZÅOTA]";
 				pomoc_lokacja = 72 - (pomoc2.length() + pom3.length());
 				for (int j = 0; j < pomoc_lokacja; j++)
 				{
@@ -930,7 +915,7 @@ void tab_trade(player &gracz, seller &handlarz, table &menu)
 			}
 			else
 			{
-				string pom3 = "[" + to_string(menu.temp_table_price[20 + i]) + " Z£OTA]";
+				string pom3 = "[" + to_string(menu.temp_table_price[20 + i]) + " ZÅOTA]";
 				pomoc_lokacja = 73 - (pomoc2.length() + pom3.length());
 				for (int j = 0; j < pomoc_lokacja; j++)
 				{
@@ -955,7 +940,7 @@ void tab_trade(player &gracz, seller &handlarz, table &menu)
 			}
 			else
 			{
-				string pom3 = "[" + to_string(menu.temp_table_price[60 + i]) + " Z£OTA]";
+				string pom3 = "[" + to_string(menu.temp_table_price[60 + i]) + " ZÅOTA]";
 				pomoc_lokacja = 72 - (pomoc2.length() + pom3.length());
 				for (int j = 0; j < pomoc_lokacja; j++)
 				{
@@ -965,6 +950,16 @@ void tab_trade(player &gracz, seller &handlarz, table &menu)
 			}
 			cout << "|" << endl;
 		}
+	}
+	cout << "X-------------------------------------------------------------------------X------------------------------------------------------------------------X" << endl;
+	{
+		cout << "|";
+		string name = "STRONA " + to_string(strona_1+1);
+		draw_on_center(65,name);
+		cout << "|";
+		name = "STRONA " + to_string(strona_2+1);
+		draw_on_center(64, name);
+		cout << "|" << endl;
 	}
 	cout << "X-------------------------------------------------------------------------X------------------------------------------------------------------------X" << endl;
 	{
@@ -1014,7 +1009,6 @@ void tab_trade(player &gracz, seller &handlarz, table &menu)
 	}
 	cout << "X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X" << endl;
 }
-
 void tab_fight(player gracz, string menu[80], Przeciwnik enemy)
 {
 	system("cls");
@@ -1156,7 +1150,7 @@ void tab_fight(player gracz, string menu[80], Przeciwnik enemy)
 		cout << "|" << endl;
 	}
 	cout << "X-----------------------------------------X-----------------------------------------------X--------------------X" << endl;
-	cout << "|            STATYSTYKI GRACZA            |                   ~~WALCZ~~                   |     ~~SKRÓTY~~     |" << endl;
+	cout << "|            STATYSTYKI GRACZA            |                   ~~WALCZ~~                   |     ~~SKRÃ“TY~~     |" << endl;
 	cout << "X-----------------------------------------X-----------------------------------------------X--------------------X" << endl;
 	for (int i = 0; i < 20; i++)
 	{
@@ -1186,25 +1180,25 @@ void tab_fight(player gracz, string menu[80], Przeciwnik enemy)
 					cout << " ";
 				}
 				pomoc_lokacja = 16 - menu[i + 20].length();
-				if (menu[i] == "PUNKTY SI£Y:" && gracz.counter_nerf_str != 0)
+				if (menu[i] == "PUNKTY SIÅY:" && gracz.counter_nerf_str != 0)
 				{
 					change_color(12);
 					cout << menu[i + 20];
 					change_color(7);
 				}
-				else if (menu[i] == "PUNKTY SI£Y:" && gracz.counter_boost_str != 0)
+				else if (menu[i] == "PUNKTY SIÅY:" && gracz.counter_boost_str != 0)
 				{
 					change_color(10);
 					cout << menu[i + 20];
 					change_color(7);
 				}
-				else if (menu[i] == "PUNKTY ZRÊCZNOŒCI:" && gracz.counter_nerf_agility != 0)
+				else if (menu[i] == "PUNKTY ZRÄ˜CZNOÅšCI:" && gracz.counter_nerf_agility != 0)
 				{
 					change_color(12);
 					cout << menu[i + 20];
 					change_color(7);
 				}
-				else if (menu[i] == "PUNKTY ZRÊCZNOŒCI:" && gracz.counter_boost_agility != 0)
+				else if (menu[i] == "PUNKTY ZRÄ˜CZNOÅšCI:" && gracz.counter_boost_agility != 0)
 				{
 					change_color(10);
 					cout << menu[i + 20];
@@ -1222,13 +1216,13 @@ void tab_fight(player gracz, string menu[80], Przeciwnik enemy)
 					cout << menu[i + 20];
 					change_color(7);
 				}
-				else if (menu[i] == "PUNKTY SZCZÊŒCIA:" && gracz.counter_nerf_luck != 0)
+				else if (menu[i] == "PUNKTY SZCZÄ˜ÅšCIA:" && gracz.counter_nerf_luck != 0)
 				{
 					change_color(12);
 					cout << menu[i + 20];
 					change_color(7);
 				}
-				else if (menu[i] == "PUNKTY SZCZÊŒCIA:" && gracz.counter_boost_luck != 0)
+				else if (menu[i] == "PUNKTY SZCZÄ˜ÅšCIA:" && gracz.counter_boost_luck != 0)
 				{
 					change_color(10);
 					cout << menu[i + 20];
@@ -1277,7 +1271,6 @@ void tab_fight(player gracz, string menu[80], Przeciwnik enemy)
 	}
 	cout << "X-----------------------------------------X-----------------------------------------------X--------------------X" << endl;
 }
-
 void tab_cheat(player gracz, string info[8], string menu[80])
 {
 	system("cls");
@@ -1286,7 +1279,7 @@ void tab_cheat(player gracz, string info[8], string menu[80])
 	cout << "X--------------------X--------------------------------------------------------------------X--------------------X" << endl;
 	//licznik dnia
 	{
-		pom1 = "~~DZIEÑ " + to_string(gracz.licznik_dnia) + "~~";
+		pom1 = "~~DZIEÅƒ " + to_string(gracz.licznik_dnia) + "~~";
 		pomoc_lokacja = 20 - pom1.length();
 		int i = pomoc_lokacja % 2;
 		cout << "|";
@@ -1317,7 +1310,7 @@ void tab_cheat(player gracz, string info[8], string menu[80])
 		pomoc_lokacja = 68 - pom1.length();
 		if (pomoc_lokacja < 0)
 		{
-			cout << "                       ~~B£¥D ZADANIA!!!~~                         ";
+			cout << "                       ~~BÅÄ„D ZADANIA!!!~~                         ";
 		}
 		if (pomoc_lokacja == 55)
 		{
@@ -1347,10 +1340,10 @@ void tab_cheat(player gracz, string info[8], string menu[80])
 			}
 		}
 	}
-	//z³oto
+	//zÅ‚oto
 	{
 		cout << "|";
-		pom1 = "Z£OTO: " + to_string(gracz.gold);
+		pom1 = "ZÅOTO: " + to_string(gracz.gold);
 		pomoc_lokacja = 20 - pom1.length();
 		int i = pomoc_lokacja % 2;
 		if (i == 0)
@@ -1377,7 +1370,7 @@ void tab_cheat(player gracz, string info[8], string menu[80])
 	cout << "X--------------------X--------------------X-----------------------------------------------X--------------------X" << endl;
 	//pasek hp
 	{
-		cout << "| PUNKTY ¯YCIA:         ";
+		cout << "| PUNKTY Å»YCIA:         ";
 		string expikk = to_string(gracz.hp) + "/" + to_string(gracz.max_hp);;
 		pomoc_lokacja = 18 - expikk.length();
 		cout << expikk;
@@ -1404,7 +1397,7 @@ void tab_cheat(player gracz, string info[8], string menu[80])
 	}
 	//pasek expa
 	{
-		cout << "| PUNKTY DOŒWIADCZENIA: ";
+		cout << "| PUNKTY DOÅšWIADCZENIA: ";
 		string expikk = to_string(gracz.exp) + "/" + to_string(gracz.exp_to_next_level);
 		pomoc_lokacja = 18 - expikk.length();
 		cout << expikk;
@@ -1496,7 +1489,7 @@ void tab_cheat(player gracz, string info[8], string menu[80])
 		}
 	}
 	cout << "X-----------------------------------------------X--------------------X" << endl;
-	//g³ówna statystyka
+	//gÅ‚Ã³wna statystyka
 	{
 		cout << "| RANGA POSTACI:        ";
 		string expikk = gracz.pseudonym;
@@ -1531,7 +1524,7 @@ void tab_cheat(player gracz, string info[8], string menu[80])
 		{
 			cout << " ";
 		}
-		cout << "|     ~~SKRÓTY~~     |" << endl;
+		cout << "|     ~~SKRÃ“TY~~     |" << endl;
 	}
 	cout << "X-----------------------------------------X-----------------------------------------------X--------------------X" << endl;
 	for (int i = 0; i < 20; i++)
@@ -1562,25 +1555,25 @@ void tab_cheat(player gracz, string info[8], string menu[80])
 					cout << " ";
 				}
 				pomoc_lokacja = 16 - menu[i + 20].length();
-				if (menu[i] == "PUNKTY SI£Y:" && gracz.counter_nerf_str != 0)
+				if (menu[i] == "PUNKTY SIÅY:" && gracz.counter_nerf_str != 0)
 				{
 					change_color(12);
 					cout << menu[i + 20];
 					change_color(7);
 				}
-				else if (menu[i] == "PUNKTY SI£Y:" && gracz.counter_boost_str != 0)
+				else if (menu[i] == "PUNKTY SIÅY:" && gracz.counter_boost_str != 0)
 				{
 					change_color(10);
 					cout << menu[i + 20];
 					change_color(7);
 				}
-				else if (menu[i] == "PUNKTY ZRÊCZNOŒCI:" && gracz.counter_nerf_agility != 0)
+				else if (menu[i] == "PUNKTY ZRÄ˜CZNOÅšCI:" && gracz.counter_nerf_agility != 0)
 				{
 					change_color(12);
 					cout << menu[i + 20];
 					change_color(7);
 				}
-				else if (menu[i] == "PUNKTY ZRÊCZNOŒCI:" && gracz.counter_boost_agility != 0)
+				else if (menu[i] == "PUNKTY ZRÄ˜CZNOÅšCI:" && gracz.counter_boost_agility != 0)
 				{
 					change_color(10);
 					cout << menu[i + 20];
@@ -1598,13 +1591,13 @@ void tab_cheat(player gracz, string info[8], string menu[80])
 					cout << menu[i + 20];
 					change_color(7);
 				}
-				else if (menu[i] == "PUNKTY SZCZÊŒCIA:" && gracz.counter_nerf_luck != 0)
+				else if (menu[i] == "PUNKTY SZCZÄ˜ÅšCIA:" && gracz.counter_nerf_luck != 0)
 				{
 					change_color(12);
 					cout << menu[i + 20];
 					change_color(7);
 				}
-				else if (menu[i] == "PUNKTY SZCZÊŒCIA:" && gracz.counter_boost_luck != 0)
+				else if (menu[i] == "PUNKTY SZCZÄ˜ÅšCIA:" && gracz.counter_boost_luck != 0)
 				{
 					change_color(10);
 					cout << menu[i + 20];
@@ -1652,4 +1645,256 @@ void tab_cheat(player gracz, string info[8], string menu[80])
 		}
 	}
 	cout << "X-----------------------------------------X-----------------------------------------------X--------------------X" << endl;
+}
+void tab_chest(player gracz,chest krzynka,string info[7])
+{
+	system("cls");
+	cout << "X--------------------------------------------------------------------------------------------------------------------------------------------------X" << endl;
+	{
+		string name = "GRACZ";
+		cout << "|";
+		int how_long = 146 - name.length();
+		draw_on_center(how_long,name);
+		cout << "|"<<endl;
+	}
+	cout << "X------------------------------------------------X------------------------------------------------X------------------------------------------------X" << endl;
+	{
+		string name = "PRZEDMIOTY UÅ»YTKOWE";
+		cout << "|";
+		int how_long = 48 - name.length();
+		draw_on_center(how_long, name);
+	}
+	{
+		string name = "PRZEDMIOTY ALCHEMICZNE";
+		cout << "|";
+		int how_long = 48 - name.length();
+		draw_on_center(how_long, name);
+	}
+	{
+		string name = "PRZEDMIOTY KOWALSKIE";
+		cout << "|";
+		int how_long = 48 - name.length();
+		draw_on_center(how_long, name);
+	}
+	cout << "|" << endl;
+	cout << "X------------------------------------------------X------------------------------------------------X------------------------------------------------X" << endl;
+	{
+		if (gracz.count_free_fields_usage() == 20)
+		{
+			gracz.inventory_usage[0] = "BRAK PRZEDMIOTÃ“W UÅ»YTKOWYCH";
+		}
+		if (gracz.count_free_fields_alchemy() == 20)
+		{
+			gracz.inventory_crafting[0] = "BRAK PRZEDMIOTÃ“W ALCHEMICZNYCH";
+		}
+		if (gracz.count_free_fields_forge() == 20)
+		{
+			gracz.inventory_crafting[20] = "BRAK PRZEDMIOTÃ“W KOWALSKICH";
+		}
+		for (int i = 0; i < 20; i++)
+		{
+			if (gracz.inventory_usage[i] != "" || gracz.inventory_crafting[i] != "" || gracz.inventory_crafting[20 + i] != "")
+			{
+				{
+					cout << "|";
+					string name;
+					if (i < 9)
+					{
+						name = "  g" + to_string(i + 1) + ": " + gracz.inventory_usage[i];
+					}
+					else
+					{
+						name = " g" + to_string(i + 1) + ": " + gracz.inventory_usage[i];
+					}
+					if (gracz.inventory_usage_amount[i] > 1)
+					{
+						name = name + " x" + to_string(gracz.inventory_usage_amount[i]);
+					}
+					int pomoc_lokacja = 48 - name.length();
+					cout << name;
+					draw_spaces(pomoc_lokacja);
+				}
+				{
+					cout << "|";
+					string name;
+					name = " g" + to_string(i + 21) + ": " + gracz.inventory_crafting[i];
+					if (gracz.inventory_crafting_amount[i] > 1)
+					{
+						name = name + " x" + to_string(gracz.inventory_crafting_amount[i]);
+					}
+					int pomoc_lokacja = 48 - name.length();
+					cout << name;
+					draw_spaces(pomoc_lokacja);
+				}
+				{
+					cout << "|";
+					string name;
+					name = " g" + to_string(i + 41) + ": " + gracz.inventory_crafting[20 + i];
+					if (gracz.inventory_crafting_amount[20 + i] > 1)
+					{
+						name = name + " x" + to_string(gracz.inventory_crafting_amount[20 + i]);
+					}
+					int pomoc_lokacja = 48 - name.length();
+					cout << name;
+					draw_spaces(pomoc_lokacja);
+				}
+				cout << "|" << endl;
+			}
+		}
+		if (gracz.inventory_usage[0] == "BRAK PRZEDMIOTÃ“W UÅ»YTKOWYCH")
+		{
+			gracz.inventory_usage[0] = "";
+		}
+		if (gracz.inventory_crafting[0] == "BRAK PRZEDMIOTÃ“W ALCHEMICZNYCH")
+		{
+			gracz.inventory_crafting[0] = "";
+		}
+		if (gracz.inventory_crafting[20] == "BRAK PRZEDMIOTÃ“W KOWALSKICH")
+		{
+			gracz.inventory_crafting[20] = "";
+		}
+	}
+	cout << "X--------------------------------------------------------------------------------------------------------------------------------------------------X" << endl;
+	{
+		if (krzynka.count_free_fields_usage() == 20)
+		{
+			krzynka.menu[0] = "BRAK PRZEDMIOTÃ“W UÅ»YTKOWYCH";
+		}
+		if (krzynka.count_free_fields_alchemy() == 20)
+		{
+			krzynka.menu[20] = "BRAK PRZEDMIOTÃ“W ALCHEMICZNYCH";
+		}
+		if (krzynka.count_free_fields_forge() == 20)
+		{
+			krzynka.menu[40] = "BRAK PRZEDMIOTÃ“W KOWALSKICH";
+		}
+		for (int i = 0; i < 20; i++)
+		{
+			if (krzynka.menu[i] != "" || krzynka.menu[20 + i] != "" || krzynka.menu[40 + i] != "")
+			{
+				{
+					cout << "|";
+					string name;
+					if (i < 9)
+					{
+						name = "  s" + to_string(i + 1) + ": " + krzynka.menu[i];
+					}
+					else
+					{
+						name = " s" + to_string(i + 1) + ": " + krzynka.menu[i];
+					}
+					if (krzynka.menu_amount[i] > 1)
+					{
+						name = name + " x" + to_string(krzynka.menu_amount[i]);
+					}
+					int pomoc_lokacja = 48 - name.length();
+					cout << name;
+					draw_spaces(pomoc_lokacja);
+				}
+				{
+					cout << "|";
+					string name;
+					name = " s" + to_string(i + 21) + ": " + krzynka.menu[20 + i];
+					if (krzynka.menu_amount[20 + i] > 1)
+					{
+						name = name + " x" + to_string(krzynka.menu_amount[20 + i]);
+					}
+					int pomoc_lokacja = 48 - name.length();
+					cout << name;
+					draw_spaces(pomoc_lokacja);
+				}
+				{
+					cout << "|";
+					string name;
+					name = " s" + to_string(i + 41) + ": " + krzynka.menu[40 + i];
+					if (krzynka.menu_amount[40 + i] > 1)
+					{
+						name = name + " x" + to_string(krzynka.menu_amount[40 + i]);
+					}
+					int pomoc_lokacja = 48 - name.length();
+					cout << name;
+					draw_spaces(pomoc_lokacja);
+				}
+				cout << "|" << endl;
+			}
+		}
+		if (krzynka.menu[0] == "BRAK PRZEDMIOTÃ“W UÅ»YTKOWYCH")
+		{
+			krzynka.menu[0] = "";
+		}
+		if (krzynka.menu[20] == "BRAK PRZEDMIOTÃ“W ALCHEMICZNYCH")
+		{
+			krzynka.menu[20] = "";
+		}
+		if (krzynka.menu[40] == "BRAK PRZEDMIOTÃ“W KOWALSKICH")
+		{
+			krzynka.menu[40] = "";
+		}
+	}
+	cout << "X------------------------------------------------X------------------------------------------------X------------------------------------------------X" << endl;
+	{
+		string name = "PRZEDMIOTY UÅ»YTKOWE";
+		cout << "|";
+		int how_long = 48 - name.length();
+		draw_on_center(how_long, name);
+	}
+	{
+		string name = "PRZEDMIOTY ALCHEMICZNE";
+		cout << "|";
+		int how_long = 48 - name.length();
+		draw_on_center(how_long, name);
+	}
+	{
+		string name = "PRZEDMIOTY KOWALSKIE";
+		cout << "|";
+		int how_long = 48 - name.length();
+		draw_on_center(how_long, name);
+	}
+	cout << "|" << endl;
+	cout << "X------------------------------------------------X------------------------------------------------X------------------------------------------------X" << endl;
+	{
+		string name = "SKRZYNIA";
+		cout << "|";
+		int how_long = 146 - name.length();
+		draw_on_center(how_long, name);
+		cout << "|" << endl;
+	}
+	cout << "X--------------------------------------------------------------------------------------------------------------------------------------------------X" << endl;
+	{
+		cout << "| " << info[0];
+		int pomoc_lokacja = 19 - info[7].length();
+		draw_spaces(pomoc_lokacja);
+	}
+	{
+		cout << "| " << info[1];
+		int pomoc_lokacja = 19 - info[1].length();
+		draw_spaces(pomoc_lokacja);
+	}
+	{
+		cout << "| " << info[2];
+		int pomoc_lokacja = 19 - info[2].length();
+		draw_spaces(pomoc_lokacja);
+	}
+	{
+		cout << "| " << info[3];
+		int pomoc_lokacja = 19 - info[3].length();
+		draw_spaces(pomoc_lokacja);
+	}
+	{
+		cout << "| " << info[4];
+		int pomoc_lokacja = 19 - info[4].length();
+		draw_spaces(pomoc_lokacja);
+	}
+	{
+		cout << "| " << info[5];
+		int pomoc_lokacja = 19 - info[5].length();
+		draw_spaces(pomoc_lokacja);
+	}
+	{
+		cout << "| " << info[6];
+		int pomoc_lokacja = 19 - info[6].length();
+		draw_spaces(pomoc_lokacja);
+	}
+	cout << "|" << endl;
+	cout << "X--------------------------------------------------------------------------------------------------------------------------------------------------X" << endl;
 }

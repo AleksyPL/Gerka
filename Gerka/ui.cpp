@@ -14,7 +14,7 @@
 #include "tabelka.h"
 
 
-int ui(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist alchemik,shaman szaman, doctor lekarz)
+int ui(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist alchemik,shaman szaman, doctor lekarz, chest krzynka)
 {
 	srand((unsigned int)time(NULL));
 	while (1)
@@ -30,12 +30,12 @@ int ui(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist a
 		info[0]= "RYNEK";
 		info[1] = "W: WRÓÆ DO MENU";
 		info[2] = "Z: ZAPISZ GRÊ";
-		info[3] = "P: PRZEDMIOTY";
+		info[3] = "E: EKWIPUNEK";
 		info[4] = "";
 		info[5] = "";
 		info[6] = "";
 		info[7] = "";
-		string menu[100];
+		string menu[60];
 		long ceny[20];
 	
 		//glowne staty 23 znaki
@@ -104,48 +104,6 @@ int ui(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist a
 		/*19*/menu[58] = "";
 		/*20*/menu[59] = "";
 
-		/* 1*/menu[60] = "MIKSTURY ¯YCIA:";
-		/* 2*/menu[61] = "MIKSTURY SI£Y:";
-		/* 3*/menu[62] = "MIKSTURY ZRÊCZNOŒCI:";
-		/* 4*/menu[63] = "MIKSTURY INTELIGENCJI:";
-		/* 5*/menu[64] = "MIKSTURY CHARYZMY:";
-		/* 6*/menu[65] = "MIKSTURY SZCZÊŒCIA:";
-		/* 7*/menu[66] = "";
-		/* 8*/menu[67] = "";
-		/* 9*/menu[68] = "";
-		/*10*/menu[69] = "";
-		/*11*/menu[70] = "";
-		/*12*/menu[71] = "";
-		/*13*/menu[72] = "";
-		/*14*/menu[73] = "";
-		/*15*/menu[74] = "";
-		/*16*/menu[75] = "";
-		/*17*/menu[76] = "";
-		/*18*/menu[77] = "";
-		/*19*/menu[78] = "";
-		/*20*/menu[79] = "";
-
-		/* 1*/menu[80] = to_string(gracz.hp_potion);
-		/* 2*/menu[81] = to_string(gracz.str_potion);
-		/* 3*/menu[82] = to_string(gracz.agility_potion);
-		/* 4*/menu[83] = to_string(gracz.intel_potion);
-		/* 5*/menu[84] = to_string(gracz.charisma_potion);
-		/* 6*/menu[85] = to_string(gracz.luck_potion);
-		/* 7*/menu[86] = "";
-		/* 8*/menu[87] = "";
-		/* 9*/menu[88] = "";
-		/*10*/menu[89] = "";
-		/*11*/menu[90] = "";
-		/*12*/menu[91] = "";
-		/*13*/menu[92] = "";
-		/*14*/menu[93] = "";
-		/*15*/menu[94] = "";
-		/*16*/menu[95] = "";
-		/*17*/menu[96] = "";
-		/*18*/menu[97] = "";
-		/*19*/menu[98] = "";
-		/*20*/menu[99] = "";
-
 		//Ceny za poszczególne akcje
 		ceny[0] = 0;
 		ceny[1] = 0;
@@ -181,14 +139,14 @@ int ui(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist a
 		}
 		tab(gracz,info, menu,ceny);
 		cout << "Twoj wybor to: ";
-		string wybor;
-		cin >> wybor;
-		
-		switch (wybor[0])
+		string wyb;
+		cin >> wyb;
+		wyb = string_tolower(wyb);
+		switch (wyb[0])
 		{
 		case '1':
 		{
-			gracz = enter_tavern(gracz,bobby);
+			gracz = enter_tavern(gracz,bobby,krzynka);
 			break;
 		}
 		case '2':
@@ -223,20 +181,10 @@ int ui(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist a
 		}
 		case 'z':
 		{
-			save(gracz,bobby,handlarz,kowal,alchemik);
+			save(gracz,bobby,handlarz,kowal,alchemik,krzynka);
 			break;
 		}
-		case 'Z':
-		{
-			save(gracz,bobby,handlarz,kowal,alchemik);
-			break;
-		}
-		case 'P':
-		{
-			gracz = enter_inventory(gracz);
-			break;
-		}
-		case 'p':
+		case 'e':
 		{
 			gracz = enter_inventory(gracz);
 			break;
@@ -271,39 +219,9 @@ int ui(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist a
 			}
 			break;
 		}
-		case 'W':
-		{
-			while (1)
-			{
-				cout << "Czy napewno chcesz wróciæ do menu, niezapisany postêp przepadnie?" << endl;
-				cout << "1.Tak" << endl;
-				cout << "2.Nie" << endl;
-				cout << "Twój wybór to: ";
-				string wyb;
-				cin >> wyb;
-				switch (wyb[0])
-				{
-				case '1':
-				{
-					return 0;
-				}
-				case '2':
-				{
-					break;
-				}
-				default:
-				{
-					break;
-				}
-				break;
-				}
-				break;
-			}
-			break;
-		}
 		case 't':
 		{
-			if (wybor == "test")
+			if (wyb == "test")
 			{
 				gracz = enter_cheat_menu(gracz);
 				system("PAUSE");

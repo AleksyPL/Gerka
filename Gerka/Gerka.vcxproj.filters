@@ -31,6 +31,12 @@
     <Filter Include="Pliki nagłówkowe\Postaci">
       <UniqueIdentifier>{a6377288-a7e3-4aad-8bd2-9b5505e0cabd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pliki źródłowe\Inne">
+      <UniqueIdentifier>{cc57b6e9-776b-4ee9-9489-5764dea9e7a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Inne">
+      <UniqueIdentifier>{70c698b7-7d11-45f3-b6ed-996859d9a65d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="burdel.cpp">
@@ -52,9 +58,6 @@
       <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
     <ClCompile Include="save.cpp">
-      <Filter>Pliki źródłowe\Funkcje</Filter>
-    </ClCompile>
-    <ClCompile Include="tabelka.cpp">
       <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
     <ClCompile Include="zakres.cpp">
@@ -99,15 +102,6 @@
     <ClCompile Include="szpital.cpp">
       <Filter>Pliki źródłowe\Miejsca</Filter>
     </ClCompile>
-    <ClCompile Include="inventory.cpp">
-      <Filter>Pliki źródłowe\Postaci</Filter>
-    </ClCompile>
-    <ClCompile Include="biblioteki.cpp">
-      <Filter>Pliki źródłowe\Postaci</Filter>
-    </ClCompile>
-    <ClCompile Include="trade.cpp">
-      <Filter>Pliki źródłowe\Funkcje</Filter>
-    </ClCompile>
     <ClCompile Include="dwellers.cpp">
       <Filter>Pliki źródłowe\Postaci</Filter>
     </ClCompile>
@@ -117,8 +111,32 @@
     <ClCompile Include="boost_syf.cpp">
       <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
+    <ClCompile Include="biblioteki.cpp">
+      <Filter>Pliki źródłowe\Inne</Filter>
+    </ClCompile>
+    <ClCompile Include="inventory.cpp">
+      <Filter>Pliki źródłowe\Inne</Filter>
+    </ClCompile>
     <ClCompile Include="trade_tab.cpp">
+      <Filter>Pliki źródłowe\Inne</Filter>
+    </ClCompile>
+    <ClCompile Include="trade.cpp">
+      <Filter>Pliki źródłowe\Inne</Filter>
+    </ClCompile>
+    <ClCompile Include="chest.cpp">
+      <Filter>Pliki źródłowe\Inne</Filter>
+    </ClCompile>
+    <ClCompile Include="items.cpp">
+      <Filter>Pliki źródłowe\Inne</Filter>
+    </ClCompile>
+    <ClCompile Include="sleep.cpp">
+      <Filter>Pliki źródłowe\Funkcje</Filter>
+    </ClCompile>
+    <ClCompile Include="mobki1.cpp">
       <Filter>Pliki źródłowe\Postaci</Filter>
+    </ClCompile>
+    <ClCompile Include="tabelka.cpp">
+      <Filter>Pliki źródłowe\Inne</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,16 +161,10 @@
     <ClInclude Include="level_up.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
-    <ClInclude Include="biblioteki.h">
-      <Filter>Pliki nagłówkowe\Funkcje</Filter>
-    </ClInclude>
     <ClInclude Include="quest.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
     <ClInclude Include="save.h">
-      <Filter>Pliki nagłówkowe\Funkcje</Filter>
-    </ClInclude>
-    <ClInclude Include="tabelka.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
     <ClInclude Include="zakres.h">
@@ -200,16 +212,31 @@
     <ClInclude Include="szpital.h">
       <Filter>Pliki nagłówkowe\Miejsca</Filter>
     </ClInclude>
-    <ClInclude Include="inventory.h">
-      <Filter>Pliki nagłówkowe\Postaci</Filter>
-    </ClInclude>
-    <ClInclude Include="trade.h">
+    <ClInclude Include="boost_syf.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
-    <ClInclude Include="trade_tab.h">
-      <Filter>Pliki nagłówkowe\Postaci</Filter>
+    <ClInclude Include="inventory.h">
+      <Filter>Pliki nagłówkowe\Inne</Filter>
     </ClInclude>
-    <ClInclude Include="boost_syf.h">
+    <ClInclude Include="trade_tab.h">
+      <Filter>Pliki nagłówkowe\Inne</Filter>
+    </ClInclude>
+    <ClInclude Include="biblioteki.h">
+      <Filter>Pliki nagłówkowe\Inne</Filter>
+    </ClInclude>
+    <ClInclude Include="trade.h">
+      <Filter>Pliki nagłówkowe\Inne</Filter>
+    </ClInclude>
+    <ClInclude Include="chest.h">
+      <Filter>Pliki nagłówkowe\Inne</Filter>
+    </ClInclude>
+    <ClInclude Include="items.h">
+      <Filter>Pliki nagłówkowe\Inne</Filter>
+    </ClInclude>
+    <ClInclude Include="tabelka.h">
+      <Filter>Pliki nagłówkowe\Inne</Filter>
+    </ClInclude>
+    <ClInclude Include="sleep.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
   </ItemGroup>

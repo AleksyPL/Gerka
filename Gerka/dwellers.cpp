@@ -1,8 +1,8 @@
 #include "dwellers.h"
-#include "koniec_tury.h"
 #include "jedzenie.h"
 #include "boost_syf.h"
 #include "level_up.h"
+#include "sleep.h"
 
 
 dweller::dweller()
@@ -151,30 +151,10 @@ void barman::gossip()
 		system("PAUSE");
 		system("cls");
 	}
-void barman::sleep(player &gracz)
-	{
-		if (gracz.gold < ceny[1])
-		{
-			no_money();
-		}
-		else
-		{
-			cout << "Karczmarz ma wolny pokoj" << endl;
-			cout << "Pokoj jest twoj" << endl;
-			if (gracz.hp < gracz.max_hp)
-			{
-				cout << "Regenerujesz swoje si³y" << endl;
-				gracz.hp = gracz.hp + (0.05*gracz.hp);
-			}
-			gracz.gold = gracz.gold - ceny[1];
-			if (gracz.hp > gracz.max_hp)
-			{
-				gracz.hp = gracz.max_hp;
-			}
-			end_of_turn(gracz);
-		}
-		system("PAUSE");
-	}
+void barman::give_room(player &gracz)
+{
+	sleep(gracz,ceny[1],1);
+}
 void barman::sell_food(player &gracz, int ilosc)
 	{
 		eat_food(gracz, ceny[2], 2);
@@ -1927,13 +1907,26 @@ void alchemist::show_image()
 	plik.close();
 	sound_alchemy();
 }
+void alchemist::buy_new_level_potion(player &gracz)
+{
+	if (gracz.gold > (gracz.level * 100))
+	{
+		cout << "KUPI£EŒ MIKSTURÊ NOWEGO POZIOMU" << endl;
+		gracz.add_usage_item("Mikstura nowego poziomu", (gracz.level * 100), 1);
+		show_image();
+	}
+	else
+	{
+		no_money();
+	}
+	system("PAUSE");
+}
 void alchemist::buy_hp_potion(player &gracz)
 {
 	if (gracz.gold > ceny[1])
 	{
 		cout << "KUPI£EŒ MIKSTURÊ ZDROWIA" << endl;
-		gracz.hp_potion = gracz.hp_potion + 1;
-		gracz.gold = gracz.gold - ceny[1];
+		gracz.add_usage_item("Mikstura ¿ycia", ceny[1], 1);
 		show_image();
 	}
 	else
@@ -2440,5 +2433,644 @@ void doctor::remove_nerf(player &gracz, int tryb)
 		system("PAUSE");
 		break;
 	}
+	}
+}
+chest::chest()
+{
+	for (int i = 0; i < 60; i++)
+	{
+		menu[i] = "";
+		menu_amount[i] = 0;
+	}
+}
+int chest::count_free_fields_usage()
+{
+	int licznik = 0;
+	for (int i = 0; i < 20; i++)
+	{
+		if (menu[i] == "" && menu_amount[i] == 0)
+		{
+			licznik++;
+		}
+	}
+	return licznik;
+}
+int chest::count_free_fields_alchemy()
+{
+	int licznik = 0;
+	for (int i = 0; i < 20; i++)
+	{
+		if (menu[20 + i] == "" && menu_amount[20 + i] == 0)
+		{
+			licznik++;
+		}
+	}
+	return licznik;
+}
+int chest::count_free_fields_forge()
+{
+	int licznik = 0;
+	for (int i = 0; i < 20; i++)
+	{
+		if (menu[40 + i] == "" && menu_amount[40 + i] == 0)
+		{
+			licznik++;
+		}
+	}
+	return licznik;
+}
+int chest::is_in_chest_usage(player gracz,string nazwa)
+{
+	for (int i = 0; i < 20; i++)
+	{
+		if (menu[i]==nazwa)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+}
+int chest::find_free_usage_index()
+{
+	for (int i = 0; i < 20; i++)
+	{
+		if (menu[i] == "")
+		{
+			return i;
+		}
+	}
+}
+int chest::find_selected_usage_index(string nazwa)
+{
+	for (int i = 0; i < 20; i++)
+	{
+		if (menu[i] == nazwa)
+		{
+			return i;
+		}
+	}
+}
+int chest::is_in_chest_alchemy(player gracz, string nazwa)
+{
+	for (int i = 0; i < 20; i++)
+	{
+		if (menu[20 + i] == nazwa)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+}
+int chest::find_free_alchemy_index()
+{
+	for (int i = 0; i < 20; i++)
+	{
+		if (menu[20 + i] == "")
+		{
+			return (20 + i);
+		}
+	}
+}
+int chest::find_selected_alchemy_index(string nazwa)
+{
+	for (int i = 0; i < 20; i++)
+	{
+		if (menu[20 + i] == nazwa)
+		{
+			return (20 + i);
+		}
+	}
+}
+int chest::is_in_chest_forge(player gracz, string nazwa)
+{
+	for (int i = 0; i < 20; i++)
+	{
+		if (menu[40 + i] == nazwa)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+}
+int chest::find_free_forge_index()
+{
+	for (int i = 0; i < 20; i++)
+	{
+		if (menu[40 + i] == "")
+		{
+			return (40 + i);
+		}
+	}
+}
+int chest::find_selected_forge_index(string nazwa)
+{
+	for (int i = 0; i < 20; i++)
+	{
+		if (menu[40 + i] == nazwa)
+		{
+			return (40 + i);
+		}
+	}
+}
+void chest::sort_usage()
+{
+	for (int i = 0; i < 20; i++)
+	{
+		if (menu[i] != "")
+		{
+			continue;
+		}
+		else
+		{
+			for (int j = i + 1; j < 20; j++)
+			{
+				if (menu[j] != "")
+				{
+					menu[i] = menu[j];
+					menu_amount[i] = menu_amount[j];
+					menu[j] = "";
+					menu_amount[j] = 0;
+					break;
+				}
+			}
+		}
+	}
+}
+void chest::sort_alchemy()
+{
+	for (int i = 0; i < 20; i++)
+	{
+		if (menu[20 + i] != "")
+		{
+			continue;
+		}
+		else
+		{
+			for (int j = i + 1; j < 20; j++)
+			{
+				if (menu[20 + j] != "")
+				{
+					menu[20 + i] = menu[20 + j];
+					menu_amount[20 + i] = menu_amount[20 + j];
+					menu[20 + j] = "";
+					menu_amount[20 + j] = 0;
+					break;
+				}
+			}
+		}
+	}
+}
+void chest::sort_forge()
+{
+	for (int i = 0; i < 20; i++)
+	{
+		if (menu[40 + i] != "")
+		{
+			continue;
+		}
+		else
+		{
+			for (int j = i + 1; j < 20; j++)
+			{
+				if (menu[40 + j] != "")
+				{
+					menu[40 + i] = menu[40 + j];
+					menu_amount[40 + i] = menu_amount[40 + j];
+					menu[40 + j] = "";
+					menu_amount[40 + j] = 0;
+					break;
+				}
+			}
+		}
+	}
+}
+void chest::move_to_player(int numer,player &gracz)
+{
+	numer = numer - 1;
+	if (numer < 20)
+	{
+		if (gracz.count_free_fields_usage() == 0)
+		{
+			cout << "Nie mo¿esz przenieœæ tego przedmiotu do ekwipunku gdy¿ jest pe³ny!" << endl;
+			system("PAUSE");
+		}
+		else if (menu[numer] == "")
+		{
+			cout << "To miejsce w skrzyni jest puste!" << endl;
+			system("PAUSE");
+		}
+		else
+		{
+			if (menu_amount[numer] > 1)
+			{
+				cout << "W skrzyni wiêcej ni¿ jeden przedmiot tego typu (" << menu[numer] << "), ile z nich chcesz przenieœæ do ekwipunku?" << endl;
+				cout << "Ile: ";
+				int ile;
+				cin >> ile;
+				while (cin.fail() || ile<0 || ile>menu_amount[numer])
+				{
+					cout << "Ile: ";
+					cin.clear();
+					cin.ignore(256, '\n');
+					cin >> ile;
+				}
+				menu_amount[numer] = menu_amount[numer] - ile;
+				gracz.add_usage_item(menu[numer], 0,ile, 1);
+				if (menu_amount[numer] == 0)
+				{
+					menu[numer] = "";
+					sort_usage();
+				}
+			}
+			else
+			{
+				menu_amount[numer]--;
+				gracz.add_usage_item(menu[numer], 0,1, 1);
+				if (menu_amount[numer] == 0)
+				{
+					menu[numer] = "";
+					sort_usage();
+				}
+			}
+		}
+	}
+	else if (numer < 40 && numer > 19)
+	{
+		if (gracz.count_free_fields_alchemy() == 0)
+		{
+			cout << "Nie mo¿esz przenieœæ tego przedmiotu do ekwipunku gdy¿ jest pe³ny!" << endl;
+			system("PAUSE");
+		}
+		else if (menu[numer] == "")
+		{
+			cout << "To miejsce w skrzyni jest puste!" << endl;
+			system("PAUSE");
+		}
+		else
+		{
+			if (menu_amount[numer] > 1)
+			{
+				cout << "W skrzyni wiêcej ni¿ jeden przedmiot tego typu (" << menu[numer] << "), ile z nich chcesz przenieœæ do ekwipunku?" << endl;
+				cout << "Ile: ";
+				int ile;
+				cin >> ile;
+				while (cin.fail() || ile<0 || ile>menu_amount[numer])
+				{
+					cout << "Ile: ";
+					cin.clear();
+					cin.ignore(256, '\n');
+					cin >> ile;
+				}
+				menu_amount[numer] = menu_amount[numer] - ile;
+				gracz.add_crafting_alchemy_item(menu[numer], 0, ile, 1);
+				if (menu_amount[numer] == 0)
+				{
+					menu[numer] = "";
+					sort_alchemy();
+				}
+			}
+			else
+			{
+				menu_amount[numer]--;
+				gracz.add_crafting_alchemy_item(menu[numer], 0, 1, 1);
+				if (menu_amount[numer] == 0)
+				{
+					menu[numer] = "";
+					sort_alchemy();
+				}
+			}
+		}
+	}
+	else if (numer > 39)
+	{
+		if (gracz.count_free_fields_forge() == 0)
+		{
+			cout << "Nie mo¿esz przenieœæ tego przedmiotu do ekwipunku gdy¿ jest pe³ny!" << endl;
+			system("PAUSE");
+		}
+		else if (menu[numer] == "")
+		{
+			cout << "To miejsce w skrzyni jest puste!" << endl;
+			system("PAUSE");
+		}
+		else
+		{
+			if (menu_amount[numer] > 1)
+			{
+				cout << "W skrzyni wiêcej ni¿ jeden przedmiot tego typu (" << menu[numer] << "), ile z nich chcesz przenieœæ do ekwipunku?" << endl;
+				cout << "Ile: ";
+				int ile;
+				cin >> ile;
+				while (cin.fail() || ile<0 || ile>menu_amount[numer])
+				{
+					cout << "Ile: ";
+					cin.clear();
+					cin.ignore(256, '\n');
+					cin >> ile;
+				}
+				menu_amount[numer] = menu_amount[numer] - ile;
+				gracz.add_crafting_forge_item(menu[numer], 0, ile, 1);
+				if (menu_amount[numer] == 0)
+				{
+					menu[numer] = "";
+					sort_forge();
+				}
+			}
+			else
+			{
+				menu_amount[numer]--;
+				gracz.add_crafting_forge_item(menu[numer], 0, 1, 1);
+				if (menu_amount[numer] == 0)
+				{
+					menu[numer] = "";
+					sort_forge();
+				}
+			}
+		}
+	}
+}
+void chest::move_to_chest(int numer,player &gracz)
+{
+	numer = numer - 1;
+	if (numer < 20)
+	{
+		if (count_free_fields_usage() == 0)
+		{
+			cout << "Nie mo¿esz przenieœæ tego przedmiotu do skrzyni gdy¿ jest pe³na!" << endl;
+			system("PAUSE");
+		}
+		else if (gracz.inventory_usage[numer] == "")
+		{
+			cout << "To miejsce w twoim ekwipunku jest puste!" << endl;
+			system("PAUSE");
+		}
+		else
+		{
+			if (is_in_chest_usage(gracz, gracz.inventory_usage[numer]) == 1)
+			{
+				if (gracz.inventory_usage_amount[numer] > 1)
+				{
+					cout << "Masz wiêcej ni¿ jeden przedmiot tego typu (" << gracz.inventory_usage_amount[numer] << "), ile z nich chcesz przenieœæ do skrzyni?" << endl;
+					cout << "Ile: ";
+					int ile;
+					cin >> ile;
+					while (cin.fail() || ile<0 || ile>gracz.inventory_usage_amount[numer])
+					{
+						cout << "Ile: ";
+						cin.clear();
+						cin.ignore(256, '\n');
+						cin >> ile;
+					}
+					gracz.inventory_usage_amount[numer] = gracz.inventory_usage_amount[numer] - ile;
+					menu_amount[find_selected_usage_index(gracz.inventory_usage[numer])] = menu_amount[find_selected_usage_index(gracz.inventory_usage[numer])] + ile;
+					if (gracz.inventory_usage_amount[numer] == 0)
+					{
+						gracz.inventory_usage[numer] = "";
+						gracz.inventory_usage_price[numer] = 0;
+						gracz.sort_usage_backpack();
+					}
+				}
+				else
+				{
+					gracz.inventory_usage_amount[numer]--;
+					menu_amount[find_selected_usage_index(gracz.inventory_usage[numer])]++;
+					if (gracz.inventory_usage_amount[numer] == 0)
+					{
+						gracz.inventory_usage[numer] = "";
+						gracz.inventory_usage_price[numer] = 0;
+						gracz.sort_usage_backpack();
+					}
+				}
+			}
+			else
+			{
+				if (gracz.inventory_usage_amount[numer] > 1)
+				{
+					cout << "Masz wiêcej ni¿ jeden przedmiot tego typu (" << gracz.inventory_usage_amount[numer] << "), ile z nich chcesz przenieœæ do skrzyni?" << endl;
+					cout << "Ile: ";
+					int ile;
+					cin >> ile;
+					while (cin.fail() || ile<0 || ile>gracz.inventory_usage_amount[numer])
+					{
+						cout << "Ile: ";
+						cin.clear();
+						cin.ignore(256, '\n');
+						cin >> ile;
+					}
+					gracz.inventory_usage_amount[numer] = gracz.inventory_usage_amount[numer] - ile;
+					menu_amount[find_free_usage_index()] = menu_amount[find_free_usage_index()] + ile;
+					menu[find_free_usage_index()] = gracz.inventory_usage[numer];
+					if (gracz.inventory_usage_amount[numer] == 0)
+					{
+						gracz.inventory_usage[numer] = "";
+						gracz.inventory_usage_price[numer] = 0;
+						gracz.sort_usage_backpack();
+					}
+				}
+				else
+				{
+					gracz.inventory_usage_amount[numer]--;
+					menu_amount[find_free_usage_index()]++;
+					menu[find_free_usage_index()] = gracz.inventory_usage[numer];
+					if (gracz.inventory_usage_amount[numer] == 0)
+					{
+						gracz.inventory_usage[numer] = "";
+						gracz.inventory_usage_price[numer] = 0;
+						gracz.sort_usage_backpack();
+					}
+				}
+			}
+		}
+	}
+	else if (numer < 40 && numer >19)
+	{
+		numer = numer - 20;
+		if (count_free_fields_alchemy() == 0)
+		{
+			cout << "Nie mo¿esz przenieœæ tego przedmiotu do skrzyni gdy¿ jest pe³na!" << endl;
+			system("PAUSE");
+		}
+		else if (gracz.inventory_crafting[numer] == "")
+		{
+			cout << "To miejsce w twoim ekwipunku jest puste!" << endl;
+			system("PAUSE");
+		}
+		else
+		{
+			if (is_in_chest_alchemy(gracz, gracz.inventory_crafting[numer]) == 1)
+			{
+				if (gracz.inventory_crafting_amount[numer] > 1)
+				{
+					cout << "Masz wiêcej ni¿ jeden przedmiot tego typu (" << gracz.inventory_crafting_amount[numer] << "), ile z nich chcesz przenieœæ do skrzyni?" << endl;
+					cout << "Ile: ";
+					int ile;
+					cin >> ile;
+					while (cin.fail() || ile<0 || ile>gracz.inventory_crafting_amount[numer])
+					{
+						cout << "Ile: ";
+						cin.clear();
+						cin.ignore(256, '\n');
+						cin >> ile;
+					}
+					gracz.inventory_crafting_amount[numer] = gracz.inventory_crafting_amount[numer] - ile;
+					menu_amount[find_selected_alchemy_index(gracz.inventory_crafting[numer])] = menu_amount[find_selected_alchemy_index(gracz.inventory_crafting[numer])] + ile;
+					if (gracz.inventory_crafting_amount[numer] == 0)
+					{
+						gracz.inventory_crafting[numer] = "";
+						gracz.inventory_crafting_price[numer] = 0;
+						gracz.sort_crafting_alchemy_backpack();
+					}
+				}
+				else
+				{
+					gracz.inventory_crafting_amount[numer]--;
+					menu_amount[find_selected_alchemy_index(gracz.inventory_crafting[numer])]++;
+					if (gracz.inventory_crafting_amount[numer] == 0)
+					{
+						gracz.inventory_crafting[numer] = "";
+						gracz.inventory_crafting_price[numer] = 0;
+						gracz.sort_crafting_alchemy_backpack();
+					}
+				}
+			}
+			else
+			{
+				if (gracz.inventory_crafting_amount[numer] > 1)
+				{
+					cout << "Masz wiêcej ni¿ jeden przedmiot tego typu (" << gracz.inventory_crafting_amount[numer] << "), ile z nich chcesz przenieœæ do skrzyni?" << endl;
+					cout << "Ile: ";
+					int ile;
+					cin >> ile;
+					while (cin.fail() || ile<0 || ile>gracz.inventory_crafting_amount[numer])
+					{
+						cout << "Ile: ";
+						cin.clear();
+						cin.ignore(256, '\n');
+						cin >> ile;
+					}
+					gracz.inventory_crafting_amount[numer] = gracz.inventory_crafting_amount[numer] - ile;
+					menu_amount[find_free_alchemy_index()] = menu_amount[find_free_alchemy_index()] + ile;
+					menu[find_free_alchemy_index()] = gracz.inventory_crafting[numer];
+					if (gracz.inventory_crafting_amount[numer] == 0)
+					{
+						gracz.inventory_crafting[numer] = "";
+						gracz.inventory_crafting_price[numer] = 0;
+						gracz.sort_crafting_alchemy_backpack();
+					}
+				}
+				else
+				{
+					gracz.inventory_crafting_amount[numer]--;
+					menu_amount[find_free_alchemy_index()]++;
+					menu[find_free_alchemy_index()] = gracz.inventory_crafting[numer];
+					if (gracz.inventory_crafting_amount[numer] == 0)
+					{
+						gracz.inventory_crafting[numer] = "";
+						gracz.inventory_crafting_price[numer] = 0;
+						gracz.sort_crafting_alchemy_backpack();
+					}
+				}
+			}
+		}
+	}
+	else if(numer >39)
+	{
+		numer = numer - 20;
+		if (count_free_fields_forge() == 0)
+		{
+			cout << "Nie mo¿esz przenieœæ tego przedmiotu do skrzyni gdy¿ jest pe³na!" << endl;
+			system("PAUSE");
+		}
+		else if (gracz.inventory_crafting[20 + numer] == "")
+		{
+			cout << "To miejsce w twoim ekwipunku jest puste!" << endl;
+			system("PAUSE");
+		}
+		else
+		{
+			if (is_in_chest_forge(gracz, gracz.inventory_crafting[20 + numer]) == 1)
+			{
+				if (gracz.inventory_crafting_amount[20 + numer] > 1)
+				{
+					cout << "Masz wiêcej ni¿ jeden przedmiot tego typu (" << gracz.inventory_crafting_amount[20 + numer] << "), ile z nich chcesz przenieœæ do skrzyni?" << endl;
+					cout << "Ile: ";
+					int ile;
+					cin >> ile;
+					while (cin.fail() || ile<0 || ile>gracz.inventory_crafting_amount[20 + numer])
+					{
+						cout << "Ile: ";
+						cin.clear();
+						cin.ignore(256, '\n');
+						cin >> ile;
+					}
+					gracz.inventory_crafting_amount[20 + numer] = gracz.inventory_crafting_amount[20 + numer] - ile;
+					menu_amount[find_selected_forge_index(gracz.inventory_crafting[20 + numer])] = menu_amount[find_selected_forge_index(gracz.inventory_crafting[20 + numer])] + ile;
+					if (gracz.inventory_crafting_amount[20 + numer] == 0)
+					{
+						gracz.inventory_crafting[20 + numer] = "";
+						gracz.inventory_crafting_price[20 + numer] = 0;
+						gracz.sort_crafting_forge_backpack();
+					}
+				}
+				else
+				{
+					gracz.inventory_crafting_amount[20 + numer]--;
+					menu_amount[find_selected_forge_index(gracz.inventory_crafting[20 + numer])]++;
+					if (gracz.inventory_crafting_amount[20 + numer] == 0)
+					{
+						gracz.inventory_crafting[20 + numer] = "";
+						gracz.inventory_crafting_price[20 + numer] = 0;
+						gracz.sort_crafting_forge_backpack();
+					}
+				}
+			}
+			else
+			{
+				if (gracz.inventory_crafting_amount[20 + numer] > 1)
+				{
+					cout << "Masz wiêcej ni¿ jeden przedmiot tego typu (" << gracz.inventory_crafting_amount[20 + numer] << "), ile z nich chcesz przenieœæ do skrzyni?" << endl;
+					cout << "Ile: ";
+					int ile;
+					cin >> ile;
+					while (cin.fail() || ile<0 || ile>gracz.inventory_crafting_amount[20 + numer])
+					{
+						cout << "Ile: ";
+						cin.clear();
+						cin.ignore(256, '\n');
+						cin >> ile;
+					}
+					gracz.inventory_crafting_amount[20 + numer] = gracz.inventory_crafting_amount[20 + numer] - ile;
+					menu_amount[find_free_forge_index()] = menu_amount[find_free_forge_index()] + ile;
+					menu[find_free_forge_index()] = gracz.inventory_crafting[20 + numer];
+					if (gracz.inventory_crafting_amount[20 + numer] == 0)
+					{
+						gracz.inventory_crafting[20 + numer] = "";
+						gracz.inventory_crafting_price[20 + numer] = 0;
+						gracz.sort_crafting_forge_backpack();
+					}
+				}
+				else
+				{
+					gracz.inventory_crafting_amount[20 + numer]--;
+					menu_amount[find_free_forge_index()]++;
+					menu[find_free_forge_index()] = gracz.inventory_crafting[20 + numer];
+					if (gracz.inventory_crafting_amount[20 + numer] == 0)
+					{
+						gracz.inventory_crafting[20 + numer] = "";
+						gracz.inventory_crafting_price[20 + numer] = 0;
+						gracz.sort_crafting_forge_backpack();
+					}
+				}
+			}
+		}
 	}
 }

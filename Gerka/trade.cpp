@@ -8,10 +8,11 @@ player trade_mode(player &gracz, seller &handlarz, table &menu)
 	{
 		menu.check_info_boxes();
 		menu.check_free_fields();
-		tab_trade(gracz, handlarz, menu);
+		tab_trade(gracz, handlarz, menu,menu.strona_1,menu.strona_2);
 		cout << "Twój wybór to: ";
 		string wyb;
 		cin >> wyb;
+		wyb = string_tolower(wyb);
 		switch (wyb[0])
 		{
 		case '1':
@@ -461,25 +462,9 @@ player trade_mode(player &gracz, seller &handlarz, table &menu)
 				break;
 			}
 		}
-		case 'W':
-		{
-			if (menu.exit_trade_mode() == 1)
-			{
-				return gracz;
-			}
-			else
-			{
-				break;
-			}
-		}
 		case 'n':
 		{
 			menu.switch_page_next(gracz,handlarz,wyb);
-			break;
-		}
-		case 'N':
-		{
-			menu.switch_page_next(gracz, handlarz, wyb);
 			break;
 		}
 		case 'p':
@@ -487,18 +472,9 @@ player trade_mode(player &gracz, seller &handlarz, table &menu)
 			menu.switch_page_previous(gracz, handlarz, wyb);
 			break;
 		}
-		case 'P':
-		{
-			menu.switch_page_previous(gracz, handlarz, wyb);
-			break;
-		}
 		case 'z':
 		{
 			menu.accept_transaction(gracz,handlarz);
-			break;
-		}
-		case 'Z':
-		{
 			break;
 		}
 		default:

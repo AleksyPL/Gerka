@@ -5,11 +5,13 @@
 #include "karty.h"
 #include "seksik.h"
 #include "level_up.h"
+#include "chest.h"
+#include "sleep.h"
 
 void drunked(player &gracz)
 {
-
 	cout << "JESTEŒ TAK PIJANY ,¯E ZASYPIASZ W KARCZMIE!!!" << endl;
+	system("PAUSE");
 	robbery(gracz);
 	end_of_turn(gracz);
 }
@@ -39,11 +41,12 @@ void robbery(player &gracz)
 	}
 	else
 	{
-		cout << "BEZPIECZNIE PRZESYPIASZ NOC" << endl;
+		cout << "Bezpiecznie przesypiasz noc" << endl;
 	}
+	system("PAUSE");
 }
 
-void flirting(player &gracz)
+void flirting(player &gracz,string info)
 {
 	srand((unsigned int)time(NULL));
 	int sukces = rand() % 100;
@@ -130,12 +133,8 @@ void flirting(player &gracz)
 			{
 				case '1':
 				{
-					have_sex(gracz,0);
-					cout << "Przesypiasz bezpiecznie noc" << endl;
-					system("PAUSE");
-					end_of_turn(gracz);
-					gracz.hp = gracz.hp + 10;
-					range(gracz);
+					have_sex(gracz,0,info);
+					sleep(gracz, 0);
 					break;
 				}
 				case '2':
@@ -159,7 +158,7 @@ void flirting(player &gracz)
 	}
 }
 
-player enter_tavern(player gracz,barman bobby)
+player enter_tavern(player gracz,barman bobby, chest &krzynka)
 {
 	int tryb = 0;
 	while (1)
@@ -171,7 +170,7 @@ player enter_tavern(player gracz,barman bobby)
 		}
 		system("cls");
 		string info[8];
-		string menu[100];
+		string menu[60];
 		long ceny[20]; 
 
 		//glowne staty 23 znaki
@@ -276,7 +275,7 @@ player enter_tavern(player gracz,barman bobby)
 			/* 3*/menu[42] = "PROWOKUJ WALKÊ";
 			/* 4*/menu[43] = "SZUKAJ DRU¯YNY";
 			/* 5*/menu[44] = "PODRYWAJ DZIEWCZYNY";
-			/* 6*/menu[45] = "";
+			/* 6*/menu[45] = "PRZECHOWAJ PRZEDMIOTY W SKRZYNI";
 			/* 7*/menu[46] = "";
 			/* 8*/menu[47] = "";
 			/* 9*/menu[48] = "";
@@ -313,7 +312,7 @@ player enter_tavern(player gracz,barman bobby)
 			ceny[19] = 0;
 			info[0] = "TAWERNA";
 			info[1] = "W: WRÓÆ NA RYNEK";
-			info[2] = "M: MIKSTURA ¯YCIA";
+			info[2] = "";
 			info[3] = "";
 			info[4] = "";
 			info[5] = "";
@@ -321,55 +320,6 @@ player enter_tavern(player gracz,barman bobby)
 			info[7] = "";
 		}
 
-		/* 1*/menu[60] = "MIKSTURY ¯YCIA:";
-		/* 2*/menu[61] = "MIKSTURY SI£Y:";
-		/* 3*/menu[62] = "MIKSTURY ZRÊCZNOŒCI:";
-		/* 4*/menu[63] = "MIKSTURY INTELIGENCJI:";
-		/* 5*/menu[64] = "MIKSTURY CHARYZMY:";
-		/* 6*/menu[65] = "MIKSTURY SZCZÊŒCIA:";
-		/* 7*/menu[66] = "";
-		/* 8*/menu[67] = "";
-		/* 9*/menu[68] = "";
-		/*10*/menu[69] = "";
-		/*11*/menu[70] = "";
-		/*12*/menu[71] = "";
-		/*13*/menu[72] = "";
-		/*14*/menu[73] = "";
-		/*15*/menu[74] = "";
-		/*16*/menu[75] = "";
-		/*17*/menu[76] = "";
-		/*18*/menu[77] = "";
-		/*19*/menu[78] = "";
-		/*20*/menu[79] = "";
-
-		/* 1*/menu[80] = to_string(gracz.hp_potion);
-		/* 2*/menu[81] = to_string(gracz.str_potion);
-		/* 3*/menu[82] = to_string(gracz.agility_potion);
-		/* 4*/menu[83] = to_string(gracz.intel_potion);
-		/* 5*/menu[84] = to_string(gracz.charisma_potion);
-		/* 6*/menu[85] = to_string(gracz.luck_potion);
-		/* 7*/menu[86] = "";
-		/* 8*/menu[87] = "";
-		/* 9*/menu[88] = "";
-		/*10*/menu[89] = "";
-		/*11*/menu[90] = "";
-		/*12*/menu[91] = "";
-		/*13*/menu[92] = "";
-		/*14*/menu[93] = "";
-		/*15*/menu[94] = "";
-		/*16*/menu[95] = "";
-		/*17*/menu[96] = "";
-		/*18*/menu[97] = "";
-		/*19*/menu[98] = "";
-		/*20*/menu[99] = "";
-
-		/*for (int i = 0; i < 20; i++)
-		{
-			if (gracz.inventory[i] != "")
-			{
-				menu[60 + i] = gracz.inventory[i] + " x" + to_string(gracz.inventory_amount[i]);
-			}
-		}*/
 
 		for (int i = 0; i < 20; i++)
 		{
@@ -386,7 +336,7 @@ player enter_tavern(player gracz,barman bobby)
 		cout << "Twoj wybor to: ";
 		string wyb;
 		cin >> wyb;
-		
+		wyb = string_tolower(wyb);
 		switch (wyb[0])
 		{
 		case '1':
@@ -410,7 +360,7 @@ player enter_tavern(player gracz,barman bobby)
 			}
 			else
 			{
-				bobby.sleep(gracz);
+				bobby.give_room(gracz);
 			}
 			break;
 		}
@@ -443,7 +393,7 @@ player enter_tavern(player gracz,barman bobby)
 		{
 			if (tryb == 0)
 			{
-				flirting(gracz);
+				flirting(gracz,info[0]);
 			}
 			else
 			{
@@ -451,31 +401,17 @@ player enter_tavern(player gracz,barman bobby)
 			}
 			break;
 		}
-		case 'M':
+		case '6':
 		{
-			gracz.use_hp_potion();
+			if (tryb == 0)
+			{
+				enter_chest_mode(gracz,krzynka);
+			}
+			else
+			{
+				;
+			}
 			break;
-		}
-		case 'm':
-		{
-			gracz.use_hp_potion();
-			break;
-		}
-		case 'W':
-		{
-			if (gracz.alko == 10 && tryb == 0)
-			{
-				drunked(gracz);
-			}
-			else if (tryb == 0)
-			{
-				return gracz;
-			}
-			else if (tryb == 1)
-			{
-				tryb = 0;
-				break;
-			}
 		}
 		case 'w':
 		{

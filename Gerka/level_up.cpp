@@ -4,30 +4,30 @@
 
 void level_up(player &gracz,int tryb)
 {
+	if (gracz.counter_nerf_str != 0)
+	{
+		remove_nerf_str(gracz);
+	}
+	if (gracz.counter_nerf_agility != 0)
+	{
+		remove_nerf_agility(gracz);
+	}
+	if (gracz.counter_nerf_intel != 0)
+	{
+		remove_nerf_intel(gracz);
+	}
+	if (gracz.counter_nerf_luck != 0)
+	{
+		remove_nerf_luck(gracz);
+	}
+	if (gracz.counter_nerf_charisma != 0)
+	{
+		remove_nerf_charisma(gracz);
+	}
 	if (tryb == 1)
 	{
-		if (gracz.counter_nerf_str != 0)
-		{
-			remove_nerf_str(gracz);
-		}
-		if (gracz.counter_nerf_agility != 0)
-		{
-			remove_nerf_agility(gracz);
-		}
-		if (gracz.counter_nerf_intel != 0)
-		{
-			remove_nerf_intel(gracz);
-		}
-		if (gracz.counter_nerf_luck != 0)
-		{
-			remove_nerf_luck(gracz);
-		}
-		if (gracz.counter_nerf_charisma != 0)
-		{
-			remove_nerf_charisma(gracz);
-		}
 		cout << "AWANSUJESZ NA " << gracz.level + 1 << " POZIOM" << endl;
-		gracz.exp_to_next_level = gracz.exp_to_next_level * 2;
+		gracz.exp_to_next_level = gracz.level * 1000;
 		gracz.level = gracz.level + 1;
 		gracz.hp = gracz.max_hp + 10;
 		gracz.max_hp = gracz.hp;
@@ -39,7 +39,8 @@ void level_up(player &gracz,int tryb)
 			cout << "1. SI£A" << endl;
 			cout << "2. ZRÊCZNOŒÆ" << endl;
 			cout << "3. INTELIGENCJA" << endl;
-			cout << "4. SZCZÊŒCIE" << endl;
+			cout << "4. CHARYZMA" << endl;
+			cout << "5. SZCZÊŒCIE" << endl;
 			cout << "Twoj wybor to: ";
 			cin >> wyb_statystyki;
 			switch (wyb_statystyki[0])
@@ -47,25 +48,31 @@ void level_up(player &gracz,int tryb)
 			case '1':
 			{
 				cout << endl << "DODANO JEDEN PUNKT DO SI£Y" << endl;
-				gracz.str = gracz.str + 1;
+				gracz.str++;
 				break;
 			}
 			case '2':
 			{
 				cout << endl << "DODANO JEDEN PUNKT DO ZRÊCZNOŒCI" << endl;
-				gracz.agility = gracz.agility + 1;
+				gracz.agility++;
 				break;
 			}
 			case '3':
 			{
 				cout << endl << "DODANO JEDEN PUNKT DO INTELIGENCJI" << endl;
-				gracz.intel = gracz.intel + 1;
+				gracz.intel++;
 				break;
 			}
 			case '4':
 			{
+				cout << endl << "DODANO JEDEN PUNKT DO CHARYZMY" << endl;
+				gracz.charisma++;
+				break;
+			}
+			case '5':
+			{
 				cout << endl << "DODANO JEDEN PUNKT DO SZCZÊŒCIA" << endl;
-				gracz.luck = gracz.luck + 1;
+				gracz.luck++;
 				break;
 			}
 			default:
@@ -82,29 +89,9 @@ void level_up(player &gracz,int tryb)
 	{
 		while (gracz.exp >= gracz.exp_to_next_level)
 		{
-			if (gracz.counter_nerf_str != 0)
-			{
-				remove_nerf_str(gracz);
-			}
-			if (gracz.counter_nerf_agility != 0)
-			{
-				remove_nerf_agility(gracz);
-			}
-			if (gracz.counter_nerf_intel != 0)
-			{
-				remove_nerf_intel(gracz);
-			}
-			if (gracz.counter_nerf_luck != 0)
-			{
-				remove_nerf_luck(gracz);
-			}
-			if (gracz.counter_nerf_charisma != 0)
-			{
-				remove_nerf_charisma(gracz);
-			}
 			cout << "AWANSUJESZ NA " << gracz.level + 1 << " POZIOM" << endl;
 			gracz.exp = gracz.exp - gracz.exp_to_next_level;
-			gracz.exp_to_next_level = gracz.exp_to_next_level * 2;
+			gracz.exp_to_next_level = gracz.level * 1000;
 			gracz.level = gracz.level + 1;
 			gracz.hp = gracz.max_hp + 10;
 			gracz.max_hp = gracz.hp;
@@ -116,7 +103,8 @@ void level_up(player &gracz,int tryb)
 				cout << "1. SI£A" << endl;
 				cout << "2. ZRÊCZNOŒÆ" << endl;
 				cout << "3. INTELIGENCJA" << endl;
-				cout << "4. SZCZÊŒCIE" << endl;
+				cout << "4. CHARYZMA" << endl;
+				cout << "5. SZCZÊŒCIE" << endl;
 				cout << "Twoj wybor to: ";
 				cin >> wyb_statystyki;
 				switch (wyb_statystyki)
@@ -124,25 +112,31 @@ void level_up(player &gracz,int tryb)
 				case '1':
 				{
 					cout << endl << "DODANO JEDEN PUNKT DO SI£Y" << endl;
-					gracz.str = gracz.str + 1;
+					gracz.str++;
 					break;
 				}
 				case '2':
 				{
 					cout << endl << "DODANO JEDEN PUNKT DO ZRÊCZNOŒCI" << endl;
-					gracz.agility = gracz.agility + 1;
+					gracz.agility++;
 					break;
 				}
 				case '3':
 				{
 					cout << endl << "DODANO JEDEN PUNKT DO INTELIGENCJI" << endl;
-					gracz.intel = gracz.intel + 1;
+					gracz.intel++;
 					break;
 				}
 				case '4':
 				{
+					cout << endl << "DODANO JEDEN PUNKT DO CHARYZMY" << endl;
+					gracz.charisma++;
+					break;
+				}
+				case '5':
+				{
 					cout << endl << "DODANO JEDEN PUNKT DO SZCZÊŒCIA" << endl;
-					gracz.luck = gracz.luck + 1;
+					gracz.luck++;
 					break;
 				}
 				default:

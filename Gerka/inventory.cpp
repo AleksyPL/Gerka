@@ -1,56 +1,59 @@
 #include "inventory.h"
 #include "tabelka.h"
 #include "level_up.h"
+#include "items.h"
 
-void print_option(string item)
+void print_option(string nazwa, int ilosc)
 {
-	cout << "Co chcesz zrobiæ z przedmiotem " << item << " ?" << endl;
+	cout << "Co chcesz zrobiæ z przedmiotem " << nazwa << " (" << ilosc << ") ?"<< endl;
 	cout << "1. U¿yj" << endl;
 	cout << "2. Wyrzuæ" << endl;
-	cout << "3. Opuœæ menu wyboru" << endl;
+	cout << "3. Informacje o przedmiocie" << endl;
+	cout << "4. Opuœæ menu wyboru" << endl;
 	cout << "Twój wybór to: ";
 }
-
-player what_to_do(player &gracz,string menu[60], int menu_amount[60], string info[7],int i)
+void do_operation(player &gracz,string nazwa, int ilosc, string info[8])
 {
-	if (i == 40)
+	if (ilosc > 0)
 	{
-		if (menu[40] != "")
+		int tryb = 0;
+		do
 		{
-			while (1)
+			print_option(nazwa, ilosc);
+			string wyb;
+			cin >> wyb;
+			switch (wyb[0])
 			{
-				print_option(menu[40]);
-				string wyb;
-				cin >> wyb;
-				switch (wyb[0])
-				{
-				case '1':
-				{
-					gracz.use_hp_potion();
-					return gracz;
-				}
-				case '2':
-				{
-					gracz.drop_hp_potion();
-					return gracz;
-				}
-				case '3':
-				{
-					return gracz;
-				}
-				default:
-				{
-					system("cls");
-					tab_items(gracz, menu, menu_amount, info);
-				}
-				}
+			case '1':
+			{
+				use_item(nazwa,1,gracz,info[0]);
+				tryb = 1;
+				break;
 			}
-			
-		}
-		else
-		{
-			cout << "BRAK PRZEDMIOTU" << endl;
-		}
+			case '2':
+			{
+				use_item(nazwa, 2, gracz,info[0]);
+				tryb = 1;
+				break;
+			}
+			case '3':
+			{
+				use_item(nazwa, 3, gracz,info[0]);
+				tryb = 1;
+				break;
+			}
+			case '4':
+			{
+				tryb = 1;
+				break;
+			}
+			default:
+			{
+				system("cls");
+				tab_items(gracz, info);
+			}
+			}
+		} while (tryb == 0);
 	}
 }
 player enter_inventory(player &gracz)
@@ -59,113 +62,463 @@ player enter_inventory(player &gracz)
 	{
 		level_up(gracz);
 		system("cls");
-		string menu[100];
-		int menu_amount[60];
-		string info[7];
-		info[0] = "";
-		info[1] = "";
-		info[2] = "W: WYJD Z EKWIP.";
+		string menu[40];
+		string info[8];
+		info[0] = "EKWIPUNEK";
+		info[1] = "W: WYJD Z EKWIP.";
+		info[2] = "";
 		info[3] = "";
 		info[4] = "";
 		info[5] = "";
 		info[6] = "";
-		for (int i = 0; i < 20; i++)
-		{
-			if (gracz.inventory_usage[i] == "" && gracz.inventory_usage_amount[i] == 0)
-			{
-				menu[i] = "";
-				menu_amount[i] = 0;
-			}
-			else
-			{
-				menu[i] = gracz.inventory_usage[i];
-				menu_amount[i] = gracz.inventory_usage_amount[i];
-			}
-			if (gracz.inventory_crafting[i] == "" && gracz.inventory_crafting_amount[i] == 0)
-			{
-				menu[20 + i] = "";
-				menu_amount[20 + i] = 0;
-			}
-			else
-			{
-				menu[20 + i] = gracz.inventory_crafting[i];
-				menu_amount[20 + i] = gracz.inventory_crafting_amount[i];
-			}
-			if (gracz.inventory_crafting[20 + i] == "" && gracz.inventory_crafting_amount[20 + i] == 0)
-			{
-				menu[40 + i] = "";
-				menu_amount[40 + i] = 0;
-			}
-			else
-			{
-				menu[40 + i] = gracz.inventory_crafting[20 + i];
-				menu_amount[40 + i] = gracz.inventory_crafting_amount[20 + i];
-			}
-		}
-		{
-			if (gracz.count_free_fields_usage() == 20)
-			{
-				menu[0] = "BRAK PRZEDMIOTÓW";
-			}
-			if (gracz.count_free_fields_alchemy() == 20)
-			{
-				menu[20] = "BRAK PRZEDMIOTÓW ALCHEMICZNYCH";
-			}
-			if (gracz.count_free_fields_forge() == 20)
-			{
-				menu[40] = "BRAK PRZEDMIOTÓW KOWALSKICH";
-			}
-		}
-		/* 1*/menu[60] = "PUNKTY HE£MU";
-		/* 2*/menu[61] = "PUNKTY NAPIERŒNIKA";
-		/* 3*/menu[62] = "PUNKTY RÊKAWIC";
-		/* 4*/menu[63] = "PUNKTY SPODNI";
-		/* 5*/menu[64] = "PUNKTY BUTÓW";
-		/* 6*/menu[65] = "NAZWA BRONI";
-		/* 7*/menu[66] = "OBRA¯ENIA BRONI";
-		/* 8*/menu[67] = "";
-		/* 9*/menu[68] = "";
-		/*10*/menu[69] = "";
-		/*11*/menu[70] = "";
-		/*12*/menu[71] = "";
-		/*13*/menu[72] = "";
-		/*14*/menu[73] = "";
-		/*15*/menu[74] = "";
-		/*16*/menu[75] = "";
-		/*17*/menu[76] = "";
-		/*18*/menu[77] = "";
-		/*19*/menu[78] = "";
-		/*20*/menu[79] = "";
-
-		/* 1*/menu[80] = to_string(gracz.helmet);
-		/* 2*/menu[81] = to_string(gracz.chestplate);
-		/* 3*/menu[82] = to_string(gracz.gloves);
-		/* 4*/menu[83] = to_string(gracz.pants);
-		/* 5*/menu[84] = to_string(gracz.shoes);
-		/* 6*/menu[85] = gracz.weapon_name;
-		/* 7*/menu[86] = to_string(gracz.weapon);
-		/* 8*/menu[87] = "";
-		/* 9*/menu[88] = "";
-		/*10*/menu[89] = "";
-		/*11*/menu[90] = "";
-		/*12*/menu[91] = "";
-		/*13*/menu[92] = "";
-		/*14*/menu[93] = "";
-		/*15*/menu[94] = "";
-		/*16*/menu[95] = "";
-		/*17*/menu[96] = "";
-		/*18*/menu[97] = "";
-		/*19*/menu[98] = "";
-		/*20*/menu[99] = "";
-		tab_items(gracz,menu, menu_amount,info);
+		info[6] = "";
+		tab_items(gracz,info);
 		cout << "Twój wybór to: ";
 		string wyb;
 		cin >> wyb;
+		wyb = string_tolower(wyb);
 		switch (wyb[0])
 		{
-		case 'W':
+		case '1':
 		{
-			return gracz;
+			if (wyb.size() == 1)
+			{
+				do_operation(gracz, gracz.inventory_usage[0], gracz.inventory_usage_amount[0], info);
+				break;
+			}
+			else if (wyb[1] == '0')
+			{
+				break;
+			}
+			else if (wyb[1] == '1')
+			{
+				break;
+			}
+			else if (wyb[1] == '2')
+			{
+				break;
+			}
+			else if (wyb[1] == '3')
+			{
+				break;
+			}
+			else if (wyb[1] == '4')
+			{
+				break;
+			}
+			else if (wyb[1] == '5')
+			{
+				break;
+			}
+			else if (wyb[1] == '6')
+			{
+				break;
+			}
+			else if (wyb[1] == '7')
+			{
+				break;
+			}
+			else if (wyb[1] == '8')
+			{
+				break;
+			}
+			else if (wyb[1] == '9')
+			{
+				break;
+			}
+			break;
+		}
+		case '2':
+		{
+			if (wyb.size() == 1)
+			{
+				do_operation(gracz, gracz.inventory_usage[1], gracz.inventory_usage_amount[1], info);
+				break;
+			}
+			else if (wyb[1] == '0')
+			{
+				break;
+			}
+			else if (wyb[1] == '1')
+			{
+				break;
+			}
+			else if (wyb[1] == '2')
+			{
+				break;
+			}
+			else if (wyb[1] == '3')
+			{
+				break;
+			}
+			else if (wyb[1] == '4')
+			{
+				break;
+			}
+			else if (wyb[1] == '5')
+			{
+				break;
+			}
+			else if (wyb[1] == '6')
+			{
+				break;
+			}
+			else if (wyb[1] == '7')
+			{
+				break;
+			}
+			else if (wyb[1] == '8')
+			{
+				break;
+			}
+			else if (wyb[1] == '9')
+			{
+				break;
+			}
+			break;
+		}
+		case '3':
+		{
+			if (wyb.size() == 1)
+			{
+				do_operation(gracz, gracz.inventory_usage[2], gracz.inventory_usage_amount[2], info);
+				break;
+			}
+			else if (wyb[1] == '0')
+			{
+				break;
+			}
+			else if (wyb[1] == '1')
+			{
+				break;
+			}
+			else if (wyb[1] == '2')
+			{
+				break;
+			}
+			else if (wyb[1] == '3')
+			{
+				break;
+			}
+			else if (wyb[1] == '4')
+			{
+				break;
+			}
+			else if (wyb[1] == '5')
+			{
+				break;
+			}
+			else if (wyb[1] == '6')
+			{
+				break;
+			}
+			else if (wyb[1] == '7')
+			{
+				break;
+			}
+			else if (wyb[1] == '8')
+			{
+				break;
+			}
+			else if (wyb[1] == '9')
+			{
+				break;
+			}
+			break;
+		}
+		case '4':
+		{
+			if (wyb.size() == 1)
+			{
+				do_operation(gracz, gracz.inventory_usage[3], gracz.inventory_usage_amount[3], info);
+				break;
+			}
+			else if (wyb[1] == '0')
+			{
+				break;
+			}
+			else if (wyb[1] == '1')
+			{
+				break;
+			}
+			else if (wyb[1] == '2')
+			{
+				break;
+			}
+			else if (wyb[1] == '3')
+			{
+				break;
+			}
+			else if (wyb[1] == '4')
+			{
+				break;
+			}
+			else if (wyb[1] == '5')
+			{
+				break;
+			}
+			else if (wyb[1] == '6')
+			{
+				break;
+			}
+			else if (wyb[1] == '7')
+			{
+				break;
+			}
+			else if (wyb[1] == '8')
+			{
+				break;
+			}
+			else if (wyb[1] == '9')
+			{
+				break;
+			}
+			break;
+		}
+		case '5':
+		{
+			if (wyb.size() == 1)
+			{
+				do_operation(gracz, gracz.inventory_usage[4], gracz.inventory_usage_amount[4], info);
+				break;
+			}
+			else if (wyb[1] == '0')
+			{
+				break;
+			}
+			else if (wyb[1] == '1')
+			{
+				break;
+			}
+			else if (wyb[1] == '2')
+			{
+				break;
+			}
+			else if (wyb[1] == '3')
+			{
+				break;
+			}
+			else if (wyb[1] == '4')
+			{
+				break;
+			}
+			else if (wyb[1] == '5')
+			{
+				break;
+			}
+			else if (wyb[1] == '6')
+			{
+				break;
+			}
+			else if (wyb[1] == '7')
+			{
+				break;
+			}
+			else if (wyb[1] == '8')
+			{
+				break;
+			}
+			else if (wyb[1] == '9')
+			{
+				break;
+			}
+			break;
+		}
+		case '6':
+		{
+			if (wyb.size() == 1)
+			{
+				do_operation(gracz, gracz.inventory_usage[5], gracz.inventory_usage_amount[5], info);
+				break;
+			}
+			else if (wyb[1] == '0')
+			{
+				break;
+			}
+			else if (wyb[1] == '1')
+			{
+				break;
+			}
+			else if (wyb[1] == '2')
+			{
+				break;
+			}
+			else if (wyb[1] == '3')
+			{
+				break;
+			}
+			else if (wyb[1] == '4')
+			{
+				break;
+			}
+			else if (wyb[1] == '5')
+			{
+				break;
+			}
+			else if (wyb[1] == '6')
+			{
+				break;
+			}
+			else if (wyb[1] == '7')
+			{
+				break;
+			}
+			else if (wyb[1] == '8')
+			{
+				break;
+			}
+			else if (wyb[1] == '9')
+			{
+				break;
+			}
+			break;
+		}
+		case '7':
+		{
+			if (wyb.size() == 1)
+			{
+				do_operation(gracz, gracz.inventory_usage[6], gracz.inventory_usage_amount[6], info);
+				break;
+			}
+			else if (wyb[1] == '0')
+			{
+				break;
+			}
+			else if (wyb[1] == '1')
+			{
+				break;
+			}
+			else if (wyb[1] == '2')
+			{
+				break;
+			}
+			else if (wyb[1] == '3')
+			{
+				break;
+			}
+			else if (wyb[1] == '4')
+			{
+				break;
+			}
+			else if (wyb[1] == '5')
+			{
+				break;
+			}
+			else if (wyb[1] == '6')
+			{
+				break;
+			}
+			else if (wyb[1] == '7')
+			{
+				break;
+			}
+			else if (wyb[1] == '8')
+			{
+				break;
+			}
+			else if (wyb[1] == '9')
+			{
+				break;
+			}
+			break;
+		}
+		case '8':
+		{
+			if (wyb.size() == 1)
+			{
+				do_operation(gracz, gracz.inventory_usage[7], gracz.inventory_usage_amount[7], info);
+				break;
+			}
+			else if (wyb[1] == '0')
+			{
+				break;
+			}
+			else if (wyb[1] == '1')
+			{
+				break;
+			}
+			else if (wyb[1] == '2')
+			{
+				break;
+			}
+			else if (wyb[1] == '3')
+			{
+				break;
+			}
+			else if (wyb[1] == '4')
+			{
+				break;
+			}
+			else if (wyb[1] == '5')
+			{
+				break;
+			}
+			else if (wyb[1] == '6')
+			{
+				break;
+			}
+			else if (wyb[1] == '7')
+			{
+				break;
+			}
+			else if (wyb[1] == '8')
+			{
+				break;
+			}
+			else if (wyb[1] == '9')
+			{
+				break;
+			}
+			break;
+		}
+		case '9':
+		{
+			if (wyb.size() == 1)
+			{
+				do_operation(gracz, gracz.inventory_usage[8], gracz.inventory_usage_amount[8], info);
+				break;
+			}
+			else if (wyb[1] == '0')
+			{
+				break;
+			}
+			else if (wyb[1] == '1')
+			{
+				break;
+			}
+			else if (wyb[1] == '2')
+			{
+				break;
+			}
+			else if (wyb[1] == '3')
+			{
+				break;
+			}
+			else if (wyb[1] == '4')
+			{
+				break;
+			}
+			else if (wyb[1] == '5')
+			{
+				break;
+			}
+			else if (wyb[1] == '6')
+			{
+				break;
+			}
+			else if (wyb[1] == '7')
+			{
+				break;
+			}
+			else if (wyb[1] == '8')
+			{
+				break;
+			}
+			else if (wyb[1] == '9')
+			{
+				break;
+			}
+			break;
 		}
 		case 'w':
 		{

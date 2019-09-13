@@ -8,6 +8,7 @@
 #include<cstdlib>
 #include<locale.h>
 #include<algorithm>
+#include<cctype>
 
 using std::cin;
 using std::cout;
@@ -16,6 +17,7 @@ using std::string;
 using std::fstream;
 using std::ios;
 using std::to_string;
+using std::transform;
 
 void sound_drums();
 void sound_damage();
@@ -33,5 +35,8 @@ void sound_cheat_activated();
 void sound_game_over();
 void sound_stop();
 void sound_no_money();
+void sound_drop_item();
+void sound_rejection();
 void no_money();
 void change_color(int num);
+string string_tolower(string data);

@@ -8,6 +8,10 @@ player enter_cheat_menu(player gracz)
 {
 	while (1)
 	{
+		if (gracz.hp <= 0)
+		{
+			return gracz;
+		}
 		range(gracz);
 		level_up(gracz);
 		system("cls");
@@ -15,7 +19,7 @@ player enter_cheat_menu(player gracz)
 		string info[8];
 		info[0] = "CHEAT MENU";
 		info[1] = "W: WRÓÆ NA RYNEK";
-		info[2] = "M: MIKSTURA ¯YCIA";
+		info[2] = "";
 		info[3] = "";
 		info[4] = "";
 		info[5] = "";
@@ -115,6 +119,7 @@ player enter_cheat_menu(player gracz)
 		cout << "Twój wybór to: ";
 		string wyb;
 		cin >> wyb;
+		wyb = string_tolower(wyb);
 		switch (wyb[0])
 		{
 		case '1':
@@ -244,11 +249,6 @@ player enter_cheat_menu(player gracz)
 			gracz.level = numer;
 			sound_cheat_activated();
 			break;
-		}
-		case 'W':
-		{
-			sound_stop();
-			return gracz;
 		}
 		case 'w':
 		{

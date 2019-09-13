@@ -64,6 +64,14 @@ void sound_no_money()
 {
 	PlaySound(TEXT("./wav/no_money.wav"), NULL, SND_ASYNC);
 }
+void sound_drop_item()
+{
+	PlaySound(TEXT("./wav/drop_item.wav"), NULL, SND_ASYNC);
+}
+void sound_rejection()
+{
+	PlaySound(TEXT("./wav/no.wav"), NULL, SND_ASYNC);
+}
 void no_money()
 {
 	sound_no_money();
@@ -90,4 +98,9 @@ void change_color(int num)
 	//13 - jasnopurpurowy
 	//14 - jasno¿ó³ty
 	//15 - jaskrawobia³y
+}
+string string_tolower(string data)
+{
+	transform(data.begin(), data.end(), data.begin(), tolower);
+	return data;
 }

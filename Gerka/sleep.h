@@ -2,4 +2,4 @@
 #include "biblioteki.h"
 #include "player.h"
 
-void have_sex(player &gracz, int cena,string info);
+void sleep(player &gracz, int cena, int tryb = 1);
