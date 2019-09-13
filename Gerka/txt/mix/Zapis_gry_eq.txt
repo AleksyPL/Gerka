@@ -1,15 +1,3 @@
-Ilosc mikstur lecz¹cych
-5
-Ilosc mikstur si³y
-0
-Ilosc mikstur zrêcznoœci
-0
-Ilosc mikstur inteligencji
-0
-Ilosc mikstur charyzmy
-0
-Ilosc mikstur szczêœcia
-0
 Punkty he³mu
 0
 Punkty napierœnika

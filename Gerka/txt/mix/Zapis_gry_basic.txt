@@ -3,7 +3,7 @@ aleksy
 Poziom gracza
 100
 Ilosc z³ota
-99999499
+99999498
 Punkty ¿ycia
 50
 Max punktów ¿ycia

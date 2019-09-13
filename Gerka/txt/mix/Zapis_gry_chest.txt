@@ -1,9 +1,9 @@
 Przedmiot u퓓tkowy numer 1
-Durexy
-5
+Talerz
+3
 Przedmiot u퓓tkowy numer 2
-Mikstura 퓓cia
-4
+
+0
 Przedmiot u퓓tkowy numer 3
 
 0
@@ -59,8 +59,8 @@ Przedmiot u퓓tkowy numer 20
 
 0
 Przedmiot rzemie쐋niczy alchemiczny numer 1
-Kwiatek
-3
+
+0
 Przedmiot rzemie쐋niczy alchemiczny numer 2
 
 0

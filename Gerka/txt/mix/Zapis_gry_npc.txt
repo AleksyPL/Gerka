@@ -12,7 +12,7 @@ Handlarz - punkty reputacji
 Handlarz - punkty reputacji do nastêpnego poziomu
 0
 Handlarz - iloœæ z³ota
-5000Kowal - poziom reputacji
+0Kowal - poziom reputacji
 0
 Kowal - punkty reputacji
 0
