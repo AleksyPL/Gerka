@@ -1,33 +1,37 @@
 Nazwa postaci
-aleksy
+Aleksy
 Poziom gracza
-100
+1
 Ilosc z³ota
-99999498
+99999999959
 Punkty ¿ycia
-50
+80
 Max punktów ¿ycia
-50
+80
 Punkty si³y
-6
+5
 Punkty zrêcznoœci
-6
+5
 Punkty inteligencji
-6
+5
 Punkty szczêœcia
 5
 Punkty charyzmy
 5
 Punkty najedzenia
-10
+9
 Punkty upojenia alkoholowego
 0
 Punkty doœwiadczenia
 0
 Punkty doœwiadczenia do nastêpnego poziomu
-50
+1000
 Licznik dnia
-1
+2
+Aktualny czas - godznia
+14
+Aktualny czas - minuta
+57
 Zadanie
 
 Umiejêtnoœæ
