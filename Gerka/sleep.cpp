@@ -1,8 +1,8 @@
 #include "sleep.h"
-#include "koniec_tury.h"
 #include "zakres.h"
+#include "czas.h"
 
-void sleep(player &gracz, int cena, int tryb)
+void sleep(player &gracz, int cena,int hours, int minutes)
 {
 	if (gracz.gold < cena)
 	{
@@ -10,23 +10,33 @@ void sleep(player &gracz, int cena, int tryb)
 	}
 	else
 	{
-		if (tryb == 0)
+		if (gracz.hunger < 5)
 		{
-			cout << "Karczmarz prowadzi ciê do wolnego pokoju" << endl;
+			cout << "Jesteœ zbyt g³ody by zasn¹æ" << endl;
 		}
-		cout << "Przesypiasz bezpiecznie noc" << endl;
-		if (gracz.hp < gracz.max_hp)
+		else
 		{
-			cout << "Regenerujesz swoje si³y" << endl;
-			gracz.hp = gracz.hp + (0.05*gracz.hp);
+			if (minutes == 0)
+			{
+				cout << "Bezpiecznie przesypiasz " << hours << " godzin" << endl;
+			}
+			else
+			{
+				cout << "Bezpiecznie przesypiasz " << hours << " godzin i " << minutes << " minut" << endl;
+			}
+			if (gracz.hp < gracz.max_hp)
+			{
+				cout << "Regenerujesz swoje si³y" << endl;
+				gracz.hp = gracz.hp + (0.05*gracz.hp);
+			}
+			gracz.gold = gracz.gold - cena;
+			if (gracz.hp > gracz.max_hp)
+			{
+				gracz.hp = gracz.max_hp;
+			}
+			change_time(gracz, hours, minutes);
+			range(gracz);
 		}
-		gracz.gold = gracz.gold - cena;
-		if (gracz.hp > gracz.max_hp)
-		{
-			gracz.hp = gracz.max_hp;
-		}
-		end_of_turn(gracz);
-		range(gracz);
 	}
 	system("PAUSE");
 }

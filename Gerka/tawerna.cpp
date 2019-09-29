@@ -1,19 +1,20 @@
 #include "tawerna.h"
 #include "tabelka.h"
 #include "zakres.h"
-#include "koniec_tury.h"
+#include "czas.h"
 #include "karty.h"
 #include "seksik.h"
 #include "level_up.h"
 #include "chest.h"
 #include "sleep.h"
+#include "wait.h"
 
 void drunked(player &gracz)
 {
 	cout << "JESTEŒ TAK PIJANY ,¯E ZASYPIASZ W KARCZMIE!!!" << endl;
 	system("PAUSE");
 	robbery(gracz);
-	end_of_turn(gracz);
+	change_time(gracz, 8, 0);
 }
 
 void robbery(player &gracz)
@@ -134,7 +135,7 @@ void flirting(player &gracz,string info)
 				case '1':
 				{
 					have_sex(gracz,0,info);
-					sleep(gracz, 0);
+					sleep(gracz, 0,8,0);
 					break;
 				}
 				case '2':
@@ -160,6 +161,7 @@ void flirting(player &gracz,string info)
 
 player enter_tavern(player gracz,barman bobby, chest &krzynka)
 {
+	change_time(gracz, 0, 5);
 	int tryb = 0;
 	while (1)
 	{
@@ -312,7 +314,7 @@ player enter_tavern(player gracz,barman bobby, chest &krzynka)
 			ceny[19] = 0;
 			info[0] = "TAWERNA";
 			info[1] = "W: WRÓÆ NA RYNEK";
-			info[2] = "";
+			info[2] = "C: CZEKAJ";
 			info[3] = "";
 			info[4] = "";
 			info[5] = "";
@@ -343,11 +345,12 @@ player enter_tavern(player gracz,barman bobby, chest &krzynka)
 		{
 			if (tryb == 0)
 			{
+				change_time(gracz, 0, 1);
 				tryb = 1;
 			}
 			else
 			{
-				bobby.gossip();
+				bobby.gossip(gracz);
 			}
 			break;
 		}
@@ -413,19 +416,27 @@ player enter_tavern(player gracz,barman bobby, chest &krzynka)
 			}
 			break;
 		}
+		case 'c':
+		{
+			gracz = wait_n_hours(gracz);
+			break;
+		}
 		case 'w':
 		{
 			if (gracz.alko == 10 && tryb == 0)
 			{
 				drunked(gracz);
+				break;
 			}
 			else if (tryb == 0)
 			{
+				change_time(gracz, 0, 5);
 				return gracz;
 			}
 			else if (tryb == 1)
 			{
 				tryb = 0;
+				change_time(gracz, 0, 1);
 				break;
 			}
 		}

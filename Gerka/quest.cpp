@@ -1,44 +1,61 @@
 #include "quest.h"
 
-Quest::Quest(std::string var1) : __file_name("./Quest/")
+void change_flags(barman &bobby,string name)
 {
-	sfile_name(gfile_name() + var1);
-	__quest_file.open(gfile_name(), std::ifstream::in);
-	set_tmp(__quest_file.get());
-	while (__quest_file.good())
+	if (name == "BARMAN")
 	{
-		squest_text(gquest_text()+get_tmp());
-		set_tmp(__quest_file.get());
+		int help = bobby.quest_info();
+		bobby.quest_set(help + 1);
 	}
-	__quest_file.close();
 }
-
-//Quest::~Quest()
+void reject_guest_giving()
+{
+	sound_rejection();
+	fancy_text("Ju¿ wykonujesz jakieœ zadanie");
+}
+int dialog_box()
+{
+	while (1)
+	{
+		cout << "Czy zrobisz to?" << endl;
+		cout << "1. Tak" << endl;
+		cout << "2. Nie" << endl;
+		cout << "Twój wybór to: ";
+		string wyb;
+		cin >> wyb;
+		switch (wyb[0])
+		{
+		case '1':
+		{
+			return 1;
+		}
+		case '2':
+		{
+			return 0;
+		}
+		default:
+		{
+			system("cls");
+			break;
+		}
+		}
+	}
+}
+void give_quest_shaman(player &gracz)
+{
+	
+}
+//void return_quest_shaman(player gracz, shaman szaman)
 //{
-//	delete __quest_text;
+//	if (gracz.quest_compl == 1)
+//	{
+//		if (szaman.quest_info == 0)
+//		{
+//			fancy_text("Zadanie zakoñczone");
+//		}
+//	}
+//	else
+//	{
+//		fancy_text("Nie mo¿esz jeszcze zwróciæ zadania");
+//	}
 //}
-
-void Quest::sfile_name(std::string file_name)
-{
-	__file_name = file_name;
-}
-std::string Quest::gfile_name()
-{
-	return __file_name;
-}
-void Quest::set_tmp(char tmp)
-{
-	__tmp = tmp;
-}
-char Quest::get_tmp()
-{
-	return __tmp;
-}
-void Quest::squest_text(std::string quest_text)
-{
-	__quest_text = quest_text;
-}
-std::string Quest::gquest_text()
-{
-	return __quest_text;
-}

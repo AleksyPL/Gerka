@@ -74,7 +74,7 @@ void tab(player gracz, string info[8], string menu[60], long ceny[20])
 	system("cls");
 	string pom1;
 	int pomoc_lokacja;
-	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
+	cout << "X-----------------------------------------X----------------------------------X----------------------------------X----------------------------------X" << endl;
 	{
 		cout << "|";
 		pom1 = "~~STATYSTYKI POSTACI~~";
@@ -84,17 +84,41 @@ void tab(player gracz, string info[8], string menu[60], long ceny[20])
 	{
 		cout << "|";
 		pom1 = "~~DZIEŃ " + to_string(gracz.licznik_dnia) + "~~";
-		pomoc_lokacja = 52 - pom1.length();
+		pomoc_lokacja = 34 - pom1.length();
+		draw_on_center(pomoc_lokacja, pom1);
+	}
+	{
+		cout << "|";
+		string timer = "";
+		if (gracz.hour < 10)
+		{
+			timer = "0" + to_string(gracz.hour);
+		}
+		else
+		{
+			timer = to_string(gracz.hour);
+		}
+		timer = timer + ":";
+		if (gracz.minute < 10)
+		{
+			timer = timer + "0" + to_string(gracz.minute);
+		}
+		else
+		{
+			timer = timer + to_string(gracz.minute);
+		}
+		pom1 = "~~" + timer + "~~";
+		pomoc_lokacja = 34 - pom1.length();
 		draw_on_center(pomoc_lokacja, pom1);
 	}
 	{
 		cout << "|";
 		pom1 = "~~ZŁOTO: " + to_string(gracz.gold) + "~~";
-		pomoc_lokacja = 51 - pom1.length();
+		pomoc_lokacja = 34 - pom1.length();
 		draw_on_center(pomoc_lokacja, pom1);
 	}
 	cout << "|" << endl;
-	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
+	cout << "X-----------------------------------------X----------------------------------X----------------------------------X----------------------------------X" << endl;
 	{
 		cout << "|";
 		string name0 = "IMIĘ POSTACI";
@@ -140,7 +164,7 @@ void tab(player gracz, string info[8], string menu[60], long ceny[20])
 		int how_long1 = 18 - name1.length();
 		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
 	}
-	cout << "X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
+	cout << "X--------------------------------------------------------------------------------------------------------X" << endl;
 	{
 		cout << "|";
 		string name0 = "PUNKTY ŻYCIA";
@@ -193,7 +217,7 @@ void tab(player gracz, string info[8], string menu[60], long ceny[20])
 		int how_long1 = 18 - name1.length();
 		draw_to_right_with_parameter_and_space_before(name0, how_long0, name1, how_long1);
 	}
-	cout << "X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
+	cout << "X--------------------------------------------------------------------------------------------------------X" << endl;
 	{
 		cout << "|";
 		string name0 = "RANGA POSTACI";
@@ -209,7 +233,7 @@ void tab(player gracz, string info[8], string menu[60], long ceny[20])
 		draw_on_center(pomoc_lokacja, pom1);
 	}
 	cout << "|" << endl;
-	cout << "X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X" << endl;
+	cout << "X-----------------------------------------X--------------------------------------------------------------------------------------------------------X" << endl;
 	for (int i = 0; i < 20; i++)
 	{
 		if (menu[i] != "" || menu[20 + i] != "" || menu[40 + i] != "")
@@ -321,7 +345,7 @@ void tab(player gracz, string info[8], string menu[60], long ceny[20])
 			cout << "|" << endl;
 		}
 	}
-	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
+	cout << "X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X" << endl;
 	{
 		cout << "| " << info[1];
 		pomoc_lokacja = 19 - info[1].length();
@@ -358,7 +382,7 @@ void tab(player gracz, string info[8], string menu[60], long ceny[20])
 		draw_spaces(pomoc_lokacja);
 	}
 	cout << "|"<<endl;
-	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
+	cout << "X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X" << endl;
 }
 void tab_items(player gracz, string info[8])
 {

@@ -40,3 +40,6 @@ void sound_rejection();
 void no_money();
 void change_color(int num);
 string string_tolower(string data);
+void print_info_box_from_file(string text);
+void print_info_box_from_string(string text);
+void fancy_text(string text);

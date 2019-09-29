@@ -2,12 +2,28 @@
 #include "tabelka.h"
 #include "level_up.h"
 #include "alchemik.h"
+#include "czas.h"
+#include "wait.h"
 
 player enter_laboratory(player gracz,alchemist alchemik)
 {
+	change_time(gracz, 0, 5);
+	if (gracz.hour >= 20 || gracz.hour <6)
+	{
+		system("cls");
+		print_info_box_from_file("Lab_closed");
+		change_time(gracz, 0, 5);
+		return gracz;
+	}
 	int tryb = 0;
 	while (1)
 	{
+		if (gracz.hour >= 20 || gracz.hour < 6)
+		{
+			print_info_box_from_string("Musisz ju¿ iœæ, zamykamy");
+			change_time(gracz, 0, 5);
+			return gracz;
+		}
 		if (gracz.hp <= 0)
 		{
 			return gracz;
@@ -157,7 +173,7 @@ player enter_laboratory(player gracz,alchemist alchemik)
 			ceny[19] = 0;
 			info[0] = "LABORATORIUM";
 			info[1] = "W: WRÓÆ NA RYNEK";
-			info[2] = "";
+			info[2] = "C: CZEKAJ";
 			info[3] = "";
 			info[4] = "";
 			info[5] = "";
@@ -189,6 +205,7 @@ player enter_laboratory(player gracz,alchemist alchemik)
 			if (tryb == 0)
 			{
 				tryb = 1;
+				change_time(gracz, 0, 1);
 			}
 			else
 			{
@@ -209,15 +226,22 @@ player enter_laboratory(player gracz,alchemist alchemik)
 			}
 			break;
 		}
+		case 'c':
+		{
+			gracz = wait_n_hours(gracz,20);
+			break;
+		}
 		case 'w':
 		{
 			if (tryb == 0)
 			{
+				change_time(gracz, 0, 5);
 				return gracz;
 			}
 			else if (tryb == 1)
 			{
 				tryb = 0;
+				change_time(gracz, 0, 1);
 				break;
 			}
 		}

@@ -2,9 +2,12 @@
 #include "zakres.h"
 #include "szpital.h"
 #include "level_up.h"
+#include "czas.h"
+#include "wait.h"
 
 player enter_hospital(player gracz, doctor lekarz)
 {
+	change_time(gracz, 0, 5);
 	int tryb = 0;
 	while (1)
 	{
@@ -158,7 +161,7 @@ player enter_hospital(player gracz, doctor lekarz)
 			ceny[19] = 0;
 			info[0] = "SZPITAL";
 			info[1] = "W: WRÓÆ NA RYNEK";
-			info[2] = "";
+			info[2] = "C: CZEKAJ";
 			info[3] = "";
 			info[4] = "";
 			info[5] = "";
@@ -190,6 +193,7 @@ player enter_hospital(player gracz, doctor lekarz)
 		{
 			if (tryb == 0)
 			{
+				change_time(gracz, 0, 1);
 				tryb = 1;
 			}
 			else
@@ -270,15 +274,22 @@ player enter_hospital(player gracz, doctor lekarz)
 			}
 			break;
 		}
+		case 'c':
+		{
+			gracz = wait_n_hours(gracz);
+			break;
+		}
 		case 'w':
 		{
 			if (tryb == 0)
 			{
+				change_time(gracz, 0, 5);
 				return gracz;
 			}
 			else if (tryb == 1)
 			{
 				tryb = 0;
+				change_time(gracz, 0, 1);
 				break;
 			}
 		}

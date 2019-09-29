@@ -12,6 +12,7 @@
 #include "inventory.h"
 #include "level_up.h"
 #include "tabelka.h"
+#include "wait.h"
 
 
 int ui(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist alchemik,shaman szaman, doctor lekarz, chest krzynka)
@@ -31,7 +32,7 @@ int ui(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist a
 		info[1] = "W: WRÓÆ DO MENU";
 		info[2] = "Z: ZAPISZ GRÊ";
 		info[3] = "E: EKWIPUNEK";
-		info[4] = "";
+		info[4] = "C: CZEKAJ";
 		info[5] = "";
 		info[6] = "";
 		info[7] = "";
@@ -187,6 +188,11 @@ int ui(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist a
 		case 'e':
 		{
 			gracz = enter_inventory(gracz);
+			break;
+		}
+		case 'c':
+		{
+			gracz = wait_n_hours(gracz);
 			break;
 		}
 		case 'w':

@@ -32,8 +32,10 @@ void save(player gracz,barman bobby,seller handlarz,blacksmith kowal, alchemist 
 			plik << "Punkty doœwiadczenia" << endl << gracz.exp << endl;//25-26
 			plik << "Punkty doœwiadczenia do nastêpnego poziomu" << endl << gracz.exp_to_next_level << endl;//27-28
 			plik << "Licznik dnia" << endl << gracz.licznik_dnia << endl;//29-30
-			plik << "Zadanie" << endl << gracz.quest << endl;//31-32
-			plik << "Umiejêtnoœæ" << endl << gracz.skill;//33-34
+			plik << "Aktualny czas - godznia" << endl << gracz.hour << endl;//31-32
+			plik << "Aktualny czas - minuta" << endl << gracz.minute << endl;//33-34
+			plik << "Zadanie" << endl << gracz.quest << endl;//35-36
+			plik << "Umiejêtnoœæ" << endl << gracz.skill;//37-38
 			plik.close();
 			remove("./txt/mix/Zapis_gry_eq.txt");
 			plik.open("./txt/mix/Zapis_gry_eq.txt", ios::out);

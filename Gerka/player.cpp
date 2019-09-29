@@ -16,13 +16,14 @@ player::player()
 	gold = 0;
 	licznik_dnia = 1;
 	quest = "";
+	quest_compl = 0;
 	helmet = 0;
 	chestplate = 0;
 	gloves = 0;
 	pants = 0;
 	shoes = 0;
-	weapon = 5;
-	weapon_name = "SZTYLET";
+	weapon = 1;
+	weapon_name = "PIÊŒCI";
 	skill = "";
 	hunger = 10;
 	pseudonym = "";
@@ -47,6 +48,8 @@ player::player()
 	before_nerf_charisma = 0;
 	before_boost_charisma = 0;
 	alko = 0;
+	hour = 6;
+	minute = 0;
 	for (int i = 0; i < 20; i++)
 	{
 		inventory_usage[i] = "";
@@ -58,6 +61,28 @@ player::player()
 		inventory_crafting_amount[20 + i] = 0;
 		inventory_crafting_price[i] = 0;
 		inventory_crafting_price[20 + i] = 0;
+	}
+}
+void player::a_bit_sober()
+{
+	alko = alko - 1;
+	if (alko < 0)
+	{
+		alko = 0;
+	}
+}
+void player::a_bit_hungry(int number)
+{
+	hunger = hunger - number;
+	if (hunger<0)
+	{
+		hunger = 0;
+	}
+	if (hunger == 0)
+	{
+		hp = hp - 10;
+		sound_damage();
+		cout << "Jesteœ g³odyny, musisz coœ zjeœæ!!!" << endl;
 	}
 }
 int player::find_usage_item(string nazwa)

@@ -1,8 +1,9 @@
 #include "dwellers.h"
-#include "jedzenie.h"
 #include "boost_syf.h"
 #include "level_up.h"
 #include "sleep.h"
+#include "quest.h"
+#include "czas.h"
 
 
 dweller::dweller()
@@ -11,191 +12,260 @@ dweller::dweller()
 	rep_points = 0;
 	rep_points_to_next_level = 500;
 	gold = 5000;
+	name = "";
+	quest = 0;
+	gold_for_complete_quest = 0;
+	exp_for_complete_quest = 0;
 }
 barman::barman()
-	{
-		info[0] = "TAWERNA - ROZMOWA Z BARMANEM";
-		info[1] = "W: ZAKOÑCZ ROZMOWÊ";
-		info[2] = "M: MIKSTURA ¯YCIA";
-		info[3] = "";
-		info[4] = "";
-		info[5] = "";
-		info[6] = "";
-		info[7] = "";
-		menu[0] = "S£UCHAJ PLOTEK";
-		menu[1] = "ZAPYTAJ O NOCLEG";
-		menu[2] = "KUP POSI£EK";
-		menu[3] = "KUP PIWO";
-		menu[4] = "";
-		menu[5] = "";
-		menu[6] = "";
-		menu[7] = "";
-		menu[8] = "";
-		menu[9] = "";
-		menu[10] = "";
-		menu[11] = "";
-		menu[12] = "";
-		menu[13] = "";
-		menu[14] = "";
-		menu[15] = "";
-		menu[16] = "";
-		menu[17] = "";
-		menu[18] = "";
-		menu[19] = "";
-		ceny[0] = 0;
-		ceny[1] = 10;
-		ceny[2] = 5;
-		ceny[3] = 5;
-		ceny[4] = 0;
-		ceny[5] = 0;
-		ceny[6] = 0;
-		ceny[7] = 0;
-		ceny[8] = 0;
-		ceny[9] = 0;
-		ceny[10] = 0;
-		ceny[11] = 0;
-		ceny[12] = 0;
-		ceny[13] = 0;
-		ceny[14] = 0;
-		ceny[15] = 0;
-		ceny[16] = 0;
-		ceny[17] = 0;
-		ceny[18] = 0;
-		ceny[19] = 0;
-	}
+{
+	name = "BARMAN";
+	info[0] = "TAWERNA - ROZMOWA Z BARMANEM";
+	info[1] = "W: ZAKOÑCZ ROZMOWÊ";
+	info[2] = "M: MIKSTURA ¯YCIA";
+	info[3] = "";
+	info[4] = "";
+	info[5] = "";
+	info[6] = "";
+	info[7] = "";
+	menu[0] = "S£UCHAJ PLOTEK";
+	menu[1] = "ZAPYTAJ O NOCLEG";
+	menu[2] = "KUP POSI£EK";
+	menu[3] = "KUP PIWO";
+	menu[4] = "";
+	menu[5] = "";
+	menu[6] = "";
+	menu[7] = "";
+	menu[8] = "";
+	menu[9] = "";
+	menu[10] = "";
+	menu[11] = "";
+	menu[12] = "";
+	menu[13] = "";
+	menu[14] = "";
+	menu[15] = "";
+	menu[16] = "";
+	menu[17] = "";
+	menu[18] = "";
+	menu[19] = "";
+	ceny[0] = 0;
+	ceny[1] = 10;
+	ceny[2] = 5;
+	ceny[3] = 5;
+	ceny[4] = 0;
+	ceny[5] = 0;
+	ceny[6] = 0;
+	ceny[7] = 0;
+	ceny[8] = 0;
+	ceny[9] = 0;
+	ceny[10] = 0;
+	ceny[11] = 0;
+	ceny[12] = 0;
+	ceny[13] = 0;
+	ceny[14] = 0;
+	ceny[15] = 0;
+	ceny[16] = 0;
+	ceny[17] = 0;
+	ceny[18] = 0;
+	ceny[19] = 0;
+}
 int barman::gold_info()
-	{
-		return gold;
-	}	
+{
+	return gold;
+}
 int barman::rep_level_info()
-	{
-		return rep_level;
-	}
+{
+	return rep_level;
+}
 int barman::rep_points_info()
-	{
-		return rep_points;
-	}
+{
+	return rep_points;
+}
 int barman::rep_points_to_next_level_info()
-	{
-		return rep_points_to_next_level;
-	}
+{
+	return rep_points_to_next_level;
+}
+int barman::quest_info()
+{
+	return quest;
+}
+int barman::gold_for_complete_quest_info()
+{
+	return gold_for_complete_quest;
+}
+int barman::exp_for_complete_quest_info()
+{
+	return exp_for_complete_quest;
+}
+string barman::name_info()
+{
+	return name;
+}
 void barman::gold_set(int a)
-	{
-		gold = a;
-	}
+{
+	gold = a;
+}
 void barman::rep_level_set(int a)
-	{
-		rep_level = a;
-	}
+{
+	rep_level = a;
+}
 void barman::rep_points_set(int a)
-	{
-		rep_points = a;
-	}	
+{
+	rep_points = a;
+}
 void barman::rep_points_to_next_level_set(int a)
+{
+	rep_points_to_next_level = a;
+}
+void barman::quest_set(int a)
+{
+	quest = a;
+}
+void barman::gold_for_complete_quest_set(int a)
+{
+	gold_for_complete_quest = a;
+}
+void barman::exp_for_complete_quest_set(int a)
+{
+	exp_for_complete_quest = a;
+}
+void barman::gossip(player &gracz)
+{
+	srand((unsigned int)time(NULL));
+	int ran = rand() % 10;
+	string linia;
+	int nr_linii = 1;
+	fstream plik;
+	if (ran == 0)
 	{
-		rep_points_to_next_level = a;
+		plik.open("./txt/tawerna/plota0.txt", ios::in);
 	}
-void barman::gossip()
+	else if (ran == 1)
 	{
-		srand((unsigned int)time(NULL));
-		int ran = rand() % 10;
+		plik.open("./txt/tawerna/plota1.txt", ios::in);
+	}
+	else if (ran == 2)
+	{
+		plik.open("./txt/tawerna/plota2.txt", ios::in);
+	}
+	else if (ran == 3)
+	{
+		plik.open("./txt/tawerna/plota3.txt", ios::in);
+	}
+	else if (ran == 4)
+	{
+		plik.open("./txt/tawerna/plota4.txt", ios::in);
+	}
+	else if (ran == 5)
+	{
+		plik.open("./txt/tawerna/plota5.txt", ios::in);
+	}
+	else if (ran == 6)
+	{
+		plik.open("./txt/tawerna/plota6.txt", ios::in);
+	}
+	else if (ran == 7)
+	{
+		plik.open("./txt/tawerna/plota7.txt", ios::in);
+	}
+	else if (ran == 8)
+	{
+		plik.open("./txt/tawerna/plota8.txt", ios::in);
+	}
+	else if (ran == 9)
+	{
+		plik.open("./txt/tawerna/plota9.txt", ios::in);
+	}
+	while (!plik.eof())
+	{
+		getline(plik, linia);
+		cout << linia << endl;
+	}
+	plik.close();
+	system("PAUSE");
+	change_time(gracz, 0, 1);
+	system("cls");
+}
+void barman::give_room(player &gracz)
+{
+	if (gracz.hunger >= 5)
+	{
+		cout << "Karczmarz prowadzi ciê do wolnego pokoju" << endl;
+		change_time(gracz, 0, 5);
+		sleep(gracz, ceny[1], 8, 0);
+	}
+}
+void barman::sell_food(player &gracz, int ilosc)
+{
+	if (gracz.hunger == 10)
+	{
+		cout << "Nie jesteœ g³odny" << endl;
+		system("PAUSE");
+	}
+	else
+	{
+		if (gracz.gold >= ceny[2])
+		{
+			cout << "Zajadasz schabowego ze smakiem" << endl;
+			gracz.gold = gracz.gold - ceny[2];
+			gracz.hunger = gracz.hunger + ilosc;
+			gracz.hp = gracz.hp + (0.01*gracz.max_hp);
+			if (gracz.hp > gracz.max_hp)
+			{
+				gracz.hp = gracz.max_hp;
+			}
+			if (gracz.hunger > 10)
+			{
+				gracz.hunger = 10;
+			}
+			change_time(gracz, 0, 10);
+		}
+		else
+		{
+			no_money();
+		}
+		system("PAUSE");
+	}
+}
+void barman::sell_beer(player &gracz)
+{
+	if (gracz.alko == 10)
+	{
+		cout << "TOBIE JU¯ WYSTARCZY!!!" << endl;
+		system("PAUSE");
+	}
+	else if (gracz.gold >= ceny[3])
+	{
+		gracz.gold = gracz.gold - ceny[3];
+		sound_beer();
+		gracz.alko = gracz.alko + 1;
+		change_time(gracz, 0, 10, 0, 1);
+		if (gracz.alko == 2 || gracz.alko == 4 || gracz.alko == 6 || gracz.alko == 8 || gracz.alko == 10)
+		{
+			gracz.hunger = gracz.hunger - 1;
+		}
 		string linia;
 		int nr_linii = 1;
 		fstream plik;
-		if (ran == 0)
-		{
-			plik.open("./txt/tawerna/plota0.txt", ios::in);
-		}
-		else if (ran == 1)
-		{
-			plik.open("./txt/tawerna/plota1.txt", ios::in);
-		}
-		else if (ran == 2)
-		{
-			plik.open("./txt/tawerna/plota2.txt", ios::in);
-		}
-		else if (ran == 3)
-		{
-			plik.open("./txt/tawerna/plota3.txt", ios::in);
-		}
-		else if (ran == 4)
-		{
-			plik.open("./txt/tawerna/plota4.txt", ios::in);
-		}
-		else if (ran == 5)
-		{
-			plik.open("./txt/tawerna/plota5.txt", ios::in);
-		}
-		else if (ran == 6)
-		{
-			plik.open("./txt/tawerna/plota6.txt", ios::in);
-		}
-		else if (ran == 7)
-		{
-			plik.open("./txt/tawerna/plota7.txt", ios::in);
-		}
-		else if (ran == 8)
-		{
-			plik.open("./txt/tawerna/plota8.txt", ios::in);
-		}
-		else if (ran == 9)
-		{
-			plik.open("./txt/tawerna/plota9.txt", ios::in);
-		}
+		plik.open("./txt/tawerna/beer.txt", ios::in);
 		while (!plik.eof())
 		{
 			getline(plik, linia);
 			cout << linia << endl;
 		}
 		plik.close();
+		cout << "Pijesz piwo" << endl;
 		system("PAUSE");
-		system("cls");
 	}
-void barman::give_room(player &gracz)
-{
-	sleep(gracz,ceny[1],1);
+	else
+	{
+		no_money();
+		system("PAUSE");
+	}
 }
-void barman::sell_food(player &gracz, int ilosc)
-	{
-		eat_food(gracz, ceny[2], 2);
-	}
-void barman::sell_beer(player &gracz)
-	{
-		if (gracz.alko == 10)
-		{
-			cout << "TOBIE JU¯ WYSTARCZY!!!" << endl;
-			system("PAUSE");
-		}
-		else if (gracz.gold >= ceny[3])
-		{
-			sound_beer();
-			gracz.gold = gracz.gold - ceny[3];
-			gracz.alko = gracz.alko + 1;
-			if (gracz.alko == 2 || gracz.alko == 4 || gracz.alko == 6 || gracz.alko == 8 || gracz.alko == 10)
-			{
-				gracz.hunger = gracz.hunger - 1;
-			}
-			string linia;
-			int nr_linii = 1;
-			fstream plik;
-			plik.open("./txt/tawerna/beer.txt", ios::in);
-			while (!plik.eof())
-			{
-				getline(plik, linia);
-				cout << linia << endl;
-			}
-			plik.close();
-			cout << "PIJESZ PYSZNE, ZIMNE PIWKO" << endl;
-			system("PAUSE");
-		}
-		else
-		{
-			no_money();
-			system("PAUSE");
-		}
-	}
 seller::seller()
 {
+	name = "HANDLARZ";
 	info[0] = "SKLEP WIELOBRAN¯OWY - ROZMOWA Z HANDLARZEM";
 	info[1] = "W: ZAKOÑCZ ROZMOWÊ";
 	info[2] = "M: MIKSTURA ¯YCIA";
@@ -266,6 +336,22 @@ int seller::rep_points_to_next_level_info()
 {
 	return rep_points_to_next_level;
 }
+int seller::quest_info()
+{
+	return quest;
+}
+int seller::gold_for_complete_quest_info()
+{
+	return gold_for_complete_quest;
+}
+int seller::exp_for_complete_quest_info()
+{
+	return exp_for_complete_quest;
+}
+string seller::name_info()
+{
+	return name;
+}
 void seller::gold_set(int a)
 {
 	gold = a;
@@ -281,6 +367,18 @@ void seller::rep_points_set(int a)
 void seller::rep_points_to_next_level_set(int a)
 {
 	rep_points_to_next_level = a;
+}
+void seller::quest_set(int a)
+{
+	quest = a;
+}
+void seller::gold_for_complete_quest_set(int a)
+{
+	gold_for_complete_quest = a;
+}
+void seller::exp_for_complete_quest_set(int a)
+{
+	exp_for_complete_quest = a;
 }
 void seller::load_merch()
 {
@@ -1554,42 +1652,42 @@ void seller::load_merch()
 		plik.close();
 }
 void seller::add_prices(player &gracz)
+{
+	for (int i = 0; i < 20; i++)
 	{
-		for (int i = 0; i < 20; i++)
+		if (gracz.inventory_usage[i] == "")
 		{
-			if (gracz.inventory_usage[i] == "")
-			{
-				continue;
-			}
-			else
-			{
-				for (int j = 0; j < 120; j++)
-				{
-					if (gracz.inventory_usage[i] == menu_items[j])
-					{
-						gracz.inventory_usage_price[i] = menu_price[j];
-					}
-				}
-			}
+			continue;
 		}
-		for (int i = 0; i < 20; i++)
+		else
 		{
-			if (gracz.inventory_crafting[i] == "")
+			for (int j = 0; j < 120; j++)
 			{
-				continue;
-			}
-			else
-			{
-				for (int j = 0; j < 120; j++)
+				if (gracz.inventory_usage[i] == menu_items[j])
 				{
-					if (gracz.inventory_crafting[i] == menu_items[j])
-					{
-						gracz.inventory_crafting_price[i] = menu_price[j];
-					}
+					gracz.inventory_usage_price[i] = menu_price[j];
 				}
 			}
 		}
 	}
+	for (int i = 0; i < 20; i++)
+	{
+		if (gracz.inventory_crafting[i] == "")
+		{
+			continue;
+		}
+		else
+		{
+			for (int j = 0; j < 120; j++)
+			{
+				if (gracz.inventory_crafting[i] == menu_items[j])
+				{
+					gracz.inventory_crafting_price[i] = menu_price[j];
+				}
+			}
+		}
+	}
+}
 int seller::search_on_lists(string nazwa)
 {
 	for (int i = 0; i < 120; i++)
@@ -1613,6 +1711,7 @@ int seller::search_on_lists(string nazwa)
 }
 blacksmith::blacksmith()
 {
+	name = "KOWAL";
 	info[0] = "KUNIA - ROZMOWA Z KOWALEM";
 	info[1] = "W: ZAKOÑCZ ROZMOWÊ";
 	info[2] = "M: MIKSTURA ¯YCIA";
@@ -1678,6 +1777,22 @@ int blacksmith::rep_points_to_next_level_info()
 {
 	return rep_points_to_next_level;
 }
+int blacksmith::quest_info()
+{
+	return quest;
+}
+int blacksmith::gold_for_complete_quest_info()
+{
+	return gold_for_complete_quest;
+}
+int blacksmith::exp_for_complete_quest_info()
+{
+	return exp_for_complete_quest;
+}
+string blacksmith::name_info()
+{
+	return name;
+}
 void blacksmith::gold_set(int a)
 {
 	gold = a;
@@ -1693,6 +1808,18 @@ void blacksmith::rep_points_set(int a)
 void blacksmith::rep_points_to_next_level_set(int a)
 {
 	rep_points_to_next_level = a;
+}
+void blacksmith::quest_set(int a)
+{
+	quest = a;
+}
+void blacksmith::gold_for_complete_quest_set(int a)
+{
+	gold_for_complete_quest = a;
+}
+void blacksmith::exp_for_complete_quest_set(int a)
+{
+	exp_for_complete_quest = a;
 }
 void blacksmith::print_image()
 {
@@ -1720,6 +1847,7 @@ void blacksmith::power_up(player &gracz, int tryb)
 			cout << endl << "TWÓJ HE£M ZOSTA£ WZMOCNIONY O JEDEN PUNKT" << endl;
 			gracz.helmet = gracz.helmet + 1;
 			gracz.gold = gracz.gold - ceny[0];
+			change_time(gracz, 1, 0);
 		}
 		else
 		{
@@ -1736,6 +1864,7 @@ void blacksmith::power_up(player &gracz, int tryb)
 			cout << "TWÓJ NAPIERSNIK ZOSTA£ WZMOCNIONY O JEDEN PUNKT" << endl;
 			gracz.chestplate = gracz.chestplate + 1;
 			gracz.gold = gracz.gold - ceny[1];
+			change_time(gracz, 1, 0);
 		}
 		else
 		{
@@ -1752,6 +1881,7 @@ void blacksmith::power_up(player &gracz, int tryb)
 			cout << "TWOJE REKAWICE ZOSTA£Y WZMOCNIONE O JEDEN PUNKT" << endl;
 			gracz.gloves = gracz.gloves + 1;
 			gracz.gold = gracz.gold - ceny[2];
+			change_time(gracz, 1, 0);
 		}
 		else
 		{
@@ -1768,6 +1898,7 @@ void blacksmith::power_up(player &gracz, int tryb)
 			cout << "TWOJE SPODNIE ZOSTA£Y WZMOCNIONE O JEDEN PUNKT" << endl;
 			gracz.pants = gracz.pants + 1;
 			gracz.gold = gracz.gold - ceny[3];
+			change_time(gracz, 1, 0);
 		}
 		else
 		{
@@ -1784,6 +1915,7 @@ void blacksmith::power_up(player &gracz, int tryb)
 			cout << "TWOJE BUTY ZOSTA£Y WZMOCNIONE O JEDEN PUNKT" << endl;
 			gracz.shoes = gracz.shoes + 1;
 			gracz.gold = gracz.gold - ceny[4];
+			change_time(gracz, 1, 0);
 		}
 		else
 		{
@@ -1800,6 +1932,7 @@ void blacksmith::power_up(player &gracz, int tryb)
 			cout << "TWOJA BROÑ (" << gracz.weapon_name << ") ZOSTA£A WZMOCNIONA O JEDEN PUNKT" << endl;
 			gracz.weapon = gracz.weapon + 1;
 			gracz.gold = gracz.gold - ceny[5];
+			change_time(gracz, 1, 0);
 		}
 		else
 		{
@@ -1812,6 +1945,7 @@ void blacksmith::power_up(player &gracz, int tryb)
 }
 alchemist::alchemist()
 {
+	name = "ALCHEMIK";
 	info[0] = "LABORATORIUM - ROZMOWA Z ALCHEMIKIEM";
 	info[1] = "W: ZAKOÑCZ ROZMOWÊ";
 	info[2] = "M: MIKSTURA ¯YCIA";
@@ -1877,6 +2011,22 @@ int alchemist::rep_points_to_next_level_info()
 {
 	return rep_points_to_next_level;
 }
+int alchemist::quest_info()
+{
+	return quest;
+}
+int alchemist::gold_for_complete_quest_info()
+{
+	return gold_for_complete_quest;
+}
+int alchemist::exp_for_complete_quest_info()
+{
+	return exp_for_complete_quest;
+}
+string alchemist::name_info()
+{
+	return name;
+}
 void alchemist::gold_set(int a)
 {
 	gold = a;
@@ -1892,6 +2042,18 @@ void alchemist::rep_points_set(int a)
 void alchemist::rep_points_to_next_level_set(int a)
 {
 	rep_points_to_next_level = a;
+}
+void alchemist::quest_set(int a)
+{
+	quest = a;
+}
+void alchemist::gold_for_complete_quest_set(int a)
+{
+	gold_for_complete_quest = a;
+}
+void alchemist::exp_for_complete_quest_set(int a)
+{
+	exp_for_complete_quest = a;
 }
 void alchemist::show_image()
 {
@@ -1913,6 +2075,7 @@ void alchemist::buy_new_level_potion(player &gracz)
 	{
 		cout << "KUPI£EŒ MIKSTURÊ NOWEGO POZIOMU" << endl;
 		gracz.add_usage_item("Mikstura nowego poziomu", (gracz.level * 100), 1);
+		change_time(gracz, 0, 5);
 		show_image();
 	}
 	else
@@ -1927,6 +2090,7 @@ void alchemist::buy_hp_potion(player &gracz)
 	{
 		cout << "KUPI£EŒ MIKSTURÊ ZDROWIA" << endl;
 		gracz.add_usage_item("Mikstura ¿ycia", ceny[1], 1);
+		change_time(gracz, 0, 5);
 		show_image();
 	}
 	else
@@ -1937,6 +2101,7 @@ void alchemist::buy_hp_potion(player &gracz)
 }
 shaman::shaman()
 {
+	name = "SZAMAN";
 	info[0] = "DOM SZMANA - ROZMOWA Z SZAMANEM";
 	info[1] = "W: ZAKOÑCZ ROZMOWÊ";
 	info[2] = "M: MIKSTURA ¯YCIA";
@@ -1950,7 +2115,7 @@ shaman::shaman()
 	menu[2] = "POPROŒ O WZMOCNIENIE TWOJEJ INTELIGENCJI";
 	menu[3] = "POPROŒ O WZMOCNIENIE TWOJEJ CHARYZMY";
 	menu[4] = "POPROŒ O WZMOCNIENIE TWOJEGO SZCZÊŒCIA";
-	menu[5] = "";
+	menu[5] = "ZAPYTAJ O ZADANIE";
 	menu[6] = "";
 	menu[7] = "";
 	menu[8] = "";
@@ -2002,6 +2167,22 @@ int shaman::rep_points_to_next_level_info()
 {
 	return rep_points_to_next_level;
 }
+int shaman::quest_info()
+{
+	return quest;
+}
+int shaman::gold_for_complete_quest_info()
+{
+	return gold_for_complete_quest;
+}
+int shaman::exp_for_complete_quest_info()
+{
+	return exp_for_complete_quest;
+}
+string shaman::name_info()
+{
+	return name;
+}
 void shaman::gold_set(int a)
 {
 	gold = a;
@@ -2017,6 +2198,18 @@ void shaman::rep_points_set(int a)
 void shaman::rep_points_to_next_level_set(int a)
 {
 	rep_points_to_next_level = a;
+}
+void shaman::quest_set(int a)
+{
+	quest = a;
+}
+void shaman::gold_for_complete_quest_set(int a)
+{
+	gold_for_complete_quest = a;
+}
+void shaman::exp_for_complete_quest_set(int a)
+{
+	exp_for_complete_quest = a;
 }
 void shaman::show_image()
 {
@@ -2043,9 +2236,10 @@ void shaman::add_boost(player &gracz, int tryb)
 			if (gracz.gold >= ceny[0])
 			{
 				cout << "Twoja si³a zosta³a czasowo wzmocniona" << endl;
-				add_boost_str(gracz, 3, 1);
+				add_boost_str(gracz, 24, 1);
 				gracz.gold = gracz.gold - ceny[0];
 				show_image();
+				change_time(gracz, 0, 15);
 			}
 			else
 			{
@@ -2066,9 +2260,10 @@ void shaman::add_boost(player &gracz, int tryb)
 			if (gracz.gold >= ceny[1])
 			{
 				cout << "Twoja zrêcznoœæ zosta³a czasowo wzmocniona" << endl;
-				add_boost_agility(gracz, 3, 1);
+				add_boost_agility(gracz, 24, 1);
 				gracz.gold = gracz.gold - ceny[1];
 				show_image();
+				change_time(gracz, 0, 15);
 			}
 			else
 			{
@@ -2089,9 +2284,10 @@ void shaman::add_boost(player &gracz, int tryb)
 			if (gracz.gold >= ceny[2])
 			{
 				cout << "Twoja inteligencja zosta³a czasowo wzmocniona" << endl;
-				add_boost_intel(gracz, 3, 1);
+				add_boost_intel(gracz, 24, 1);
 				gracz.gold = gracz.gold - ceny[2];
 				show_image();
+				change_time(gracz, 0, 15);
 			}
 			else
 			{
@@ -2112,9 +2308,10 @@ void shaman::add_boost(player &gracz, int tryb)
 			if (gracz.gold >= ceny[3])
 			{
 				cout << "Twoja charyzma zosta³a czasowo wzmocniona" << endl;
-				add_boost_charisma(gracz, 3, 1);
+				add_boost_charisma(gracz, 24, 1);
 				gracz.gold = gracz.gold - ceny[3];
 				show_image();
+				change_time(gracz, 0, 15);
 			}
 			else
 			{
@@ -2135,9 +2332,10 @@ void shaman::add_boost(player &gracz, int tryb)
 			if (gracz.gold >= ceny[4])
 			{
 				cout << "Twoje szczêœcie zosta³o czasowo wzmocnione" << endl;
-				add_boost_luck(gracz, 3, 1);
+				add_boost_luck(gracz, 24, 1);
 				gracz.gold = gracz.gold - ceny[4];
 				show_image();
+				change_time(gracz, 0, 15);
 			}
 			else
 			{
@@ -2153,8 +2351,65 @@ void shaman::add_boost(player &gracz, int tryb)
 	}
 	}
 }
+void shaman::reject_quest_giving()
+{
+	sound_rejection();
+	fancy_text("Ju¿ wykonujesz jakieœ zadanie");
+}
+int shaman::dialog_box()
+{
+	while (1)
+	{
+		cout << "Czy zrobisz to?" << endl;
+		cout << "1. Tak" << endl;
+		cout << "2. Nie" << endl;
+		cout << "Twój wybór to: ";
+		string wyb;
+		cin >> wyb;
+		switch (wyb[0])
+		{
+		case '1':
+		{
+			return 1;
+		}
+		case '2':
+		{
+			return 0;
+		}
+		default:
+		{
+			system("cls");
+			break;
+		}
+		}
+	}
+}
+void shaman::add_return_quest(player &gracz)
+{
+	if (gracz.quest == "")
+	{
+		if (quest_info() == 0)
+		{
+			int help = dialog_box();
+			if (help == 1)
+			{
+				cout << "DUPA" << endl;
+				gracz.quest = "DUPA";
+			}
+			else
+			{
+				fancy_text("No nic, mo¿e ktoœ inny siê zg³osi");
+			}
+		}
+	}
+	else if(gracz.quest != "")
+	{
+		reject_guest_giving();
+	}
+}
 doctor::doctor()
 {
+	name = "LEKARZ";
 	info[0] = "SZPITAL - ROZMOWA Z LEKARZEM";
 	info[1] = "W: ZAKOÑCZ ROZMOWÊ";
 	info[2] = "M: MIKSTURA ¯YCIA";
@@ -2220,6 +2475,22 @@ int doctor::rep_points_to_next_level_info()
 {
 	return rep_points_to_next_level;
 }
+int doctor::quest_info()
+{
+	return quest;
+}
+int doctor::gold_for_complete_quest_info()
+{
+	return gold_for_complete_quest;
+}
+int doctor::exp_for_complete_quest_info()
+{
+	return exp_for_complete_quest;
+}
+string doctor::name_info()
+{
+	return name;
+}
 void doctor::gold_set(int a)
 {
 	gold = a;
@@ -2235,6 +2506,18 @@ void doctor::rep_points_set(int a)
 void doctor::rep_points_to_next_level_set(int a)
 {
 	rep_points_to_next_level = a;
+}
+void doctor::quest_set(int a)
+{
+	quest = a;
+}
+void doctor::gold_for_complete_quest_set(int a)
+{
+	gold_for_complete_quest = a;
+}
+void doctor::exp_for_complete_quest_set(int a)
+{
+	exp_for_complete_quest = a;
 }
 void doctor::show_image()
 {
@@ -2260,6 +2543,7 @@ void doctor::heal(player &gracz)
 			gracz.hp = gracz.max_hp;
 			gracz.gold = gracz.gold - ceny[0];
 			show_image();
+			change_time(gracz, 1, 0);
 		}
 		else
 		{
@@ -2282,6 +2566,7 @@ void doctor::sober(player &gracz)
 			gracz.alko = 0;
 			gracz.gold = gracz.gold - ceny[1];
 			show_image();
+			change_time(gracz, 1, 0);
 		}
 		else
 		{
@@ -2308,6 +2593,7 @@ void doctor::remove_nerf(player &gracz, int tryb)
 				remove_nerf_str(gracz);
 				gracz.gold = gracz.gold - ceny[2];
 				show_image();
+				change_time(gracz, 0, 30);
 			}
 			else
 			{
@@ -2335,6 +2621,7 @@ void doctor::remove_nerf(player &gracz, int tryb)
 				remove_nerf_agility(gracz);
 				gracz.gold = gracz.gold - ceny[3];
 				show_image();
+				change_time(gracz, 0, 30);
 			}
 			else
 			{
@@ -2362,6 +2649,7 @@ void doctor::remove_nerf(player &gracz, int tryb)
 				remove_nerf_intel(gracz);
 				gracz.gold = gracz.gold - ceny[4];
 				show_image();
+				change_time(gracz, 0, 30);
 			}
 			else
 			{
@@ -2389,6 +2677,7 @@ void doctor::remove_nerf(player &gracz, int tryb)
 				remove_nerf_charisma(gracz);
 				gracz.gold = gracz.gold - ceny[5];
 				show_image();
+				change_time(gracz, 0, 30);
 			}
 			else
 			{
@@ -2416,6 +2705,7 @@ void doctor::remove_nerf(player &gracz, int tryb)
 				remove_nerf_luck(gracz);
 				gracz.gold = gracz.gold - ceny[6];
 				show_image();
+				change_time(gracz, 0, 30);
 			}
 			else
 			{

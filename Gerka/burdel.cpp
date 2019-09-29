@@ -3,10 +3,13 @@
 #include "burdel.h"
 #include "level_up.h"
 #include "tabelka.h"
+#include "czas.h"
+#include "wait.h"
 
 
 player enter_brothel(player gracz)
 {
+	change_time(gracz, 0, 5);
 	while (1)
 	{
 		if (gracz.hp <= 0)
@@ -20,7 +23,7 @@ player enter_brothel(player gracz)
 		string info[8];
 		info[0] = "BURDEL";
 		info[1] = "W: WRÓÆ NA RYNEK";
-		info[2] = "";
+		info[2] = "C: CZEKAJ";
 		info[3] = "";
 		info[4] = "";
 		info[5] = "";
@@ -143,8 +146,14 @@ player enter_brothel(player gracz)
 			gambling(gracz);
 			break;
 		}
+		case 'c':
+		{
+			gracz = wait_n_hours(gracz);
+			break;
+		}
 		case 'w':
 		{
+			change_time(gracz, 0, 5);
 			return gracz;
 		}
 		default:

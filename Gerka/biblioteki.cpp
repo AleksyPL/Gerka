@@ -104,3 +104,58 @@ string string_tolower(string data)
 	transform(data.begin(), data.end(), data.begin(), tolower);
 	return data;
 }
+void print_info_box_from_file(string text)
+{
+	string linia;
+	fstream plik;
+	string temp = "./txt/info/" + text + ".txt";
+	plik.open(temp, ios::in);
+	cout << "X--------------------------------------------------------------------------------------------------------------------------------------------------X" << endl;
+	while (!plik.eof())
+	{
+		getline(plik, linia);
+		int j = linia.length();
+		cout << "| ";
+		for (int i = 0; i < j; i++)
+		{
+			Sleep(30);
+			cout << linia[i];
+		}
+		int space = 145 - linia.length();
+		for (int i = 0; i < space; i++)
+		{
+			cout << " ";
+		}
+		cout << "|" << endl;
+	}
+	cout << "X--------------------------------------------------------------------------------------------------------------------------------------------------X" << endl;
+	system("PAUSE");
+}
+void print_info_box_from_string(string text)
+{
+	cout << "X--------------------------------------------------------------------------------------------------------------------------------------------------X" << endl;
+	cout << "| ";
+	for (int i = 0; i < text.length(); i++)
+	{
+		Sleep(30);
+		cout << text[i];
+	}
+	int space = 145 - text.length();
+	for (int i = 0; i < space; i++)
+	{
+		cout << " ";
+	}
+	cout << "|" << endl;
+	cout << "X--------------------------------------------------------------------------------------------------------------------------------------------------X" << endl;
+	system("PAUSE");
+}
+void fancy_text(string text)
+{
+	for (int i = 0; i < text.length(); i++)
+	{
+		Sleep(30);
+		cout << text[i];
+	}
+	cout << endl;
+	system("PAUSE");
+}

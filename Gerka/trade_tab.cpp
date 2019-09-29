@@ -301,7 +301,7 @@ void table::select_item_to_buy(int numer, player gracz, seller handlarz)
 	else
 	{
 		sound_rejection();
-		cout << "Nie mo¿esz wybraæ tego przedmiotu" << endl;
+		cout << "Nie mo¿esz wybraæ tego przedmiotu, nie zmieœcisz go do plecaka" << endl;
 		system("PAUSE");
 	}
 }

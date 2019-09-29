@@ -54,9 +54,6 @@
     <ClCompile Include="level_up.cpp">
       <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
-    <ClCompile Include="quest.cpp">
-      <Filter>Pliki źródłowe\Funkcje</Filter>
-    </ClCompile>
     <ClCompile Include="save.cpp">
       <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
@@ -68,12 +65,6 @@
     </ClCompile>
     <ClCompile Include="alchemik.cpp">
       <Filter>Pliki źródłowe\Miejsca</Filter>
-    </ClCompile>
-    <ClCompile Include="koniec_tury.cpp">
-      <Filter>Pliki źródłowe\Funkcje</Filter>
-    </ClCompile>
-    <ClCompile Include="jedzenie.cpp">
-      <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
     <ClCompile Include="game_over.cpp">
       <Filter>Pliki źródłowe\Funkcje</Filter>
@@ -138,6 +129,15 @@
     <ClCompile Include="tabelka.cpp">
       <Filter>Pliki źródłowe\Inne</Filter>
     </ClCompile>
+    <ClCompile Include="quest.cpp">
+      <Filter>Pliki źródłowe\Funkcje</Filter>
+    </ClCompile>
+    <ClCompile Include="czas.cpp">
+      <Filter>Pliki źródłowe\Funkcje</Filter>
+    </ClCompile>
+    <ClCompile Include="wait.cpp">
+      <Filter>Pliki źródłowe\Funkcje</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="burdel.h">
@@ -161,9 +161,6 @@
     <ClInclude Include="level_up.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
-    <ClInclude Include="quest.h">
-      <Filter>Pliki nagłówkowe\Funkcje</Filter>
-    </ClInclude>
     <ClInclude Include="save.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
@@ -172,12 +169,6 @@
     </ClInclude>
     <ClInclude Include="alchemik.h">
       <Filter>Pliki nagłówkowe\Miejsca</Filter>
-    </ClInclude>
-    <ClInclude Include="koniec_tury.h">
-      <Filter>Pliki nagłówkowe\Funkcje</Filter>
-    </ClInclude>
-    <ClInclude Include="jedzenie.h">
-      <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
     <ClInclude Include="game_over.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
@@ -237,6 +228,15 @@
       <Filter>Pliki nagłówkowe\Inne</Filter>
     </ClInclude>
     <ClInclude Include="sleep.h">
+      <Filter>Pliki nagłówkowe\Funkcje</Filter>
+    </ClInclude>
+    <ClInclude Include="quest.h">
+      <Filter>Pliki nagłówkowe\Funkcje</Filter>
+    </ClInclude>
+    <ClInclude Include="czas.h">
+      <Filter>Pliki nagłówkowe\Funkcje</Filter>
+    </ClInclude>
+    <ClInclude Include="wait.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
   </ItemGroup>

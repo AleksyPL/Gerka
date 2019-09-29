@@ -1,8 +1,8 @@
 #include "level_up.h"
 #include "boost_syf.h"
-#include "koniec_tury.h"
 #include "seksik.h"
 #include "items.h"
+#include "czas.h"
 
 void have_sex(player &gracz, int cena,string info)
 {
@@ -17,7 +17,6 @@ void have_sex(player &gracz, int cena,string info)
 		}
 		system("cls");
 		string linia;
-		int nr_linii = 1;
 		fstream plik;
 		{
 			int pani = rand() % 9;
@@ -70,6 +69,7 @@ void have_sex(player &gracz, int cena,string info)
 		gracz.exp = gracz.exp + 1;
 		gracz.hunger--;
 		level_up(gracz);
+		change_time(gracz, 1, 0);
 		if (chance_for_std == 0)
 		{
 			if (gracz.counter_boost_str != 0)
@@ -83,7 +83,7 @@ void have_sex(player &gracz, int cena,string info)
 			{
 				cout << "TWOJE OS£ABIENIA SIÊ KUMULUJ¥!!!" << endl;
 			}
-			add_nerf_str(gracz, 3, 1);
+			add_nerf_str(gracz, 24, 1);
 			system("PAUSE");
 		}
 		else if (chance_for_std == 1)
@@ -98,7 +98,7 @@ void have_sex(player &gracz, int cena,string info)
 			{
 				cout << "TWOJE PREMIE SIÊ KUMULUJ¥!!!" << endl;
 			}
-			add_boost_str(gracz, 3, 1);
+			add_boost_str(gracz, 24, 1);
 			system("PAUSE");
 		}
 	}

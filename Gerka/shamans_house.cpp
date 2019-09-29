@@ -2,12 +2,29 @@
 #include "tabelka.h"
 #include "zakres.h"
 #include "level_up.h"
+#include "czas.h"
+#include "wait.h"
 
 player enter_shaman_house(player gracz, shaman szaman)
 {
+	change_time(gracz, 0, 5);
+	if (gracz.hour >= 20 || gracz.hour <6)
+	{
+		system("cls");
+		print_info_box_from_file("shaman_closed");
+		change_time(gracz, 0, 5);
+		return gracz;
+	}
 	int tryb = 0;
+	//int info_box = 0;
 	while (1)
 	{
+		if (gracz.hour >= 20 || gracz.hour < 6)
+		{
+			print_info_box_from_string("Musisz ju¿ iœæ, zamykam");
+			change_time(gracz, 0, 5);
+			return gracz;
+		}
 		if (gracz.hp <= 0)
 		{
 			return gracz;
@@ -158,7 +175,7 @@ player enter_shaman_house(player gracz, shaman szaman)
 			ceny[19] = 0;
 			info[0] = "DOM SZAMANA";
 			info[1] = "W: WRÓÆ NA RYNEK";
-			info[2] = "";
+			info[2] = "C: CZEKAJ";
 			info[3] = "";
 			info[4] = "";
 			info[5] = "";
@@ -190,6 +207,7 @@ player enter_shaman_house(player gracz, shaman szaman)
 		{
 			if (tryb == 0)
 			{
+				change_time(gracz, 0, 1);
 				tryb = 1;
 			}
 			else
@@ -246,15 +264,34 @@ player enter_shaman_house(player gracz, shaman szaman)
 			}
 			break;
 		}
+		case '6':
+		{
+			if (tryb == 0)
+			{
+				;
+			}
+			else
+			{
+				szaman.add_return_quest(gracz);
+			}
+			break;
+		}
+		case 'c':
+		{
+			gracz = wait_n_hours(gracz,20);
+			break;
+		}
 		case 'w':
 		{
 			if (tryb == 0)
 			{
+				change_time(gracz, 0, 5);
 				return gracz;
 			}
 			else if (tryb == 1)
 			{
 				tryb = 0;
+				change_time(gracz, 0, 1);
 				break;
 			}
 		}

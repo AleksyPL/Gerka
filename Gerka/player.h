@@ -18,6 +18,7 @@ class player
 		long long gold;				//gold
 		int licznik_dnia;			//licznik dnia
 		string quest;				//nazwa questa
+		int quest_compl;			//znacznik czy quest jest zakoñczony
 		int helmet;                 //punkty deff z helmu
 		int chestplate;             //punkty deff z napiersnika
 		int gloves;                 //punkty deff z rekawic
@@ -55,7 +56,11 @@ class player
 		int before_nerf_charisma;
 		int before_boost_charisma;
 		int alko;
+		int hour;
+		int minute;
 		player();
+		void a_bit_sober();
+		void a_bit_hungry(int number = 0);
 		int find_usage_item(string nazwa);
 		int find_crafting_alchemy_item(string nazwa);
 		int find_crafting_forge_item(string nazwa);

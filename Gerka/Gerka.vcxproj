@@ -25,13 +25,12 @@
     <ClCompile Include="burdel.cpp" />
     <ClCompile Include="cheat_menu.cpp" />
     <ClCompile Include="chest.cpp" />
+    <ClCompile Include="czas.cpp" />
     <ClCompile Include="dwellers.cpp" />
     <ClCompile Include="game_over.cpp" />
     <ClCompile Include="inventory.cpp" />
     <ClCompile Include="items.cpp" />
-    <ClCompile Include="jedzenie.cpp" />
     <ClCompile Include="karty.cpp" />
-    <ClCompile Include="koniec_tury.cpp" />
     <ClCompile Include="kowal.cpp" />
     <ClCompile Include="level_up.cpp" />
     <ClCompile Include="mobki1.cpp" />
@@ -50,6 +49,7 @@
     <ClCompile Include="trade_tab.cpp" />
     <ClCompile Include="tytul.cpp" />
     <ClCompile Include="ui.cpp" />
+    <ClCompile Include="wait.cpp" />
     <ClCompile Include="walka.cpp" />
     <ClCompile Include="zakres.cpp" />
   </ItemGroup>
@@ -60,13 +60,12 @@
     <ClInclude Include="burdel.h" />
     <ClInclude Include="cheat_menu.h" />
     <ClInclude Include="chest.h" />
+    <ClInclude Include="czas.h" />
     <ClInclude Include="dwellers.h" />
     <ClInclude Include="game_over.h" />
     <ClInclude Include="inventory.h" />
     <ClInclude Include="items.h" />
-    <ClInclude Include="jedzenie.h" />
     <ClInclude Include="karty.h" />
-    <ClInclude Include="koniec_tury.h" />
     <ClInclude Include="kowal.h" />
     <ClInclude Include="level_up.h" />
     <ClInclude Include="mobki1.h" />
@@ -85,6 +84,7 @@
     <ClInclude Include="trade_tab.h" />
     <ClInclude Include="tytul.h" />
     <ClInclude Include="ui.h" />
+    <ClInclude Include="wait.h" />
     <ClInclude Include="walka.h" />
     <ClInclude Include="zakres.h" />
   </ItemGroup>
@@ -92,7 +92,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{19D94185-4607-4AD0-8034-224AB1B7E40B}</ProjectGuid>
     <RootNamespace>Gerka</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -158,6 +158,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

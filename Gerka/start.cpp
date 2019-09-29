@@ -251,8 +251,10 @@ int main()
 				case 26:gracz.exp = atoi(linia.c_str()); break;
 				case 28:gracz.exp_to_next_level = atoi(linia.c_str()); break;
 				case 30:gracz.licznik_dnia = atoi(linia.c_str()); break;
-				case 32:gracz.quest = linia; break;
-				case 34:gracz.skill = linia; break;
+				case 32:gracz.hour = atoi(linia.c_str()); break;
+				case 34:gracz.minute = atoi(linia.c_str()); break;
+				case 36:gracz.quest = linia; break;
+				case 38:gracz.skill = linia; break;
 				}
 				nr_linii++;
 			}

@@ -1,6 +1,7 @@
 #include "karty.h"
 #include "zakres.h"
 #include "level_up.h"
+#include "czas.h"
 
 void gambling(player &gracz)
 {
@@ -36,6 +37,7 @@ void gambling(player &gracz)
 			cout << "Przegrywasz " << stawka << " sztuk z³ota" << endl;
 			gracz.gold = gracz.gold - stawka;
 		}
+		change_time(gracz, 0, 10);
 		gracz.exp = gracz.exp + 5;
 		level_up(gracz);
 		range(gracz);
