@@ -17,8 +17,8 @@ class player
 		int exp_to_next_level;		//doswiadczenie do nastepnego poziomu
 		long long gold;				//gold
 		int licznik_dnia;			//licznik dnia
-		string quest;				//nazwa questa
-		int quest_compl;			//znacznik czy quest jest zakoñczony
+		int hour;					//aktualny czas - godziny
+		int minute;					//aktualny czas - minuty
 		int helmet;                 //punkty deff z helmu
 		int chestplate;             //punkty deff z napiersnika
 		int gloves;                 //punkty deff z rekawic
@@ -56,8 +56,10 @@ class player
 		int before_nerf_charisma;
 		int before_boost_charisma;
 		int alko;
-		int hour;
-		int minute;
+		string quest_name;			//nazwa questa
+		string quest_id;				//identyfikator questa
+		int quest_complete;			//znacznik czy quest jest zakoñczony pozytywnie
+		int quest_failed;			//znacznik czy quest jest zakoñczony negatywnie
 		player();
 		void a_bit_sober();
 		void a_bit_hungry(int number = 0);
@@ -72,10 +74,13 @@ class player
 		void add_usage_item(string nazwa, int cena, int ilosc, int tryb=0);
 		void add_crafting_alchemy_item(string nazwa, int cena, int ilosc, int tryb = 0);
 		void add_crafting_forge_item(string nazwa, int cena, int ilosc, int tryb = 0);
+		void remove_usage_item(string nazwa, int ilosc);
 		void sort_usage_backpack();
 		void sort_crafting_alchemy_backpack();
 		void sort_crafting_forge_backpack();
 		int count_free_fields_usage();
 		int count_free_fields_alchemy();
 		int count_free_fields_forge();
+		void add_quest(string nazwa,string id);
+		void remove_quest();
 };

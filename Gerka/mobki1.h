@@ -12,6 +12,8 @@ public:
 	int xp;
 	string skill;
 	string name;
+	string drop_item;
+	int drop_rate;
 };
 
 class Mieszkaniec_small:public Mob

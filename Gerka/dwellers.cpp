@@ -13,9 +13,69 @@ dweller::dweller()
 	rep_points_to_next_level = 500;
 	gold = 5000;
 	name = "";
-	quest = 0;
+	quest_id = "";
 	gold_for_complete_quest = 0;
 	exp_for_complete_quest = 0;
+}
+int dweller::gold_info()
+{
+	return this->gold;
+}
+int dweller::rep_level_info()
+{
+	return this->rep_level;
+}
+int dweller::rep_points_info()
+{
+	return this->rep_points;
+}
+int dweller::rep_points_to_next_level_info()
+{
+	return this->rep_points_to_next_level;
+}
+string dweller::quest_id_info()
+{
+	return this->quest_id;
+}
+int dweller::gold_for_complete_quest_info()
+{
+	return this->gold_for_complete_quest;
+}
+int dweller::exp_for_complete_quest_info()
+{
+	return this->exp_for_complete_quest;
+}
+string dweller::name_info()
+{
+	return this->name;
+}
+void dweller::gold_set(int a)
+{
+	this->gold = a;
+}
+void dweller::rep_level_set(int a)
+{
+	this->rep_level = a;
+}
+void dweller::rep_points_set(int a)
+{
+	this->rep_points = a;
+}
+void dweller::rep_points_to_next_level_set(int a)
+{
+	this->rep_points_to_next_level = a;
+}
+void dweller::quest_id_set(string a)
+{
+	this->quest_id = a;
+}
+void dweller::gold_for_complete_quest_set(int a)
+{
+	this->gold_for_complete_quest = a;
+}
+void dweller::exp_for_complete_quest_set(int a)
+{
+	this->exp_for_complete_quest = a;
 }
 barman::barman()
 {
@@ -68,66 +128,6 @@ barman::barman()
 	ceny[17] = 0;
 	ceny[18] = 0;
 	ceny[19] = 0;
-}
-int barman::gold_info()
-{
-	return gold;
-}
-int barman::rep_level_info()
-{
-	return rep_level;
-}
-int barman::rep_points_info()
-{
-	return rep_points;
-}
-int barman::rep_points_to_next_level_info()
-{
-	return rep_points_to_next_level;
-}
-int barman::quest_info()
-{
-	return quest;
-}
-int barman::gold_for_complete_quest_info()
-{
-	return gold_for_complete_quest;
-}
-int barman::exp_for_complete_quest_info()
-{
-	return exp_for_complete_quest;
-}
-string barman::name_info()
-{
-	return name;
-}
-void barman::gold_set(int a)
-{
-	gold = a;
-}
-void barman::rep_level_set(int a)
-{
-	rep_level = a;
-}
-void barman::rep_points_set(int a)
-{
-	rep_points = a;
-}
-void barman::rep_points_to_next_level_set(int a)
-{
-	rep_points_to_next_level = a;
-}
-void barman::quest_set(int a)
-{
-	quest = a;
-}
-void barman::gold_for_complete_quest_set(int a)
-{
-	gold_for_complete_quest = a;
-}
-void barman::exp_for_complete_quest_set(int a)
-{
-	exp_for_complete_quest = a;
 }
 void barman::gossip(player &gracz)
 {
@@ -319,66 +319,6 @@ seller::seller()
 		menu_items[i] = "";
 		menu_price[i] = 0;
 	}
-}
-int seller::gold_info()
-{
-	return gold;
-}
-int seller::rep_level_info()
-{
-	return rep_level;
-}
-int seller::rep_points_info()
-{
-	return rep_points;
-}
-int seller::rep_points_to_next_level_info()
-{
-	return rep_points_to_next_level;
-}
-int seller::quest_info()
-{
-	return quest;
-}
-int seller::gold_for_complete_quest_info()
-{
-	return gold_for_complete_quest;
-}
-int seller::exp_for_complete_quest_info()
-{
-	return exp_for_complete_quest;
-}
-string seller::name_info()
-{
-	return name;
-}
-void seller::gold_set(int a)
-{
-	gold = a;
-}
-void seller::rep_level_set(int a)
-{
-	rep_level = a;
-}
-void seller::rep_points_set(int a)
-{
-	rep_points = a;
-}
-void seller::rep_points_to_next_level_set(int a)
-{
-	rep_points_to_next_level = a;
-}
-void seller::quest_set(int a)
-{
-	quest = a;
-}
-void seller::gold_for_complete_quest_set(int a)
-{
-	gold_for_complete_quest = a;
-}
-void seller::exp_for_complete_quest_set(int a)
-{
-	exp_for_complete_quest = a;
 }
 void seller::load_merch()
 {
@@ -1651,6 +1591,16 @@ void seller::load_merch()
 		}
 		plik.close();
 }
+int seller::find_item_index(string nazwa)
+{
+	for (int i = 0; i < 120; i++)
+	{
+		if (menu_items[i] == nazwa)
+		{
+			return i;
+		}
+	}
+}
 void seller::add_prices(player &gracz)
 {
 	for (int i = 0; i < 20; i++)
@@ -1760,66 +1710,6 @@ blacksmith::blacksmith()
 	ceny[17] = 0;
 	ceny[18] = 0;
 	ceny[19] = 0;
-}
-int blacksmith::gold_info()
-{
-	return gold;
-}
-int blacksmith::rep_level_info()
-{
-	return rep_level;
-}
-int blacksmith::rep_points_info()
-{
-	return rep_points;
-}
-int blacksmith::rep_points_to_next_level_info()
-{
-	return rep_points_to_next_level;
-}
-int blacksmith::quest_info()
-{
-	return quest;
-}
-int blacksmith::gold_for_complete_quest_info()
-{
-	return gold_for_complete_quest;
-}
-int blacksmith::exp_for_complete_quest_info()
-{
-	return exp_for_complete_quest;
-}
-string blacksmith::name_info()
-{
-	return name;
-}
-void blacksmith::gold_set(int a)
-{
-	gold = a;
-}
-void blacksmith::rep_level_set(int a)
-{
-	rep_level = a;
-}
-void blacksmith::rep_points_set(int a)
-{
-	rep_points = a;
-}
-void blacksmith::rep_points_to_next_level_set(int a)
-{
-	rep_points_to_next_level = a;
-}
-void blacksmith::quest_set(int a)
-{
-	quest = a;
-}
-void blacksmith::gold_for_complete_quest_set(int a)
-{
-	gold_for_complete_quest = a;
-}
-void blacksmith::exp_for_complete_quest_set(int a)
-{
-	exp_for_complete_quest = a;
 }
 void blacksmith::print_image()
 {
@@ -1995,66 +1885,6 @@ alchemist::alchemist()
 	ceny[18] = 0;
 	ceny[19] = 0;
 }
-int alchemist::gold_info()
-{
-	return gold;
-}
-int alchemist::rep_level_info()
-{
-	return rep_level;
-}
-int alchemist::rep_points_info()
-{
-	return rep_points;
-}
-int alchemist::rep_points_to_next_level_info()
-{
-	return rep_points_to_next_level;
-}
-int alchemist::quest_info()
-{
-	return quest;
-}
-int alchemist::gold_for_complete_quest_info()
-{
-	return gold_for_complete_quest;
-}
-int alchemist::exp_for_complete_quest_info()
-{
-	return exp_for_complete_quest;
-}
-string alchemist::name_info()
-{
-	return name;
-}
-void alchemist::gold_set(int a)
-{
-	gold = a;
-}
-void alchemist::rep_level_set(int a)
-{
-	rep_level = a;
-}
-void alchemist::rep_points_set(int a)
-{
-	rep_points = a;
-}
-void alchemist::rep_points_to_next_level_set(int a)
-{
-	rep_points_to_next_level = a;
-}
-void alchemist::quest_set(int a)
-{
-	quest = a;
-}
-void alchemist::gold_for_complete_quest_set(int a)
-{
-	gold_for_complete_quest = a;
-}
-void alchemist::exp_for_complete_quest_set(int a)
-{
-	exp_for_complete_quest = a;
-}
 void alchemist::show_image()
 {
 	string linia;
@@ -2115,7 +1945,7 @@ shaman::shaman()
 	menu[2] = "POPROŒ O WZMOCNIENIE TWOJEJ INTELIGENCJI";
 	menu[3] = "POPROŒ O WZMOCNIENIE TWOJEJ CHARYZMY";
 	menu[4] = "POPROŒ O WZMOCNIENIE TWOJEGO SZCZÊŒCIA";
-	menu[5] = "ZAPYTAJ O ZADANIE";
+	menu[5] = "ZADANIA";
 	menu[6] = "";
 	menu[7] = "";
 	menu[8] = "";
@@ -2150,66 +1980,7 @@ shaman::shaman()
 	ceny[17] = 0;
 	ceny[18] = 0;
 	ceny[19] = 0;
-}
-int shaman::gold_info()
-{
-	return gold;
-}
-int shaman::rep_level_info()
-{
-	return rep_level;
-}
-int shaman::rep_points_info()
-{
-	return rep_points;
-}
-int shaman::rep_points_to_next_level_info()
-{
-	return rep_points_to_next_level;
-}
-int shaman::quest_info()
-{
-	return quest;
-}
-int shaman::gold_for_complete_quest_info()
-{
-	return gold_for_complete_quest;
-}
-int shaman::exp_for_complete_quest_info()
-{
-	return exp_for_complete_quest;
-}
-string shaman::name_info()
-{
-	return name;
-}
-void shaman::gold_set(int a)
-{
-	gold = a;
-}
-void shaman::rep_level_set(int a)
-{
-	rep_level = a;
-}
-void shaman::rep_points_set(int a)
-{
-	rep_points = a;
-}
-void shaman::rep_points_to_next_level_set(int a)
-{
-	rep_points_to_next_level = a;
-}
-void shaman::quest_set(int a)
-{
-	quest = a;
-}
-void shaman::gold_for_complete_quest_set(int a)
-{
-	gold_for_complete_quest = a;
-}
-void shaman::exp_for_complete_quest_set(int a)
-{
-	exp_for_complete_quest = a;
+	quest_id = "s00";
 }
 void shaman::show_image()
 {
@@ -2360,7 +2131,7 @@ int shaman::dialog_box()
 {
 	while (1)
 	{
-		cout << "Czy zrobisz to?" << endl;
+		cout << "Czy zrobisz to dla mnie?" << endl;
 		cout << "1. Tak" << endl;
 		cout << "2. Nie" << endl;
 		cout << "Twój wybór to: ";
@@ -2384,17 +2155,19 @@ int shaman::dialog_box()
 		}
 	}
 }
-void shaman::add_return_quest(player &gracz)
+void shaman::everything_about_quests(player &gracz)
 {
-	if (gracz.quest == "")
+	if (gracz.quest_name == "" && gracz.quest_id == "")
 	{
-		if (quest_info() == 0)
+		if (quest_id_info() == "s00")
 		{
-			int help = dialog_box();
-			if (help == 1)
+			gold_for_complete_quest_set(1000);
+			exp_for_complete_quest_set(100);
+			fancy_text("By zrobiæ magiczny amulet potrzebujê trzech ludzkich zêbów",1);
+			fancy_text("Zap³acê ci za to 1000 sztuk z³ota");
+			if (dialog_box() == 1)
 			{
-				cout << "DUPA" << endl;
-				gracz.quest = "DUPA";
+				gracz.add_quest("Zdob¹dŸ trzy ludzkie zêby", "s00");
 			}
 			else
 			{
@@ -2402,9 +2175,32 @@ void shaman::add_return_quest(player &gracz)
 			}
 		}
 	}
-	else if(gracz.quest != "")
+	else if(gracz.quest_name != "" && gracz.quest_id !=quest_id_info())
 	{
-		reject_guest_giving();
+		fancy_text("Wykonujesz ju¿ jakieœ zadanie, wróæ póŸniej");
+		sound_rejection();
+	}
+	else if (gracz.quest_name != "" && gracz.quest_id == quest_id_info())
+	{
+		if (gracz.quest_complete == 1 && gracz.quest_failed == 0)
+		{
+			if (quest_id_info() == "s00")
+			{
+				fancy_text("Dziekujê ci, z³oto jest twoje");
+				gracz.remove_usage_item("Ludzki z¹b",3);
+				quest_id_set("s01");
+			}
+			gracz.gold = gracz.gold + this->gold_for_complete_quest_info();
+			this->gold_for_complete_quest_set(0);
+			gracz.exp = gracz.exp + this->exp_for_complete_quest_info();
+			this->exp_for_complete_quest_set(0);
+			gracz.remove_quest();
+		}
+		else if(gracz.quest_complete == 0 && gracz.quest_failed == 1)
+		{
+			fancy_text("Tym razem ci siê nie uda³o ale mo¿esz spróbowaæ znowu");
+			gracz.remove_quest();
+		}
 	}
 }
 doctor::doctor()
@@ -2458,66 +2254,6 @@ doctor::doctor()
 	ceny[17] = 0;
 	ceny[18] = 0;
 	ceny[19] = 0;
-}
-int doctor::gold_info()
-{
-	return gold;
-}
-int doctor::rep_level_info()
-{
-	return rep_level;
-}
-int doctor::rep_points_info()
-{
-	return rep_points;
-}
-int doctor::rep_points_to_next_level_info()
-{
-	return rep_points_to_next_level;
-}
-int doctor::quest_info()
-{
-	return quest;
-}
-int doctor::gold_for_complete_quest_info()
-{
-	return gold_for_complete_quest;
-}
-int doctor::exp_for_complete_quest_info()
-{
-	return exp_for_complete_quest;
-}
-string doctor::name_info()
-{
-	return name;
-}
-void doctor::gold_set(int a)
-{
-	gold = a;
-}
-void doctor::rep_level_set(int a)
-{
-	rep_level = a;
-}
-void doctor::rep_points_set(int a)
-{
-	rep_points = a;
-}
-void doctor::rep_points_to_next_level_set(int a)
-{
-	rep_points_to_next_level = a;
-}
-void doctor::quest_set(int a)
-{
-	quest = a;
-}
-void doctor::gold_for_complete_quest_set(int a)
-{
-	gold_for_complete_quest = a;
-}
-void doctor::exp_for_complete_quest_set(int a)
-{
-	exp_for_complete_quest = a;
 }
 void doctor::show_image()
 {

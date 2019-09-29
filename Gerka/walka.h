@@ -13,6 +13,10 @@ public:
 	int xp;
 	string skill;
 	string name;
+	string drop_item;
+	int drop_rate;
 };
+
+int drop_item(player gracz, int drop_rate);
 player fight(player gracz,int nr);
 

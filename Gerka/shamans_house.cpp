@@ -4,6 +4,7 @@
 #include "level_up.h"
 #include "czas.h"
 #include "wait.h"
+#include "quest.h"
 
 player enter_shaman_house(player gracz, shaman szaman)
 {
@@ -16,9 +17,9 @@ player enter_shaman_house(player gracz, shaman szaman)
 		return gracz;
 	}
 	int tryb = 0;
-	//int info_box = 0;
 	while (1)
 	{
+		check_quest_status(gracz);
 		if (gracz.hour >= 20 || gracz.hour < 6)
 		{
 			print_info_box_from_string("Musisz ju¿ iœæ, zamykam");
@@ -272,7 +273,7 @@ player enter_shaman_house(player gracz, shaman szaman)
 			}
 			else
 			{
-				szaman.add_return_quest(gracz);
+				szaman.everything_about_quests(gracz);
 			}
 			break;
 		}

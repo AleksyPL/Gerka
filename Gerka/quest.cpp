@@ -1,61 +1,21 @@
 #include "quest.h"
+#include "dwellers.h"
 
-void change_flags(barman &bobby,string name)
+void check_quest_status(player &gracz)
 {
-	if (name == "BARMAN")
+	if (gracz.quest_name != "")
 	{
-		int help = bobby.quest_info();
-		bobby.quest_set(help + 1);
-	}
-}
-void reject_guest_giving()
-{
-	sound_rejection();
-	fancy_text("Ju¿ wykonujesz jakieœ zadanie");
-}
-int dialog_box()
-{
-	while (1)
-	{
-		cout << "Czy zrobisz to?" << endl;
-		cout << "1. Tak" << endl;
-		cout << "2. Nie" << endl;
-		cout << "Twój wybór to: ";
-		string wyb;
-		cin >> wyb;
-		switch (wyb[0])
+		shaman szaman;
+		if (szaman.quest_id_info() == "s00")
 		{
-		case '1':
-		{
-			return 1;
-		}
-		case '2':
-		{
-			return 0;
-		}
-		default:
-		{
-			system("cls");
-			break;
-		}
+			if (gracz.find_usage_item("Ludzki z¹b") == 1)
+			{
+				int pom = gracz.find_usage_item_index("Ludzki z¹b");
+				if (gracz.inventory_usage_amount[pom] == 3)
+				{
+					gracz.quest_complete = 1;
+				}
+			}
 		}
 	}
 }
-void give_quest_shaman(player &gracz)
-{
-	
-}
-//void return_quest_shaman(player gracz, shaman szaman)
-//{
-//	if (gracz.quest_compl == 1)
-//	{
-//		if (szaman.quest_info == 0)
-//		{
-//			fancy_text("Zadanie zakoñczone");
-//		}
-//	}
-//	else
-//	{
-//		fancy_text("Nie mo¿esz jeszcze zwróciæ zadania");
-//	}
-//}

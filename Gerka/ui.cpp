@@ -13,6 +13,7 @@
 #include "level_up.h"
 #include "tabelka.h"
 #include "wait.h"
+#include "quest.h"
 
 
 int ui(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist alchemik,shaman szaman, doctor lekarz, chest krzynka)
@@ -20,6 +21,7 @@ int ui(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist a
 	srand((unsigned int)time(NULL));
 	while (1)
 	{
+		check_quest_status(gracz);
 		level_up(gracz);
 		if (gracz.hp <= 0)
 		{

@@ -34,7 +34,7 @@ void save(player gracz,barman bobby,seller handlarz,blacksmith kowal, alchemist 
 			plik << "Licznik dnia" << endl << gracz.licznik_dnia << endl;//29-30
 			plik << "Aktualny czas - godznia" << endl << gracz.hour << endl;//31-32
 			plik << "Aktualny czas - minuta" << endl << gracz.minute << endl;//33-34
-			plik << "Zadanie" << endl << gracz.quest << endl;//35-36
+			plik << "Zadanie" << endl << gracz.quest_name << endl;//35-36
 			plik << "Umiejêtnoœæ" << endl << gracz.skill;//37-38
 			plik.close();
 			remove("./txt/mix/Zapis_gry_eq.txt");

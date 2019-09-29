@@ -2,6 +2,20 @@
 #include "mobki1.h"
 #include "tabelka.h"
 #include "zakres.h"
+#include "dwellers.h"
+
+int drop_item(player gracz,int drop_rate)
+{
+	int luck = (rand() % 100) + gracz.luck;
+	if (luck > drop_rate)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
 
 player fight(player gracz, int nr)
 {
@@ -16,6 +30,8 @@ player fight(player gracz, int nr)
 		enemy.gold = cos.gold;
 		enemy.name = cos.name;
 		enemy.xp = cos.xp;
+		enemy.drop_item = cos.drop_item;
+		enemy.drop_rate = cos.drop_rate;
 	}
 	if (nr == 1)
 	{
@@ -26,6 +42,8 @@ player fight(player gracz, int nr)
 		enemy.gold = cos.gold;
 		enemy.name = cos.name;
 		enemy.xp = cos.xp;
+		enemy.drop_item = cos.drop_item;
+		enemy.drop_rate = cos.drop_rate;
 	}
 	if (nr == 2)
 	{
@@ -36,6 +54,8 @@ player fight(player gracz, int nr)
 		enemy.gold = cos.gold;
 		enemy.name = cos.name;
 		enemy.xp = cos.xp;
+		enemy.drop_item = cos.drop_item;
+		enemy.drop_rate = cos.drop_rate;
 	}
 	sound_start_fight();
 	while (1)
@@ -148,8 +168,7 @@ player fight(player gracz, int nr)
 			if (random>50)
 			{
 				sound_hit();
-				cout << "Uderzasz swoj¹ broni¹ w przeciwnika" << endl;
-				cout << "Uszkodzi³eœ go lecz dalej jest w stanie walczyæ" << endl;
+				cout << "Ranisz przeciwnika lecz dalej jest w stanie walczyæ" << endl;
 				cout << "Przeciwnik traci " << gracz.weapon << " punktów ¿ycia" << endl;
 				system("PAUSE");
 				enemy.hp = enemy.hp - gracz.weapon;
@@ -177,7 +196,48 @@ player fight(player gracz, int nr)
 				gracz.gold = gracz.gold + enemy.gold;
 				range(gracz);
 				system("PAUSE");
-				return gracz;
+				if (drop_item(gracz,enemy.drop_rate)==1)
+				{
+					while (1)
+					{
+						cout << "Znajdujesz na ziemi 1 " << enemy.drop_item << ". Czy chcesz go wzi¹æ?" << endl;
+						cout << "1.Tak" << endl;
+						cout << "2.Nie" << endl;
+						cout << "Twój wybór to: ";
+						string wyb;
+						cin >> wyb;
+						switch (wyb[0])
+						{
+						case '1':
+						{
+							seller handlarzyk;
+							handlarzyk.load_merch();
+							if (handlarzyk.search_on_lists(enemy.drop_item) == 0)
+							{
+								gracz.add_usage_item(enemy.drop_item, 0, 1);
+								gracz.sort_usage_backpack();
+								handlarzyk.add_prices(gracz);
+							}
+							return gracz;
+							break;
+						}
+						case '2':
+						{
+							return gracz;
+							break;
+						}
+						default:
+						{
+							system("cls");
+							break;
+						}
+						}
+					}
+				}
+				else
+				{
+					return gracz;
+				}
 			}
 			else
 			{

@@ -129,17 +129,23 @@ void tab(player gracz, string info[8], string menu[60], long ceny[20])
 	}
 	{
 		cout << "|";
-		pom1 = "~~ZADANIE: " + gracz.quest + "~~";
+		pom1 = "~~ZADANIE: " + gracz.quest_name + "~~";
 		pomoc_lokacja = 104 - pom1.length();
 		if (pomoc_lokacja < 0)
 		{
 			pom1 = "~~BŁĄD ZADANIA!!!~~";
 			draw_on_center(pomoc_lokacja, pom1);
 		}
-		if (pomoc_lokacja == 91)
+		else if(pomoc_lokacja == 91)
 		{
 			pom1 = "~~BRAK ZADANIA~~";
-			draw_on_center(pomoc_lokacja-3, pom1);
+			draw_on_center(pomoc_lokacja - 3, pom1);
+		}
+		else if (gracz.quest_name != "" && gracz.quest_complete == 1)
+		{
+			change_color(10);
+			draw_on_center(pomoc_lokacja, pom1);
+			change_color(7);
 		}
 		else
 		{
@@ -1330,7 +1336,7 @@ void tab_cheat(player gracz, string info[8], string menu[80])
 	//zadanie
 	{
 		cout << "|";
-		pom1 = "~~ZADANIE: " + gracz.quest + "~~";
+		pom1 = "~~ZADANIE: " + gracz.quest_name + "~~";
 		pomoc_lokacja = 68 - pom1.length();
 		if (pomoc_lokacja < 0)
 		{

@@ -11,24 +11,18 @@ public:
 	int rep_points_to_next_level;
 	int gold;
 	string name;
-	int quest;
+	string quest_id;
 	int gold_for_complete_quest;
 	int exp_for_complete_quest;
-	dweller();
-};
-
-class barman : private dweller
-{
-public:
 	string menu[20];
 	int ceny[20];
 	string info[8];
-	barman();
+	dweller();
 	int gold_info();
 	int rep_level_info();
 	int rep_points_info();
 	int rep_points_to_next_level_info();
-	int quest_info();
+	string quest_id_info();
 	int gold_for_complete_quest_info();
 	int exp_for_complete_quest_info();
 	string name_info();
@@ -36,148 +30,65 @@ public:
 	void rep_level_set(int a);
 	void rep_points_set(int a);
 	void rep_points_to_next_level_set(int a);
-	void quest_set(int a);
+	void quest_id_set(string a);
 	void gold_for_complete_quest_set(int a);
 	void exp_for_complete_quest_set(int a);
+};
+
+class barman : public dweller
+{
+public:
+	barman();
 	void gossip(player &gracz);
 	void give_room(player &gracz);
 	void sell_food(player &gracz, int ilosc);
 	void sell_beer(player &gracz);
 };
 
-class seller : private dweller
+class seller : public dweller
 {
 public:
-	string menu[20];
 	string menu_items[120];
 	int menu_price[120];
-	int ceny[20];
-	string info[8];
 	seller();
-	int gold_info();
-	int rep_level_info();
-	int rep_points_info();
-	int rep_points_to_next_level_info();
-	int quest_info();
-	int gold_for_complete_quest_info();
-	int exp_for_complete_quest_info();
-	string name_info();
-	void gold_set(int a);
-	void rep_level_set(int a);
-	void rep_points_set(int a);
-	void rep_points_to_next_level_set(int a);
-	void quest_set(int a);
-	void gold_for_complete_quest_set(int a);
-	void exp_for_complete_quest_set(int a);
 	void load_merch();
+	int find_item_index(string nazwa);
 	void add_prices(player &gracz);
 	int search_on_lists(string nazwa);
 };
 
-class blacksmith : private dweller
+class blacksmith : public dweller
 {
 public:
-	string menu[20];
-	int ceny[20];
-	string info[8];
 	blacksmith();
-	int gold_info();
-	int rep_level_info();
-	int rep_points_info();
-	int rep_points_to_next_level_info();
-	int quest_info();
-	int gold_for_complete_quest_info();
-	int exp_for_complete_quest_info();
-	string name_info();
-	void gold_set(int a);
-	void rep_level_set(int a);
-	void rep_points_set(int a);
-	void rep_points_to_next_level_set(int a);
-	void quest_set(int a);
-	void gold_for_complete_quest_set(int a);
-	void exp_for_complete_quest_set(int a);
 	void print_image();
 	void power_up(player &gracz, int tryb);
 };
 
-class alchemist : private dweller
+class alchemist : public dweller
 {
 public:
-	string menu[20];
-	int ceny[20];
-	string info[8];
 	alchemist();
-	int gold_info();
-	int rep_level_info();
-	int rep_points_info();
-	int rep_points_to_next_level_info();
-	int quest_info();
-	int gold_for_complete_quest_info();
-	int exp_for_complete_quest_info();
-	string name_info();
-	void gold_set(int a);
-	void rep_level_set(int a);
-	void rep_points_set(int a);
-	void rep_points_to_next_level_set(int a);
-	void quest_set(int a);
-	void gold_for_complete_quest_set(int a);
-	void exp_for_complete_quest_set(int a);
 	void show_image();
 	void buy_new_level_potion(player &gracz);
 	void buy_hp_potion(player &gracz);
 };
 
-class shaman : private dweller
+class shaman : public dweller
 {
 public:
-	string menu[20];
-	int ceny[20];
-	string info[8];
 	shaman();
-	int gold_info();
-	int rep_level_info();
-	int rep_points_info();
-	int rep_points_to_next_level_info();
-	int quest_info();
-	int gold_for_complete_quest_info();
-	int exp_for_complete_quest_info();
-	string name_info();
-	void gold_set(int a);
-	void rep_level_set(int a);
-	void rep_points_set(int a);
-	void rep_points_to_next_level_set(int a);
-	void quest_set(int a);
-	void gold_for_complete_quest_set(int a);
-	void exp_for_complete_quest_set(int a);
 	void show_image();
 	void add_boost(player &gracz, int tryb);
 	void reject_quest_giving();
 	int dialog_box();
-	void add_return_quest(player &gracz);
+	void everything_about_quests(player &gracz);
 };
 
-class doctor : private dweller
+class doctor : public dweller
 {
 public:
-	string menu[20];
-	int ceny[20];
-	string info[8];
 	doctor();
-	int gold_info();
-	int rep_level_info();
-	int rep_points_info();
-	int rep_points_to_next_level_info();
-	int quest_info();
-	int gold_for_complete_quest_info();
-	int exp_for_complete_quest_info();
-	string name_info();
-	void gold_set(int a);
-	void rep_level_set(int a);
-	void rep_points_set(int a);
-	void rep_points_to_next_level_set(int a);
-	void quest_set(int a);
-	void gold_for_complete_quest_set(int a);
-	void exp_for_complete_quest_set(int a);
 	void show_image();
 	void heal(player &gracz);
 	void sober(player &gracz);

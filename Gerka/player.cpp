@@ -15,8 +15,9 @@ player::player()
 	exp_to_next_level = 1000;
 	gold = 0;
 	licznik_dnia = 1;
-	quest = "";
-	quest_compl = 0;
+	alko = 0;
+	hour = 6;
+	minute = 0;
 	helmet = 0;
 	chestplate = 0;
 	gloves = 0;
@@ -47,9 +48,10 @@ player::player()
 	counter_boost_charisma = 0;
 	before_nerf_charisma = 0;
 	before_boost_charisma = 0;
-	alko = 0;
-	hour = 6;
-	minute = 0;
+	quest_name = "";
+	quest_id = "";
+	quest_complete = 0;
+	quest_failed = 0;
 	for (int i = 0; i < 20; i++)
 	{
 		inventory_usage[i] = "";
@@ -349,6 +351,30 @@ void player::add_crafting_forge_item(string nazwa, int cena, int ilosc, int tryb
 		}
 	}
 }
+void player::remove_usage_item(string nazwa, int ilosc)
+{
+	int i=find_usage_item_index(nazwa);
+	if (ilosc > inventory_usage_amount[i])
+	{
+		cout << "Chcesz usun¹æ za du¿o przedmiotów" << endl;
+		cout << "Podaj iloœæ: ";
+		cin >> ilosc;
+		while (cin.fail() || ilosc<0 || ilosc>inventory_usage_amount[i])
+		{
+			cout << "Podaj iloœæ: ";
+			cin.clear();
+			cin.ignore(256, '\n');
+			cin >> ilosc;
+		}
+	}
+	inventory_usage_amount[i] = inventory_usage_amount[i] - ilosc;
+	if (inventory_usage_amount[i] == 0)
+	{
+		inventory_usage[i] = "";
+		inventory_usage_price[i] = 0;
+		sort_usage_backpack();
+	}
+}
 void player::sort_usage_backpack()
 {
 	for (int i = 0; i < 20; i++)
@@ -462,4 +488,19 @@ int player::count_free_fields_forge()
 		}
 	}
 	return counter;
+}
+void player::add_quest(string nazwa,string id)
+{
+	quest_name = nazwa;
+	quest_id = id;
+	quest_complete = 0;
+	quest_failed = 0;
+
+}
+void player::remove_quest()
+{
+	quest_name = "";
+	quest_id = "";
+	quest_complete = 0;
+	quest_failed = 0;
 }

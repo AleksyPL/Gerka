@@ -253,7 +253,7 @@ int main()
 				case 30:gracz.licznik_dnia = atoi(linia.c_str()); break;
 				case 32:gracz.hour = atoi(linia.c_str()); break;
 				case 34:gracz.minute = atoi(linia.c_str()); break;
-				case 36:gracz.quest = linia; break;
+				case 36:gracz.quest_name = linia; break;
 				case 38:gracz.skill = linia; break;
 				}
 				nr_linii++;

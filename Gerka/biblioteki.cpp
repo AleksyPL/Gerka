@@ -149,7 +149,7 @@ void print_info_box_from_string(string text)
 	cout << "X--------------------------------------------------------------------------------------------------------------------------------------------------X" << endl;
 	system("PAUSE");
 }
-void fancy_text(string text)
+void fancy_text(string text,int skip_pause)
 {
 	for (int i = 0; i < text.length(); i++)
 	{
@@ -157,5 +157,8 @@ void fancy_text(string text)
 		cout << text[i];
 	}
 	cout << endl;
-	system("PAUSE");
+	if (skip_pause == 0)
+	{
+		system("PAUSE");
+	}
 }
