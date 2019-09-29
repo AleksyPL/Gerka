@@ -3,9 +3,9 @@ Aleksy
 Poziom gracza
 1
 Ilosc z³ota
-99999999959
+100000000050
 Punkty ¿ycia
-80
+55
 Max punktów ¿ycia
 80
 Punkty si³y
@@ -19,19 +19,19 @@ Punkty szczêœcia
 Punkty charyzmy
 5
 Punkty najedzenia
-9
+5
 Punkty upojenia alkoholowego
 0
 Punkty doœwiadczenia
-0
+65
 Punkty doœwiadczenia do nastêpnego poziomu
 1000
 Licznik dnia
 2
 Aktualny czas - godznia
-14
+6
 Aktualny czas - minuta
-57
+7
 Zadanie
 
 Umiejêtnoœæ

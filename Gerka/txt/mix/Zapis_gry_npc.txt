@@ -12,12 +12,12 @@ Handlarz - punkty reputacji
 Handlarz - punkty reputacji do nastêpnego poziomu
 0
 Handlarz - iloœæ z³ota
-1Kowal - poziom reputacji
-0
-Kowal - punkty reputacji
+0Kowal - poziom reputacji
 500
-Kowal - punkty reputacji do nastêpnego poziomu
+Kowal - punkty reputacji
 5000
+Kowal - punkty reputacji do nastêpnego poziomu
+0
 Kowal - iloœæ z³ota
 0Alchemik - poziom reputacji
 0

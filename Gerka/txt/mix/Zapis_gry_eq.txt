@@ -9,6 +9,6 @@ Punkty spodni
 Punkty butów
 0
 Punkty obra¿eñ broni
-1
+100
 Nazwa broni
 PIÊŒCI
