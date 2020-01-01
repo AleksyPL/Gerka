@@ -75,8 +75,12 @@ int logo(int tryb)
 int main()
 {
 	setlocale(LC_ALL, "polish");
+	system("MODE CON COLS=148 LINES=55");
+	HWND consoleWindow = GetConsoleWindow();
 	system("MODE CON COLS=148 LINES=54");
-	int tryb = 0;
+	SetWindowPos(consoleWindow, 0, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+	SetWindowLong(consoleWindow, GWL_STYLE, GetWindowLong(consoleWindow, GWL_STYLE) & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX);
+	int tryb = 1;
 	while (1)
 	{
 		system("cls");
@@ -85,7 +89,7 @@ int main()
 		player gracz;
 		barman bobby;
 		seller handlarz;
-		blacksmith kowal;
+		blacksmith kowal(gracz);
 		alchemist alchemik;
 		shaman szaman;
 		doctor lekarz;
@@ -617,13 +621,6 @@ int main()
 			cout << "-Marek" << endl;
 			cout << "-Yeti" << endl;
 			cout << "-Suchy" << endl;
-			cout << endl << "Podziêkowania za drobn¹ pomoc w pisaniu kodu dla:" << endl;
-			cout << "-Bauer" << endl;
-			cout << "-Konstanty" << endl;
-			cout << "-Yeti" << endl;
-			cout << endl << "Podziêkowania za drobn¹ pomoc w wymyœlaniu mechanik dla:" << endl;
-			cout << "-Suchy" << endl;
-			cout << "-Pawe³" << endl;
 			
 			cout << endl;
 			system("PAUSE");

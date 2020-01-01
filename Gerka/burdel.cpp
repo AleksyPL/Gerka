@@ -1,5 +1,4 @@
 #include "karty.h"
-#include "seksik.h"
 #include "burdel.h"
 #include "level_up.h"
 #include "tabelka.h"
@@ -76,7 +75,7 @@ player enter_brothel(player gracz)
 		/*20*/menu[39] = "";
 
 		//Opcje w lokacji 48 znakow
-		/* 1*/menu[40] = "IDè NA DZIWKI";
+		/* 1*/menu[40] = "SKORZYSTAJ Z US£UG SEKSUALNYCH [NIEDOST PNE]";
 		/* 2*/menu[41] = "ZAGRAJ W KARTY";
 		/* 3*/menu[42] = "";
 		/* 4*/menu[43] = "";
@@ -98,7 +97,7 @@ player enter_brothel(player gracz)
 		/*20*/menu[59] = "";
 
 		//Ceny za poszczegÛlne akcje
-		ceny[0] = 300;
+		ceny[0] = 0;
 		ceny[1] = 0;
 		ceny[2] = 0;
 		ceny[3] = 0;
@@ -138,7 +137,7 @@ player enter_brothel(player gracz)
 		{
 		case '1':
 		{
-			have_sex(gracz,ceny[0],info[0]);
+			fancy_text("Funkcja nie jest jeszcze gotowa \"TODO\"");
 			break;
 		}
 		case '2':

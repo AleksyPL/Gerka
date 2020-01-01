@@ -3,7 +3,6 @@
 #include "zakres.h"
 #include "czas.h"
 #include "karty.h"
-#include "seksik.h"
 #include "level_up.h"
 #include "chest.h"
 #include "sleep.h"
@@ -11,7 +10,7 @@
 
 void drunked(player &gracz)
 {
-	cout << "JESTEŒ TAK PIJANY ,¯E ZASYPIASZ W KARCZMIE!!!" << endl;
+	fancy_text("Jesteœ tak pijany, ¿e zasypiasz w karczmie.");
 	system("PAUSE");
 	robbery(gracz);
 	change_time(gracz, 8, 0);
@@ -117,39 +116,15 @@ void flirting(player &gracz,string info)
 		system("PAUSE");
 		if (sukces2 < sukces)
 		{
-			cout << "Okazuje siê, ¿e przysz³a z jakimœ goœciem, zaczynacie siê szarpaæ" << endl;
+			fancy_text("Okazuje siê, ¿e przysz³a z jakimœ goœciem, zaczynacie siê szarpaæ");
 			system("PAUSE");
 			int rand1 = rand() % 3;
 			gracz = fight(gracz, rand1);
+			gracz.reset_fight_status();
 		}
-		while (1)
+		else
 		{
-			cout << "Czy chcesz siê zabawiæ?" << endl;
-			cout << "1.Tak" << endl;
-			cout << "2.Nie" << endl;
-			cout << "Twój wybór to: ";
-			string wyb;
-			cin >> wyb;
-			switch (wyb[0])
-			{
-				case '1':
-				{
-					have_sex(gracz,0,info);
-					sleep(gracz, 0,8,0);
-					break;
-				}
-				case '2':
-				{
-					cout << "Szkoda" << endl;
-					system("PAUSE");
-					break;
-				}
-				default:
-				{
-					break;
-				}
-			}
-			break;
+			fancy_text("Wysz³a gdzieœ, chyba siê sp³oszy³a. Szkoda");
 		}
 	}
 	else

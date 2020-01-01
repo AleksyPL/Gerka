@@ -93,7 +93,7 @@ int ui(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist a
 		/* 5*/menu[44] = "IDè DO SKLEPU WIELOBRANØOWEGO";
 		/* 6*/menu[45] = "IDè DO DOMU SZAMANA";
 		/* 7*/menu[46] = "IDè DO SZPITALA";
-		/* 8*/menu[47] = "IDè DO TABLICY OG£OSZE—";
+		/* 8*/menu[47] = "";
 		/* 9*/menu[48] = "";
 		/*10*/menu[49] = "";
 		/*11*/menu[50] = "";

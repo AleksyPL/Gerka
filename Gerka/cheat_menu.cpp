@@ -3,8 +3,167 @@
 #include "level_up.h"
 #include "cheat_menu.h"
 
-
-player enter_cheat_menu(player gracz)
+int load_value(string comment, string type, int active0,string mark,int min, int active1, string mark1, int max)
+{
+	cout << comment;
+	if (type == "int")
+	{
+		int numer;
+		cin >> numer;
+		if (active0 == 1 && active1 == 1)
+		{
+			if (mark == "<" && mark1 == ">")
+			{
+				while (cin.fail() || numer<min || numer>max)
+				{
+					cout << comment;
+					cin.clear();
+					cin.ignore(256, '\n');
+					cin >> numer;
+				}
+			}
+			else if (mark == ">" && mark1 == "<")
+			{
+				while (cin.fail() || numer>min || numer<max)
+				{
+					cout << comment;
+					cin.clear();
+					cin.ignore(256, '\n');
+					cin >> numer;
+				}
+			}
+		}
+		else if (active0 == 1 && active1 == 0)
+		{
+			if (mark == "<")
+			{
+				while (cin.fail() || numer<min)
+				{
+					cout << comment;
+					cin.clear();
+					cin.ignore(256, '\n');
+					cin >> numer;
+				}
+			}
+			else if (mark == ">")
+			{
+				while (cin.fail() || numer>min)
+				{
+					cout << comment;
+					cin.clear();
+					cin.ignore(256, '\n');
+					cin >> numer;
+				}
+			}
+		}
+		return numer;
+	}
+	else if (type == "long")
+	{
+		long numer;
+		cin >> numer;
+		if (active0 == 1 && active1 == 1)
+		{
+			if (mark == "<" && mark1 == ">")
+			{
+				while (cin.fail() || numer<min || numer>max)
+				{
+					cout << comment;
+					cin.clear();
+					cin.ignore(256, '\n');
+					cin >> numer;
+				}
+			}
+			else if (mark == ">" && mark1 == "<")
+			{
+				while (cin.fail() || numer>min || numer<max)
+				{
+					cout << comment;
+					cin.clear();
+					cin.ignore(256, '\n');
+					cin >> numer;
+				}
+			}
+		}
+		else if (active0 == 1 && active1 == 0)
+		{
+			if (mark == "<")
+			{
+				while (cin.fail() || numer<min)
+				{
+					cout << comment;
+					cin.clear();
+					cin.ignore(256, '\n');
+					cin >> numer;
+				}
+			}
+			else if (mark == ">")
+			{
+				while (cin.fail() || numer>min)
+				{
+					cout << comment;
+					cin.clear();
+					cin.ignore(256, '\n');
+					cin >> numer;
+				}
+			}
+		}
+		return numer;
+	}
+	else if (type == "long long")
+	{
+		long long numer;
+		cin >> numer;
+		if (active0 == 1 && active1 == 1)
+		{
+			if (mark == "<" && mark1 == ">")
+			{
+				while (cin.fail() || numer<min || numer>max)
+				{
+					cout << comment;
+					cin.clear();
+					cin.ignore(256, '\n');
+					cin >> numer;
+				}
+			}
+			else if (mark == ">" && mark1 == "<")
+			{
+				while (cin.fail() || numer>min || numer<max)
+				{
+					cout << comment;
+					cin.clear();
+					cin.ignore(256, '\n');
+					cin >> numer;
+				}
+			}
+		}
+		else if (active0 == 1 && active1 == 0)
+		{
+			if (mark == "<")
+			{
+				while (cin.fail() || numer<min)
+				{
+					cout << comment;
+					cin.clear();
+					cin.ignore(256, '\n');
+					cin >> numer;
+				}
+			}
+			else if (mark == ">")
+			{
+				while (cin.fail() || numer>min)
+				{
+					cout << comment;
+					cin.clear();
+					cin.ignore(256, '\n');
+					cin >> numer;
+				}
+			}
+		}
+		return numer;
+	}
+}
+player enter_cheat_menu(player &gracz)
 {
 	while (1)
 	{
@@ -27,15 +186,15 @@ player enter_cheat_menu(player gracz)
 		info[7] = "";
 
 		//glowne staty 23 znaki
-		/* 1*/menu[0] = "IMIÊ POSTACI:";
-		/* 2*/menu[1] = "UMIEJÊTNOŒÆ POSTACI:";
-		/* 3*/menu[2] = "PUNKTY SI£Y:";
-		/* 4*/menu[3] = "PUNKTY ZRÊCZNOŒCI:";
-		/* 5*/menu[4] = "PUNKTY INTELIGENCJI:";
-		/* 6*/menu[5] = "PUNKTY SZCZÊŒCIA:";
-		/* 7*/menu[6] = "SUMA PUNKTÓW ATAKU:";
-		/* 8*/menu[7] = "SUMA PUNKTÓW OBRONY:";
-		/* 9*/menu[8] = "MIKSTURY ¯YCIA:";
+		/* 1*/menu[0] = "PUNKTY SI£Y:";
+		/* 2*/menu[1] = "PUNKTY ZRÊCZNOŒCI:";
+		/* 3*/menu[2] = "PUNKTY INTELIGENCJI:";
+		/* 4*/menu[3] = "PUNKTY CHARYZMY:";
+		/* 5*/menu[4] = "PUNKTY SZCZÊŒCIA:";
+		/* 6*/menu[5] = "";
+		/* 7*/menu[6] = "";
+		/* 8*/menu[7] = "";
+		/* 9*/menu[8] = "";
 		/*10*/menu[9] = "";
 		/*11*/menu[10] = "";
 		/*12*/menu[11] = "";
@@ -49,13 +208,13 @@ player enter_cheat_menu(player gracz)
 		/*20*/menu[19] = "";
 
 		//wartosci glownych statow
-		/* 1*/menu[20] = gracz.nazwa;
-		/* 2*/menu[21] = gracz.skill;
-		/* 3*/menu[22] = to_string(gracz.str);
-		/* 4*/menu[23] = to_string(gracz.agility);
-		/* 5*/menu[24] = to_string(gracz.intel);
-		/* 6*/menu[25] = to_string(gracz.luck);
-		/* 7*/menu[26] = to_string(gracz.weapon);
+		/* 1*/menu[20] = to_string(gracz.str);
+		/* 2*/menu[21] = to_string(gracz.agility);
+		/* 3*/menu[22] = to_string(gracz.intel);
+		/* 4*/menu[23] = to_string(gracz.charisma);
+		/* 5*/menu[24] = to_string(gracz.luck);
+		/* 6*/menu[25] = "";
+		/* 7*/menu[26] = "";
 		/* 8*/menu[27] = "";
 		/* 9*/menu[28] = "";
 		/*10*/menu[29] = "";
@@ -72,9 +231,9 @@ player enter_cheat_menu(player gracz)
 
 		//Opcje w lokacji 48 znakow
 		/* 1*/menu[40] = "ZMIEÑ ILOŒÆ PUNKTÓW ¯YCIA";
-		/* 2*/menu[41] = "ZMIEÑ ILOŒÆ MAKS. PUNKTÓW ¯YCIA";
+		/* 2*/menu[41] = "ZMIEÑ ILOŒÆ MAKSYMALNYCH PUNKTÓW ¯YCIA";
 		/* 3*/menu[42] = "ZMIEÑ ILOŒÆ PUNKTÓW DOŒWIADCZENIA";
-		/* 4*/menu[43] = "ZMIEÑ ILOŒÆ MAKS. PUNKTÓW DOŒWIADCZENIA";
+		/* 4*/menu[43] = "ZMIEÑ ILOŒÆ MAKSYMALNYCH PUNKTÓW DOŒWIADCZENIA";
 		/* 5*/menu[44] = "ZMIEÑ ILOŒÆ PUNKTÓW NAJEDZENIA";
 		/* 6*/menu[45] = "ZMIEÑ ILOŒÆ PUNKTÓW UPOJENIA ALKOHOLOWEGO";
 		/* 7*/menu[46] = "ZMIEÑ ILOŒÆ Z£OTA";
@@ -90,10 +249,8 @@ player enter_cheat_menu(player gracz)
 		/*17*/menu[56] = "ZMIEÑ ILOŒÆ PUNKTÓW RÊKAWIC";
 		/*18*/menu[57] = "ZMIEÑ ILOŒÆ PUNKTÓW SPODNI";
 		/*19*/menu[58] = "ZMIEÑ ILOŒÆ PUNKTÓW BUTÓW";
-		/*20*/menu[59] = "ZMIEÑ ILOŒÆ MIKSTUR ¯YCIA";
-
-		//Skroty 21 znakow
-		/* 1*/menu[60] = "W: WRÓÆ NA RYNEK";
+		/*20*/menu[59] = "ZMIEÑ GODZINÊ";
+		/* 1*/menu[60] = "";
 		/* 2*/menu[61] = "";
 		/* 3*/menu[62] = "";
 		/* 4*/menu[63] = "";
@@ -124,135 +281,259 @@ player enter_cheat_menu(player gracz)
 		{
 		case '1':
 		{
-			cout << "Podaj now¹ wartoœæ punktów ¿ycia: ";
-			int numer;
-			cin >> numer;
-			while (cin.fail() || numer<0 || numer>gracz.max_hp)
+			if (wyb.length() == 1)
 			{
-				cout << "Podaj now¹ wartoœæ punktów ¿ycia: ";
-				cin.clear();
-				cin.ignore(256, '\n');
-				cin >> numer;
+				gracz.hp = load_value("Podaj now¹ wartoœæ punktów ¿ycia: ", "int", 1, "<", 0, 1, ">", gracz.max_hp);
+				sound_cheat_activated();
 			}
-			gracz.hp = numer;
-			sound_cheat_activated();
+			else if(wyb[1]=='0')
+			{
+				gracz.agility = load_value("Podaj now¹ wartoœæ punktów zrêcznoœci: ", "int", 1, "<", 0);
+				sound_cheat_activated();
+			}
+			else if (wyb[1] == '1')
+			{
+				gracz.intel = load_value("Podaj now¹ wartoœæ punktów inteligencji: ", "int", 1, "<", 0);
+				sound_cheat_activated();
+			}
+			else if (wyb[1] == '2')
+			{
+				gracz.charisma = load_value("Podaj now¹ wartoœæ punktów charyzmy: ", "int", 1, "<", 0);
+				sound_cheat_activated();
+			}
+			else if (wyb[1] == '3')
+			{
+				gracz.luck = load_value("Podaj now¹ wartoœæ punktów szczêœcia: ", "int", 1, "<", 0);
+				sound_cheat_activated();
+			}
+			else if (wyb[1] == '4')
+			{
+				gracz.weapon = load_value("Podaj now¹ wartoœæ punktów ataku broni: ", "int", 1, "<", 0);
+				sound_cheat_activated();
+			}
+			else if (wyb[1] == '5')
+			{
+				gracz.helmet = load_value("Podaj now¹ wartoœæ punktów he³mu: ", "int", 1, "<", 0);
+				sound_cheat_activated();
+			}
+			else if (wyb[1] == '6')
+			{
+				gracz.chestplate = load_value("Podaj now¹ wartoœæ punktów napierœnika: ", "int", 1, "<", 0);
+				sound_cheat_activated();
+			}
+			else if (wyb[1] == '7')
+			{
+				gracz.gloves = load_value("Podaj now¹ wartoœæ punktów rêkawic: ", "int", 1, "<", 0);
+				sound_cheat_activated();
+			}
+			else if (wyb[1] == '8')
+			{
+				gracz.pants = load_value("Podaj now¹ wartoœæ punktów spodni: ", "int", 1, "<", 0);
+				sound_cheat_activated();
+			}
+			else if (wyb[1] == '9')
+			{
+				gracz.shoes = load_value("Podaj now¹ wartoœæ punktów butów: ", "int", 1, "<", 0);
+				sound_cheat_activated();
+			}
 			break;
 		}
 		case '2':
 		{
-			cout << "Podaj now¹ wartoœæ maks. punktów ¿ycia: ";
-			int numer;
-			cin >> numer;
-			while (cin.fail() || numer<0 || numer<gracz.hp)
+			if (wyb.length() == 1)
 			{
-				cout << "Podaj now¹ wartoœæ maks. punktów ¿ycia: ";
-				cin.clear();
-				cin.ignore(256, '\n');
-				cin >> numer;
+				gracz.max_hp = load_value("Podaj now¹ wartoœæ maks. punktów ¿ycia: ", "int", 1, "<", 0, 1, ">", gracz.hp);
+				sound_cheat_activated();
 			}
-			gracz.max_hp = numer;
-			sound_cheat_activated();
+			else if (wyb[1] == '0')
+			{
+				gracz.hour = load_value("Podaj która godznina: ", "int", 1, "<", 0, 1, ">", 23);
+				gracz.minute = load_value("Podaj która minuta: ", "int", 1, "<", 0, 1, ">", 59);
+				sound_cheat_activated();
+			}
+			else if (wyb[1] == '1')
+			{
+
+			}
+			else if (wyb[1] == '2')
+			{
+
+			}
+			else if (wyb[1] == '3')
+			{
+
+			}
+			else if (wyb[1] == '4')
+			{
+
+			}
+			else if (wyb[1] == '5')
+			{
+
+			}
+			else if (wyb[1] == '6')
+			{
+
+			}
+			else if (wyb[1] == '7')
+			{
+
+			}
+			else if (wyb[1] == '8')
+			{
+
+			}
+			else if (wyb[1] == '9')
+			{
+
+			}
 			break;
 		}
 		case '3':
 		{
-			cout << "Podaj now¹ wartoœæ punktów doœwiadczenia: ";
-			int numer;
-			cin >> numer;
-			while (cin.fail() || numer<0)
+			if (wyb.length() == 1)
 			{
-				cout << "Podaj now¹ wartoœæ punktów doœwiadczenia: ";
-				cin.clear();
-				cin.ignore(256, '\n');
-				cin >> numer;
+				gracz.exp = load_value("Podaj now¹ wartoœæ punktów doœwiadczenia: ", "int", 1, "<", 0);
+				sound_cheat_activated();
 			}
-			gracz.exp = numer;
-			sound_cheat_activated();
+			else if (wyb[1] == '0')
+			{
+
+			}
+			else if (wyb[1] == '1')
+			{
+
+			}
+			else if (wyb[1] == '2')
+			{
+
+			}
+			else if (wyb[1] == '3')
+			{
+
+			}
+			else if (wyb[1] == '4')
+			{
+
+			}
+			else if (wyb[1] == '5')
+			{
+
+			}
+			else if (wyb[1] == '6')
+			{
+
+			}
+			else if (wyb[1] == '7')
+			{
+
+			}
+			else if (wyb[1] == '8')
+			{
+
+			}
+			else if (wyb[1] == '9')
+			{
+
+			}
 			break;
 		}
 		case '4':
 		{
-			cout << "Podaj now¹ wartoœæ maks. punktów doœwiadczenia: ";
-			int numer;
-			cin >> numer;
-			while (cin.fail() || numer<0)
+			if (wyb.length() == 1)
 			{
-				cout << "Podaj now¹ wartoœæ maks. punktów doœwiadczenia: ";
-				cin.clear();
-				cin.ignore(256, '\n');
-				cin >> numer;
+				gracz.exp_to_next_level = load_value("Podaj now¹ wartoœæ maks. punktów doœwiadczenia: ", "int", 1, "<", 0);
+				sound_cheat_activated();
 			}
-			gracz.exp_to_next_level = numer;
-			sound_cheat_activated();
+			else if (wyb[1] == '0')
+			{
+
+			}
+			else if (wyb[1] == '1')
+			{
+
+			}
+			else if (wyb[1] == '2')
+			{
+
+			}
+			else if (wyb[1] == '3')
+			{
+
+			}
+			else if (wyb[1] == '4')
+			{
+
+			}
+			else if (wyb[1] == '5')
+			{
+
+			}
+			else if (wyb[1] == '6')
+			{
+
+			}
+			else if (wyb[1] == '7')
+			{
+
+			}
+			else if (wyb[1] == '8')
+			{
+
+			}
+			else if (wyb[1] == '9')
+			{
+
+			}
 			break;
 		}
 		case '5':
 		{
-			cout << "Podaj now¹ wartoœæ punktów najedzenia: ";
-			int numer;
-			cin >> numer;
-			while (cin.fail() || numer<0 || numer>10)
+			if (wyb.length() == 1)
 			{
-				cout << "Podaj now¹ wartoœæ punktów najedzenia: ";
-				cin.clear();
-				cin.ignore(256, '\n');
-				cin >> numer;
+				gracz.hunger = load_value("Podaj now¹ wartoœæ punktów najedzenia: ", "int", 1, "<", 0, 1, ">", 10);
+				sound_cheat_activated();
+				break;
 			}
-			gracz.hunger = numer;
-			sound_cheat_activated();
-			break;
 		}
 		case '6':
 		{
-			cout << "Podaj now¹ wartoœæ punktów upojenia alkoholowego: ";
-			int numer;
-			cin >> numer;
-			while (cin.fail() || numer<0 || numer>10)
+			if (wyb.length() == 1)
 			{
-				cout << "Podaj now¹ wartoœæ punktów upojenia alkoholowego: ";
-				cin.clear();
-				cin.ignore(256, '\n');
-				cin >> numer;
+				gracz.alko = load_value("Podaj now¹ wartoœæ punktów upojenia alkoholowego: ", "int", 1, "<", 0, 1, ">", 10);
+				sound_cheat_activated();
+				break;
 			}
-			gracz.alko = numer;
-			sound_cheat_activated();
-			break;
 		}
 		case '7':
 		{
-			cout << "Podaj now¹ iloœæ z³ota: ";
-			long long numer;
-			cin >> numer;
-			while (cin.fail() || numer<0)
+			if (wyb.length() == 1)
 			{
-				cout << "Podaj now¹ iloœæ z³ota: ";
-				cin.clear();
-				cin.ignore(256, '\n');
-				cin >> numer;
+				gracz.gold = load_value("Podaj now¹ iloœæ z³ota: ", "long long", 1, "<", 0);
+				sound_cheat_activated();
 			}
-			gracz.gold = numer;
-			sound_cheat_activated();
 			break;
 		}
 		case '8':
 		{
-			cout << "Podaj now¹ wartoœæ poziomu postaci: ";
-			int numer;
-			cin >> numer;
-			while (cin.fail() || numer<0)
+			if (wyb.length() == 1)
 			{
-				cout << "Podaj now¹ wartoœæ poziomu postaci: ";
-				cin.clear();
-				cin.ignore(256, '\n');
-				cin >> numer;
+				gracz.level = load_value("Podaj now¹ wartoœæ poziomu postaci: ", "int", 1, "<", 0);
+				sound_cheat_activated();
 			}
-			gracz.level = numer;
-			sound_cheat_activated();
+			break;
+		}
+		case '9':
+		{
+			if (wyb.length() == 1)
+			{
+				gracz.str = load_value("Podaj now¹ wartoœæ punktów si³y: ", "int", 1, "<", 0);
+				sound_cheat_activated();
+			}
 			break;
 		}
 		case 'w':
 		{
-			sound_stop();
 			return gracz;
 		}
 		default:

@@ -52,6 +52,8 @@ player::player()
 	quest_id = "";
 	quest_complete = 0;
 	quest_failed = 0;
+	fight_complete = 0;
+	fight_failed = 0;
 	for (int i = 0; i < 20; i++)
 	{
 		inventory_usage[i] = "";
@@ -503,4 +505,10 @@ void player::remove_quest()
 	quest_id = "";
 	quest_complete = 0;
 	quest_failed = 0;
+}
+
+void player::reset_fight_status()
+{
+	fight_complete = 0;
+	fight_failed = 0;
 }

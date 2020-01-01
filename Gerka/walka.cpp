@@ -218,11 +218,13 @@ player fight(player gracz, int nr)
 								gracz.sort_usage_backpack();
 								handlarzyk.add_prices(gracz);
 							}
+							gracz.fight_complete = 1;
 							return gracz;
 							break;
 						}
 						case '2':
 						{
+							gracz.fight_complete = 1;
 							return gracz;
 							break;
 						}
@@ -236,6 +238,7 @@ player fight(player gracz, int nr)
 				}
 				else
 				{
+					gracz.fight_complete = 1;
 					return gracz;
 				}
 			}
@@ -272,8 +275,9 @@ player fight(player gracz, int nr)
 				{
 				case '1':
 				{
-					cout << "Uciekasz, jesteœ pizda a nie skoczek" << endl;
+					cout << "Uciekasz." << endl;
 					system("PAUSE");
+					gracz.fight_failed = 1;
 					return gracz;
 				}
 				case '2':

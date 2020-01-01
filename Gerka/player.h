@@ -5,37 +5,37 @@ class player
 {
 	public:
 		string nazwa;
-		int str;					//sila
-		int hp;						//hp
-		int max_hp;                 //Max hp
-		int agility;				//zwinnosc
-		int intel;					//inteligencja
-		int luck;					//szczescie
-		int charisma;				//charyzma
-		int level;					//poziom
-		int exp;					//doswiadczenie
-		int exp_to_next_level;		//doswiadczenie do nastepnego poziomu
-		long long gold;				//gold
-		int licznik_dnia;			//licznik dnia
-		int hour;					//aktualny czas - godziny
-		int minute;					//aktualny czas - minuty
-		int helmet;                 //punkty deff z helmu
-		int chestplate;             //punkty deff z napiersnika
-		int gloves;                 //punkty deff z rekawic
-		int pants;                  //punkty deff ze spodni
-		int shoes;                  //punkty deff z butow
-		int weapon;                 //punkty att z broni
-		string weapon_name;			//nazwa broni
-		string skill;
-		int hunger;
-		string inventory_usage[20];
-		int inventory_usage_amount[20];
-		int inventory_usage_price[20];
-		string inventory_crafting[40];
-		int inventory_crafting_amount[40];
-		int inventory_crafting_price[40];
-		string pseudonym;
-		int counter_nerf_str;
+		int str;							//si³a
+		int hp;								//Punkty ¿ycia
+		int max_hp;							//Max punktów ¿ycia
+		int agility;						//zwinnoœæ
+		int intel;							//inteligencja
+		int luck;							//szczêœcie
+		int charisma;						//charyzma
+		int level;							//poziom postaci
+		int exp;							//doswiadczenie
+		int exp_to_next_level;				//doswiadczenie do nastepnego poziomu
+		long long gold;						//iloœæ z³ota
+		int licznik_dnia;					//licznik dnia
+		int hour;							//aktualny czas - godziny
+		int minute;							//aktualny czas - minuty
+		int helmet;							//punkty obrony z helmu
+		int chestplate;						//punkty obrony z napiersnika
+		int gloves;							//punkty obrony z rekawic
+		int pants;							//punkty obrony ze spodni
+		int shoes;							//punkty obrony z butow
+		int weapon;							//punkty obrony z broni
+		string weapon_name;					//nazwa broni
+		string skill;						//specjalna umiejêtnoœæ
+		int hunger;							//punkty g³odu
+		string inventory_usage[20];			//tablica na przedmioty u¿ytkowe
+		int inventory_usage_amount[20];		//tablica na iloœci przedmiotów u¿ytkowych 
+		int inventory_usage_price[20];		//tablica na ceny przedmiotów u¿ytkowych 
+		string inventory_crafting[40];		//tablica na przedmioty rzemieœlnicze
+		int inventory_crafting_amount[40];	//tablica na iloœci przedmiotów rzemieœlniczych 
+		int inventory_crafting_price[40];	//tablica na ceny przedmiotów rzemieœlniczych 
+		string pseudonym;					//pseudonim postaci
+		int counter_nerf_str;				//licznik_negatywnych_efektów_si³y
 		int counter_boost_str;
 		int before_nerf_str;
 		int before_boost_str;
@@ -60,6 +60,8 @@ class player
 		string quest_id;				//identyfikator questa
 		int quest_complete;			//znacznik czy quest jest zakoñczony pozytywnie
 		int quest_failed;			//znacznik czy quest jest zakoñczony negatywnie
+		int fight_complete;
+		int fight_failed;
 		player();
 		void a_bit_sober();
 		void a_bit_hungry(int number = 0);
@@ -83,4 +85,5 @@ class player
 		int count_free_fields_forge();
 		void add_quest(string nazwa,string id);
 		void remove_quest();
+		void reset_fight_status();
 };

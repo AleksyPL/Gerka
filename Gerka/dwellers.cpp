@@ -190,9 +190,16 @@ void barman::give_room(player &gracz)
 {
 	if (gracz.hunger >= 5)
 	{
-		cout << "Karczmarz prowadzi ciê do wolnego pokoju" << endl;
-		change_time(gracz, 0, 5);
-		sleep(gracz, ceny[1], 8, 0);
+		if (gracz.gold >= ceny[1])
+		{
+			cout << "Karczmarz prowadzi ciê do wolnego pokoju" << endl;
+			change_time(gracz, 0, 5);
+			sleep(gracz, ceny[1], 8, 0);
+		}
+		else
+		{
+			no_money();
+		}
 	}
 }
 void barman::sell_food(player &gracz, int ilosc)
@@ -1659,7 +1666,7 @@ int seller::search_on_lists(string nazwa)
 		}
 	}
 }
-blacksmith::blacksmith()
+blacksmith::blacksmith(player gracz)
 {
 	name = "KOWAL";
 	info[0] = "KUNIA - ROZMOWA Z KOWALEM";
@@ -1670,12 +1677,12 @@ blacksmith::blacksmith()
 	info[5] = "";
 	info[6] = "";
 	info[7] = "";
-	menu[0] = "WZMOCNIJ HE£M [+1]";
-	menu[1] = "WZMOCNIJ NAPIERŒNIK [+1]";
-	menu[2] = "WZMOCNIJ RÊKAWICE [+1]";
-	menu[3] = "WZMOCNIJ SPODNIE [+1]";
-	menu[4] = "WZMOCNIJ BUTY [+1]";
-	menu[5] = "WZMOCNIJ BROÑ [+1]";
+	menu[0] = "WZMOCNIJ HE£M (" + to_string(gracz.helmet) + ")";
+	menu[1] = "WZMOCNIJ NAPIERŒNIK";
+	menu[2] = "WZMOCNIJ RÊKAWICE";
+	menu[3] = "WZMOCNIJ SPODNIE";
+	menu[4] = "WZMOCNIJ BUTY";
+	menu[5] = "WZMOCNIJ BROÑ";
 	menu[6] = "";
 	menu[7] = "";
 	menu[8] = "";
@@ -1690,7 +1697,7 @@ blacksmith::blacksmith()
 	menu[17] = "";
 	menu[18] = "";
 	menu[19] = "";
-	ceny[0] = 500;
+	ceny[0] = 500 + (100 * gracz.helmet);
 	ceny[1] = 500;
 	ceny[2] = 500;
 	ceny[3] = 500;
@@ -1710,6 +1717,203 @@ blacksmith::blacksmith()
 	ceny[17] = 0;
 	ceny[18] = 0;
 	ceny[19] = 0;
+	for (int i = 0; i < 20; i++)
+	{
+		weapons[i] = "";
+		weapon_dmg[i] = 0;
+	}
+}
+void blacksmith::load_weapons()
+{
+	string linia;
+	fstream plik;
+	int nr_linii = 1;
+	plik.open("./txt/kowal/weapons_blunt.txt", ios::in);
+	while (getline(plik, linia))
+	{
+		switch (nr_linii)
+		{
+		case 1:
+		{
+			weapons[0] = linia;
+			break;
+		}
+		case 2:
+		{
+			weapons[1] = linia;
+			break;
+		}
+		case 3:
+		{
+			weapons[2] = linia;
+			break;
+		}
+		case 4:
+		{
+			weapons[3] = linia;
+			break;
+		}
+		case 5:
+		{
+			weapons[4] = linia;
+			break;
+		}
+		case 6:
+		{
+			weapons[5] = linia;
+			break;
+		}
+		}
+		nr_linii++;
+	}
+	plik.close();
+	nr_linii = 1;
+	plik.open("./txt/kowal/weapons_stabbing.txt", ios::in);
+	while (getline(plik, linia))
+	{
+		switch (nr_linii)
+		{
+		case 1:
+		{
+			weapons[6] = linia;
+			break;
+		}
+		case 2:
+		{
+			weapons[7] = linia;
+			break;
+		}
+		case 3:
+		{
+			weapons[8] = linia;
+			break;
+		}
+		case 4:
+		{
+			weapons[9] = linia;
+			break;
+		}
+		case 5:
+		{
+			weapons[10] = linia;
+			break;
+		}
+		}
+		nr_linii++;
+	}
+	plik.close();
+	nr_linii = 1;
+	plik.open("./txt/kowal/weapons_cutting.txt", ios::in);
+	while (getline(plik, linia))
+	{
+		switch (nr_linii)
+		{
+		case 1:
+		{
+			weapons[11] = linia;
+			break;
+		}
+		case 2:
+		{
+			weapons[12] = linia;
+			break;
+		}
+		case 3:
+		{
+			weapons[13] = linia;
+			break;
+		}
+		case 4:
+		{
+			weapons[14] = linia;
+			break;
+		}
+		case 5:
+		{
+			weapons[15] = linia;
+			break;
+		}
+		case 6:
+		{
+			weapons[16] = linia;
+			break;
+		}
+		case 7:
+		{
+			weapons[17] = linia;
+			break;
+		}
+		case 8:
+		{
+			weapons[18] = linia;
+			break;
+		}
+		case 9:
+		{
+			weapons[19] = linia;
+			break;
+		}
+		}
+		nr_linii++;
+	}
+	plik.close();
+}
+void blacksmith::generate_merch(player gracz)
+{
+	for (int i = 0; i < 20; i++)
+	{
+		int pomoc = rand() % 3;
+		if (pomoc == 0)
+		{
+			weapon_dmg[i] = gracz.level * 5;
+		}
+		else if(pomoc==1)
+		{
+			int pomoc2 = rand() % 2;
+			if (pomoc2 == 0)
+			{
+				weapon_dmg[i] = (gracz.level * 5) - 1;
+			}
+			else if (pomoc2 == 1)
+			{
+				weapon_dmg[i] = (gracz.level * 5) + 1;
+			}
+		}
+		else if (pomoc == 2)
+		{
+			int pomoc2 = rand() % 4;
+			if (pomoc2 == 0)
+			{
+				weapon_dmg[i] = (gracz.level * 5) - 2;
+			}
+			else if (pomoc2 == 1)
+			{
+				weapon_dmg[i] = (gracz.level * 5) - 1;
+			}
+			else if (pomoc2 == 2)
+			{
+				weapon_dmg[i] = (gracz.level * 5) + 1;
+			}
+			else if (pomoc2 == 3)
+			{
+				weapon_dmg[i] = (gracz.level * 5) + 2;
+			}
+		}
+	}
+}
+void blacksmith::load_player_points(player gracz)
+{
+	this->ceny[0] = ceny[0] + (100*gracz.helmet);
+	this->menu[1] = menu[1] + " (" + to_string(gracz.chestplate) + ")";
+	this->ceny[1] = ceny[1] + (100 * gracz.chestplate);
+	this->menu[2] = menu[2] + " (" + to_string(gracz.gloves) + ")";
+	this->ceny[2] = ceny[2] + (100 * gracz.gloves);
+	this->menu[3] = menu[3] + " (" + to_string(gracz.pants) + ")";
+	this->ceny[3] = ceny[3] + (100 * gracz.pants);
+	this->menu[4] = menu[4] + " (" + to_string(gracz.shoes) + ")";
+	this->ceny[4] = ceny[4] + (100 * gracz.shoes);
+	this->menu[5] = menu[5] + " (" + to_string(gracz.weapon) + ")";
+	this->ceny[5] = ceny[5] + (100 * gracz.weapon);
 }
 void blacksmith::print_image()
 {

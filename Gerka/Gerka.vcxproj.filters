@@ -78,9 +78,6 @@
     <ClCompile Include="trader.cpp">
       <Filter>Pliki źródłowe\Miejsca</Filter>
     </ClCompile>
-    <ClCompile Include="seksik.cpp">
-      <Filter>Pliki źródłowe\Funkcje</Filter>
-    </ClCompile>
     <ClCompile Include="walka.cpp">
       <Filter>Pliki źródłowe\Miejsca</Filter>
     </ClCompile>
@@ -180,9 +177,6 @@
       <Filter>Pliki nagłówkowe\Miejsca</Filter>
     </ClInclude>
     <ClInclude Include="karty.h">
-      <Filter>Pliki nagłówkowe\Funkcje</Filter>
-    </ClInclude>
-    <ClInclude Include="seksik.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
     <ClInclude Include="mobki1.h">

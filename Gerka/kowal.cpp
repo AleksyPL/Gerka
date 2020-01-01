@@ -80,6 +80,7 @@ player enter_forge(player gracz,blacksmith kowal)
 
 		if (tryb == 1)
 		{
+			kowal.load_player_points(gracz);
 			//Opcje w lokacji 35 znakow
 			/* 1*/menu[40] = kowal.menu[0];
 			/* 2*/menu[41] = kowal.menu[1];
@@ -208,6 +209,8 @@ player enter_forge(player gracz,blacksmith kowal)
 			{
 				tryb = 1;
 				change_time(gracz, 0, 1);
+				kowal.load_weapons();
+				kowal.generate_merch(gracz);
 			}
 			else
 			{

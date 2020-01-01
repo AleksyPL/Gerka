@@ -60,7 +60,12 @@ public:
 class blacksmith : public dweller
 {
 public:
-	blacksmith();
+	string weapons[20];
+	int weapon_dmg[20];
+	blacksmith(player gracz);
+	void load_weapons();
+	void generate_merch(player gracz);
+	void load_player_points(player gracz);
 	void print_image();
 	void power_up(player &gracz, int tryb);
 };

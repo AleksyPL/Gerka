@@ -8,7 +8,7 @@ void gambling(player &gracz)
 	if (gracz.gold == 0)
 	{
 		sound_rejection();
-		cout << "Nie masz czym graæ, spadaj!" << endl;
+		fancy_text("Nie masz czym graæ, spadaj!");
 	}
 	else
 	{

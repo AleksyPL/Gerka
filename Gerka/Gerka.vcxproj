@@ -37,7 +37,6 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="quest.cpp" />
     <ClCompile Include="save.cpp" />
-    <ClCompile Include="seksik.cpp" />
     <ClCompile Include="shamans_house.cpp" />
     <ClCompile Include="sleep.cpp" />
     <ClCompile Include="szpital.cpp" />
@@ -72,7 +71,6 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="quest.h" />
     <ClInclude Include="save.h" />
-    <ClInclude Include="seksik.h" />
     <ClInclude Include="shamans_house.h" />
     <ClInclude Include="sleep.h" />
     <ClInclude Include="szpital.h" />

@@ -7,7 +7,6 @@ player trade_mode(player &gracz, seller &handlarz, table &menu)
 	while (1)
 	{
 		menu.check_info_boxes();
-		menu.check_free_fields();
 		tab_trade(gracz, handlarz, menu,menu.strona_1,menu.strona_2);
 		cout << "Twój wybór to: ";
 		string wyb;
@@ -324,47 +323,47 @@ player trade_mode(player &gracz, seller &handlarz, table &menu)
 			}
 			if (wyb[1] == '1')
 			{
-				menu.select_item_to_sell(61);
+				menu.select_item_to_sell(61, gracz);
 				break;
 			}
 			if (wyb[1] == '2')
 			{
-				menu.select_item_to_sell(62);
+				menu.select_item_to_sell(62, gracz);
 				break;
 			}
 			if (wyb[1] == '3')
 			{
-				menu.select_item_to_sell(63);
+				menu.select_item_to_sell(63, gracz);
 				break;
 			}
 			if (wyb[1] == '4')
 			{
-				menu.select_item_to_sell(64);
+				menu.select_item_to_sell(64, gracz);
 				break;
 			}
 			if (wyb[1] == '5')
 			{
-				menu.select_item_to_sell(65);
+				menu.select_item_to_sell(65, gracz);
 				break;
 			}
 			if (wyb[1] == '6')
 			{
-				menu.select_item_to_sell(66);
+				menu.select_item_to_sell(66, gracz);
 				break;
 			}
 			if (wyb[1] == '7')
 			{
-				menu.select_item_to_sell(67);
+				menu.select_item_to_sell(67, gracz);
 				break;
 			}
 			if (wyb[1] == '8')
 			{
-				menu.select_item_to_sell(68);
+				menu.select_item_to_sell(68, gracz);
 				break;
 			}
 			if (wyb[1] == '9')
 			{
-				menu.select_item_to_sell(69);
+				menu.select_item_to_sell(69, gracz);
 				break;
 			}
 			break;
@@ -378,52 +377,52 @@ player trade_mode(player &gracz, seller &handlarz, table &menu)
 			}
 			if (wyb[1] == '0')
 			{
-				menu.select_item_to_sell(70);
+				menu.select_item_to_sell(70, gracz);
 				break;
 			}
 			if (wyb[1] == '1')
 			{
-				menu.select_item_to_sell(71);
+				menu.select_item_to_sell(71, gracz);
 				break;
 			}
 			if (wyb[1] == '2')
 			{
-				menu.select_item_to_sell(72);
+				menu.select_item_to_sell(72, gracz);
 				break;
 			}
 			if (wyb[1] == '3')
 			{
-				menu.select_item_to_sell(73);
+				menu.select_item_to_sell(73, gracz);
 				break;
 			}
 			if (wyb[1] == '4')
 			{
-				menu.select_item_to_sell(74);
+				menu.select_item_to_sell(74, gracz);
 				break;
 			}
 			if (wyb[1] == '5')
 			{
-				menu.select_item_to_sell(75);
+				menu.select_item_to_sell(75, gracz);
 				break;
 			}
 			if (wyb[1] == '6')
 			{
-				menu.select_item_to_sell(76);
+				menu.select_item_to_sell(76, gracz);
 				break;
 			}
 			if (wyb[1] == '7')
 			{
-				menu.select_item_to_sell(77);
+				menu.select_item_to_sell(77, gracz);
 				break;
 			}
 			if (wyb[1] == '8')
 			{
-				menu.select_item_to_sell(78);
+				menu.select_item_to_sell(78, gracz);
 				break;
 			}
 			if (wyb[1] == '9')
 			{
-				menu.select_item_to_sell(79);
+				menu.select_item_to_sell(79, gracz);
 				break;
 			}
 			break;
@@ -437,7 +436,7 @@ player trade_mode(player &gracz, seller &handlarz, table &menu)
 			}
 			if (wyb[1] == '0')
 			{
-				menu.select_item_to_sell(80);
+				menu.select_item_to_sell(80, gracz);
 				break;
 			}
 			break;
@@ -455,6 +454,7 @@ player trade_mode(player &gracz, seller &handlarz, table &menu)
 		{
 			if (menu.exit_trade_mode() == 1)
 			{
+				menu.decline_transaction(gracz,handlarz);
 				return gracz;
 			}
 			else
