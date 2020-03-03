@@ -1,4 +1,5 @@
 #include "player.h"
+#include "tabelka.h"
 
 player::player()
 {
@@ -54,6 +55,7 @@ player::player()
 	quest_failed = 0;
 	fight_complete = 0;
 	fight_failed = 0;
+	last_dungeon = 0;
 	for (int i = 0; i < 20; i++)
 	{
 		inventory_usage[i] = "";
@@ -75,7 +77,7 @@ void player::a_bit_sober()
 		alko = 0;
 	}
 }
-void player::a_bit_hungry(int number)
+void player::a_bit_hungry(int height, int startPoint, int number)
 {
 	hunger = hunger - number;
 	if (hunger<0)
@@ -86,7 +88,8 @@ void player::a_bit_hungry(int number)
 	{
 		hp = hp - 10;
 		sound_damage();
-		cout << "Jesteœ g³odyny, musisz coœ zjeœæ!!!" << endl;
+		vector <string> message = { "You are hungry, you have to eat something." };
+		tabSubmenuTextOnly(height, startPoint, message);
 	}
 }
 int player::find_usage_item(string nazwa)
@@ -173,32 +176,27 @@ int player::find_crafting_forge_item_index(string nazwa)
 		}
 	}
 }
-void player::drop_item(string nazwa, string ending)
+void player::drop_item(int height, int startPoint, string item)
 {
-	int index = find_usage_item_index(nazwa);
+	int index = find_usage_item_index(item);
 	if (inventory_usage_amount[index] > 0)
 	{
 		inventory_usage_amount[index] =inventory_usage_amount[index] - 1;
 		sound_drop_item();
-		cout << endl << "Wyrzucasz jedn" << ending << endl;
-		system("PAUSE");
+		vector <string> message = { "You are dropping one " + item };
+		tabSubmenuTextOnly(height, startPoint, message);
 		if (inventory_usage_amount[index] == 0)
 		{
 			inventory_usage[index] = "";
 			sort_usage_backpack();
 		}
 	}
-	else
-	{
-		cout << endl << "Nie ma czego wyrzucaæ" << endl;
-		system("PAUSE");
-	}
 }
-void player::use_item(string nazwa, string komunikat)
+void player::use_item(int height, int startPoint, string item, string message)
 {
-	int index = find_usage_item_index(nazwa);
-	cout << endl << komunikat << endl;
-	system("PAUSE");
+	vector <string> temp = { message };
+	int index = find_usage_item_index(item);
+	tabSubmenuTextOnly(height, startPoint, temp);
 	inventory_usage_amount[index] = inventory_usage_amount[index] - 1;
 	if (inventory_usage_amount[index] == 0)
 	{
@@ -206,9 +204,9 @@ void player::use_item(string nazwa, string komunikat)
 		sort_usage_backpack();
 	}
 }
-void player::add_usage_item(string nazwa, int cena, int ilosc, int tryb)
+void player::add_usage_item(string nazwa, int cena, int ilosc, int height, int startPoint, int skipBackpackChecking)
 {
-	if (tryb == 1)
+	if (skipBackpackChecking == 1)
 	{
 		for (int i = 0; i < 20; i++)
 		{
@@ -229,10 +227,11 @@ void player::add_usage_item(string nazwa, int cena, int ilosc, int tryb)
 	}
 	else
 	{
+		vector <string> message;
 		if (count_free_fields_usage() == 0)
 		{
-			cout << "TWÓJ PLECAK JEST PE£EN, NIE MO¯ESZ WZI¥Æ TEGO PRZEDMIOTU" << endl;
-			system("PAUSE");
+			message.push_back("You cannot take this item, your backpack is full.");
+			tabSubmenuTextOnly(height, startPoint, message);
 		}
 		else
 		{
@@ -254,10 +253,11 @@ void player::add_usage_item(string nazwa, int cena, int ilosc, int tryb)
 			}
 		}
 	}
+	sort_usage_backpack();
 }
-void player::add_crafting_alchemy_item(string nazwa, int cena, int ilosc, int tryb)
+void player::add_crafting_alchemy_item(string nazwa, int cena, int ilosc, int height, int startPoint, int skipBackpackChecking)
 {
-	if (tryb == 1)
+	if (skipBackpackChecking == 1)
 	{
 		for (int i = 0; i < 20; i++)
 		{
@@ -278,10 +278,11 @@ void player::add_crafting_alchemy_item(string nazwa, int cena, int ilosc, int tr
 	}
 	else
 	{
+		vector <string> message;
 		if (count_free_fields_alchemy() == 0)
 		{
-			cout << "TWÓJ PLECAK JEST PE£EN, NIE MO¯ESZ WZI¥Æ TEGO PRZEDMIOTU" << endl;
-			system("PAUSE");
+			message.push_back("You cannot take this item, your backpack is full.");
+			tabSubmenuTextOnly(height, startPoint, message);
 		}
 		else
 		{
@@ -304,9 +305,9 @@ void player::add_crafting_alchemy_item(string nazwa, int cena, int ilosc, int tr
 		}
 	}
 }
-void player::add_crafting_forge_item(string nazwa, int cena, int ilosc, int tryb)
+void player::add_crafting_forge_item(string nazwa, int cena, int ilosc, int height, int startPoint, int skipBackpackChecking)
 {
-	if (tryb == 1)
+	if (skipBackpackChecking == 1)
 	{
 		for (int i = 0; i < 20; i++)
 		{
@@ -327,10 +328,11 @@ void player::add_crafting_forge_item(string nazwa, int cena, int ilosc, int tryb
 	}
 	else
 	{
+		vector <string> message;
 		if (count_free_fields_forge() == 0)
 		{
-			cout << "TWÓJ PLECAK JEST PE£EN, NIE MO¯ESZ WZI¥Æ TEGO PRZEDMIOTU" << endl;
-			system("PAUSE");
+			message.push_back("You cannot take this item, your backpack is full.");
+			tabSubmenuTextOnly(height, startPoint, message);
 		}
 		else
 		{
@@ -353,23 +355,19 @@ void player::add_crafting_forge_item(string nazwa, int cena, int ilosc, int tryb
 		}
 	}
 }
-void player::remove_usage_item(string nazwa, int ilosc)
+void player::remove_usage_item(int height, int startPoint, string item, int amount)
 {
-	int i=find_usage_item_index(nazwa);
-	if (ilosc > inventory_usage_amount[i])
+	int i=find_usage_item_index(item);
+	if (amount > inventory_usage_amount[i])
 	{
-		cout << "Chcesz usun¹æ za du¿o przedmiotów" << endl;
-		cout << "Podaj iloœæ: ";
-		cin >> ilosc;
-		while (cin.fail() || ilosc<0 || ilosc>inventory_usage_amount[i])
+		string temp = "You want to delete more items than you have, enter the correct amount: ";
+		amount = stoi(tabSubmenuInputField(height, startPoint, temp));
+		while (amount<=0 || amount>inventory_usage_amount[i])
 		{
-			cout << "Podaj iloœæ: ";
-			cin.clear();
-			cin.ignore(256, '\n');
-			cin >> ilosc;
+			amount = stoi(tabSubmenuInputField(height, startPoint, temp));
 		}
 	}
-	inventory_usage_amount[i] = inventory_usage_amount[i] - ilosc;
+	inventory_usage_amount[i] = inventory_usage_amount[i] - amount;
 	if (inventory_usage_amount[i] == 0)
 	{
 		inventory_usage[i] = "";

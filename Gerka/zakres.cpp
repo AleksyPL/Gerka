@@ -2,33 +2,33 @@
 
 void range(player &gracz)
 {
-	if (gracz.level >= 10000)
+	if (gracz.level > 9999)
 	{
 		gracz.level = 9999;
 	}
-	if (gracz.exp >= 100000000)
+	if (gracz.exp > 999999999)
 	{
-		gracz.exp = 99999999;
+		gracz.exp = 999999999;
 	}
-	if (gracz.exp_to_next_level >= 100000000)
+	if (gracz.exp_to_next_level > 999999999)
 	{
-		gracz.exp_to_next_level = 99999999;
+		gracz.exp_to_next_level = 999999999;
 	}
-	if (gracz.hp > 99999999)
+	if (gracz.hp > 999999999)
 	{
-		gracz.hp = 99999999;
+		gracz.hp = 999999999;
 	}
-	if (gracz.max_hp > 99999999)
+	if (gracz.max_hp > 999999999)
 	{
-		gracz.max_hp = 99999999;
+		gracz.max_hp = 999999999;
 	}
 	if (gracz.hp > gracz.max_hp)
 	{
 		gracz.hp = gracz.max_hp;
 	}
-	if (gracz.gold > 9999999999999999)
+	if (gracz.gold > MAXLONGLONG)
 	{                 
-		gracz.gold = 9999999999999999;
+		gracz.gold = MAXLONGLONG;
 	}
 	if (gracz.licznik_dnia >= 10000 || gracz.licznik_dnia == 10000)
 	{

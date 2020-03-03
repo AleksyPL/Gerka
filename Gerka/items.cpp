@@ -1,9 +1,10 @@
 #include "items.h"
+#include "tabelka.h"
 
 void rejection_use()
 {
 	sound_rejection();
-	cout << endl << "Nie mo¿esz u¿yæ tego przedmiotu w tym momencie" << endl;
+	//cout << endl << "Nie mo¿esz u¿yæ tego przedmiotu w tym momencie" << endl;
 	system("PAUSE");
 }
 
@@ -33,18 +34,19 @@ void rejection_use()
 //	}
 //}
 
-void info_hp_potion()
+void info_hp_potion(int height, int startPoint)
 {
-	cout << endl << "Leczy rany" << endl;
-	system("PAUSE");
+	vector <string> message = { "The healing potion heals wounds and injuries" };
+	tabSubmenuTextOnly(height, startPoint, message);
 }
 
-void use_item(string name, int tryb,player &gracz,string info)
+void use_item(int height, int startPoint, string item, int useDropInfo,player &gracz)
 {
-	if (name == "Mikstura ¿ycia")
+	if (item == "Mikstura ¿ycia")
 	{
-		if (tryb == 1)
+		if (useDropInfo == 1)
 		{
+			
 			typedef player(*Shit_fun)(player);
 			Shit_fun shit;
 			HINSTANCE cos = LoadLibrary("./dll/MyDll.dll");
@@ -57,15 +59,15 @@ void use_item(string name, int tryb,player &gracz,string info)
 				}
 				FreeLibrary(cos);
 			}
-			gracz;
+			sound_rejection();
 		}
-		else if (tryb == 2)
+		else if (useDropInfo == 2)
 		{
-			gracz.drop_item(name, "¹ miksturê ¿ycia");
+			gracz.drop_item(height, startPoint, item);
 		}
-		else if (tryb == 3)
+		else if (useDropInfo == 3)
 		{
-			info_hp_potion();
+			info_hp_potion(height,startPoint);
 		}
 	}
 }

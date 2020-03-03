@@ -2,4 +2,5 @@
 #include "biblioteki.h"
 #include "player.h"
 
-player wait_n_hours(player &gracz, int hour = 0, int minute = 0);
+int waitingDamage(int height, int startPoint, player gracz, int hour, int minute);
+void wait_n_hours(int height, int startPoint, player &gracz);

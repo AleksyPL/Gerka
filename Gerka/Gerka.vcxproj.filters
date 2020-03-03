@@ -45,9 +45,6 @@
     <ClCompile Include="kowal.cpp">
       <Filter>Pliki źródłowe\Miejsca</Filter>
     </ClCompile>
-    <ClCompile Include="ui.cpp">
-      <Filter>Pliki źródłowe\Miejsca</Filter>
-    </ClCompile>
     <ClCompile Include="tawerna.cpp">
       <Filter>Pliki źródłowe\Miejsca</Filter>
     </ClCompile>
@@ -74,9 +71,6 @@
     </ClCompile>
     <ClCompile Include="karty.cpp">
       <Filter>Pliki źródłowe\Funkcje</Filter>
-    </ClCompile>
-    <ClCompile Include="trader.cpp">
-      <Filter>Pliki źródłowe\Miejsca</Filter>
     </ClCompile>
     <ClCompile Include="walka.cpp">
       <Filter>Pliki źródłowe\Miejsca</Filter>
@@ -108,9 +102,6 @@
     <ClCompile Include="trade_tab.cpp">
       <Filter>Pliki źródłowe\Inne</Filter>
     </ClCompile>
-    <ClCompile Include="trade.cpp">
-      <Filter>Pliki źródłowe\Inne</Filter>
-    </ClCompile>
     <ClCompile Include="chest.cpp">
       <Filter>Pliki źródłowe\Inne</Filter>
     </ClCompile>
@@ -135,6 +126,21 @@
     <ClCompile Include="wait.cpp">
       <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
+    <ClCompile Include="town square.cpp">
+      <Filter>Pliki źródłowe\Miejsca</Filter>
+    </ClCompile>
+    <ClCompile Include="general_store.cpp">
+      <Filter>Pliki źródłowe\Miejsca</Filter>
+    </ClCompile>
+    <ClCompile Include="trade_mode.cpp">
+      <Filter>Pliki źródłowe\Inne</Filter>
+    </ClCompile>
+    <ClCompile Include="load.cpp">
+      <Filter>Pliki źródłowe\Funkcje</Filter>
+    </ClCompile>
+    <ClCompile Include="dungeon.cpp">
+      <Filter>Pliki źródłowe\Miejsca</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="burdel.h">
@@ -144,9 +150,6 @@
       <Filter>Pliki nagłówkowe\Miejsca</Filter>
     </ClInclude>
     <ClInclude Include="tawerna.h">
-      <Filter>Pliki nagłówkowe\Miejsca</Filter>
-    </ClInclude>
-    <ClInclude Include="ui.h">
       <Filter>Pliki nagłówkowe\Miejsca</Filter>
     </ClInclude>
     <ClInclude Include="start.h">
@@ -172,9 +175,6 @@
     </ClInclude>
     <ClInclude Include="tytul.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
-    </ClInclude>
-    <ClInclude Include="trader.h">
-      <Filter>Pliki nagłówkowe\Miejsca</Filter>
     </ClInclude>
     <ClInclude Include="karty.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
@@ -209,9 +209,6 @@
     <ClInclude Include="biblioteki.h">
       <Filter>Pliki nagłówkowe\Inne</Filter>
     </ClInclude>
-    <ClInclude Include="trade.h">
-      <Filter>Pliki nagłówkowe\Inne</Filter>
-    </ClInclude>
     <ClInclude Include="chest.h">
       <Filter>Pliki nagłówkowe\Inne</Filter>
     </ClInclude>
@@ -232,6 +229,21 @@
     </ClInclude>
     <ClInclude Include="wait.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
+    </ClInclude>
+    <ClInclude Include="town square.h">
+      <Filter>Pliki nagłówkowe\Miejsca</Filter>
+    </ClInclude>
+    <ClInclude Include="general_store.h">
+      <Filter>Pliki nagłówkowe\Miejsca</Filter>
+    </ClInclude>
+    <ClInclude Include="trade_mode.h">
+      <Filter>Pliki nagłówkowe\Inne</Filter>
+    </ClInclude>
+    <ClInclude Include="load.h">
+      <Filter>Pliki nagłówkowe\Funkcje</Filter>
+    </ClInclude>
+    <ClInclude Include="dungeon.h">
+      <Filter>Pliki nagłówkowe\Miejsca</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

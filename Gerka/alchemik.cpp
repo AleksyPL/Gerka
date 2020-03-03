@@ -7,12 +7,13 @@
 
 player enter_laboratory(player gracz,alchemist alchemik)
 {
-	change_time(gracz, 0, 5);
+	int highlight = 0;
+	change_time(23,32,gracz, 0, 5);
 	if (gracz.hour >= 20 || gracz.hour <6)
 	{
-		system("cls");
-		print_info_box_from_file("Lab_closed");
-		change_time(gracz, 0, 5);
+		vector<string> message;
+		message.push_back("Lab closed");
+		tabSubmenuFancyTextOnly(23, 32, message,50);
 		return gracz;
 	}
 	int tryb = 0;
@@ -20,86 +21,46 @@ player enter_laboratory(player gracz,alchemist alchemik)
 	{
 		if (gracz.hour >= 20 || gracz.hour < 6)
 		{
-			print_info_box_from_string("Musisz ju¿ iœæ, zamykamy");
-			change_time(gracz, 0, 5);
+			alchemik.weAreClosing(gracz);
+			vector<string> message;
+			message.push_back("You have to go. We're closing.");
+			tabSubmenuFancyTextOnly(23, 32, message, 50);
+			change_time(23,32,gracz, 0, 5);
 			return gracz;
 		}
 		if (gracz.hp <= 0)
 		{
 			return gracz;
 		}
-		level_up(gracz);
-		system("cls");
-		string menu[60];
-		string info[8];
+		levelUp(23,32,gracz);
+		string menu[20];
 		long ceny[20];
 
-		//glowne staty 23 znaki
-		/* 1*/menu[0] = "PUNKTY SI£Y:";
-		/* 2*/menu[1] = "PUNKTY ZRÊCZNOŒCI:";
-		/* 3*/menu[2] = "PUNKTY INTELIGENCJI:";
-		/* 4*/menu[3] = "PUNKTY CHARYZMY:";
-		/* 5*/menu[4] = "PUNKTY SZCZÊŒCIA:";
-		/* 6*/menu[5] = "";
-		/* 7*/menu[6] = "";
-		/* 8*/menu[7] = "";
-		/* 9*/menu[8] = "";
-		/*10*/menu[9] = "";
-		/*11*/menu[10] = "";
-		/*12*/menu[11] = "";
-		/*13*/menu[12] = "";
-		/*14*/menu[13] = "";
-		/*15*/menu[14] = "";
-		/*16*/menu[15] = "";
-		/*17*/menu[16] = "";
-		/*18*/menu[17] = "";
-		/*19*/menu[18] = "";
-		/*20*/menu[19] = "";
-
-		//wartosci glownych statow
-		/* 1*/menu[20] = to_string(gracz.str);
-		/* 2*/menu[21] = to_string(gracz.agility);
-		/* 3*/menu[22] = to_string(gracz.intel);
-		/* 4*/menu[23] = to_string(gracz.charisma);
-		/* 5*/menu[24] = to_string(gracz.luck);
-		/* 6*/menu[25] = "";
-		/* 7*/menu[26] = "";
-		/* 8*/menu[27] = "";
-		/* 9*/menu[28] = "";
-		/*10*/menu[29] = "";
-		/*11*/menu[30] = "";
-		/*12*/menu[31] = "";
-		/*13*/menu[32] = "";
-		/*14*/menu[33] = "";
-		/*15*/menu[34] = "";
-		/*16*/menu[35] = "";
-		/*17*/menu[36] = "";
-		/*18*/menu[37] = "";
-		/*19*/menu[38] = "";
-		/*20*/menu[39] = "";
+		string info[20];
+		string local = "Alchemist lab";
 
 		if (tryb == 1)
 		{
-			/* 1*/menu[40] = alchemik.menu[0];
-			/* 2*/menu[41] = alchemik.menu[1];
-			/* 3*/menu[42] = alchemik.menu[2];
-			/* 4*/menu[43] = alchemik.menu[3];
-			/* 5*/menu[44] = alchemik.menu[4];
-			/* 6*/menu[45] = alchemik.menu[5];
-			/* 7*/menu[46] = alchemik.menu[6];
-			/* 8*/menu[47] = alchemik.menu[7];
-			/* 9*/menu[48] = alchemik.menu[8];
-			/*10*/menu[49] = alchemik.menu[9];
-			/*11*/menu[50] = alchemik.menu[10];
-			/*12*/menu[51] = alchemik.menu[11];
-			/*13*/menu[52] = alchemik.menu[12];
-			/*14*/menu[53] = alchemik.menu[13];
-			/*15*/menu[54] = alchemik.menu[14];
-			/*16*/menu[55] = alchemik.menu[15];
-			/*17*/menu[56] = alchemik.menu[16];
-			/*18*/menu[57] = alchemik.menu[17];
-			/*19*/menu[58] = alchemik.menu[18];
-			/*20*/menu[59] = alchemik.menu[19];
+			/* 1*/menu[0] = alchemik.menu[0];
+			/* 2*/menu[1] = alchemik.menu[1];
+			/* 3*/menu[2] = alchemik.menu[2];
+			/* 4*/menu[3] = alchemik.menu[3];
+			/* 5*/menu[4] = alchemik.menu[4];
+			/* 6*/menu[5] = alchemik.menu[5];
+			/* 7*/menu[6] = alchemik.menu[6];
+			/* 8*/menu[7] = alchemik.menu[7];
+			/* 9*/menu[8] = alchemik.menu[8];
+			/*10*/menu[9] = alchemik.menu[9];
+			/*11*/menu[10] = alchemik.menu[10];
+			/*12*/menu[11] = alchemik.menu[11];
+			/*13*/menu[12] = alchemik.menu[12];
+			/*14*/menu[13] = alchemik.menu[13];
+			/*15*/menu[14] = alchemik.menu[14];
+			/*16*/menu[15] = alchemik.menu[15];
+			/*17*/menu[16] = alchemik.menu[16];
+			/*18*/menu[17] = alchemik.menu[17];
+			/*19*/menu[18] = alchemik.menu[18];
+			/*20*/menu[19] = alchemik.menu[19];
 			ceny[0] = gracz.level * 100;
 			ceny[1] = alchemik.ceny[1];
 			ceny[2] = alchemik.ceny[2];
@@ -128,29 +89,41 @@ player enter_laboratory(player gracz,alchemist alchemik)
 			info[5] = alchemik.info[5];
 			info[6] = alchemik.info[6];
 			info[7] = alchemik.info[7];
+			info[8] = alchemik.info[8];
+			info[9] = alchemik.info[9];
+			info[10] = alchemik.info[10];
+			info[11] = alchemik.info[11];
+			info[12] = alchemik.info[12];
+			info[13] = alchemik.info[13];
+			info[14] = alchemik.info[14];
+			info[15] = alchemik.info[15];
+			info[16] = alchemik.info[16];
+			info[17] = alchemik.info[17];
+			info[18] = alchemik.info[18];
+			info[19] = alchemik.info[19];
 		}
 		else
 		{
-			/* 1*/menu[40] = "ROZMAWIAJ Z ALCHEMIKIEM";
-			/* 2*/menu[41] = "";
-			/* 3*/menu[42] = "";
-			/* 4*/menu[43] = "";
-			/* 5*/menu[44] = "";
-			/* 6*/menu[45] = "";
-			/* 7*/menu[46] = "";
-			/* 8*/menu[47] = "";
-			/* 9*/menu[48] = "";
-			/*10*/menu[49] = "";
-			/*11*/menu[50] = "";
-			/*12*/menu[51] = "";
-			/*13*/menu[52] = "";
-			/*14*/menu[53] = "";
-			/*15*/menu[54] = "";
-			/*16*/menu[55] = "";
-			/*17*/menu[56] = "";
-			/*18*/menu[57] = "";
-			/*19*/menu[58] = "";
-			/*20*/menu[59] = "";
+			/* 1*/menu[0] = "Talk to alchemist";
+			/* 2*/menu[1] = "";
+			/* 3*/menu[2] = "";
+			/* 4*/menu[3] = "";
+			/* 5*/menu[4] = "";
+			/* 6*/menu[5] = "";
+			/* 7*/menu[6] = "";
+			/* 8*/menu[7] = "";
+			/* 9*/menu[8] = "";
+			/*10*/menu[9] = "";
+			/*11*/menu[10] = "";
+			/*12*/menu[11] = "";
+			/*13*/menu[12] = "";
+			/*14*/menu[13] = "";
+			/*15*/menu[14] = "";
+			/*16*/menu[15] = "";
+			/*17*/menu[16] = "";
+			/*18*/menu[17] = "";
+			/*19*/menu[18] = "";
+			/*20*/menu[19] = "";
 			ceny[0] = 0;
 			ceny[1] = 0;
 			ceny[2] = 0;
@@ -171,14 +144,26 @@ player enter_laboratory(player gracz,alchemist alchemik)
 			ceny[17] = 0;
 			ceny[18] = 0;
 			ceny[19] = 0;
-			info[0] = "LABORATORIUM";
-			info[1] = "W: WRÓÆ NA RYNEK";
-			info[2] = "C: CZEKAJ";
+			info[0] = "Leave tavern";
+			info[1] = "Wait";
+			info[2] = "";
 			info[3] = "";
 			info[4] = "";
 			info[5] = "";
 			info[6] = "";
 			info[7] = "";
+			info[8] = "";
+			info[9] = "";
+			info[10] = "";
+			info[11] = "";
+			info[12] = "";
+			info[13] = "";
+			info[14] = "";
+			info[15] = "";
+			info[16] = "";
+			info[17] = "";
+			info[18] = "";
+			info[19] = "";
 		}
 		for (int i = 0; i < 20; i++)
 		{
@@ -192,29 +177,23 @@ player enter_laboratory(player gracz,alchemist alchemik)
 			}
 		}
 		range(gracz);
-		tab(gracz,info, menu, ceny);
-		cout << "Twój wybór to: ";
-		string wyb;
-		cin >> wyb;
-		wyb = string_tolower(wyb);
-		switch (wyb[0])
+		tab(gracz,highlight, local, info, menu, ceny);
+		switch (highlight)
 		{
-			//helmet
-		case '1':
+		case 20:
 		{
 			if (tryb == 0)
 			{
 				tryb = 1;
-				change_time(gracz, 0, 1);
+				change_time(23,32,gracz, 0, 1);
 			}
 			else
 			{
-				alchemik.buy_new_level_potion(gracz);
+				alchemik.buy_new_level_potion(23,32,gracz);
 			}
 			break;
 		}
-		//chestplate
-		case '2':
+		case 21:
 		{
 			if (tryb == 0)
 			{
@@ -222,32 +201,28 @@ player enter_laboratory(player gracz,alchemist alchemik)
 			}
 			else
 			{
-				alchemik.buy_hp_potion(gracz);
+				alchemik.buy_hp_potion(23,32,gracz);
 			}
 			break;
 		}
-		case 'c':
+		case 1:
 		{
-			gracz = wait_n_hours(gracz,20);
+			wait_n_hours(23, 32, gracz);
 			break;
 		}
-		case 'w':
+		case 0:
 		{
 			if (tryb == 0)
 			{
-				change_time(gracz, 0, 5);
+				change_time(23,32,gracz, 0, 5);
 				return gracz;
 			}
 			else if (tryb == 1)
 			{
 				tryb = 0;
-				change_time(gracz, 0, 1);
+				change_time(23,32,gracz, 0, 1);
 				break;
 			}
-		}
-		default:
-		{
-			system("cls");
 			break;
 		}
 		}

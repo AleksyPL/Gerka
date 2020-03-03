@@ -84,7 +84,7 @@ void boost_nerf(player &gracz)
 		}
 	}
 }
-void hungry_and_sober(player &gracz, int off_hunger, int off_sobering)
+void hungry_and_sober(int height, int startPoint, player &gracz, int off_hunger, int off_sobering)
 {
 	if (gracz.hour % 2 == 0)
 	{
@@ -94,7 +94,7 @@ void hungry_and_sober(player &gracz, int off_hunger, int off_sobering)
 		}
 		if (off_hunger == 0)
 		{
-			gracz.a_bit_hungry(1);
+			gracz.a_bit_hungry(height, startPoint, 1);
 		}
 	}
 	else
@@ -105,7 +105,7 @@ void hungry_and_sober(player &gracz, int off_hunger, int off_sobering)
 		}
 	}
 }
-void change_time(player &gracz, int hours, int minutes, int off_hunger, int off_sobering)
+void change_time(int height, int startPoint, player &gracz, int hours, int minutes, int off_hunger, int off_sobering)
 {
 	gracz.minute = gracz.minute + minutes;
 	while (gracz.minute >= 60)
@@ -121,7 +121,7 @@ void change_time(player &gracz, int hours, int minutes, int off_hunger, int off_
 			gracz.licznik_dnia = gracz.licznik_dnia + 1;
 			gracz.hour = 0;
 		}
-		hungry_and_sober(gracz, off_hunger, off_sobering);
+		hungry_and_sober(height, startPoint, gracz, off_hunger, off_sobering);
 		boost_nerf(gracz);
 	}
 }

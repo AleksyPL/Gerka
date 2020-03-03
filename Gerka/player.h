@@ -10,8 +10,8 @@ class player
 		int max_hp;							//Max punktów ¿ycia
 		int agility;						//zwinnoœæ
 		int intel;							//inteligencja
-		int luck;							//szczêœcie
 		int charisma;						//charyzma
+		int luck;							//szczêœcie
 		int level;							//poziom postaci
 		int exp;							//doswiadczenie
 		int exp_to_next_level;				//doswiadczenie do nastepnego poziomu
@@ -47,14 +47,14 @@ class player
 		int counter_boost_intel;
 		int before_nerf_intel;
 		int before_boost_intel;
-		int counter_nerf_luck;
-		int counter_boost_luck;
-		int before_nerf_luck;
-		int before_boost_luck;
 		int counter_nerf_charisma;
 		int counter_boost_charisma;
 		int before_nerf_charisma;
 		int before_boost_charisma;
+		int counter_nerf_luck;
+		int counter_boost_luck;
+		int before_nerf_luck;
+		int before_boost_luck;
 		int alko;
 		string quest_name;			//nazwa questa
 		string quest_id;				//identyfikator questa
@@ -62,21 +62,22 @@ class player
 		int quest_failed;			//znacznik czy quest jest zakoñczony negatywnie
 		int fight_complete;
 		int fight_failed;
+		int last_dungeon;
 		player();
 		void a_bit_sober();
-		void a_bit_hungry(int number = 0);
+		void a_bit_hungry(int height, int startPoint, int number = 0);
 		int find_usage_item(string nazwa);
 		int find_crafting_alchemy_item(string nazwa);
 		int find_crafting_forge_item(string nazwa);
 		int find_usage_item_index(string nazwa);
 		int find_crafting_alchemy_item_index(string nazwa);
 		int find_crafting_forge_item_index(string nazwa);
-		void drop_item(string nazwa, string ending);
-		void use_item(string nazwa, string komunikat);
-		void add_usage_item(string nazwa, int cena, int ilosc, int tryb=0);
-		void add_crafting_alchemy_item(string nazwa, int cena, int ilosc, int tryb = 0);
-		void add_crafting_forge_item(string nazwa, int cena, int ilosc, int tryb = 0);
-		void remove_usage_item(string nazwa, int ilosc);
+		void drop_item(int height, int startPoint, string item);
+		void use_item(int height, int startPoint, string item, string message);
+		void add_usage_item(string nazwa, int cena, int ilosc, int height, int startPoint,int skipBackpackChecking = 0);
+		void add_crafting_alchemy_item(string nazwa, int cena, int ilosc, int height, int startPoint, int skipBackpackChecking = 0);
+		void add_crafting_forge_item(string nazwa, int cena, int ilosc, int height, int startPoint, int skipBackpackChecking = 0);
+		void remove_usage_item(int height, int startPoint, string item, int amount);
 		void sort_usage_backpack();
 		void sort_crafting_alchemy_backpack();
 		void sort_crafting_forge_backpack();

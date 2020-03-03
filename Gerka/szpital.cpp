@@ -4,10 +4,12 @@
 #include "level_up.h"
 #include "czas.h"
 #include "wait.h"
+#include "boost_syf.h"
 
 player enter_hospital(player gracz, doctor lekarz)
 {
-	change_time(gracz, 0, 5);
+	int highlight = 0;
+	change_time(23,32,gracz, 0, 5);
 	int tryb = 0;
 	while (1)
 	{
@@ -15,79 +17,34 @@ player enter_hospital(player gracz, doctor lekarz)
 		{
 			return gracz;
 		}
-		level_up(gracz);
-		system("cls");
-		string menu[60];
-		string info[8];
+		levelUp(23,32, gracz);
+		string menu[20];
+		string info[20];
 		long ceny[20];
-
-		//glowne staty 23 znaki
-		/* 1*/menu[0] = "PUNKTY SI£Y:";
-		/* 2*/menu[1] = "PUNKTY ZRÊCZNOŒCI:";
-		/* 3*/menu[2] = "PUNKTY INTELIGENCJI:";
-		/* 4*/menu[3] = "PUNKTY CHARYZMY:";
-		/* 5*/menu[4] = "PUNKTY SZCZÊŒCIA:";
-		/* 6*/menu[5] = "";
-		/* 7*/menu[6] = "";
-		/* 8*/menu[7] = "";
-		/* 9*/menu[8] = "";
-		/*10*/menu[9] = "";
-		/*11*/menu[10] = "";
-		/*12*/menu[11] = "";
-		/*13*/menu[12] = "";
-		/*14*/menu[13] = "";
-		/*15*/menu[14] = "";
-		/*16*/menu[15] = "";
-		/*17*/menu[16] = "";
-		/*18*/menu[17] = "";
-		/*19*/menu[18] = "";
-		/*20*/menu[19] = "";
-
-		//wartosci glownych statow
-		/* 1*/menu[20] = to_string(gracz.str);
-		/* 2*/menu[21] = to_string(gracz.agility);
-		/* 3*/menu[22] = to_string(gracz.intel);
-		/* 4*/menu[23] = to_string(gracz.charisma);
-		/* 5*/menu[24] = to_string(gracz.luck);
-		/* 6*/menu[25] = "";
-		/* 7*/menu[26] = "";
-		/* 8*/menu[27] = "";
-		/* 9*/menu[28] = "";
-		/*10*/menu[29] = "";
-		/*11*/menu[30] = "";
-		/*12*/menu[31] = "";
-		/*13*/menu[32] = "";
-		/*14*/menu[33] = "";
-		/*15*/menu[34] = "";
-		/*16*/menu[35] = "";
-		/*17*/menu[36] = "";
-		/*18*/menu[37] = "";
-		/*19*/menu[38] = "";
-		/*20*/menu[39] = "";
-
+		string local = "Hospital";
+		
 		if (tryb == 1)
 		{
-			//Opcje w lokacji 35 znakow
-			/* 1*/menu[40] = lekarz.menu[0];
-			/* 2*/menu[41] = lekarz.menu[1];
-			/* 3*/menu[42] = lekarz.menu[2];
-			/* 4*/menu[43] = lekarz.menu[3];
-			/* 5*/menu[44] = lekarz.menu[4];
-			/* 6*/menu[45] = lekarz.menu[5];
-			/* 7*/menu[46] = lekarz.menu[6];
-			/* 8*/menu[47] = lekarz.menu[7];
-			/* 9*/menu[48] = lekarz.menu[8];
-			/*10*/menu[49] = lekarz.menu[9];
-			/*11*/menu[50] = lekarz.menu[10];
-			/*12*/menu[51] = lekarz.menu[11];
-			/*13*/menu[52] = lekarz.menu[12];
-			/*14*/menu[53] = lekarz.menu[13];
-			/*15*/menu[54] = lekarz.menu[14];
-			/*16*/menu[55] = lekarz.menu[15];
-			/*17*/menu[56] = lekarz.menu[16];
-			/*18*/menu[57] = lekarz.menu[17];
-			/*19*/menu[58] = lekarz.menu[18];
-			/*20*/menu[59] = lekarz.menu[19];
+			/* 1*/menu[0] = lekarz.menu[0];
+			/* 2*/menu[1] = lekarz.menu[1];
+			/* 3*/menu[2] = lekarz.menu[2];
+			/* 4*/menu[3] = lekarz.menu[3];
+			/* 5*/menu[4] = lekarz.menu[4];
+			/* 6*/menu[5] = lekarz.menu[5];
+			/* 7*/menu[6] = lekarz.menu[6];
+			/* 8*/menu[7] = lekarz.menu[7];
+			/* 9*/menu[8] = lekarz.menu[8];
+			/*10*/menu[9] = lekarz.menu[9];
+			/*11*/menu[10] = lekarz.menu[10];
+			/*12*/menu[11] = lekarz.menu[11];
+			/*13*/menu[12] = lekarz.menu[12];
+			/*14*/menu[13] = lekarz.menu[13];
+			/*15*/menu[14] = lekarz.menu[14];
+			/*16*/menu[15] = lekarz.menu[15];
+			/*17*/menu[16] = lekarz.menu[16];
+			/*18*/menu[17] = lekarz.menu[17];
+			/*19*/menu[18] = lekarz.menu[18];
+			/*20*/menu[19] = lekarz.menu[19];
 			ceny[0] = lekarz.ceny[0];
 			ceny[1] = lekarz.ceny[1];
 			ceny[2] = lekarz.ceny[2];
@@ -116,29 +73,41 @@ player enter_hospital(player gracz, doctor lekarz)
 			info[5] = lekarz.info[5];
 			info[6] = lekarz.info[6];
 			info[7] = lekarz.info[7];
+			info[8] = lekarz.info[8];
+			info[9] = lekarz.info[9];
+			info[10] = lekarz.info[10];
+			info[11] = lekarz.info[11];
+			info[12] = lekarz.info[12];
+			info[13] = lekarz.info[13];
+			info[14] = lekarz.info[14];
+			info[15] = lekarz.info[15];
+			info[16] = lekarz.info[16];
+			info[17] = lekarz.info[17];
+			info[18] = lekarz.info[18];
+			info[19] = lekarz.info[19];
 		}
 		else
 		{
-			/* 1*/menu[40] = "ROZMAWIAJ Z LEKARZEM";
-			/* 2*/menu[41] = "";
-			/* 3*/menu[42] = "";
-			/* 4*/menu[43] = "";
-			/* 5*/menu[44] = "";
-			/* 6*/menu[45] = "";
-			/* 7*/menu[46] = "";
-			/* 8*/menu[47] = "";
-			/* 9*/menu[48] = "";
-			/*10*/menu[49] = "";
-			/*11*/menu[50] = "";
-			/*12*/menu[51] = "";
-			/*13*/menu[52] = "";
-			/*14*/menu[53] = "";
-			/*15*/menu[54] = "";
-			/*16*/menu[55] = "";
-			/*17*/menu[56] = "";
-			/*18*/menu[57] = "";
-			/*19*/menu[58] = "";
-			/*20*/menu[59] = "";
+			/* 1*/menu[0] = "Talk to doctor";
+			/* 2*/menu[1] = "";
+			/* 3*/menu[2] = "";
+			/* 4*/menu[3] = "";
+			/* 5*/menu[4] = "";
+			/* 6*/menu[5] = "";
+			/* 7*/menu[6] = "";
+			/* 8*/menu[7] = "";
+			/* 9*/menu[8] = "";
+			/*10*/menu[9] = "";
+			/*11*/menu[10] = "";
+			/*12*/menu[11] = "";
+			/*13*/menu[12] = "";
+			/*14*/menu[13] = "";
+			/*15*/menu[14] = "";
+			/*16*/menu[15] = "";
+			/*17*/menu[16] = "";
+			/*18*/menu[17] = "";
+			/*19*/menu[18] = "";
+			/*20*/menu[19] = "";
 			ceny[0] = 0;
 			ceny[1] = 0;
 			ceny[2] = 0;
@@ -159,14 +128,26 @@ player enter_hospital(player gracz, doctor lekarz)
 			ceny[17] = 0;
 			ceny[18] = 0;
 			ceny[19] = 0;
-			info[0] = "SZPITAL";
-			info[1] = "W: WRÓÆ NA RYNEK";
-			info[2] = "C: CZEKAJ";
+			info[0] = "Leave hospital";
+			info[1] = "Wait";
+			info[2] = "";
 			info[3] = "";
 			info[4] = "";
 			info[5] = "";
 			info[6] = "";
 			info[7] = "";
+			info[8] = "";
+			info[9] = "";
+			info[10] = "";
+			info[11] = "";
+			info[12] = "";
+			info[13] = "";
+			info[14] = "";
+			info[15] = "";
+			info[16] = "";
+			info[17] = "";
+			info[18] = "";
+			info[19] = "";
 		}
 
 
@@ -182,27 +163,27 @@ player enter_hospital(player gracz, doctor lekarz)
 			}
 		}
 		range(gracz);
-		tab(gracz, info, menu, ceny);
-		cout << "Twój wybór to: ";
-		string wyb;
-		cin >> wyb;
-		wyb = string_tolower(wyb);
-		switch (wyb[0])
+		tab(gracz, highlight, local, info, menu, ceny);
+		if (highlight >= 22 && highlight <= 26 && tryb == 1)
 		{
-		case '1':
+			lekarz.remove_nerf(23, 32, gracz, highlight-22);
+		}
+		switch (highlight)
+		{
+		case 20:
 		{
 			if (tryb == 0)
 			{
-				change_time(gracz, 0, 1);
+				change_time(23,32,gracz, 0, 1);
 				tryb = 1;
 			}
 			else
 			{
-				lekarz.heal(gracz);
+				lekarz.heal(23, 32, gracz);
 			}
 			break;
 		}
-		case '2':
+		case 21:
 		{
 			if (tryb == 0)
 			{
@@ -210,93 +191,28 @@ player enter_hospital(player gracz, doctor lekarz)
 			}
 			else
 			{
-				lekarz.sober(gracz);
+				lekarz.sober(23, 32, gracz);
 			}
 			break;
 		}
-		case '3':
+		case 1:
+		{
+			wait_n_hours(23, 32, gracz);
+			break;
+		}
+		case 0:
 		{
 			if (tryb == 0)
 			{
-				;
-			}
-			else
-			{
-				lekarz.remove_nerf(gracz,1);
-			}
-			break;
-		}
-		case '4':
-		{
-			if (tryb == 0)
-			{
-				;
-			}
-			else
-			{
-				lekarz.remove_nerf(gracz, 2);
-			}
-			break;
-		}
-		case '5':
-		{
-			if (tryb == 0)
-			{
-				;
-			}
-			else
-			{
-				lekarz.remove_nerf(gracz, 3);
-			}
-			break;
-		}
-		case '6':
-		{
-			if (tryb == 0)
-			{
-				;
-			}
-			else
-			{
-				lekarz.remove_nerf(gracz, 4);
-			}
-			break;
-		}
-		case '7':
-		{
-			if (tryb == 0)
-			{
-				;
-			}
-			else
-			{
-				lekarz.remove_nerf(gracz, 5);
-			}
-			break;
-		}
-		case 'c':
-		{
-			gracz = wait_n_hours(gracz);
-			break;
-		}
-		case 'w':
-		{
-			if (tryb == 0)
-			{
-				change_time(gracz, 0, 5);
+				change_time(23,32,gracz, 0, 5);
 				return gracz;
 			}
 			else if (tryb == 1)
 			{
 				tryb = 0;
-				change_time(gracz, 0, 1);
+				change_time(23,32,gracz, 0, 1);
 				break;
 			}
-		}
-		default:
-		{
-			system("cls");
-			break;
 		}
 		}
 	}

@@ -2,31 +2,33 @@
 #include "zakres.h"
 #include "czas.h"
 
-void sleep(player &gracz, int cena,int hours, int minutes)
+void sleep(player &gracz, int cena,int hours, int minutes, int height, int startPoint, vector <string> &message)
 {
+	//string tab[2];
 	if (gracz.gold < cena)
 	{
-		no_money();
+		message.push_back(no_money());
 	}
 	else
 	{
 		if (gracz.hunger < 5)
 		{
-			cout << "Jesteœ zbyt g³ody by zasn¹æ" << endl;
+			message.push_back("You are too hungry to fall asleep");
 		}
 		else
 		{
 			if (minutes == 0)
 			{
-				cout << "Bezpiecznie przesypiasz " << hours << " godzin" << endl;
+				message.push_back("You sleep safely for " + to_string(hours) + " hours");
 			}
 			else
 			{
-				cout << "Bezpiecznie przesypiasz " << hours << " godzin i " << minutes << " minut" << endl;
+				message.push_back("You sleep safely for " + to_string(hours) + " hours" + to_string(minutes) + " minutes");
 			}
 			if (gracz.hp < gracz.max_hp)
 			{
-				cout << "Regenerujesz swoje si³y" << endl;
+				
+				message.push_back("You regenerate some health points");
 				gracz.hp = gracz.hp + (0.05*gracz.hp);
 			}
 			gracz.gold = gracz.gold - cena;
@@ -34,9 +36,8 @@ void sleep(player &gracz, int cena,int hours, int minutes)
 			{
 				gracz.hp = gracz.max_hp;
 			}
-			change_time(gracz, hours, minutes);
+			change_time(height, startPoint, gracz, hours, minutes);
 			range(gracz);
 		}
 	}
-	system("PAUSE");
 }

@@ -16,7 +16,7 @@ public:
 	int exp_for_complete_quest;
 	string menu[20];
 	int ceny[20];
-	string info[8];
+	string info[20];
 	dweller();
 	int gold_info();
 	int rep_level_info();
@@ -33,28 +33,34 @@ public:
 	void quest_id_set(string a);
 	void gold_for_complete_quest_set(int a);
 	void exp_for_complete_quest_set(int a);
+	void weAreClosing(player gracz);
+	void reject_quest_giving(int height, int startPoint);
 };
 
 class barman : public dweller
 {
 public:
 	barman();
-	void gossip(player &gracz);
-	void give_room(player &gracz);
-	void sell_food(player &gracz, int ilosc);
-	void sell_beer(player &gracz);
+	void gossip(int height, int startPoint, player& gracz);
+	void give_room(int height, int startPoint, player &gracz);
+	void sell_food(int height, int startPoint, player &gracz, int ilosc);
+	void sell_beer(int height, int startPoint, player &gracz);
 };
 
 class seller : public dweller
 {
 public:
-	string menu_items[120];
-	int menu_price[120];
+	string menu_items[20];
+	int menu_price[20];
 	seller();
-	void load_merch();
-	int find_item_index(string nazwa);
-	void add_prices(player &gracz);
-	int search_on_lists(string nazwa);
+	void loadMerch(int leftSideCard);
+	int loadPrices(string item);
+	string makeString(int howLong, string item, int amount, int price);
+	void buyItem(int height, int startPoint, player& gracz, string item, int amount, int price, bool &anythingSoldOrBought);
+	void sellItem(int height, int startPoint, player &gracz, string item, int amount, int price, bool &anythingSoldOrBought);
+	//int find_item_index(string nazwa);
+	
+	//int search_on_lists(string nazwa);
 };
 
 class blacksmith : public dweller
@@ -66,38 +72,37 @@ public:
 	void load_weapons();
 	void generate_merch(player gracz);
 	void load_player_points(player gracz);
-	void print_image();
-	void power_up(player &gracz, int tryb);
+	void print_image(vector <string>& message);
+	void power_up(int height, int startPoint, player &gracz, int tryb);
 };
 
 class alchemist : public dweller
 {
 public:
 	alchemist();
-	void show_image();
-	void buy_new_level_potion(player &gracz);
-	void buy_hp_potion(player &gracz);
+	void show_image(vector <string>& message);
+	void buy_new_level_potion(int height, int startPoint, player &gracz);
+	void buy_hp_potion(int height, int startPoint, player &gracz);
 };
 
 class shaman : public dweller
 {
 public:
 	shaman();
-	void show_image();
-	void add_boost(player &gracz, int tryb);
-	void reject_quest_giving();
-	int dialog_box();
-	void everything_about_quests(player &gracz);
+	void show_image(vector <string>& message);
+	void add_boost(int height, int startPoint, player &gracz, int tryb);
+	int dialog_box(int height, int startPoint);
+	void everything_about_quests(int height, int startPoint, player &gracz);
 };
 
 class doctor : public dweller
 {
 public:
 	doctor();
-	void show_image();
-	void heal(player &gracz);
-	void sober(player &gracz);
-	void remove_nerf(player &gracz, int tryb);
+	void show_image(vector <string>& message);
+	void heal(int height, int startPoint, player &gracz);
+	void sober(int height, int startPoint, player &gracz);
+	void remove_nerf(int height, int startPoint, player &gracz, int tryb);
 };
 
 class chest
@@ -121,6 +126,6 @@ public:
 	void sort_usage();
 	void sort_alchemy();
 	void sort_forge();
-	void move_to_player(int numer, player &gracz);
-	void move_to_chest(int numer, player &gracz);
+	void move_to_player(int height, int startPoint, int numer, player &gracz);
+	void move_to_chest(int height, int startPoint, int numer, player &gracz);
 };

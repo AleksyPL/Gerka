@@ -2,4 +2,5 @@
 #include "biblioteki.h"
 #include "player.h"
 
-void level_up(player &gracz, int tryb=0);
+void removeNegativeEffects(player& gracz);
+void levelUp(int height, int startPoint, player& gracz, int skipCheckingXP=0);

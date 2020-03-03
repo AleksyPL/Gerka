@@ -4,6 +4,7 @@
 #include "sleep.h"
 #include "quest.h"
 #include "czas.h"
+#include "tabelka.h"
 
 
 dweller::dweller()
@@ -77,21 +78,67 @@ void dweller::exp_for_complete_quest_set(int a)
 {
 	this->exp_for_complete_quest = a;
 }
+void dweller::weAreClosing(player gracz)
+{
+	WINDOW* topbar = newwin(3, 47, 0, 46);
+	wborder(topbar, 0, 0, 0, 0, ACS_TTEE, ACS_TTEE, ACS_PLUS, ACS_BTEE);
+	{
+		string temp = "Day " + to_string(gracz.licznik_dnia) + " - ";
+		if (gracz.hour < 10)
+		{
+			temp += "0" + to_string(gracz.hour);
+		}
+		else
+		{
+			temp += to_string(gracz.hour);
+		}
+		temp += ":";
+		if (gracz.minute < 10)
+		{
+			temp += "0" + to_string(gracz.minute);
+		}
+		else
+		{
+			temp += to_string(gracz.minute);
+		}
+		windowDrawOnCenter(topbar, 1, 44, temp.c_str());
+	}
+	wrefresh(topbar);
+}
+void dweller::reject_quest_giving(int height, int startPoint)
+{
+	vector <string> message = { "You're already doing some task" };
+	sound_rejection();
+	tabSubmenuTextOnly(height,startPoint,message);
+}
 barman::barman()
 {
 	name = "BARMAN";
-	info[0] = "TAWERNA - ROZMOWA Z BARMANEM";
-	info[1] = "W: ZAKOÑCZ ROZMOWÊ";
-	info[2] = "M: MIKSTURA ¯YCIA";
+	info[0] = "End the conversation";
+	info[1] = "";
+	info[2] = "";
 	info[3] = "";
 	info[4] = "";
 	info[5] = "";
 	info[6] = "";
 	info[7] = "";
-	menu[0] = "S£UCHAJ PLOTEK";
-	menu[1] = "ZAPYTAJ O NOCLEG";
-	menu[2] = "KUP POSI£EK";
-	menu[3] = "KUP PIWO";
+	info[8] = "";
+	info[8] = "";
+	info[10] = "";
+	info[11] = "";
+	info[12] = "";
+	info[13] = "";
+	info[14] = "";
+	info[15] = "";
+	info[16] = "";
+	info[17] = "";
+	info[18] = "";
+	info[18] = "";
+	info[19] = "";
+	menu[0] = "Listen to gossip";
+	menu[1] = "Ask for a place to stay the night";
+	menu[2] = "Buy a meal";
+	menu[3] = "Buy a beer";
 	menu[4] = "";
 	menu[5] = "";
 	menu[6] = "";
@@ -129,13 +176,14 @@ barman::barman()
 	ceny[18] = 0;
 	ceny[19] = 0;
 }
-void barman::gossip(player &gracz)
+void barman::gossip(int height, int startPoint, player &gracz)
 {
 	srand((unsigned int)time(NULL));
-	int ran = rand() % 10;
+	int ran = rand() % 11;
 	string linia;
 	int nr_linii = 1;
 	fstream plik;
+	vector<string> message;
 	if (ran == 0)
 	{
 		plik.open("./txt/tawerna/plota0.txt", ios::in);
@@ -176,44 +224,49 @@ void barman::gossip(player &gracz)
 	{
 		plik.open("./txt/tawerna/plota9.txt", ios::in);
 	}
+	else if (ran == 10)
+	{
+		plik.open("./txt/tawerna/plota10.txt", ios::in);
+	}
 	while (!plik.eof())
 	{
 		getline(plik, linia);
-		cout << linia << endl;
+		message.push_back(linia);
 	}
 	plik.close();
-	system("PAUSE");
-	change_time(gracz, 0, 1);
-	system("cls");
+	tabSubmenuFancyTextOnly(height, startPoint, message,50);
+	change_time(height, startPoint, gracz, 0, 1);
 }
-void barman::give_room(player &gracz)
+void barman::give_room(int height, int startPoint, player &gracz)
 {
 	if (gracz.hunger >= 5)
 	{
+		vector<string> message;
 		if (gracz.gold >= ceny[1])
 		{
-			cout << "Karczmarz prowadzi ciê do wolnego pokoju" << endl;
-			change_time(gracz, 0, 5);
-			sleep(gracz, ceny[1], 8, 0);
+			message.push_back("The barman leads you to the free room");
+			change_time(height, startPoint, gracz, 0, 5);
+			sleep(gracz, ceny[1], 8, 0, height, startPoint,message);
 		}
 		else
 		{
-			no_money();
+			message.push_back(no_money());
 		}
+		tabSubmenuTextOnly(height, startPoint, message);
 	}
 }
-void barman::sell_food(player &gracz, int ilosc)
+void barman::sell_food(int height, int startPoint, player &gracz, int ilosc)
 {
+	vector<string> message;
 	if (gracz.hunger == 10)
 	{
-		cout << "Nie jesteœ g³odny" << endl;
-		system("PAUSE");
+		message.push_back("You're not hungry");
 	}
 	else
 	{
 		if (gracz.gold >= ceny[2])
 		{
-			cout << "Zajadasz schabowego ze smakiem" << endl;
+			message.push_back("You're having a meal");
 			gracz.gold = gracz.gold - ceny[2];
 			gracz.hunger = gracz.hunger + ilosc;
 			gracz.hp = gracz.hp + (0.01*gracz.max_hp);
@@ -225,28 +278,30 @@ void barman::sell_food(player &gracz, int ilosc)
 			{
 				gracz.hunger = 10;
 			}
-			change_time(gracz, 0, 10);
+			change_time(height, startPoint, gracz, 0, 10);
 		}
 		else
 		{
-			no_money();
+			message.push_back(no_money());
 		}
-		system("PAUSE");
 	}
+	tabSubmenuTextOnly(height, startPoint, message);
 }
-void barman::sell_beer(player &gracz)
+void barman::sell_beer(int height, int startPoint, player &gracz)
 {
+	vector<string> message;
 	if (gracz.alko == 10)
 	{
-		cout << "TOBIE JU¯ WYSTARCZY!!!" << endl;
-		system("PAUSE");
+		message.push_back("You're too drunk to drink more");
 	}
 	else if (gracz.gold >= ceny[3])
 	{
+		message.push_back("You're drinking a cold beer");
+		message.push_back("");
 		gracz.gold = gracz.gold - ceny[3];
 		sound_beer();
 		gracz.alko = gracz.alko + 1;
-		change_time(gracz, 0, 10, 0, 1);
+		change_time(height, startPoint, gracz, 0, 10, 0, 1);
 		if (gracz.alko == 2 || gracz.alko == 4 || gracz.alko == 6 || gracz.alko == 8 || gracz.alko == 10)
 		{
 			gracz.hunger = gracz.hunger - 1;
@@ -258,30 +313,40 @@ void barman::sell_beer(player &gracz)
 		while (!plik.eof())
 		{
 			getline(plik, linia);
-			cout << linia << endl;
+			message.push_back(linia);
 		}
 		plik.close();
-		cout << "Pijesz piwo" << endl;
-		system("PAUSE");
 	}
 	else
 	{
-		no_money();
-		system("PAUSE");
+		message.push_back(no_money());
 	}
+	tabSubmenuTextOnly(height, startPoint, message);
 }
 seller::seller()
 {
 	name = "HANDLARZ";
-	info[0] = "SKLEP WIELOBRAN¯OWY - ROZMOWA Z HANDLARZEM";
-	info[1] = "W: ZAKOÑCZ ROZMOWÊ";
-	info[2] = "M: MIKSTURA ¯YCIA";
+	info[0] = "End the conversation";
+	info[1] = "";
+	info[2] = "";
 	info[3] = "";
 	info[4] = "";
 	info[5] = "";
 	info[6] = "";
 	info[7] = "";
-	menu[0] = "ZACZNIJ HANDEL";
+	info[8] = "";
+	info[9] = "";
+	info[10] = "";
+	info[11] = "";
+	info[12] = "";
+	info[13] = "";
+	info[14] = "";
+	info[15] = "";
+	info[16] = "";
+	info[17] = "";
+	info[18] = "";
+	info[19] = "";
+	menu[0] = "Start to trade";
 	menu[1] = "";
 	menu[2] = "";
 	menu[3] = "";
@@ -321,1283 +386,564 @@ seller::seller()
 	ceny[17] = 0;
 	ceny[18] = 0;
 	ceny[19] = 0;
-	for (int i = 0; i < 80; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		menu_items[i] = "";
 		menu_price[i] = 0;
 	}
 }
-void seller::load_merch()
+void seller::loadMerch(int leftSideCard)
 {
-		string linia;
-		fstream plik;
-		int nr_linii = 1;
+	for (int i = 0; i < 20; i++)
+	{
+		menu_items[i] = "";
+	}
+	string linia;
+	fstream plik;
+	int nr_linii = 1;
+	if (leftSideCard == 0)
+	{
 		plik.open("./txt/trader/items_trash.txt", ios::in);
 		while (getline(plik, linia))
 		{
-			switch (nr_linii)
-			{
-			case 1:
-			{
-				menu_items[0] = linia;
-				break;
-			}
-			case 2:
-			{
-				menu_price[0] = atoi(linia.c_str());
-				break;
-			}
-			case 3:
-			{
-				menu_items[1] = linia;
-				break;
-			}
-			case 4:
-			{
-				menu_price[1] = atoi(linia.c_str());
-				break;
-			}
-			case 5:
-			{
-				menu_items[2] = linia;
-				break;
-			}
-			case 6:
-			{
-				menu_price[2] = atoi(linia.c_str());
-				break;
-			}
-			case 7:
-			{
-				menu_items[3] = linia;
-				break;
-			}
-			case 8:
-			{
-				menu_price[3] = atoi(linia.c_str());
-				break;
-			}
-			case 9:
-			{
-				menu_items[4] = linia;
-				break;
-			}
-			case 10:
-			{
-				menu_price[4] = atoi(linia.c_str());
-				break;
-			}
-			case 11:
-			{
-				menu_items[5] = linia;
-				break;
-			}
-			case 12:
-			{
-				menu_price[5] = atoi(linia.c_str());
-				break;
-			}
-			case 13:
-			{
-				menu_items[6] = linia;
-				break;
-			}
-			case 14:
-			{
-				menu_price[6] = atoi(linia.c_str());
-				break;
-			}
-			case 15:
-			{
-				menu_items[7] = linia;
-				break;
-			}
-			case 16:
-			{
-				menu_price[7] = atoi(linia.c_str());
-				break;
-			}
-			case 17:
-			{
-				menu_items[8] = linia;
-				break;
-			}
-			case 18:
-			{
-				menu_price[8] = atoi(linia.c_str());
-				break;
-			}
-			case 19:
-			{
-				menu_items[9] = linia;
-				break;
-			}
-			case 20:
-			{
-				menu_price[9] = atoi(linia.c_str());
-				break;
-			}
-			case 21:
-			{
-				menu_items[10] = linia;
-				break;
-			}
-			case 22:
-			{
-				menu_price[10] = atoi(linia.c_str());
-				break;
-			}
-			case 23:
-			{
-				menu_items[11] = linia;
-				break;
-			}
-			case 24:
-			{
-				menu_price[11] = atoi(linia.c_str());
-				break;
-			}
-			case 25:
-			{
-				menu_items[12] = linia;
-				break;
-			}
-			case 26:
-			{
-				menu_price[12] = atoi(linia.c_str());
-				break;
-			}
-			case 27:
-			{
-				menu_items[13] = linia;
-				break;
-			}
-			case 28:
-			{
-				menu_price[13] = atoi(linia.c_str());
-				break;
-			}
-			case 29:
-			{
-				menu_items[14] = linia;
-				break;
-			}
-			case 30:
-			{
-				menu_price[14] = atoi(linia.c_str());
-				break;
-			}
-			case 31:
-			{
-				menu_items[15] = linia;
-				break;
-			}
-			case 32:
-			{
-				menu_price[15] = atoi(linia.c_str());
-				break;
-			}
-			case 33:
-			{
-				menu_items[16] = linia;
-				break;
-			}
-			case 34:
-			{
-				menu_price[16] = atoi(linia.c_str());
-				break;
-			}
-			case 35:
-			{
-				menu_items[17] = linia;
-				break;
-			}
-			case 36:
-			{
-				menu_price[17] = atoi(linia.c_str());
-				break;
-			}
-			case 37:
-			{
-				menu_items[18] = linia;
-				break;
-			}
-			case 38:
-			{
-				menu_price[18] = atoi(linia.c_str());
-				break;
-
-			}
-			case 39:
-			{
-				menu_items[19] = linia;
-				break;
-			}
-			case 40:
-			{
-				menu_price[19] = atoi(linia.c_str());
-				break;
-			}
-			}
+			menu_items[nr_linii - 1] = linia;
 			nr_linii++;
 		}
 		plik.close();
-		nr_linii = 1;
+	}
+	else if (leftSideCard == 1)
+	{
 		plik.open("./txt/trader/items_low.txt", ios::in);
 		while (getline(plik, linia))
 		{
-			switch (nr_linii)
-			{
-			case 1:
-			{
-				menu_items[20] = linia;
-				break;
-			}
-			case 2:
-			{
-				menu_price[20] = atoi(linia.c_str());
-				break;
-			}
-			case 3:
-			{
-				menu_items[21] = linia;
-				break;
-			}
-			case 4:
-			{
-				menu_price[21] = atoi(linia.c_str());
-				break;
-			}
-			case 5:
-			{
-				menu_items[22] = linia;
-				break;
-			}
-			case 6:
-			{
-				menu_price[22] = atoi(linia.c_str());
-				break;
-			}
-			case 7:
-			{
-				menu_items[23] = linia;
-				break;
-			}
-			case 8:
-			{
-				menu_price[23] = atoi(linia.c_str());
-				break;
-			}
-			case 9:
-			{
-				menu_items[24] = linia;
-				break;
-			}
-			case 10:
-			{
-				menu_price[24] = atoi(linia.c_str());
-				break;
-			}
-			case 11:
-			{
-				menu_items[25] = linia;
-				break;
-			}
-			case 12:
-			{
-				menu_price[25] = atoi(linia.c_str());
-				break;
-			}
-			case 13:
-			{
-				menu_items[26] = linia;
-				break;
-			}
-			case 14:
-			{
-				menu_price[26] = atoi(linia.c_str());
-				break;
-			}
-			case 15:
-			{
-				menu_items[27] = linia;
-				break;
-			}
-			case 16:
-			{
-				menu_price[27] = atoi(linia.c_str());
-				break;
-			}
-			case 17:
-			{
-				menu_items[28] = linia;
-				break;
-			}
-			case 18:
-			{
-				menu_price[28] = atoi(linia.c_str());
-				break;
-			}
-			case 19:
-			{
-				menu_items[29] = linia;
-				break;
-			}
-			case 20:
-			{
-				menu_price[29] = atoi(linia.c_str());
-				break;
-			}
-			case 21:
-			{
-				menu_items[30] = linia;
-				break;
-			}
-			case 22:
-			{
-				menu_price[30] = atoi(linia.c_str());
-				break;
-			}
-			case 23:
-			{
-				menu_items[31] = linia;
-				break;
-			}
-			case 24:
-			{
-				menu_price[31] = atoi(linia.c_str());
-				break;
-			}
-			case 25:
-			{
-				menu_items[32] = linia;
-				break;
-			}
-			case 26:
-			{
-				menu_price[32] = atoi(linia.c_str());
-				break;
-			}
-			case 27:
-			{
-				menu_items[33] = linia;
-				break;
-			}
-			case 28:
-			{
-				menu_price[33] = atoi(linia.c_str());
-				break;
-			}
-			case 29:
-			{
-				menu_items[34] = linia;
-				break;
-			}
-			case 30:
-			{
-				menu_price[34] = atoi(linia.c_str());
-				break;
-			}
-			case 31:
-			{
-				menu_items[35] = linia;
-				break;
-			}
-			case 32:
-			{
-				menu_price[35] = atoi(linia.c_str());
-				break;
-			}
-			case 33:
-			{
-				menu_items[36] = linia;
-				break;
-			}
-			case 34:
-			{
-				menu_price[36] = atoi(linia.c_str());
-				break;
-			}
-			case 35:
-			{
-				menu_items[37] = linia;
-				break;
-			}
-			case 36:
-			{
-				menu_price[37] = atoi(linia.c_str());
-				break;
-			}
-			case 37:
-			{
-				menu_items[38] = linia;
-				break;
-			}
-			case 38:
-			{
-				menu_price[38] = atoi(linia.c_str());
-				break;
-
-			}
-			case 39:
-			{
-				menu_items[39] = linia;
-				break;
-			}
-			case 40:
-			{
-				menu_price[39] = atoi(linia.c_str());
-				break;
-			}
-			}
+			menu_items[nr_linii - 1] = linia;
 			nr_linii++;
 		}
 		plik.close();
-		nr_linii = 1;
+	}
+	else if (leftSideCard == 2)
+	{
 		plik.open("./txt/trader/items_mid.txt", ios::in);
 		while (getline(plik, linia))
 		{
-			switch (nr_linii)
-			{
-			case 1:
-			{
-				menu_items[40] = linia;
-				break;
-			}
-			case 2:
-			{
-				menu_price[40] = atoi(linia.c_str());
-				break;
-			}
-			case 3:
-			{
-				menu_items[41] = linia;
-				break;
-			}
-			case 4:
-			{
-				menu_price[41] = atoi(linia.c_str());
-				break;
-			}
-			case 5:
-			{
-				menu_items[42] = linia;
-				break;
-			}
-			case 6:
-			{
-				menu_price[42] = atoi(linia.c_str());
-				break;
-			}
-			case 7:
-			{
-				menu_items[43] = linia;
-				break;
-			}
-			case 8:
-			{
-				menu_price[43] = atoi(linia.c_str());
-				break;
-			}
-			case 9:
-			{
-				menu_items[44] = linia;
-				break;
-			}
-			case 10:
-			{
-				menu_price[44] = atoi(linia.c_str());
-				break;
-			}
-			case 11:
-			{
-				menu_items[45] = linia;
-				break;
-			}
-			case 12:
-			{
-				menu_price[45] = atoi(linia.c_str());
-				break;
-			}
-			case 13:
-			{
-				menu_items[46] = linia;
-				break;
-			}
-			case 14:
-			{
-				menu_price[46] = atoi(linia.c_str());
-				break;
-			}
-			case 15:
-			{
-				menu_items[47] = linia;
-				break;
-			}
-			case 16:
-			{
-				menu_price[47] = atoi(linia.c_str());
-				break;
-			}
-			case 17:
-			{
-				menu_items[48] = linia;
-				break;
-			}
-			case 18:
-			{
-				menu_price[48] = atoi(linia.c_str());
-				break;
-			}
-			case 19:
-			{
-				menu_items[49] = linia;
-				break;
-			}
-			case 20:
-			{
-				menu_price[49] = atoi(linia.c_str());
-				break;
-			}
-			case 21:
-			{
-				menu_items[50] = linia;
-				break;
-			}
-			case 22:
-			{
-				menu_price[50] = atoi(linia.c_str());
-				break;
-			}
-			case 23:
-			{
-				menu_items[51] = linia;
-				break;
-			}
-			case 24:
-			{
-				menu_price[51] = atoi(linia.c_str());
-				break;
-			}
-			case 25:
-			{
-				menu_items[52] = linia;
-				break;
-			}
-			case 26:
-			{
-				menu_price[52] = atoi(linia.c_str());
-				break;
-			}
-			case 27:
-			{
-				menu_items[53] = linia;
-				break;
-			}
-			case 28:
-			{
-				menu_price[53] = atoi(linia.c_str());
-				break;
-			}
-			case 29:
-			{
-				menu_items[54] = linia;
-				break;
-			}
-			case 30:
-			{
-				menu_price[54] = atoi(linia.c_str());
-				break;
-			}
-			case 31:
-			{
-				menu_items[55] = linia;
-				break;
-			}
-			case 32:
-			{
-				menu_price[55] = atoi(linia.c_str());
-				break;
-			}
-			case 33:
-			{
-				menu_items[56] = linia;
-				break;
-			}
-			case 34:
-			{
-				menu_price[56] = atoi(linia.c_str());
-				break;
-			}
-			case 35:
-			{
-				menu_items[57] = linia;
-				break;
-			}
-			case 36:
-			{
-				menu_price[57] = atoi(linia.c_str());
-				break;
-			}
-			case 37:
-			{
-				menu_items[58] = linia;
-				break;
-			}
-			case 38:
-			{
-				menu_price[58] = atoi(linia.c_str());
-				break;
-
-			}
-			case 39:
-			{
-				menu_items[59] = linia;
-				break;
-			}
-			case 40:
-			{
-				menu_price[59] = atoi(linia.c_str());
-				break;
-			}
-			}
+			menu_items[nr_linii - 1] = linia;
 			nr_linii++;
 		}
 		plik.close();
-		nr_linii = 1;
+	}
+	else if (leftSideCard == 3)
+	{
 		plik.open("./txt/trader/items_high.txt", ios::in);
 		while (getline(plik, linia))
 		{
-			switch (nr_linii)
-			{
-			case 1:
-			{
-				menu_items[60] = linia;
-				break;
-			}
-			case 2:
-			{
-				menu_price[60] = atoi(linia.c_str());
-				break;
-			}
-			case 3:
-			{
-				menu_items[61] = linia;
-				break;
-			}
-			case 4:
-			{
-				menu_price[61] = atoi(linia.c_str());
-				break;
-			}
-			case 5:
-			{
-				menu_items[62] = linia;
-				break;
-			}
-			case 6:
-			{
-				menu_price[62] = atoi(linia.c_str());
-				break;
-			}
-			case 7:
-			{
-				menu_items[63] = linia;
-				break;
-			}
-			case 8:
-			{
-				menu_price[63] = atoi(linia.c_str());
-				break;
-			}
-			case 9:
-			{
-				menu_items[64] = linia;
-				break;
-			}
-			case 10:
-			{
-				menu_price[64] = atoi(linia.c_str());
-				break;
-			}
-			case 11:
-			{
-				menu_items[65] = linia;
-				break;
-			}
-			case 12:
-			{
-				menu_price[65] = atoi(linia.c_str());
-				break;
-			}
-			case 13:
-			{
-				menu_items[66] = linia;
-				break;
-			}
-			case 14:
-			{
-				menu_price[66] = atoi(linia.c_str());
-				break;
-			}
-			case 15:
-			{
-				menu_items[67] = linia;
-				break;
-			}
-			case 16:
-			{
-				menu_price[67] = atoi(linia.c_str());
-				break;
-			}
-			case 17:
-			{
-				menu_items[68] = linia;
-				break;
-			}
-			case 18:
-			{
-				menu_price[68] = atoi(linia.c_str());
-				break;
-			}
-			case 19:
-			{
-				menu_items[69] = linia;
-				break;
-			}
-			case 20:
-			{
-				menu_price[69] = atoi(linia.c_str());
-				break;
-			}
-			case 21:
-			{
-				menu_items[70] = linia;
-				break;
-			}
-			case 22:
-			{
-				menu_price[70] = atoi(linia.c_str());
-				break;
-			}
-			case 23:
-			{
-				menu_items[71] = linia;
-				break;
-			}
-			case 24:
-			{
-				menu_price[71] = atoi(linia.c_str());
-				break;
-			}
-			case 25:
-			{
-				menu_items[72] = linia;
-				break;
-			}
-			case 26:
-			{
-				menu_price[72] = atoi(linia.c_str());
-				break;
-			}
-			case 27:
-			{
-				menu_items[73] = linia;
-				break;
-			}
-			case 28:
-			{
-				menu_price[73] = atoi(linia.c_str());
-				break;
-			}
-			case 29:
-			{
-				menu_items[74] = linia;
-				break;
-			}
-			case 30:
-			{
-				menu_price[74] = atoi(linia.c_str());
-				break;
-			}
-			case 31:
-			{
-				menu_items[75] = linia;
-				break;
-			}
-			case 32:
-			{
-				menu_price[75] = atoi(linia.c_str());
-				break;
-			}
-			case 33:
-			{
-				menu_items[76] = linia;
-				break;
-			}
-			case 34:
-			{
-				menu_price[76] = atoi(linia.c_str());
-				break;
-			}
-			case 35:
-			{
-				menu_items[77] = linia;
-				break;
-			}
-			case 36:
-			{
-				menu_price[77] = atoi(linia.c_str());
-				break;
-			}
-			case 37:
-			{
-				menu_items[78] = linia;
-				break;
-			}
-			case 38:
-			{
-				menu_price[78] = atoi(linia.c_str());
-				break;
-
-			}
-			case 39:
-			{
-				menu_items[79] = linia;
-				break;
-			}
-			case 40:
-			{
-				menu_price[79] = atoi(linia.c_str());
-				break;
-			}
-			}
+			menu_items[nr_linii - 1] = linia;
 			nr_linii++;
 		}
 		plik.close();
-		nr_linii = 1;
-		plik.open("./txt/alchemik/items_crafting_alchemy.txt", ios::in);
-		while (getline(plik, linia))
+	}
+	else
+	{
+		for (int i = 0; i < 20; i++)
 		{
-			switch (nr_linii)
-			{
-			case 1:
-			{
-				menu_items[80] = linia;
-				break;
-			}
-			case 2:
-			{
-				menu_price[80] = atoi(linia.c_str());
-				break;
-			}
-			case 3:
-			{
-				menu_items[81] = linia;
-				break;
-			}
-			case 4:
-			{
-				menu_price[81] = atoi(linia.c_str());
-				break;
-			}
-			case 5:
-			{
-				menu_items[82] = linia;
-				break;
-			}
-			case 6:
-			{
-				menu_price[82] = atoi(linia.c_str());
-				break;
-			}
-			case 7:
-			{
-				menu_items[83] = linia;
-				break;
-			}
-			case 8:
-			{
-				menu_price[83] = atoi(linia.c_str());
-				break;
-			}
-			case 9:
-			{
-				menu_items[84] = linia;
-				break;
-			}
-			case 10:
-			{
-				menu_price[84] = atoi(linia.c_str());
-				break;
-			}
-			case 11:
-			{
-				menu_items[85] = linia;
-				break;
-			}
-			case 12:
-			{
-				menu_price[85] = atoi(linia.c_str());
-				break;
-			}
-			case 13:
-			{
-				menu_items[86] = linia;
-				break;
-			}
-			case 14:
-			{
-				menu_price[86] = atoi(linia.c_str());
-				break;
-			}
-			case 15:
-			{
-				menu_items[87] = linia;
-				break;
-			}
-			case 16:
-			{
-				menu_price[87] = atoi(linia.c_str());
-				break;
-			}
-			case 17:
-			{
-				menu_items[88] = linia;
-				break;
-			}
-			case 18:
-			{
-				menu_price[88] = atoi(linia.c_str());
-				break;
-			}
-			case 19:
-			{
-				menu_items[89] = linia;
-				break;
-			}
-			case 20:
-			{
-				menu_price[89] = atoi(linia.c_str());
-				break;
-			}
-			case 21:
-			{
-				menu_items[90] = linia;
-				break;
-			}
-			case 22:
-			{
-				menu_price[90] = atoi(linia.c_str());
-				break;
-			}
-			case 23:
-			{
-				menu_items[91] = linia;
-				break;
-			}
-			case 24:
-			{
-				menu_price[91] = atoi(linia.c_str());
-				break;
-			}
-			case 25:
-			{
-				menu_items[92] = linia;
-				break;
-			}
-			case 26:
-			{
-				menu_price[92] = atoi(linia.c_str());
-				break;
-			}
-			case 27:
-			{
-				menu_items[93] = linia;
-				break;
-			}
-			case 28:
-			{
-				menu_price[93] = atoi(linia.c_str());
-				break;
-			}
-			case 29:
-			{
-				menu_items[94] = linia;
-				break;
-			}
-			case 30:
-			{
-				menu_price[94] = atoi(linia.c_str());
-				break;
-			}
-			case 31:
-			{
-				menu_items[95] = linia;
-				break;
-			}
-			case 32:
-			{
-				menu_price[95] = atoi(linia.c_str());
-				break;
-			}
-			case 33:
-			{
-				menu_items[96] = linia;
-				break;
-			}
-			case 34:
-			{
-				menu_price[96] = atoi(linia.c_str());
-				break;
-			}
-			case 35:
-			{
-				menu_items[97] = linia;
-				break;
-			}
-			case 36:
-			{
-				menu_price[97] = atoi(linia.c_str());
-				break;
-			}
-			case 37:
-			{
-				menu_items[98] = linia;
-				break;
-			}
-			case 38:
-			{
-				menu_price[98] = atoi(linia.c_str());
-				break;
-
-			}
-			case 39:
-			{
-				menu_items[99] = linia;
-				break;
-			}
-			case 40:
-			{
-				menu_price[99] = atoi(linia.c_str());
-				break;
-			}
-			}
-			nr_linii++;
+			menu_items[i] = "";
+			menu_price[i] = 0;
 		}
-		plik.close();
-		nr_linii = 1;
-		plik.open("./txt/kowal/items_crafting_forge.txt", ios::in);
-		while (getline(plik, linia))
-		{
-			switch (nr_linii)
-			{
-			case 1:
-			{
-				menu_items[100] = linia;
-				break;
-			}
-			case 2:
-			{
-				menu_price[100] = atoi(linia.c_str());
-				break;
-			}
-			case 3:
-			{
-				menu_items[101] = linia;
-				break;
-			}
-			case 4:
-			{
-				menu_price[101] = atoi(linia.c_str());
-				break;
-			}
-			case 5:
-			{
-				menu_items[102] = linia;
-				break;
-			}
-			case 6:
-			{
-				menu_price[102] = atoi(linia.c_str());
-				break;
-			}
-			case 7:
-			{
-				menu_items[103] = linia;
-				break;
-			}
-			case 8:
-			{
-				menu_price[103] = atoi(linia.c_str());
-				break;
-			}
-			case 9:
-			{
-				menu_items[104] = linia;
-				break;
-			}
-			case 10:
-			{
-				menu_price[104] = atoi(linia.c_str());
-				break;
-			}
-			case 11:
-			{
-				menu_items[105] = linia;
-				break;
-			}
-			case 12:
-			{
-				menu_price[105] = atoi(linia.c_str());
-				break;
-			}
-			case 13:
-			{
-				menu_items[106] = linia;
-				break;
-			}
-			case 14:
-			{
-				menu_price[106] = atoi(linia.c_str());
-				break;
-			}
-			case 15:
-			{
-				menu_items[107] = linia;
-				break;
-			}
-			case 16:
-			{
-				menu_price[107] = atoi(linia.c_str());
-				break;
-			}
-			case 17:
-			{
-				menu_items[108] = linia;
-				break;
-			}
-			case 18:
-			{
-				menu_price[108] = atoi(linia.c_str());
-				break;
-			}
-			case 19:
-			{
-				menu_items[109] = linia;
-				break;
-			}
-			case 20:
-			{
-				menu_price[109] = atoi(linia.c_str());
-				break;
-			}
-			case 21:
-			{
-				menu_items[110] = linia;
-				break;
-			}
-			case 22:
-			{
-				menu_price[110] = atoi(linia.c_str());
-				break;
-			}
-			case 23:
-			{
-				menu_items[111] = linia;
-				break;
-			}
-			case 24:
-			{
-				menu_price[111] = atoi(linia.c_str());
-				break;
-			}
-			case 25:
-			{
-				menu_items[112] = linia;
-				break;
-			}
-			case 26:
-			{
-				menu_price[112] = atoi(linia.c_str());
-				break;
-			}
-			case 27:
-			{
-				menu_items[113] = linia;
-				break;
-			}
-			case 28:
-			{
-				menu_price[113] = atoi(linia.c_str());
-				break;
-			}
-			case 29:
-			{
-				menu_items[114] = linia;
-				break;
-			}
-			case 30:
-			{
-				menu_price[114] = atoi(linia.c_str());
-				break;
-			}
-			case 31:
-			{
-				menu_items[115] = linia;
-				break;
-			}
-			case 32:
-			{
-				menu_price[115] = atoi(linia.c_str());
-				break;
-			}
-			case 33:
-			{
-				menu_items[116] = linia;
-				break;
-			}
-			case 34:
-			{
-				menu_price[116] = atoi(linia.c_str());
-				break;
-			}
-			case 35:
-			{
-				menu_items[117] = linia;
-				break;
-			}
-			case 36:
-			{
-				menu_price[117] = atoi(linia.c_str());
-				break;
-			}
-			case 37:
-			{
-				menu_items[118] = linia;
-				break;
-			}
-			case 38:
-			{
-				menu_price[118] = atoi(linia.c_str());
-				break;
-
-			}
-			case 39:
-			{
-				menu_items[119] = linia;
-				break;
-			}
-			case 40:
-			{
-				menu_price[119] = atoi(linia.c_str());
-				break;
-			}
-			}
-			nr_linii++;
-		}
-		plik.close();
+	}
 }
+int seller::loadPrices(string item)
+{
+	for (int i = 0; i < 20; i++)
+	{
+		menu_price[i] = 0;
+	}
+	string linia;
+	fstream plik;
+	int nr_linii = 1;
+	int price = 0;
+	plik.open("./txt/mix/items_prices.txt", ios::in);
+	while (getline(plik, linia))
+	{
+		if (linia == item)
+		{
+			nr_linii++;
+			getline(plik, linia);
+			price = atoi(linia.c_str());
+			break;
+		}
+		nr_linii++;
+	}
+	plik.close();
+	return price;
+}
+string seller::makeString(int howLong, string item, int amount, int price)
+{
+	string price_string="";
+	string amount_string="";
+	string temp="";
+	if (price <= 0)
+	{
+		price_string = "[WORTHLESS]";
+	}
+	else
+	{
+		price_string = "[" + to_string(price) + " GOLD]";
+	}
+	if (amount > 1)
+	{
+		amount_string = " x" + to_string(amount);
+	}
+	else
+	{
+
+	}
+	howLong -= (item.length() + amount_string.length() + price_string.length());
+	temp = item + amount_string;
+	for (int i = 0; i < howLong; i++)
+	{
+		temp += " ";
+	}
+	temp += price_string;
+	return temp;
+}
+void seller::buyItem(int height, int startPoint, player& gracz, string item, int amount, int price, bool &anythingSoldOrBought)
+{
+	vector <string> message;
+	vector <string> options = { "Yes","No" };
+	if (item != "" && findItemOnList(item) == "Usable" && amount != 0)
+	{
+		if (gracz.count_free_fields_usage() !=0)
+		{
+			if (price > gracz.gold)
+			{
+				message.push_back("You don't have enough gold to buy " + item);
+			}
+			else
+			{
+				gracz.add_usage_item(item,price,amount,height,startPoint);
+				gold += price;
+			}
+		}
+		else
+		{
+			message.push_back("Your backpack is full");
+		}
+	}
+	else if (item != "" && findItemOnList(item) == "Alchemy" && amount != 0)
+	{
+		if (gracz.count_free_fields_alchemy() != 0)
+		{
+			if (price > gracz.gold)
+			{
+				message.push_back("You don't have enough gold to buy " + item);
+			}
+			else
+			{
+				gracz.add_crafting_alchemy_item(item, price, amount, height, startPoint);
+				gold += price;
+			}
+		}
+		else
+		{
+			message.push_back("Your backpack is full");
+		}
+	}
+	else if (item != "" && findItemOnList(item) == "Smithery" && amount != 0)
+	{
+		if (gracz.count_free_fields_forge() != 0)
+		{
+			if (price > gracz.gold)
+			{
+				message.push_back("You don't have enough gold to buy " + item);
+			}
+			else
+			{
+				gracz.add_crafting_forge_item(item, price, amount, height, startPoint);
+				gold += price;
+			}
+		}
+		else
+		{
+			message.push_back("Your backpack is full");
+		}
+	}
+	else
+	{
+		message.push_back("Error");
+	}
+	if (message.size() != 0)
+	{
+		tabSubmenuTextOnly(height, startPoint, message);
+	}
+}
+void seller::sellItem(int height, int startPoint, player &gracz, string item, int amount, int price, bool &anythingSoldOrBought)
+{
+	vector <string> message;
+	vector <string> options = {"Yes","No"};
+	int priceForItems = 0;
+	if (item != "" && gracz.find_usage_item(item) == 1 && amount != 0)
+	{
+		if (price > 0)
+		{
+			string temp = "Are you sure you want to sell " + item + " for " + to_string(price) + " gold";
+			if (amount > 1)
+			{
+				temp += " each?";
+			}
+			else
+			{
+				temp += "?";
+			}
+			message.push_back(temp);
+			message.push_back("This transaction cannot be undone.");
+			int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
+			if (highlight == 0)
+			{
+				int index = gracz.find_usage_item_index(item);
+				if (amount > 1)
+				{
+					temp = "How many " + item + " you want to sell? ";
+					int amountWritten = stoi(tabSubmenuInputField(height, startPoint, temp));
+					while (amountWritten <= 0 || amountWritten > gracz.inventory_usage_amount[index] || price * amountWritten > gold)
+					{
+						if (price * amountWritten > gold)
+						{
+							message.clear();
+							message.push_back(name + " does not have enough gold to buy " + item + " from you.");
+							tabSubmenuTextOnly(height, startPoint, message);
+						}
+						amountWritten = stoi(tabSubmenuInputField(height, startPoint, temp));
+					}
+					if (amountWritten == gracz.inventory_usage_amount[index])
+					{
+						gracz.inventory_usage[index] = "";
+						gracz.inventory_usage_amount[index] = 0;
+						gracz.sort_usage_backpack();
+					}
+					else
+					{
+						gracz.inventory_usage_amount[index] -= amountWritten;
+					}
+					gracz.gold += price * amountWritten;
+					gold -= price * amountWritten;
+					anythingSoldOrBought = true;
+				}
+				else
+				{
+					if (gold > price* amount)
+					{
+						if (amount == gracz.inventory_usage_amount[index])
+						{
+							gracz.inventory_usage[index] = "";
+							gracz.inventory_usage_amount[index] = 0;
+							gracz.sort_usage_backpack();
+						}
+						else
+						{
+							gracz.inventory_usage_amount[index] -= amount;
+						}
+						gracz.gold += price * amount;
+						gold -= price * amount;
+						anythingSoldOrBought = true;
+					}
+					else
+					{
+						message.clear();
+						message.push_back(name + " does not have enough gold to buy " + item + " from you.");
+						tabSubmenuTextOnly(height, startPoint, message);
+					}
+				}
+			}
+		}
+		else
+		{
+			message.push_back("Are you sure you want to give " + item + " for free?");
+			message.push_back("This transaction cannot be undone.");
+			int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
+			if (highlight == 0)
+			{
+				int index = gracz.find_usage_item_index(item);
+				if (amount > 1)
+				{
+					string temp = "How many " + item + " you want to give? ";
+					int amountWritten = stoi(tabSubmenuInputField(height, startPoint, temp));
+					while (amountWritten <= 0 || amountWritten > gracz.inventory_usage_amount[index])
+					{
+						amountWritten = stoi(tabSubmenuInputField(height, startPoint, temp));
+					}
+					if (amountWritten == gracz.inventory_usage_amount[index])
+					{
+						gracz.inventory_usage[index] = "";
+						gracz.inventory_usage_amount[index] = 0;
+						gracz.sort_usage_backpack();
+					}
+					else
+					{
+						gracz.inventory_usage_amount[index] -= amountWritten;
+					}
+					anythingSoldOrBought = true;
+				}
+				else
+				{
+					if (amount == gracz.inventory_usage_amount[index])
+					{
+						gracz.inventory_usage[index] = "";
+						gracz.inventory_usage_amount[index] = 0;
+						gracz.sort_usage_backpack();
+					}
+					else
+					{
+						gracz.inventory_usage_amount[index] -= amount;
+					}
+					anythingSoldOrBought = true;
+				}
+			}
+		}
+	}
+	else if (item != "" && gracz.find_crafting_alchemy_item(item) == 1 && amount != 0)
+	{
+	if (price > 0)
+	{
+		string temp = "Are you sure you want to sell " + item + " for " + to_string(price) + " gold";
+		if (amount > 1)
+		{
+			temp += " each?";
+		}
+		else
+		{
+			temp += "?";
+		}
+		message.push_back(temp);
+		message.push_back("This transaction cannot be undone.");
+		int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
+		if (highlight == 0)
+		{
+			int index = gracz.find_crafting_alchemy_item_index(item);
+			if (amount > 1)
+			{
+				temp = "How many " + item + " you want to sell? ";
+				int amountWritten = stoi(tabSubmenuInputField(height, startPoint, temp));
+				while (amountWritten <= 0 || amountWritten > gracz.inventory_crafting_amount[index] || price * amountWritten > gold)
+				{
+					if (price * amountWritten > gold)
+					{
+						message.clear();
+						message.push_back(name + " does not have enough gold to buy " + item + " from you.");
+						tabSubmenuTextOnly(height, startPoint, message);
+					}
+					amountWritten = stoi(tabSubmenuInputField(height, startPoint, temp));
+				}
+				if (amountWritten == gracz.inventory_crafting_amount[index])
+				{
+					gracz.inventory_crafting[index] = "";
+					gracz.inventory_crafting_amount[index] = 0;
+					gracz.sort_crafting_alchemy_backpack();
+				}
+				else
+				{
+					gracz.inventory_crafting_amount[index] -= amountWritten;
+				}
+				gracz.gold += price * amountWritten;
+				gold -= price * amountWritten;
+				anythingSoldOrBought = true;
+			}
+			else
+			{
+				if (gold > price* amount)
+				{
+					if (amount == gracz.inventory_crafting_amount[index])
+					{
+						gracz.inventory_crafting[index] = "";
+						gracz.inventory_crafting_amount[index] = 0;
+						gracz.sort_crafting_alchemy_backpack();
+					}
+					else
+					{
+						gracz.inventory_crafting_amount[index] -= amount;
+					}
+					gracz.gold += price * amount;
+					gold -= price * amount;
+					anythingSoldOrBought = true;
+				}
+				else
+				{
+					message.clear();
+					message.push_back(name + " does not have enough gold to buy " + item + " from you.");
+					tabSubmenuTextOnly(height, startPoint, message);
+				}
+			}
+		}
+	}
+	else
+	{
+		message.push_back("Are you sure you want to give " + item + " for free?");
+		message.push_back("This transaction cannot be undone.");
+		int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
+		if (highlight == 0)
+		{
+			int index = gracz.find_crafting_alchemy_item_index(item);
+			if (amount > 1)
+			{
+				string temp = "How many " + item + " you want to give? ";
+				int amountWritten = stoi(tabSubmenuInputField(height, startPoint, temp));
+				while (amountWritten <= 0 || amountWritten > gracz.inventory_crafting_amount[index])
+				{
+					amountWritten = stoi(tabSubmenuInputField(height, startPoint, temp));
+				}
+				if (amountWritten == gracz.inventory_crafting_amount[index])
+				{
+					gracz.inventory_crafting[index] = "";
+					gracz.inventory_crafting_amount[index] = 0;
+					gracz.sort_crafting_alchemy_backpack();
+				}
+				else
+				{
+					gracz.inventory_crafting_amount[index] -= amountWritten;
+				}
+				anythingSoldOrBought = true;
+			}
+			else
+			{
+				if (amount == gracz.inventory_crafting_amount[index])
+				{
+					gracz.inventory_crafting[index] = "";
+					gracz.inventory_crafting_amount[index] = 0;
+					gracz.sort_crafting_alchemy_backpack();
+				}
+				else
+				{
+					gracz.inventory_crafting_amount[index] -= amount;
+				}
+				anythingSoldOrBought = true;
+			}
+		}
+	}
+	}
+	else if(item != "" && gracz.find_crafting_forge_item(item) == 1 && amount != 0)
+	{
+	if (price > 0)
+	{
+		string temp = "Are you sure you want to sell " + item + " for " + to_string(price) + " gold";
+		if (amount > 1)
+		{
+			temp += " each?";
+		}
+		else
+		{
+			temp += "?";
+		}
+		message.push_back(temp);
+		message.push_back("This transaction cannot be undone.");
+		int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
+		if (highlight == 0)
+		{
+			int index = gracz.find_crafting_forge_item_index(item);
+			if (amount > 1)
+			{
+				temp = "How many " + item + " you want to sell? ";
+				int amountWritten = stoi(tabSubmenuInputField(height, startPoint, temp));
+				while (amountWritten <= 0 || amountWritten > gracz.inventory_crafting_amount[20 + index] || price * amountWritten > gold)
+				{
+					if (price * amountWritten > gold)
+					{
+						message.clear();
+						message.push_back(name + " does not have enough gold to buy " + item + " from you.");
+						tabSubmenuTextOnly(height, startPoint, message);
+					}
+					amountWritten = stoi(tabSubmenuInputField(height, startPoint, temp));
+				}
+				if (amountWritten == gracz.inventory_crafting_amount[20 + index])
+				{
+					gracz.inventory_crafting[20 + index] = "";
+					gracz.inventory_crafting_amount[20 + index] = 0;
+					gracz.sort_crafting_forge_backpack();
+				}
+				else
+				{
+					gracz.inventory_crafting_amount[20 + index] -= amountWritten;
+				}
+				gracz.gold += price * amountWritten;
+				gold -= price * amountWritten;
+				anythingSoldOrBought = true;
+			}
+			else
+			{
+				if (gold > price* amount)
+				{
+					if (amount == gracz.inventory_crafting_amount[20 + index])
+					{
+						gracz.inventory_crafting[20 + index] = "";
+						gracz.inventory_crafting_amount[20 + index] = 0;
+						gracz.sort_crafting_forge_backpack();
+					}
+					else
+					{
+						gracz.inventory_crafting_amount[20 + index] -= amount;
+					}
+					gracz.gold += price * amount;
+					gold -= price * amount;
+					anythingSoldOrBought = true;
+				}
+				else
+				{
+					message.clear();
+					message.push_back(name + " does not have enough gold to buy " + item + " from you.");
+					tabSubmenuTextOnly(height, startPoint, message);
+				}
+			}
+		}
+	}
+	else
+	{
+		message.push_back("Are you sure you want to give " + item + " for free?");
+		message.push_back("This transaction cannot be undone.");
+		int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
+		if (highlight == 0)
+		{
+			int index = gracz.find_crafting_forge_item_index(item);
+			if (amount > 1)
+			{
+				string temp = "How many " + item + " you want to give? ";
+				int amountWritten = stoi(tabSubmenuInputField(height, startPoint, temp));
+				while (amountWritten <= 0 || amountWritten > gracz.inventory_crafting_amount[20 + index])
+				{
+					amountWritten = stoi(tabSubmenuInputField(height, startPoint, temp));
+				}
+				if (amountWritten == gracz.inventory_crafting_amount[20 + index])
+				{
+					gracz.inventory_crafting[20 + index] = "";
+					gracz.inventory_crafting_amount[20 + index] = 0;
+					gracz.sort_crafting_forge_backpack();
+				}
+				else
+				{
+					gracz.inventory_crafting_amount[20 + index] -= amountWritten;
+				}
+				anythingSoldOrBought = true;
+			}
+			else
+			{
+				if (amount == gracz.inventory_crafting_amount[20 + index])
+				{
+					gracz.inventory_crafting[20 + index] = "";
+					gracz.inventory_crafting_amount[20 + index] = 0;
+					gracz.sort_crafting_forge_backpack();
+				}
+				else
+				{
+					gracz.inventory_crafting_amount[20 + index] -= amount;
+				}
+				anythingSoldOrBought = true;
+			}
+		}
+	}
+	}
+	else
+	{
+		message.push_back("No item");
+		tabSubmenuTextOnly(height, startPoint, message);
+	}
+}
+/*
 int seller::find_item_index(string nazwa)
 {
 	for (int i = 0; i < 120; i++)
@@ -1666,23 +1012,37 @@ int seller::search_on_lists(string nazwa)
 		}
 	}
 }
+*/
 blacksmith::blacksmith(player gracz)
 {
 	name = "KOWAL";
-	info[0] = "KUNIA - ROZMOWA Z KOWALEM";
-	info[1] = "W: ZAKOÑCZ ROZMOWÊ";
-	info[2] = "M: MIKSTURA ¯YCIA";
+	info[0] = "End the conversation";
+	info[1] = "";
+	info[2] = "";
 	info[3] = "";
 	info[4] = "";
 	info[5] = "";
 	info[6] = "";
 	info[7] = "";
-	menu[0] = "WZMOCNIJ HE£M (" + to_string(gracz.helmet) + ")";
-	menu[1] = "WZMOCNIJ NAPIERŒNIK";
-	menu[2] = "WZMOCNIJ RÊKAWICE";
-	menu[3] = "WZMOCNIJ SPODNIE";
-	menu[4] = "WZMOCNIJ BUTY";
-	menu[5] = "WZMOCNIJ BROÑ";
+	info[8] = "";
+	info[8] = "";
+	info[10] = "";
+	info[11] = "";
+	info[12] = "";
+	info[13] = "";
+	info[14] = "";
+	info[15] = "";
+	info[16] = "";
+	info[17] = "";
+	info[18] = "";
+	info[18] = "";
+	info[19] = "";
+	menu[0] = "Upgrade helmet";
+	menu[1] = "Upgrade chestplate";
+	menu[2] = "Upgrade gloves";
+	menu[3] = "Upgrade pants";
+	menu[4] = "Upgrade shoes";
+	menu[5] = "Upgrade weapon";
 	menu[6] = "";
 	menu[7] = "";
 	menu[8] = "";
@@ -1697,7 +1057,7 @@ blacksmith::blacksmith(player gracz)
 	menu[17] = "";
 	menu[18] = "";
 	menu[19] = "";
-	ceny[0] = 500 + (100 * gracz.helmet);
+	ceny[0] = 500;
 	ceny[1] = 500;
 	ceny[2] = 500;
 	ceny[3] = 500;
@@ -1903,6 +1263,19 @@ void blacksmith::generate_merch(player gracz)
 }
 void blacksmith::load_player_points(player gracz)
 {
+	menu[0] = "Upgrade helmet";
+	menu[1] = "Upgrade chestplate";
+	menu[2] = "Upgrade gloves";
+	menu[3] = "Upgrade pants";
+	menu[4] = "Upgrade shoes";
+	menu[5] = "Upgrade weapon";
+	ceny[0] = 500;
+	ceny[1] = 500;
+	ceny[2] = 500;
+	ceny[3] = 500;
+	ceny[4] = 500;
+	ceny[5] = 500;
+	this->menu[0] = menu[0] + " (" + to_string(gracz.helmet) + ")";
 	this->ceny[0] = ceny[0] + (100*gracz.helmet);
 	this->menu[1] = menu[1] + " (" + to_string(gracz.chestplate) + ")";
 	this->ceny[1] = ceny[1] + (100 * gracz.chestplate);
@@ -1915,141 +1288,155 @@ void blacksmith::load_player_points(player gracz)
 	this->menu[5] = menu[5] + " (" + to_string(gracz.weapon) + ")";
 	this->ceny[5] = ceny[5] + (100 * gracz.weapon);
 }
-void blacksmith::print_image()
+void blacksmith::print_image(vector <string>& message)
 {
 	string linia;
-	int nr_linii = 1;
 	fstream plik;
 	plik.open("./txt/kowal/kowal.txt", ios::in);
 	while (!plik.eof())
 	{
 		getline(plik, linia);
-		cout << linia << endl;
+		message.push_back(linia);
 	}
 	plik.close();
 	sound_blacksmith();
 }
-void blacksmith::power_up(player &gracz, int tryb)
+void blacksmith::power_up(int height, int startPoint, player &gracz, int tryb)
 {
+	vector <string> message;
 	switch (tryb)
 	{
-	case 1:
+	case 0:
 	{
 		if (gracz.gold >= ceny[0])
 		{
-			print_image();
-			cout << endl << "TWÓJ HE£M ZOSTA£ WZMOCNIONY O JEDEN PUNKT" << endl;
+			message.push_back("The helmet has been strengthened");
+			message.push_back("");
+			print_image(message);
 			gracz.helmet = gracz.helmet + 1;
 			gracz.gold = gracz.gold - ceny[0];
-			change_time(gracz, 1, 0);
+			change_time(height, startPoint, gracz, 1, 0);
 		}
 		else
 		{
-			no_money();
+			message.push_back(no_money());
 		}
-		system("PAUSE");
+		break;
+	}
+	case 1:
+	{
+		if (gracz.gold >= ceny[1])
+		{
+			message.push_back("The chestplate has been strengthened");
+			message.push_back("");
+			print_image(message);
+			gracz.chestplate = gracz.chestplate + 1;
+			gracz.gold = gracz.gold - ceny[1];
+			change_time(height, startPoint, gracz, 1, 0);
+		}
+		else
+		{
+			message.push_back(no_money());
+		}
 		break;
 	}
 	case 2:
 	{
-		if (gracz.gold >= ceny[1])
+		if (gracz.gold >= ceny[2])
 		{
-			print_image();
-			cout << "TWÓJ NAPIERSNIK ZOSTA£ WZMOCNIONY O JEDEN PUNKT" << endl;
-			gracz.chestplate = gracz.chestplate + 1;
-			gracz.gold = gracz.gold - ceny[1];
-			change_time(gracz, 1, 0);
+			message.push_back("The gloves have been strengthened");
+			message.push_back("");
+			print_image(message);
+			gracz.gloves = gracz.gloves + 1;
+			gracz.gold = gracz.gold - ceny[2];
+			change_time(height, startPoint, gracz, 1, 0);
 		}
 		else
 		{
-			no_money();
+			message.push_back(no_money());
 		}
-		system("PAUSE");
 		break;
 	}
 	case 3:
 	{
-		if (gracz.gold >= ceny[2])
+		if (gracz.gold >= ceny[3])
 		{
-			print_image();
-			cout << "TWOJE REKAWICE ZOSTA£Y WZMOCNIONE O JEDEN PUNKT" << endl;
-			gracz.gloves = gracz.gloves + 1;
-			gracz.gold = gracz.gold - ceny[2];
-			change_time(gracz, 1, 0);
+			message.push_back("The pants have been strengthened");
+			message.push_back("");
+			print_image(message);
+			gracz.pants = gracz.pants + 1;
+			gracz.gold = gracz.gold - ceny[3];
+			change_time(height, startPoint, gracz, 1, 0);
 		}
 		else
 		{
-			no_money();
+			message.push_back(no_money());
 		}
-		system("PAUSE");
 		break;
 	}
 	case 4:
 	{
-		if (gracz.gold >= ceny[3])
+		if (gracz.gold >= ceny[4])
 		{
-			print_image();
-			cout << "TWOJE SPODNIE ZOSTA£Y WZMOCNIONE O JEDEN PUNKT" << endl;
-			gracz.pants = gracz.pants + 1;
-			gracz.gold = gracz.gold - ceny[3];
-			change_time(gracz, 1, 0);
+			message.push_back("The shoes have been strengthened");
+			message.push_back("");
+			print_image(message);
+			gracz.shoes = gracz.shoes + 1;
+			gracz.gold = gracz.gold - ceny[4];
+			change_time(height, startPoint, gracz, 1, 0);
 		}
 		else
 		{
-			no_money();
+			message.push_back(no_money());
 		}
-		system("PAUSE");
 		break;
 	}
 	case 5:
 	{
-		if (gracz.gold >= ceny[4])
-		{
-			print_image();
-			cout << "TWOJE BUTY ZOSTA£Y WZMOCNIONE O JEDEN PUNKT" << endl;
-			gracz.shoes = gracz.shoes + 1;
-			gracz.gold = gracz.gold - ceny[4];
-			change_time(gracz, 1, 0);
-		}
-		else
-		{
-			no_money();
-		}
-		system("PAUSE");
-		break;
-	}
-	case 6:
-	{
 		if (gracz.gold >= ceny[5])
 		{
-			print_image();
-			cout << "TWOJA BROÑ (" << gracz.weapon_name << ") ZOSTA£A WZMOCNIONA O JEDEN PUNKT" << endl;
+			message.push_back("The weapon (" + gracz.weapon_name + ") have been strengthened");
+			message.push_back("");
+			print_image(message);
 			gracz.weapon = gracz.weapon + 1;
 			gracz.gold = gracz.gold - ceny[5];
-			change_time(gracz, 1, 0);
+			change_time(height, startPoint, gracz, 1, 0);
 		}
 		else
 		{
-			no_money();
+			message.push_back(no_money());
 		}
-		system("PAUSE");
 		break;
 	}
 	}
+	tabSubmenuTextOnly(23, 32, message);
 }
 alchemist::alchemist()
 {
 	name = "ALCHEMIK";
-	info[0] = "LABORATORIUM - ROZMOWA Z ALCHEMIKIEM";
-	info[1] = "W: ZAKOÑCZ ROZMOWÊ";
-	info[2] = "M: MIKSTURA ¯YCIA";
+	info[0] = "End the conversation";
+	info[1] = "";
+	info[2] = "";
 	info[3] = "";
 	info[4] = "";
 	info[5] = "";
 	info[6] = "";
 	info[7] = "";
-	menu[0] = "KUP MIKSTURE NOWEGO POZIOMU";
-	menu[1] = "KUP MIKSTURE ZDROWIA";
+	info[8] = "";
+	info[8] = "";
+	info[10] = "";
+	info[11] = "";
+	info[12] = "";
+	info[13] = "";
+	info[14] = "";
+	info[15] = "";
+	info[16] = "";
+	info[17] = "";
+	info[18] = "";
+	info[18] = "";
+	info[19] = "";
+	menu[0] = "Buy a level up potion";
+	menu[1] = "Buy health points potion";
 	menu[2] = "";
 	menu[3] = "";
 	menu[4] = "";
@@ -2089,67 +1476,83 @@ alchemist::alchemist()
 	ceny[18] = 0;
 	ceny[19] = 0;
 }
-void alchemist::show_image()
+void alchemist::show_image(vector <string> &message)
 {
 	string linia;
-	int nr_linii = 1;
 	fstream plik;
 	plik.open("./txt/alchemik/alchemik.txt", ios::in);
 	while (!plik.eof())
 	{
 		getline(plik, linia);
-		cout << linia << endl;
+		message.push_back(linia);
 	}
 	plik.close();
 	sound_alchemy();
 }
-void alchemist::buy_new_level_potion(player &gracz)
+void alchemist::buy_new_level_potion(int height, int startPoint, player &gracz)
 {
+	vector <string> message;
 	if (gracz.gold > (gracz.level * 100))
 	{
-		cout << "KUPI£EŒ MIKSTURÊ NOWEGO POZIOMU" << endl;
-		gracz.add_usage_item("Mikstura nowego poziomu", (gracz.level * 100), 1);
-		change_time(gracz, 0, 5);
-		show_image();
+		message.push_back("You bought a level up potion");
+		message.push_back("");
+		gracz.add_usage_item("Mikstura nowego poziomu", (gracz.level * 100), 23,32,1);
+		change_time(height, startPoint, gracz, 0, 5);
+		show_image(message);
 	}
 	else
 	{
-		no_money();
+		message.push_back(no_money());
 	}
-	system("PAUSE");
+	tabSubmenuTextOnly(height,startPoint,message);
 }
-void alchemist::buy_hp_potion(player &gracz)
+void alchemist::buy_hp_potion(int height, int startPoint, player &gracz)
 {
+	vector <string> message;
 	if (gracz.gold > ceny[1])
 	{
-		cout << "KUPI£EŒ MIKSTURÊ ZDROWIA" << endl;
-		gracz.add_usage_item("Mikstura ¿ycia", ceny[1], 1);
-		change_time(gracz, 0, 5);
-		show_image();
+		message.push_back("You bought a health points potion");
+		message.push_back("");
+		gracz.add_usage_item("Mikstura ¿ycia", ceny[1], 23,32, 1);
+		change_time(height, startPoint, gracz, 0, 5);
+		show_image(message);
 	}
 	else
 	{
-		no_money();
+		message.push_back(no_money());
 	}
-	system("PAUSE");
+	tabSubmenuTextOnly(height, startPoint, message);
 }
 shaman::shaman()
 {
 	name = "SZAMAN";
-	info[0] = "DOM SZMANA - ROZMOWA Z SZAMANEM";
-	info[1] = "W: ZAKOÑCZ ROZMOWÊ";
-	info[2] = "M: MIKSTURA ¯YCIA";
+	info[0] = "End the conversation";
+	info[1] = "";
+	info[2] = "";
 	info[3] = "";
 	info[4] = "";
 	info[5] = "";
 	info[6] = "";
 	info[7] = "";
-	menu[0] = "POPROŒ O WZMOCNIENIE TWOJEJ SI£Y";
-	menu[1] = "POPROŒ O WZMOCNIENIE TWOJEJ ZRÊCZNOŒCI";
-	menu[2] = "POPROŒ O WZMOCNIENIE TWOJEJ INTELIGENCJI";
-	menu[3] = "POPROŒ O WZMOCNIENIE TWOJEJ CHARYZMY";
-	menu[4] = "POPROŒ O WZMOCNIENIE TWOJEGO SZCZÊŒCIA";
-	menu[5] = "ZADANIA";
+	info[8] = "";
+	info[8] = "";
+	info[10] = "";
+	info[11] = "";
+	info[12] = "";
+	info[13] = "";
+	info[14] = "";
+	info[15] = "";
+	info[16] = "";
+	info[17] = "";
+	info[18] = "";
+	info[18] = "";
+	info[19] = "";
+	menu[0] = "Ask for strength upgrade";
+	menu[1] = "Ask for agility upgrade";
+	menu[2] = "Ask for intelligence upgrade";
+	menu[3] = "Ask for charisma upgrade";
+	menu[4] = "Ask for luck upgrade";
+	menu[5] = "QUEST";
 	menu[6] = "";
 	menu[7] = "";
 	menu[8] = "";
@@ -2186,203 +1589,181 @@ shaman::shaman()
 	ceny[19] = 0;
 	quest_id = "s00";
 }
-void shaman::show_image()
+void shaman::show_image(vector <string> &message)
 {
 	string linia;
-	int nr_linii = 1;
 	fstream plik;
 	plik.open("./txt/dom_szamana/shaman.txt", ios::in);
 	while (!plik.eof())
 	{
 		getline(plik, linia);
-		cout << linia << endl;
+		message.push_back(linia);
 	}
 	plik.close();
 	sound_shaman();
 }
-void shaman::add_boost(player &gracz, int tryb)
+void shaman::add_boost(int height, int startPoint, player &gracz, int tryb)
 {
+	vector <string> message;
 	switch (tryb)
 	{
-	case 1:
+	case 0:
 	{
 		if (gracz.counter_boost_str == 0)
 		{
 			if (gracz.gold >= ceny[0])
 			{
-				cout << "Twoja si³a zosta³a czasowo wzmocniona" << endl;
+				message.push_back("Your strength has been temporarily strengthened");
 				add_boost_str(gracz, 24, 1);
 				gracz.gold = gracz.gold - ceny[0];
-				show_image();
-				change_time(gracz, 0, 15);
+				show_image(message);
+				change_time(height, startPoint, gracz, 0, 15);
 			}
 			else
 			{
-				no_money();
+				message.push_back(no_money());
 			}
 		}
 		else
 		{
-			cout << "Ju¿ jesteœ wzmocniony, to zbyt niebezpieczne by nak³adaæ kolejn¹ premiê" << endl;
+			message.push_back("Your strength is already temporarily strengthened.");
+			message.push_back("It's dangerous to apply another effect.");
 		}
-		system("PAUSE");
 		break;
 	}
-	case 2:
+	case 1:
 	{
 		if (gracz.counter_boost_agility == 0)
 		{
 			if (gracz.gold >= ceny[1])
 			{
-				cout << "Twoja zrêcznoœæ zosta³a czasowo wzmocniona" << endl;
+				message.push_back("Your agility has been temporarily strengthened");
 				add_boost_agility(gracz, 24, 1);
 				gracz.gold = gracz.gold - ceny[1];
-				show_image();
-				change_time(gracz, 0, 15);
+				show_image(message);
+				change_time(height, startPoint, gracz, 0, 15);
 			}
 			else
 			{
-				no_money();
+				message.push_back(no_money());
 			}
 		}
 		else
 		{
-			cout << "Ju¿ jesteœ wzmocniony, to zbyt niebezpieczne by nak³adaæ kolejn¹ premiê" << endl;
+			message.push_back("Your agility is already temporarily strengthened.");
+			message.push_back("It's dangerous to apply another effect.");
 		}
-		system("PAUSE");
 		break;
 	}
-	case 3:
+	case 2:
 	{
 		if (gracz.counter_boost_intel == 0)
 		{
 			if (gracz.gold >= ceny[2])
 			{
-				cout << "Twoja inteligencja zosta³a czasowo wzmocniona" << endl;
+				message.push_back("Your inteligence has been temporarily strengthened");
 				add_boost_intel(gracz, 24, 1);
 				gracz.gold = gracz.gold - ceny[2];
-				show_image();
-				change_time(gracz, 0, 15);
+				show_image(message);
+				change_time(height, startPoint, gracz, 0, 15);
 			}
 			else
 			{
-				no_money();
+				message.push_back(no_money());
 			}
 		}
 		else
 		{
-			cout << "Ju¿ jesteœ wzmocniony, to zbyt niebezpieczne by nak³adaæ kolejn¹ premiê" << endl;
+			message.push_back("Your inteligence is already temporarily strengthened.");
+			message.push_back("It's dangerous to apply another effect.");
 		}
-		system("PAUSE");
 		break;
 	}
-	case 4:
+	case 3:
 	{
 		if (gracz.counter_boost_charisma == 0)
 		{
 			if (gracz.gold >= ceny[3])
 			{
-				cout << "Twoja charyzma zosta³a czasowo wzmocniona" << endl;
+				message.push_back("Your charisma has been temporarily strengthened");
 				add_boost_charisma(gracz, 24, 1);
 				gracz.gold = gracz.gold - ceny[3];
-				show_image();
-				change_time(gracz, 0, 15);
+				show_image(message);
+				change_time(height, startPoint, gracz, 0, 15);
 			}
 			else
 			{
-				no_money();
+				message.push_back(no_money());
 			}
 		}
 		else
 		{
-			cout << "Ju¿ jesteœ wzmocniony, to zbyt niebezpieczne by nak³adaæ kolejn¹ premiê" << endl;
+			message.push_back("Your charisma is already temporarily strengthened.");
+			message.push_back("It's dangerous to apply another effect.");
 		}
-		system("PAUSE");
 		break;
 	}
-	case 5:
+	case 4:
 	{
 		if (gracz.counter_boost_luck == 0)
 		{
 			if (gracz.gold >= ceny[4])
 			{
-				cout << "Twoje szczêœcie zosta³o czasowo wzmocnione" << endl;
+				message.push_back("Your luck has been temporarily strengthened");
 				add_boost_luck(gracz, 24, 1);
 				gracz.gold = gracz.gold - ceny[4];
-				show_image();
-				change_time(gracz, 0, 15);
+				show_image(message);
+				change_time(height, startPoint, gracz, 0, 15);
 			}
 			else
 			{
-				no_money();
+				message.push_back(no_money());
 			}
 		}
 		else
 		{
-			cout << "Ju¿ jesteœ wzmocniony, to zbyt niebezpieczne by nak³adaæ kolejn¹ premiê" << endl;
+			message.push_back("Your luck is already temporarily strengthened.");
+			message.push_back("It's dangerous to apply another effect.");
 		}
-		system("PAUSE");
 		break;
 	}
 	}
+	tabSubmenuTextOnly(height, startPoint, message);
 }
-void shaman::reject_quest_giving()
+int shaman::dialog_box(int height, int startPoint)
 {
-	sound_rejection();
-	fancy_text("Ju¿ wykonujesz jakieœ zadanie");
+	vector <string> message = {"Could you do that for me?"};
+	vector <string> options = {"Yes","No"};
+	int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
+	return highlight;
 }
-int shaman::dialog_box()
+void shaman::everything_about_quests(int height, int startPoint, player &gracz)
 {
-	while (1)
-	{
-		cout << "Czy zrobisz to dla mnie?" << endl;
-		cout << "1. Tak" << endl;
-		cout << "2. Nie" << endl;
-		cout << "Twój wybór to: ";
-		string wyb;
-		cin >> wyb;
-		switch (wyb[0])
-		{
-		case '1':
-		{
-			return 1;
-		}
-		case '2':
-		{
-			return 0;
-		}
-		default:
-		{
-			system("cls");
-			break;
-		}
-		}
-	}
-}
-void shaman::everything_about_quests(player &gracz)
-{
+	vector <string> message;
 	if (gracz.quest_name == "" && gracz.quest_id == "")
 	{
 		if (quest_id_info() == "s00")
 		{
 			gold_for_complete_quest_set(1000);
 			exp_for_complete_quest_set(100);
-			fancy_text("By zrobiæ magiczny amulet potrzebujê trzech ludzkich zêbów",1);
-			fancy_text("Zap³acê ci za to 1000 sztuk z³ota");
-			if (dialog_box() == 1)
+			message.push_back("To make a magic amulet I need three human teeth.");
+			message.push_back("I will give you 1000 gold if you bring me these teeth.");
+			tabSubmenuFancyTextOnly(height, startPoint, message, 50);
+			if (dialog_box(height,startPoint) == 0)
 			{
 				gracz.add_quest("Zdob¹dŸ trzy ludzkie zêby", "s00");
 			}
 			else
 			{
-				fancy_text("No nic, mo¿e ktoœ inny siê zg³osi");
+				message.clear();
+				message.push_back("Well, maybe someone else will come forward.");
+				tabSubmenuFancyTextOnly(height, startPoint, message, 50);
 			}
 		}
 	}
 	else if(gracz.quest_name != "" && gracz.quest_id !=quest_id_info())
 	{
-		fancy_text("Wykonujesz ju¿ jakieœ zadanie, wróæ póŸniej");
-		sound_rejection();
+		reject_quest_giving(height,startPoint);
 	}
 	else if (gracz.quest_name != "" && gracz.quest_id == quest_id_info())
 	{
@@ -2390,8 +1771,10 @@ void shaman::everything_about_quests(player &gracz)
 		{
 			if (quest_id_info() == "s00")
 			{
-				fancy_text("Dziekujê ci, z³oto jest twoje");
-				gracz.remove_usage_item("Ludzki z¹b",3);
+				message.clear();
+				message.push_back("Thank you, this is your gold.");
+				tabSubmenuFancyTextOnly(height, startPoint, message, 50);
+				gracz.remove_usage_item(height,startPoint,"Ludzki z¹b",3);
 				quest_id_set("s01");
 			}
 			gracz.gold = gracz.gold + this->gold_for_complete_quest_info();
@@ -2402,7 +1785,9 @@ void shaman::everything_about_quests(player &gracz)
 		}
 		else if(gracz.quest_complete == 0 && gracz.quest_failed == 1)
 		{
-			fancy_text("Tym razem ci siê nie uda³o ale mo¿esz spróbowaæ znowu");
+			message.clear();
+			message.push_back("You didn't make it this time but you can try again");
+			tabSubmenuFancyTextOnly(height, startPoint, message, 50);
 			gracz.remove_quest();
 		}
 	}
@@ -2410,21 +1795,34 @@ void shaman::everything_about_quests(player &gracz)
 doctor::doctor()
 {
 	name = "LEKARZ";
-	info[0] = "SZPITAL - ROZMOWA Z LEKARZEM";
-	info[1] = "W: ZAKOÑCZ ROZMOWÊ";
-	info[2] = "M: MIKSTURA ¯YCIA";
+	info[0] = "End the conversation";
+	info[1] = "";
+	info[2] = "";
 	info[3] = "";
 	info[4] = "";
 	info[5] = "";
 	info[6] = "";
 	info[7] = "";
-	menu[0] = "POPROŒ O WYLECZENIE RAN";
-	menu[1] = "POPROŒ O USUNIÊCIE ALKOHOLU Z ORGANIZMU";
-	menu[2] = "POPROŒ O ULECZENIE TWOJEJ SI£Y";
-	menu[3] = "POPROŒ O ULECZENIE TWOJEJ ZRÊCZNOŒCI";
-	menu[4] = "POPROŒ O ULECZENIE TWOJEJ INTELIGENCJI";
-	menu[5] = "POPROŒ O ULECZENIE TWOJEJ CHARYZMY";
-	menu[6] = "POPROŒ O ULECZENIE TWOJEGO SZCZÊŒCIA";
+	info[8] = "";
+	info[8] = "";
+	info[10] = "";
+	info[11] = "";
+	info[12] = "";
+	info[13] = "";
+	info[14] = "";
+	info[15] = "";
+	info[16] = "";
+	info[17] = "";
+	info[18] = "";
+	info[18] = "";
+	info[19] = "";
+	menu[0] = "Ask for wounds healing";
+	menu[1] = "Ask for alcohol detox";
+	menu[2] = "Ask for strength restore";
+	menu[3] = "Ask for agility restore";
+	menu[4] = "Ask for intelligence restore";
+	menu[5] = "Ask for charisma restore";
+	menu[6] = "Ask for luck restore";
 	menu[7] = "";
 	menu[8] = "";
 	menu[9] = "";
@@ -2459,211 +1857,209 @@ doctor::doctor()
 	ceny[18] = 0;
 	ceny[19] = 0;
 }
-void doctor::show_image()
+void doctor::show_image(vector <string>& message)
 {
 	string linia;
-	int nr_linii = 1;
 	fstream plik;
 	plik.open("./txt/szpital/lekarz.txt", ios::in);
 	while (!plik.eof())
 	{
 		getline(plik, linia);
-		cout << linia << endl;
+		message.push_back(linia);
 	}
 	plik.close();
 	sound_heal_up();
 }
-void doctor::heal(player &gracz)
+void doctor::heal(int height, int startPoint, player &gracz)
 {
+	vector <string> message;
 	if (gracz.hp < gracz.max_hp)
 	{
 		if (gracz.gold >= ceny[0])
 		{
-			cout << "Twoje rany zosta³y uleczone" << endl;
+			message.push_back("Your wounds have been healed");
 			gracz.hp = gracz.max_hp;
 			gracz.gold = gracz.gold - ceny[0];
-			show_image();
-			change_time(gracz, 1, 0);
+			show_image(message);
+			change_time(height, startPoint, gracz, 1, 0);
 		}
 		else
 		{
-			no_money();
+			message.push_back(no_money());
 		}
 	}
 	else
 	{
-		cout << "Nic ci nie dolega" << endl;
+		message.push_back("You are fine");
 	}
-	system("PAUSE");
+	tabSubmenuTextOnly(height,startPoint,message);
 }
-void doctor::sober(player &gracz)
+void doctor::sober(int height, int startPoint, player &gracz)
 {
+	vector <string> message;
 	if (gracz.alko != 0)
 	{
 		if (gracz.gold >= ceny[1])
 		{
-			cout << "WytrzeŸwia³eœ" << endl;
+			message.push_back("You sober up");
 			gracz.alko = 0;
 			gracz.gold = gracz.gold - ceny[1];
-			show_image();
-			change_time(gracz, 1, 0);
+			show_image(message);
+			change_time(height, startPoint, gracz, 1, 0);
 		}
 		else
 		{
-			no_money();
+			message.push_back(no_money());
 		}
 	}
 	else
 	{
-		cout << "Jesteœ trzeŸwy" << endl;
+		message.push_back("You are sober");
 	}
-	system("PAUSE");
+	tabSubmenuTextOnly(height, startPoint, message);
 }
-void doctor::remove_nerf(player &gracz, int tryb)
+void doctor::remove_nerf(int height, int startPoint, player &gracz, int tryb)
 {
+	vector <string> message;
 	switch (tryb)
 	{
-	case 1:
+	case 0:
 	{
 		if (gracz.counter_nerf_str != 0)
 		{
 			if (gracz.gold >= ceny[2])
 			{
-				cout << "Twoja si³a wraca do normy" << endl;
+				message.push_back("Your strength is returning to normal");
 				remove_nerf_str(gracz);
 				gracz.gold = gracz.gold - ceny[2];
-				show_image();
-				change_time(gracz, 0, 30);
+				show_image(message);
+				change_time(height, startPoint, gracz, 0, 30);
 			}
 			else
 			{
-				no_money();
+				message.push_back(no_money());
 			}
 		}
 		else if (gracz.counter_boost_str != 0)
 		{
-			cout << "Nic ci nie dolega, a wrêcz jest lepiej ni¿ normalnie" << endl;
+			message.push_back("You are fine, and it's even better than normal");
 		}
 		else
 		{
-			cout << "Nic ci nie dolega" << endl;
+			message.push_back("You are fine");
 		}
-		system("PAUSE");
 		break;
 	}
-	case 2:
+	case 1:
 	{
 		if (gracz.counter_nerf_agility != 0)
 		{
 			if (gracz.gold >= ceny[3])
 			{
-				cout << "Twoja zrêcznoœæ wraca do normy" << endl;
+				message.push_back("Your agility is returning to normal");
 				remove_nerf_agility(gracz);
 				gracz.gold = gracz.gold - ceny[3];
-				show_image();
-				change_time(gracz, 0, 30);
+				show_image(message);
+				change_time(height, startPoint, gracz, 0, 30);
 			}
 			else
 			{
-				no_money();
+				message.push_back(no_money());
 			}
 		}
 		else if (gracz.counter_boost_agility != 0)
 		{
-			cout << "Nic ci nie dolega, a wrêcz jest lepiej ni¿ normalnie" << endl;
+			message.push_back("You are fine, and it's even better than normal");
 		}
 		else
 		{
-			cout << "Nic ci nie dolega" << endl;
+			message.push_back("You are fine");
 		}
-		system("PAUSE");
 		break;
 	}
-	case 3:
+	case 2:
 	{
 		if (gracz.counter_nerf_intel != 0)
 		{
 			if (gracz.gold >= ceny[4])
 			{
-				cout << "Twoja inteligencja wraca do normy" << endl;
+				message.push_back("Your inteligence is returning to normal");
 				remove_nerf_intel(gracz);
 				gracz.gold = gracz.gold - ceny[4];
-				show_image();
-				change_time(gracz, 0, 30);
+				show_image(message);
+				change_time(height, startPoint, gracz, 0, 30);
 			}
 			else
 			{
-				no_money();
+				message.push_back(no_money());
 			}
 		}
 		else if (gracz.counter_boost_intel != 0)
 		{
-			cout << "Nic ci nie dolega, a wrêcz jest lepiej ni¿ normalnie" << endl;
+			message.push_back("You are fine, and it's even better than normal");
 		}
 		else
 		{
-			cout << "Nic ci nie dolega" << endl;
+			message.push_back("You are fine");
 		}
-		system("PAUSE");
 		break;
 	}
-	case 4:
+	case 3:
 	{
 		if (gracz.counter_nerf_charisma != 0)
 		{
 			if (gracz.gold >= ceny[5])
 			{
-				cout << "Twoja charyzma wraca do normy" << endl;
+				message.push_back("Your charisma is returning to normal");
 				remove_nerf_charisma(gracz);
 				gracz.gold = gracz.gold - ceny[5];
-				show_image();
-				change_time(gracz, 0, 30);
+				show_image(message);
+				change_time(height, startPoint, gracz, 0, 30);
 			}
 			else
 			{
-				no_money();
+				message.push_back(no_money());
 			}
 		}
 		else if (gracz.counter_boost_charisma != 0)
 		{
-			cout << "Nic ci nie dolega, a wrêcz jest lepiej ni¿ normalnie" << endl;
+			message.push_back("You are fine, and it's even better than normal");
 		}
 		else
 		{
-			cout << "Nic ci nie dolega" << endl;
+			message.push_back("You are fine");
 		}
-		system("PAUSE");
 		break;
 	}
-	case 5:
+	case 4:
 	{
 		if (gracz.counter_nerf_luck != 0)
 		{
 			if (gracz.gold >= ceny[6])
 			{
-				cout << "Twoje szczêœcie wraca do normy" << endl;
+				message.push_back("Your luck is returning to normal");
 				remove_nerf_luck(gracz);
 				gracz.gold = gracz.gold - ceny[6];
-				show_image();
-				change_time(gracz, 0, 30);
+				show_image(message);
+				change_time(height, startPoint, gracz, 0, 30);
 			}
 			else
 			{
-				no_money();
+				message.push_back(no_money());
 			}
 		}
 		else if (gracz.counter_boost_luck != 0)
 		{
-			cout << "Nic ci nie dolega, a wrêcz jest lepiej ni¿ normalnie" << endl;
+			message.push_back("You are fine, and it's even better than normal");
 		}
 		else
 		{
-			cout << "Nic ci nie dolega" << endl;
+			message.push_back("You are fine");
 		}
-		system("PAUSE");
 		break;
 	}
 	}
+	tabSubmenuTextOnly(height, startPoint, message);
 }
 chest::chest()
 {
@@ -2883,38 +2279,31 @@ void chest::sort_forge()
 		}
 	}
 }
-void chest::move_to_player(int numer,player &gracz)
+void chest::move_to_player(int height, int startPoint, int numer, player &gracz)
 {
-	numer = numer - 1;
+	vector <string> message;
 	if (numer < 20)
 	{
 		if (gracz.count_free_fields_usage() == 0)
 		{
-			cout << "Nie mo¿esz przenieœæ tego przedmiotu do ekwipunku gdy¿ jest pe³ny!" << endl;
-			system("PAUSE");
+			message.push_back("You cannot move this item to your inventory because it is full.");
 		}
 		else if (menu[numer] == "")
 		{
-			cout << "To miejsce w skrzyni jest puste!" << endl;
-			system("PAUSE");
+			message.push_back("No item");
 		}
 		else
 		{
 			if (menu_amount[numer] > 1)
 			{
-				cout << "W skrzyni wiêcej ni¿ jeden przedmiot tego typu (" << menu[numer] << "), ile z nich chcesz przenieœæ do ekwipunku?" << endl;
-				cout << "Ile: ";
-				int ile;
-				cin >> ile;
-				while (cin.fail() || ile<0 || ile>menu_amount[numer])
+				string temp = "In the chest is more than one item of this type (" + to_string(gracz.inventory_usage_amount[numer]) + "), how many of them you want to transfer to your inventory? ";
+				int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
+				while (ile<0 || ile>menu_amount[numer])
 				{
-					cout << "Ile: ";
-					cin.clear();
-					cin.ignore(256, '\n');
-					cin >> ile;
+					ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 				}
 				menu_amount[numer] = menu_amount[numer] - ile;
-				gracz.add_usage_item(menu[numer], 0,ile, 1);
+				gracz.add_usage_item(menu[numer], 0,ile, height, startPoint, 1);
 				if (menu_amount[numer] == 0)
 				{
 					menu[numer] = "";
@@ -2924,7 +2313,7 @@ void chest::move_to_player(int numer,player &gracz)
 			else
 			{
 				menu_amount[numer]--;
-				gracz.add_usage_item(menu[numer], 0,1, 1);
+				gracz.add_usage_item(menu[numer], 0,1, height, startPoint, 1);
 				if (menu_amount[numer] == 0)
 				{
 					menu[numer] = "";
@@ -2933,35 +2322,28 @@ void chest::move_to_player(int numer,player &gracz)
 			}
 		}
 	}
-	else if (numer < 40 && numer > 19)
+	else if (numer < 40 && numer >= 20)
 	{
 		if (gracz.count_free_fields_alchemy() == 0)
 		{
-			cout << "Nie mo¿esz przenieœæ tego przedmiotu do ekwipunku gdy¿ jest pe³ny!" << endl;
-			system("PAUSE");
+			message.push_back("You cannot move this item to your inventory because it is full.");
 		}
 		else if (menu[numer] == "")
 		{
-			cout << "To miejsce w skrzyni jest puste!" << endl;
-			system("PAUSE");
+			message.push_back("No item");
 		}
 		else
 		{
 			if (menu_amount[numer] > 1)
 			{
-				cout << "W skrzyni wiêcej ni¿ jeden przedmiot tego typu (" << menu[numer] << "), ile z nich chcesz przenieœæ do ekwipunku?" << endl;
-				cout << "Ile: ";
-				int ile;
-				cin >> ile;
-				while (cin.fail() || ile<0 || ile>menu_amount[numer])
+				string temp = "In the chest is more than one item of this type (" + to_string(gracz.inventory_usage_amount[numer]) + "), how many of them you want to transfer to your inventory? ";
+				int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
+				while (ile<0 || ile>menu_amount[numer])
 				{
-					cout << "Ile: ";
-					cin.clear();
-					cin.ignore(256, '\n');
-					cin >> ile;
+					ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 				}
 				menu_amount[numer] = menu_amount[numer] - ile;
-				gracz.add_crafting_alchemy_item(menu[numer], 0, ile, 1);
+				gracz.add_crafting_alchemy_item(menu[numer], 0, ile, height, startPoint, 1);
 				if (menu_amount[numer] == 0)
 				{
 					menu[numer] = "";
@@ -2971,7 +2353,7 @@ void chest::move_to_player(int numer,player &gracz)
 			else
 			{
 				menu_amount[numer]--;
-				gracz.add_crafting_alchemy_item(menu[numer], 0, 1, 1);
+				gracz.add_crafting_alchemy_item(menu[numer], 0, 1, height, startPoint, 1);
 				if (menu_amount[numer] == 0)
 				{
 					menu[numer] = "";
@@ -2980,35 +2362,28 @@ void chest::move_to_player(int numer,player &gracz)
 			}
 		}
 	}
-	else if (numer > 39)
+	else if (numer >= 40)
 	{
 		if (gracz.count_free_fields_forge() == 0)
 		{
-			cout << "Nie mo¿esz przenieœæ tego przedmiotu do ekwipunku gdy¿ jest pe³ny!" << endl;
-			system("PAUSE");
+			message.push_back("You cannot move this item to your inventory because it is full.");
 		}
 		else if (menu[numer] == "")
 		{
-			cout << "To miejsce w skrzyni jest puste!" << endl;
-			system("PAUSE");
+			message.push_back("No item");
 		}
 		else
 		{
 			if (menu_amount[numer] > 1)
 			{
-				cout << "W skrzyni wiêcej ni¿ jeden przedmiot tego typu (" << menu[numer] << "), ile z nich chcesz przenieœæ do ekwipunku?" << endl;
-				cout << "Ile: ";
-				int ile;
-				cin >> ile;
-				while (cin.fail() || ile<0 || ile>menu_amount[numer])
+				string temp = "In the chest is more than one item of this type (" + to_string(gracz.inventory_usage_amount[numer]) + "), how many of them you want to transfer to your inventory? ";
+				int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
+				while (ile<0 || ile>menu_amount[numer])
 				{
-					cout << "Ile: ";
-					cin.clear();
-					cin.ignore(256, '\n');
-					cin >> ile;
+					ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 				}
 				menu_amount[numer] = menu_amount[numer] - ile;
-				gracz.add_crafting_forge_item(menu[numer], 0, ile, 1);
+				gracz.add_crafting_forge_item(menu[numer], 0, ile, height, startPoint, 1);
 				if (menu_amount[numer] == 0)
 				{
 					menu[numer] = "";
@@ -3018,7 +2393,7 @@ void chest::move_to_player(int numer,player &gracz)
 			else
 			{
 				menu_amount[numer]--;
-				gracz.add_crafting_forge_item(menu[numer], 0, 1, 1);
+				gracz.add_crafting_forge_item(menu[numer], 0, 1, height, startPoint, 1);
 				if (menu_amount[numer] == 0)
 				{
 					menu[numer] = "";
@@ -3027,21 +2402,23 @@ void chest::move_to_player(int numer,player &gracz)
 			}
 		}
 	}
+	if (message.size() != 0)
+	{
+		tabSubmenuTextOnly(height, startPoint, message);
+	}
 }
-void chest::move_to_chest(int numer,player &gracz)
+void chest::move_to_chest(int height, int startPoint, int numer, player &gracz)
 {
-	numer = numer - 1;
+	vector <string> message;
 	if (numer < 20)
 	{
 		if (count_free_fields_usage() == 0)
 		{
-			cout << "Nie mo¿esz przenieœæ tego przedmiotu do skrzyni gdy¿ jest pe³na!" << endl;
-			system("PAUSE");
+			message.push_back("You cannot move this item to the chest because the chest is full.");
 		}
 		else if (gracz.inventory_usage[numer] == "")
 		{
-			cout << "To miejsce w twoim ekwipunku jest puste!" << endl;
-			system("PAUSE");
+			message.push_back("No item");
 		}
 		else
 		{
@@ -3049,16 +2426,11 @@ void chest::move_to_chest(int numer,player &gracz)
 			{
 				if (gracz.inventory_usage_amount[numer] > 1)
 				{
-					cout << "Masz wiêcej ni¿ jeden przedmiot tego typu (" << gracz.inventory_usage_amount[numer] << "), ile z nich chcesz przenieœæ do skrzyni?" << endl;
-					cout << "Ile: ";
-					int ile;
-					cin >> ile;
-					while (cin.fail() || ile<0 || ile>gracz.inventory_usage_amount[numer])
+					string temp = "You have more than one item of this type (" + to_string(gracz.inventory_usage_amount[numer]) + "), how many of them you want to transfer to the chest? ";
+					int ile = stoi(tabSubmenuInputField(height, startPoint,temp));
+					while (ile<0 || ile>gracz.inventory_usage_amount[numer])
 					{
-						cout << "Ile: ";
-						cin.clear();
-						cin.ignore(256, '\n');
-						cin >> ile;
+						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 					}
 					gracz.inventory_usage_amount[numer] = gracz.inventory_usage_amount[numer] - ile;
 					menu_amount[find_selected_usage_index(gracz.inventory_usage[numer])] = menu_amount[find_selected_usage_index(gracz.inventory_usage[numer])] + ile;
@@ -3085,16 +2457,11 @@ void chest::move_to_chest(int numer,player &gracz)
 			{
 				if (gracz.inventory_usage_amount[numer] > 1)
 				{
-					cout << "Masz wiêcej ni¿ jeden przedmiot tego typu (" << gracz.inventory_usage_amount[numer] << "), ile z nich chcesz przenieœæ do skrzyni?" << endl;
-					cout << "Ile: ";
-					int ile;
-					cin >> ile;
-					while (cin.fail() || ile<0 || ile>gracz.inventory_usage_amount[numer])
+					string temp = "You have more than one item of this type (" + to_string(gracz.inventory_usage_amount[numer]) + "), how many of them you want to transfer to the chest? ";
+					int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
+					while (ile<0 || ile>gracz.inventory_usage_amount[numer])
 					{
-						cout << "Ile: ";
-						cin.clear();
-						cin.ignore(256, '\n');
-						cin >> ile;
+						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 					}
 					gracz.inventory_usage_amount[numer] = gracz.inventory_usage_amount[numer] - ile;
 					menu_amount[find_free_usage_index()] = menu_amount[find_free_usage_index()] + ile;
@@ -3121,18 +2488,16 @@ void chest::move_to_chest(int numer,player &gracz)
 			}
 		}
 	}
-	else if (numer < 40 && numer >19)
+	else if (numer < 40 && numer >= 20)
 	{
 		numer = numer - 20;
 		if (count_free_fields_alchemy() == 0)
 		{
-			cout << "Nie mo¿esz przenieœæ tego przedmiotu do skrzyni gdy¿ jest pe³na!" << endl;
-			system("PAUSE");
+			message.push_back("You cannot move this item to the chest because the chest is full.");
 		}
 		else if (gracz.inventory_crafting[numer] == "")
 		{
-			cout << "To miejsce w twoim ekwipunku jest puste!" << endl;
-			system("PAUSE");
+			message.push_back("No item");
 		}
 		else
 		{
@@ -3140,16 +2505,11 @@ void chest::move_to_chest(int numer,player &gracz)
 			{
 				if (gracz.inventory_crafting_amount[numer] > 1)
 				{
-					cout << "Masz wiêcej ni¿ jeden przedmiot tego typu (" << gracz.inventory_crafting_amount[numer] << "), ile z nich chcesz przenieœæ do skrzyni?" << endl;
-					cout << "Ile: ";
-					int ile;
-					cin >> ile;
-					while (cin.fail() || ile<0 || ile>gracz.inventory_crafting_amount[numer])
+					string temp = "You have more than one item of this type (" + to_string(gracz.inventory_crafting_amount[numer]) + "), how many of them you want to transfer to the chest? ";
+					int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
+					while (ile<0 || ile>gracz.inventory_crafting_amount[numer])
 					{
-						cout << "Ile: ";
-						cin.clear();
-						cin.ignore(256, '\n');
-						cin >> ile;
+						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 					}
 					gracz.inventory_crafting_amount[numer] = gracz.inventory_crafting_amount[numer] - ile;
 					menu_amount[find_selected_alchemy_index(gracz.inventory_crafting[numer])] = menu_amount[find_selected_alchemy_index(gracz.inventory_crafting[numer])] + ile;
@@ -3176,16 +2536,11 @@ void chest::move_to_chest(int numer,player &gracz)
 			{
 				if (gracz.inventory_crafting_amount[numer] > 1)
 				{
-					cout << "Masz wiêcej ni¿ jeden przedmiot tego typu (" << gracz.inventory_crafting_amount[numer] << "), ile z nich chcesz przenieœæ do skrzyni?" << endl;
-					cout << "Ile: ";
-					int ile;
-					cin >> ile;
-					while (cin.fail() || ile<0 || ile>gracz.inventory_crafting_amount[numer])
+					string temp = "You have more than one item of this type (" + to_string(gracz.inventory_crafting_amount[numer]) + "), how many of them you want to transfer to the chest? ";
+					int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
+					while (ile<0 || ile>gracz.inventory_crafting_amount[numer])
 					{
-						cout << "Ile: ";
-						cin.clear();
-						cin.ignore(256, '\n');
-						cin >> ile;
+						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 					}
 					gracz.inventory_crafting_amount[numer] = gracz.inventory_crafting_amount[numer] - ile;
 					menu_amount[find_free_alchemy_index()] = menu_amount[find_free_alchemy_index()] + ile;
@@ -3212,18 +2567,16 @@ void chest::move_to_chest(int numer,player &gracz)
 			}
 		}
 	}
-	else if(numer >39)
+	else if(numer >= 40)
 	{
 		numer = numer - 20;
 		if (count_free_fields_forge() == 0)
 		{
-			cout << "Nie mo¿esz przenieœæ tego przedmiotu do skrzyni gdy¿ jest pe³na!" << endl;
-			system("PAUSE");
+			message.push_back("You cannot move this item to the chest because the chest is full.");
 		}
 		else if (gracz.inventory_crafting[20 + numer] == "")
 		{
-			cout << "To miejsce w twoim ekwipunku jest puste!" << endl;
-			system("PAUSE");
+			message.push_back("No item");
 		}
 		else
 		{
@@ -3231,16 +2584,11 @@ void chest::move_to_chest(int numer,player &gracz)
 			{
 				if (gracz.inventory_crafting_amount[20 + numer] > 1)
 				{
-					cout << "Masz wiêcej ni¿ jeden przedmiot tego typu (" << gracz.inventory_crafting_amount[20 + numer] << "), ile z nich chcesz przenieœæ do skrzyni?" << endl;
-					cout << "Ile: ";
-					int ile;
-					cin >> ile;
-					while (cin.fail() || ile<0 || ile>gracz.inventory_crafting_amount[20 + numer])
+					string temp = "You have more than one item of this type (" + to_string(gracz.inventory_crafting_amount[20 + numer]) + "), how many of them you want to transfer to the chest? ";
+					int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
+					while (ile<0 || ile>gracz.inventory_crafting_amount[20 + numer])
 					{
-						cout << "Ile: ";
-						cin.clear();
-						cin.ignore(256, '\n');
-						cin >> ile;
+						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 					}
 					gracz.inventory_crafting_amount[20 + numer] = gracz.inventory_crafting_amount[20 + numer] - ile;
 					menu_amount[find_selected_forge_index(gracz.inventory_crafting[20 + numer])] = menu_amount[find_selected_forge_index(gracz.inventory_crafting[20 + numer])] + ile;
@@ -3267,16 +2615,11 @@ void chest::move_to_chest(int numer,player &gracz)
 			{
 				if (gracz.inventory_crafting_amount[20 + numer] > 1)
 				{
-					cout << "Masz wiêcej ni¿ jeden przedmiot tego typu (" << gracz.inventory_crafting_amount[20 + numer] << "), ile z nich chcesz przenieœæ do skrzyni?" << endl;
-					cout << "Ile: ";
-					int ile;
-					cin >> ile;
-					while (cin.fail() || ile<0 || ile>gracz.inventory_crafting_amount[20 + numer])
+					string temp = "You have more than one item of this type (" + to_string(gracz.inventory_crafting_amount[20 + numer]) + "), how many of them you want to transfer to the chest? ";
+					int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
+					while (ile<0 || ile>gracz.inventory_crafting_amount[20 + numer])
 					{
-						cout << "Ile: ";
-						cin.clear();
-						cin.ignore(256, '\n');
-						cin >> ile;
+						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 					}
 					gracz.inventory_crafting_amount[20 + numer] = gracz.inventory_crafting_amount[20 + numer] - ile;
 					menu_amount[find_free_forge_index()] = menu_amount[find_free_forge_index()] + ile;
@@ -3303,4 +2646,8 @@ void chest::move_to_chest(int numer,player &gracz)
 			}
 		}
 	}
+	if (message.size() != 0)
+	{
+		tabSubmenuTextOnly(height, startPoint, message);
+	}	
 }

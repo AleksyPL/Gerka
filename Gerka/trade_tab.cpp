@@ -24,6 +24,7 @@ table::table()
 		temp_table_price[i] = 0;
 	}
 }
+/*
 void table::load_merch_trader(seller &handlarz, player &gracz)
 {
 	handlarz.load_merch();
@@ -839,3 +840,4 @@ void table::accept_transaction(player &gracz, seller handlarz)
 		} while (tryb = 0);
 	}
 }
+*/

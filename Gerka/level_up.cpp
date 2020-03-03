@@ -1,8 +1,9 @@
 #include "level_up.h"
 #include "tytul.h"
 #include "boost_syf.h"
+#include "tabelka.h"
 
-void level_up(player &gracz,int tryb)
+void removeNegativeEffects(player& gracz)
 {
 	if (gracz.counter_nerf_str != 0)
 	{
@@ -24,130 +25,106 @@ void level_up(player &gracz,int tryb)
 	{
 		remove_nerf_charisma(gracz);
 	}
-	if (tryb == 1)
+}
+
+void levelUp(int height, int startPoint, player& gracz, int skipCheckingXP)
+{
+	if (skipCheckingXP == 1)
 	{
-		cout << "AWANSUJESZ NA " << gracz.level + 1 << " POZIOM" << endl;
+		vector <string> message;
+		vector <string> options;
+		removeNegativeEffects(gracz);
+		message.push_back("You are promoted to level " + to_string(gracz.level + 1));
 		gracz.exp_to_next_level = gracz.level * 1000;
 		gracz.level = gracz.level + 1;
 		gracz.hp = gracz.max_hp + 10;
 		gracz.max_hp = gracz.hp;
 		give_the_title(gracz);
-		string wyb_statystyki;
-		while (1)
+		message.push_back("You get a skill point, which statistic you want to add it to?");
+		options.push_back("Strength");
+		options.push_back("Agility");
+		options.push_back("Inteligence");
+		options.push_back("Charisma");
+		options.push_back("Luck");
+		int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
+		switch (highlight)
 		{
-			cout << "DOSTAJESZ PUNKT UMIEJÊTNOŒCI, DO KTÓREJ STATYSTYKI CHCESZ GO DODAÆ?" << endl;
-			cout << "1. SI£A" << endl;
-			cout << "2. ZRÊCZNOŒÆ" << endl;
-			cout << "3. INTELIGENCJA" << endl;
-			cout << "4. CHARYZMA" << endl;
-			cout << "5. SZCZÊŒCIE" << endl;
-			cout << "Twoj wybor to: ";
-			cin >> wyb_statystyki;
-			switch (wyb_statystyki[0])
-			{
-			case '1':
-			{
-				cout << endl << "DODANO JEDEN PUNKT DO SI£Y" << endl;
-				gracz.str++;
-				break;
-			}
-			case '2':
-			{
-				cout << endl << "DODANO JEDEN PUNKT DO ZRÊCZNOŒCI" << endl;
-				gracz.agility++;
-				break;
-			}
-			case '3':
-			{
-				cout << endl << "DODANO JEDEN PUNKT DO INTELIGENCJI" << endl;
-				gracz.intel++;
-				break;
-			}
-			case '4':
-			{
-				cout << endl << "DODANO JEDEN PUNKT DO CHARYZMY" << endl;
-				gracz.charisma++;
-				break;
-			}
-			case '5':
-			{
-				cout << endl << "DODANO JEDEN PUNKT DO SZCZÊŒCIA" << endl;
-				gracz.luck++;
-				break;
-			}
-			default:
-			{
-				system("cls");
-				break;
-			}
-			}
+		case 0:
+		{
+			gracz.str++;
 			break;
-			system("cls");
+		}
+		case 1:
+		{
+			gracz.agility++;
+			break;
+		}
+		case 2:
+		{
+			gracz.intel++;
+			break;
+		}
+		case 3:
+		{
+			gracz.charisma++;
+			break;
+		}
+		case 4:
+		{
+			gracz.luck++;
+			break;
+		}
 		}
 	}
 	else
 	{
 		while (gracz.exp >= gracz.exp_to_next_level)
 		{
-			cout << "AWANSUJESZ NA " << gracz.level + 1 << " POZIOM" << endl;
+			vector <string> message;
+			vector <string> options;
+			removeNegativeEffects(gracz);
+			message.push_back("You are promoted to level " + to_string(gracz.level + 1));
 			gracz.exp = gracz.exp - gracz.exp_to_next_level;
 			gracz.exp_to_next_level = gracz.level * 1000;
 			gracz.level = gracz.level + 1;
 			gracz.hp = gracz.max_hp + 10;
 			gracz.max_hp = gracz.hp;
 			give_the_title(gracz);
-			char wyb_statystyki = 0;
-			while (1)
+			message.push_back("You get a skill point, which statistic you want to add it to?");
+			options.push_back("Strength");
+			options.push_back("Agility");
+			options.push_back("Inteligence");
+			options.push_back("Charisma");
+			options.push_back("Luck");
+			int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
+			switch (highlight)
 			{
-				cout << "DOSTAJESZ PUNKT UMIEJÊTNOŒCI, DO KTÓREJ STATYSTYKI CHCESZ GO DODAÆ?" << endl;
-				cout << "1. SI£A" << endl;
-				cout << "2. ZRÊCZNOŒÆ" << endl;
-				cout << "3. INTELIGENCJA" << endl;
-				cout << "4. CHARYZMA" << endl;
-				cout << "5. SZCZÊŒCIE" << endl;
-				cout << "Twoj wybor to: ";
-				cin >> wyb_statystyki;
-				switch (wyb_statystyki)
-				{
-				case '1':
-				{
-					cout << endl << "DODANO JEDEN PUNKT DO SI£Y" << endl;
-					gracz.str++;
-					break;
-				}
-				case '2':
-				{
-					cout << endl << "DODANO JEDEN PUNKT DO ZRÊCZNOŒCI" << endl;
-					gracz.agility++;
-					break;
-				}
-				case '3':
-				{
-					cout << endl << "DODANO JEDEN PUNKT DO INTELIGENCJI" << endl;
-					gracz.intel++;
-					break;
-				}
-				case '4':
-				{
-					cout << endl << "DODANO JEDEN PUNKT DO CHARYZMY" << endl;
-					gracz.charisma++;
-					break;
-				}
-				case '5':
-				{
-					cout << endl << "DODANO JEDEN PUNKT DO SZCZÊŒCIA" << endl;
-					gracz.luck++;
-					break;
-				}
-				default:
-				{
-					system("cls");
-					break;
-				}
-				}
+			case 0:
+			{
+				gracz.str++;
 				break;
-				system("cls");
+			}
+			case 1:
+			{
+				gracz.agility++;
+				break;
+			}
+			case 2:
+			{
+				gracz.intel++;
+				break;
+			}
+			case 3:
+			{
+				gracz.charisma++;
+				break;
+			}
+			case 4:
+			{
+				gracz.luck++;
+				break;
+			}
 			}
 		}
-	}	
+	}
 }

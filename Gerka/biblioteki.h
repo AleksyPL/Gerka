@@ -4,20 +4,20 @@
 #include<string>
 #include<ctime>
 #include<fstream>
-#include<conio.h>
-#include<cstdlib>
-#include<locale.h>
 #include<algorithm>
-#include<cctype>
+#include<curses.h>
+#include<vector>
+#pragma comment(lib, "winmm.lib")
+//#pragma comment(lib,"lib/pdcurses.lib")
+//#include "include/curses.h"
 
-using std::cin;
-using std::cout;
 using std::endl;
 using std::string;
 using std::fstream;
 using std::ios;
 using std::to_string;
 using std::transform;
+using std::vector;
 
 void sound_drums();
 void sound_damage();
@@ -37,9 +37,8 @@ void sound_stop();
 void sound_no_money();
 void sound_drop_item();
 void sound_rejection();
-void no_money();
+string no_money();
 void change_color(int num);
 string string_tolower(string data);
-void print_info_box_from_file(string text);
-void print_info_box_from_string(string text);
-void fancy_text(string text, int skip_pause=0);
+void windowDrawOnCenter(WINDOW * win, int y, int how_log, string name, int x = 1, int spaces_on_the_end = 1);
+string findItemOnList(string item);

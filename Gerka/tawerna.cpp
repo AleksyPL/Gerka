@@ -8,55 +8,52 @@
 #include "sleep.h"
 #include "wait.h"
 
-void drunked(player &gracz)
+void drunked(int height, int startPoint, player &gracz)
 {
-	fancy_text("Jesteœ tak pijany, ¿e zasypiasz w karczmie.");
-	system("PAUSE");
-	robbery(gracz);
-	change_time(gracz, 8, 0);
+	vector <string> message;
+	message.push_back("You're too drunk, you fall asleep in a tavern");
+	change_time(height, startPoint, gracz, 8, 0);
+	robbery(height, startPoint, gracz, message);
 }
 
-void robbery(player &gracz)
+void robbery(int height, int startPoint, player &gracz, vector <string> message)
 {
 	srand((unsigned int)time(NULL));
 	int rand1 = rand() % 100;
 	int rand2 = rand() % 100+gracz.luck;
 	if (rand2 < rand1 && gracz.gold>0)
 	{
+		message.push_back("Someone stole some money from you");
 		if (gracz.gold > 10000)
 		{
-			cout << "KTOŒ UKRAD£ CI CZÊŒÆ PIENIÊDZY" << endl;
 			gracz.gold=gracz.gold - (0.2*gracz.gold);
 		}
 		else if (gracz.gold > 1000)
 		{
-			cout << "KTOŒ UKRAD£ CI CZÊŒÆ PIENIÊDZY" << endl;
 			gracz.gold = gracz.gold - (0.1*gracz.gold);
 		}
 		else
 		{
-			cout << "KTOŒ UKRAD£ CI CZÊŒÆ PIENIÊDZY" << endl;
 			gracz.gold = gracz.gold - (0.05*gracz.gold);
 		}
 	}
 	else
 	{
-		cout << "Bezpiecznie przesypiasz noc" << endl;
+		message.push_back("You sleep safely for 8 hours");
 	}
-	system("PAUSE");
+	tabSubmenuTextOnly(height, startPoint, message);
 }
 
-void flirting(player &gracz,string info)
+void flirting(int height, int startPoint, player &gracz)
 {
+	vector <string> message;
 	srand((unsigned int)time(NULL));
 	int sukces = rand() % 100;
 	int sukces2 = rand() % 100+gracz.luck;
 	if (sukces2 > sukces)
 	{
-		cout << "Uda³o ci siê poderwaæ ³adn¹ dziewczynê" << endl;
-		cout << "Ma na imiê ";
+		message.push_back("You've managed to successfully hit on a girl");
 		string linia;
-		int nr_linii = 1;
 		fstream plik;
 		{
 			int rand1 = rand() % 10;
@@ -104,118 +101,76 @@ void flirting(player &gracz,string info)
 		while (!plik.eof())
 		{
 			getline(plik, linia);
-			cout << linia << endl;
 		}
 		plik.close();
+		message.push_back("Her name is " + linia);
 		if (gracz.alko != 0)
 		{
-			cout << "Randka przebiega przyjemnie, oboje jesteœcie trochê pijani" << endl;
+			message.push_back("The date goes well, both of you get a little tipsy");
 		}
 		sukces = rand() % 100;
 		sukces2 = rand() % 20 + gracz.luck;
-		system("PAUSE");
 		if (sukces2 < sukces)
 		{
-			fancy_text("Okazuje siê, ¿e przysz³a z jakimœ goœciem, zaczynacie siê szarpaæ");
-			system("PAUSE");
-			int rand1 = rand() % 3;
-			gracz = fight(gracz, rand1);
-			gracz.reset_fight_status();
+			message.push_back("It turns out she came with some guy, the two of you begin to tussle");
+			message.push_back("The function is not ready yet \"TODO\"");
+			tabSubmenuTextOnly(height, startPoint, message);
+			//int rand1 = rand() % 3;
+			//gracz = fight(gracz, rand1);
+			//gracz.reset_fight_status();
 		}
 		else
 		{
-			fancy_text("Wysz³a gdzieœ, chyba siê sp³oszy³a. Szkoda");
+			message.push_back("She left. Probably got spooked out, that's a shame...");
 		}
 	}
 	else
 	{
-		cout << "Nie uda³o ci siê nikogo poderwaæ, ale nie poddawaj siê!" << endl;
-		system("PAUSE");
+		message.push_back("You've not managed to successfully hit on a girl, better luck next time");
 	}
+	tabSubmenuTextOnly(height,startPoint,message);
 }
 
 player enter_tavern(player gracz,barman bobby, chest &krzynka)
 {
-	change_time(gracz, 0, 5);
+	change_time(23,32,gracz, 0, 5);
 	int tryb = 0;
+	int highlight = 0;
 	while (1)
 	{
-		level_up(gracz);
+		levelUp(23,32,gracz);
 		if (gracz.hp <= 0)
 		{
 			return gracz;
 		}
-		system("cls");
-		string info[8];
-		string menu[60];
+		string info[20];
+		string local = "Tavern";
+
+		string menu[20];
 		long ceny[20]; 
-
-		//glowne staty 23 znaki
-		/* 1*/menu[0] = "PUNKTY SI£Y:";
-		/* 2*/menu[1] = "PUNKTY ZRÊCZNOŒCI:";
-		/* 3*/menu[2] = "PUNKTY INTELIGENCJI:";
-		/* 4*/menu[3] = "PUNKTY CHARYZMY:";
-		/* 5*/menu[4] = "PUNKTY SZCZÊŒCIA:";
-		/* 6*/menu[5] = "";
-		/* 7*/menu[6] = "";
-		/* 8*/menu[7] = "";
-		/* 9*/menu[8] = "";
-		/*10*/menu[9] = "";
-		/*11*/menu[10] = "";
-		/*12*/menu[11] = "";
-		/*13*/menu[12] = "";
-		/*14*/menu[13] = "";
-		/*15*/menu[14] = "";
-		/*16*/menu[15] = "";
-		/*17*/menu[16] = "";
-		/*18*/menu[17] = "";
-		/*19*/menu[18] = "";
-		/*20*/menu[19] = "";
-
-		//wartosci glownych statow
-		/* 1*/menu[20] = to_string(gracz.str);
-		/* 2*/menu[21] = to_string(gracz.agility);
-		/* 3*/menu[22] = to_string(gracz.intel);
-		/* 4*/menu[23] = to_string(gracz.charisma);
-		/* 5*/menu[24] = to_string(gracz.luck);
-		/* 6*/menu[25] = "";
-		/* 7*/menu[26] = "";
-		/* 8*/menu[27] = "";
-		/* 9*/menu[28] = "";
-		/*10*/menu[29] = "";
-		/*11*/menu[30] = "";
-		/*12*/menu[31] = "";
-		/*13*/menu[32] = "";
-		/*14*/menu[33] = "";
-		/*15*/menu[34] = "";
-		/*16*/menu[35] = "";
-		/*17*/menu[36] = "";
-		/*18*/menu[37] = "";
-		/*19*/menu[38] = "";
-		/*20*/menu[39] = "";
 
 		if (tryb == 1)
 		{
-			/* 1*/menu[40] = bobby.menu[0];
-			/* 2*/menu[41] = bobby.menu[1];
-			/* 3*/menu[42] = bobby.menu[2];
-			/* 4*/menu[43] = bobby.menu[3];
-			/* 5*/menu[44] = bobby.menu[4];
-			/* 6*/menu[45] = bobby.menu[5];
-			/* 7*/menu[46] = bobby.menu[6];
-			/* 8*/menu[47] = bobby.menu[7];
-			/* 9*/menu[48] = bobby.menu[8];
-			/*10*/menu[49] = bobby.menu[9];
-			/*11*/menu[50] = bobby.menu[10];
-			/*12*/menu[51] = bobby.menu[11];
-			/*13*/menu[52] = bobby.menu[12];
-			/*14*/menu[53] = bobby.menu[13];
-			/*15*/menu[54] = bobby.menu[14];
-			/*16*/menu[55] = bobby.menu[15];
-			/*17*/menu[56] = bobby.menu[16];
-			/*18*/menu[57] = bobby.menu[17];
-			/*19*/menu[58] = bobby.menu[18];
-			/*20*/menu[59] = bobby.menu[19];
+			/* 1*/menu[0] = bobby.menu[0];
+			/* 2*/menu[1] = bobby.menu[1];
+			/* 3*/menu[2] = bobby.menu[2];
+			/* 4*/menu[3] = bobby.menu[3];
+			/* 5*/menu[4] = bobby.menu[4];
+			/* 6*/menu[5] = bobby.menu[5];
+			/* 7*/menu[6] = bobby.menu[6];
+			/* 8*/menu[7] = bobby.menu[7];
+			/* 9*/menu[8] = bobby.menu[8];
+			/*10*/menu[9] = bobby.menu[9];
+			/*11*/menu[10] = bobby.menu[10];
+			/*12*/menu[11] = bobby.menu[11];
+			/*13*/menu[12] = bobby.menu[12];
+			/*14*/menu[13] = bobby.menu[13];
+			/*15*/menu[14] = bobby.menu[14];
+			/*16*/menu[15] = bobby.menu[15];
+			/*17*/menu[16] = bobby.menu[16];
+			/*18*/menu[17] = bobby.menu[17];
+			/*19*/menu[18] = bobby.menu[18];
+			/*20*/menu[19] = bobby.menu[19];
 			/* 1*/ceny[0] = bobby.ceny[0];
 			/* 2*/ceny[1] = bobby.ceny[1];
 			/* 3*/ceny[2] = bobby.ceny[2];
@@ -244,29 +199,41 @@ player enter_tavern(player gracz,barman bobby, chest &krzynka)
 			info[5] = bobby.info[5];
 			info[6] = bobby.info[6];
 			info[7] = bobby.info[7];
+			info[8] = bobby.info[8];
+			info[9] = bobby.info[9];
+			info[10] = bobby.info[10];
+			info[11] = bobby.info[11];
+			info[12] = bobby.info[12];
+			info[13] = bobby.info[13];
+			info[14] = bobby.info[14];
+			info[15] = bobby.info[15];
+			info[16] = bobby.info[16];
+			info[17] = bobby.info[17];
+			info[18] = bobby.info[18];
+			info[19] = bobby.info[19];
 		}
 		else
 		{
-			/* 1*/menu[40] = "POROZMAWIAJ Z BARMANEM";
-			/* 2*/menu[41] = "SZUKAJ KOGOŒ DO GRY W KARTY";
-			/* 3*/menu[42] = "PROWOKUJ WALKÊ";
-			/* 4*/menu[43] = "SZUKAJ DRU¯YNY";
-			/* 5*/menu[44] = "PODRYWAJ DZIEWCZYNY";
-			/* 6*/menu[45] = "PRZECHOWAJ PRZEDMIOTY W SKRZYNI";
-			/* 7*/menu[46] = "";
-			/* 8*/menu[47] = "";
-			/* 9*/menu[48] = "";
-			/*10*/menu[49] = "";
-			/*11*/menu[50] = "";
-			/*12*/menu[51] = "";
-			/*13*/menu[52] = "";
-			/*14*/menu[53] = "";
-			/*15*/menu[54] = "";
-			/*16*/menu[55] = "";
-			/*17*/menu[56] = "";
-			/*18*/menu[57] = "";
-			/*19*/menu[58] = "";
-			/*20*/menu[59] = "";
+			/* 1*/menu[0] = "Talk to Barkeep";
+			/* 2*/menu[1] = "Play cards";
+			/* 3*/menu[2] = "Start a fight [unavailable]";
+			/* 4*/menu[3] = "Look for a team [unavailable]";
+			/* 5*/menu[4] = "Hit up on girls";
+			/* 6*/menu[5] = "Stash items in a chest";
+			/* 7*/menu[6] = "";
+			/* 8*/menu[7] = "";
+			/* 9*/menu[8] = "";
+			/*10*/menu[9] = "";
+			/*11*/menu[10] = "";
+			/*12*/menu[11] = "";
+			/*13*/menu[12] = "";
+			/*14*/menu[13] = "";
+			/*15*/menu[14] = "";
+			/*16*/menu[15] = "";
+			/*17*/menu[16] = "";
+			/*18*/menu[17] = "";
+			/*19*/menu[18] = "";
+			/*20*/menu[19] = "";
 			ceny[0] = 0;
 			ceny[1] = 0;
 			ceny[2] = 0;
@@ -287,14 +254,26 @@ player enter_tavern(player gracz,barman bobby, chest &krzynka)
 			ceny[17] = 0;
 			ceny[18] = 0;
 			ceny[19] = 0;
-			info[0] = "TAWERNA";
-			info[1] = "W: WRÓÆ NA RYNEK";
-			info[2] = "C: CZEKAJ";
+			info[0] = "Leave tavern";
+			info[1] = "Wait";
+			info[2] = "";
 			info[3] = "";
 			info[4] = "";
 			info[5] = "";
 			info[6] = "";
 			info[7] = "";
+			info[8] = "";
+			info[9] = "";
+			info[10] = "";
+			info[11] = "";
+			info[12] = "";
+			info[13] = "";
+			info[14] = "";
+			info[15] = "";
+			info[16] = "";
+			info[17] = "";
+			info[18] = "";
+			info[19] = "";
 		}
 
 
@@ -309,114 +288,118 @@ player enter_tavern(player gracz,barman bobby, chest &krzynka)
 				ceny[i] = 0;
 			}
 		}
-		tab(gracz,info, menu, ceny);
-		cout << "Twoj wybor to: ";
-		string wyb;
-		cin >> wyb;
-		wyb = string_tolower(wyb);
-		switch (wyb[0])
+		tab(gracz, highlight, local, info, menu, ceny);
+		switch (highlight)
 		{
-		case '1':
-		{
-			if (tryb == 0)
-			{
-				change_time(gracz, 0, 1);
-				tryb = 1;
-			}
-			else
-			{
-				bobby.gossip(gracz);
-			}
-			break;
-		}
-		case '2':
-		{
-			if (tryb == 0)
-			{
-				gambling(gracz);
-				range(gracz);
-			}
-			else
-			{
-				bobby.give_room(gracz);
-			}
-			break;
-		}
-		case '3':
-		{
-			if (tryb == 0)
-			{
-				int rand1 = rand() % 3;
-				gracz = fight(gracz, rand1);
-			}
-			else
-			{
-				bobby.sell_food(gracz, 2);
-			}
-			break;
-		}
-		case '4':
-		{
-			if (gracz.alko == 10 && tryb == 1)
-			{
-				drunked(gracz);
-			}
-			else if (tryb == 1)
-			{
-				bobby.sell_beer(gracz);
-			}
-			break;
-		}
-		case '5':
-		{
-			if (tryb == 0)
-			{
-				flirting(gracz,info[0]);
-			}
-			else
-			{
-				;
-			}
-			break;
-		}
-		case '6':
-		{
-			if (tryb == 0)
-			{
-				enter_chest_mode(gracz,krzynka);
-			}
-			else
-			{
-				;
-			}
-			break;
-		}
-		case 'c':
-		{
-			gracz = wait_n_hours(gracz);
-			break;
-		}
-		case 'w':
+		case 0:
 		{
 			if (gracz.alko == 10 && tryb == 0)
 			{
-				drunked(gracz);
+				drunked(23, 32, gracz);
 				break;
 			}
 			else if (tryb == 0)
 			{
-				change_time(gracz, 0, 5);
+				change_time(23,32,gracz, 0, 5);
 				return gracz;
 			}
 			else if (tryb == 1)
 			{
 				tryb = 0;
-				change_time(gracz, 0, 1);
+				change_time(23,32,gracz, 0, 1);
 				break;
 			}
 		}
-		default:
+		case 1:
 		{
+			wait_n_hours(23, 32, gracz);
+			break;
+		}
+		case 20:
+		{
+			if (tryb == 0)
+			{
+				change_time(23,32,gracz, 0, 1);
+				tryb = 1;
+			}
+			else
+			{
+				bobby.gossip(23, 32, gracz);
+			}
+			break;
+		}
+		case 21:
+		{
+			if (tryb == 0)
+			{
+				gambling(23, 32, gracz);
+				range(gracz);
+			}
+			else
+			{
+				bobby.give_room(23, 32, gracz);
+				tryb = 0;
+			}
+			break;
+		}
+		case 22:
+		{
+			if (tryb == 0)
+			{
+				/*int rand1 = rand() % 3;
+				gracz = fight(gracz, rand1);*/
+				vector <string> message;
+				message.push_back("The function is not ready yet \"TODO\"");
+				tabSubmenuTextOnly(23, 32, message);
+				break;
+			}
+			else
+			{
+				bobby.sell_food(23, 32, gracz, 2);
+			}
+			break;
+		}
+		case 23:
+		{
+			if (tryb == 0)
+			{
+				vector <string> message;
+				message.push_back("The function is not ready yet \"TODO\"");
+				tabSubmenuTextOnly(23, 32, message);
+				break;
+			}
+			else
+			{
+				bobby.sell_beer(23, 32, gracz);
+				if (gracz.alko == 10)
+				{
+					drunked(23, 32, gracz);
+				}
+			}
+			break;
+		}
+		case 24:
+		{
+			if (tryb == 0)
+			{
+				flirting(23, 32, gracz);
+			}
+			else
+			{
+				;
+			}
+			break;
+		}
+		case 25:
+		{
+			if (tryb == 0)
+			{
+				enter_chest_mode(gracz, krzynka);
+			}
+			else
+			{
+				;
+			}
 			break;
 		}
 		}

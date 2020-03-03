@@ -72,10 +72,10 @@ void sound_rejection()
 {
 	PlaySound(TEXT("./wav/no.wav"), NULL, SND_ASYNC);
 }
-void no_money()
+string no_money()
 {
 	sound_no_money();
-	cout << "Nie staæ ciê na to!!!" << endl;
+	return "You don't have enough money";
 }
 void change_color(int num)
 {
@@ -104,61 +104,87 @@ string string_tolower(string data)
 	transform(data.begin(), data.end(), data.begin(), tolower);
 	return data;
 }
-void print_info_box_from_file(string text)
+void windowDrawOnCenter(WINDOW * win, int y, int how_log, string name, int x, int spaces_on_the_end)
 {
+	int j = name.length();
+	int i = how_log - j;
+	string temp;
+	if ((how_log - j) % 2 == 0)
+	{
+		for (int j = 0; j < i / 2; j++)
+		{
+			temp = temp + " ";
+		}
+	}
+	else
+	{
+		for (int j = 0; j < (i / 2) + 1; j++)
+		{
+			temp = temp + " ";
+		}
+	}
+	temp = temp + name;
+	if (spaces_on_the_end == 0)
+	{
+		mvwprintw(win, y, x, temp.c_str());
+	}
+	else
+	{
+		for (int j = 0; j < i / 2; j++)
+		{
+			temp = temp + " ";
+		}
+		mvwprintw(win, y, x, temp.c_str());
+	}
+}
+string findItemOnList(string item)
+{
+	int nr_linii = 1;
 	string linia;
 	fstream plik;
-	string temp = "./txt/info/" + text + ".txt";
-	plik.open(temp, ios::in);
-	cout << "X--------------------------------------------------------------------------------------------------------------------------------------------------X" << endl;
+	plik.open("./txt/mix/Items_usable.txt", ios::in);
 	while (!plik.eof())
 	{
 		getline(plik, linia);
-		int j = linia.length();
-		cout << "| ";
-		for (int i = 0; i < j; i++)
+		if (linia == item)
 		{
-			Sleep(30);
-			cout << linia[i];
+			return "Usable";
 		}
-		int space = 145 - linia.length();
-		for (int i = 0; i < space; i++)
+		else
 		{
-			cout << " ";
+			nr_linii++;
 		}
-		cout << "|" << endl;
 	}
-	cout << "X--------------------------------------------------------------------------------------------------------------------------------------------------X" << endl;
-	system("PAUSE");
-}
-void print_info_box_from_string(string text)
-{
-	cout << "X--------------------------------------------------------------------------------------------------------------------------------------------------X" << endl;
-	cout << "| ";
-	for (int i = 0; i < text.length(); i++)
+	plik.close();
+	nr_linii = 1;
+	plik.open("./txt/mix/Items_alchemy.txt", ios::in);
+	while (!plik.eof())
 	{
-		Sleep(30);
-		cout << text[i];
+		getline(plik, linia);
+		if (linia == item)
+		{
+			return "Alchemy";
+		}
+		else
+		{
+			nr_linii++;
+		}
 	}
-	int space = 145 - text.length();
-	for (int i = 0; i < space; i++)
+	plik.close();
+	nr_linii = 1;
+	plik.open("./txt/mix/Items_smithery.txt", ios::in);
+	while (!plik.eof())
 	{
-		cout << " ";
+		getline(plik, linia);
+		if (linia == item)
+		{
+			return "Smithery";
+		}
+		else
+		{
+			nr_linii++;
+		}
 	}
-	cout << "|" << endl;
-	cout << "X--------------------------------------------------------------------------------------------------------------------------------------------------X" << endl;
-	system("PAUSE");
-}
-void fancy_text(string text,int skip_pause)
-{
-	for (int i = 0; i < text.length(); i++)
-	{
-		Sleep(30);
-		cout << text[i];
-	}
-	cout << endl;
-	if (skip_pause == 0)
-	{
-		system("PAUSE");
-	}
+	plik.close();
+	return "Error";
 }

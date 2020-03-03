@@ -7,12 +7,13 @@
 
 player enter_forge(player gracz,blacksmith kowal)
 {
-	change_time(gracz, 0, 5);
+	int highlight = 0;
+	change_time(23,32,gracz, 0, 5);
 	if (gracz.hour >= 20 || gracz.hour <6)
 	{
-		system("cls");
-		print_info_box_from_file("forge_closed");
-		change_time(gracz, 0, 5);
+		vector<string> message;
+		message.push_back("Forge closed");
+		tabSubmenuFancyTextOnly(23, 32, message, 50);
 		return gracz;
 	}
 	int tryb = 0;
@@ -20,88 +21,46 @@ player enter_forge(player gracz,blacksmith kowal)
 	{
 		if (gracz.hour >= 20 || gracz.hour < 6)
 		{
-			print_info_box_from_string("Musisz ju¿ iœæ, zamykamy");
-			change_time(gracz, 0, 5);
+			kowal.weAreClosing(gracz);
+			vector<string> message;
+			message.push_back("You have to go. We're closing.");
+			tabSubmenuFancyTextOnly(23, 32, message, 50);
+			change_time(23,32,gracz, 0, 5);
 			return gracz;
 		}
 		if (gracz.hp <= 0)
 		{
 			return gracz;
 		}
-		level_up(gracz);
-		system("cls");
-		string menu[60];
-		string info[8];
+		levelUp(23,32, gracz);
+		string menu[20];
+		string info[20];
 		long ceny[20];
-
-		//glowne staty 23 znaki
-		/* 1*/menu[0] = "PUNKTY SI£Y:";
-		/* 2*/menu[1] = "PUNKTY ZRÊCZNOŒCI:";
-		/* 3*/menu[2] = "PUNKTY INTELIGENCJI:";
-		/* 4*/menu[3] = "PUNKTY CHARYZMY:";
-		/* 5*/menu[4] = "PUNKTY SZCZÊŒCIA:";
-		/* 6*/menu[5] = "";
-		/* 7*/menu[6] = "";
-		/* 8*/menu[7] = "";
-		/* 9*/menu[8] = "";
-		/*10*/menu[9] = "";
-		/*11*/menu[10] = "";
-		/*12*/menu[11] = "";
-		/*13*/menu[12] = "";
-		/*14*/menu[13] = "";
-		/*15*/menu[14] = "";
-		/*16*/menu[15] = "";
-		/*17*/menu[16] = "";
-		/*18*/menu[17] = "";
-		/*19*/menu[18] = "";
-		/*20*/menu[19] = "";
-
-		//wartosci glownych statow
-		/* 1*/menu[20] = to_string(gracz.str);
-		/* 2*/menu[21] = to_string(gracz.agility);
-		/* 3*/menu[22] = to_string(gracz.intel);
-		/* 4*/menu[23] = to_string(gracz.charisma);
-		/* 5*/menu[24] = to_string(gracz.luck);
-		/* 6*/menu[25] = "";
-		/* 7*/menu[26] = "";
-		/* 8*/menu[27] = "";
-		/* 9*/menu[28] = "";
-		/*10*/menu[29] = "";
-		/*11*/menu[30] = "";
-		/*12*/menu[31] = "";
-		/*13*/menu[32] = "";
-		/*14*/menu[33] = "";
-		/*15*/menu[34] = "";
-		/*16*/menu[35] = "";
-		/*17*/menu[36] = "";
-		/*18*/menu[37] = "";
-		/*19*/menu[38] = "";
-		/*20*/menu[39] = "";
-
+		string local = "Forge";
 		if (tryb == 1)
 		{
 			kowal.load_player_points(gracz);
 			//Opcje w lokacji 35 znakow
-			/* 1*/menu[40] = kowal.menu[0];
-			/* 2*/menu[41] = kowal.menu[1];
-			/* 3*/menu[42] = kowal.menu[2];
-			/* 4*/menu[43] = kowal.menu[3];
-			/* 5*/menu[44] = kowal.menu[4];
-			/* 6*/menu[45] = kowal.menu[5];
-			/* 7*/menu[46] = kowal.menu[6];
-			/* 8*/menu[47] = kowal.menu[7];
-			/* 9*/menu[48] = kowal.menu[8];
-			/*10*/menu[49] = kowal.menu[9];
-			/*11*/menu[50] = kowal.menu[10];
-			/*12*/menu[51] = kowal.menu[11];
-			/*13*/menu[52] = kowal.menu[12];
-			/*14*/menu[53] = kowal.menu[13];
-			/*15*/menu[54] = kowal.menu[14];
-			/*16*/menu[55] = kowal.menu[15];
-			/*17*/menu[56] = kowal.menu[16];
-			/*18*/menu[57] = kowal.menu[17];
-			/*19*/menu[58] = kowal.menu[18];
-			/*20*/menu[59] = kowal.menu[19];
+			/* 1*/menu[0] = kowal.menu[0];
+			/* 2*/menu[1] = kowal.menu[1];
+			/* 3*/menu[2] = kowal.menu[2];
+			/* 4*/menu[3] = kowal.menu[3];
+			/* 5*/menu[4] = kowal.menu[4];
+			/* 6*/menu[5] = kowal.menu[5];
+			/* 7*/menu[6] = kowal.menu[6];
+			/* 8*/menu[7] = kowal.menu[7];
+			/* 9*/menu[8] = kowal.menu[8];
+			/*10*/menu[9] = kowal.menu[9];
+			/*11*/menu[10] = kowal.menu[10];
+			/*12*/menu[11] = kowal.menu[11];
+			/*13*/menu[12] = kowal.menu[12];
+			/*14*/menu[13] = kowal.menu[13];
+			/*15*/menu[14] = kowal.menu[14];
+			/*16*/menu[15] = kowal.menu[15];
+			/*17*/menu[16] = kowal.menu[16];
+			/*18*/menu[17] = kowal.menu[17];
+			/*19*/menu[18] = kowal.menu[18];
+			/*20*/menu[19] = kowal.menu[19];
 			ceny[0] = kowal.ceny[0];
 			ceny[1] = kowal.ceny[1];
 			ceny[2] = kowal.ceny[2];
@@ -130,29 +89,41 @@ player enter_forge(player gracz,blacksmith kowal)
 			info[5] = kowal.info[5];
 			info[6] = kowal.info[6];
 			info[7] = kowal.info[7];
+			info[8] = kowal.info[8];
+			info[9] = kowal.info[9];
+			info[10] = kowal.info[10];
+			info[11] = kowal.info[11];
+			info[12] = kowal.info[12];
+			info[13] = kowal.info[13];
+			info[14] = kowal.info[14];
+			info[15] = kowal.info[15];
+			info[16] = kowal.info[16];
+			info[17] = kowal.info[17];
+			info[18] = kowal.info[18];
+			info[19] = kowal.info[19];
 		}
 		else
 		{
-			/* 1*/menu[40] = "POROZMAWIAJ Z KOWALEM";
-			/* 2*/menu[41] = "";
-			/* 3*/menu[42] = "";
-			/* 4*/menu[43] = "";
-			/* 5*/menu[44] = "";
-			/* 6*/menu[45] = "";
-			/* 7*/menu[46] = "";
-			/* 8*/menu[47] = "";
-			/* 9*/menu[48] = "";
-			/*10*/menu[49] = "";
-			/*11*/menu[50] = "";
-			/*12*/menu[51] = "";
-			/*13*/menu[52] = "";
-			/*14*/menu[53] = "";
-			/*15*/menu[54] = "";
-			/*16*/menu[55] = "";
-			/*17*/menu[56] = "";
-			/*18*/menu[57] = "";
-			/*19*/menu[58] = "";
-			/*20*/menu[59] = "";
+			/* 1*/menu[0] = "Talk to blacksmith";
+			/* 2*/menu[1] = "";
+			/* 3*/menu[2] = "";
+			/* 4*/menu[3] = "";
+			/* 5*/menu[4] = "";
+			/* 6*/menu[5] = "";
+			/* 7*/menu[6] = "";
+			/* 8*/menu[7] = "";
+			/* 9*/menu[8] = "";
+			/*10*/menu[9] = "";
+			/*11*/menu[10] = "";
+			/*12*/menu[11] = "";
+			/*13*/menu[12] = "";
+			/*14*/menu[13] = "";
+			/*15*/menu[14] = "";
+			/*16*/menu[15] = "";
+			/*17*/menu[16] = "";
+			/*18*/menu[17] = "";
+			/*19*/menu[18] = "";
+			/*20*/menu[19] = "";
 			ceny[0] = 0;
 			ceny[1] = 0;
 			ceny[2] = 0;
@@ -173,14 +144,26 @@ player enter_forge(player gracz,blacksmith kowal)
 			ceny[17] = 0;
 			ceny[18] = 0;
 			ceny[19] = 0;
-			info[0] = "KUNIA";
-			info[1] = "W: WRÓÆ NA RYNEK";
-			info[2] = "C: CZEKAJ";
+			info[0] = "Leave forge";
+			info[1] = "Wait";
+			info[2] = "";
 			info[3] = "";
 			info[4] = "";
 			info[5] = "";
 			info[6] = "";
 			info[7] = "";
+			info[8] = "";
+			info[9] = "";
+			info[10] = "";
+			info[11] = "";
+			info[12] = "";
+			info[13] = "";
+			info[14] = "";
+			info[15] = "";
+			info[16] = "";
+			info[17] = "";
+			info[18] = "";
+			info[19] = "";
 		}
 
 		for (int i = 0; i < 20; i++)
@@ -195,118 +178,51 @@ player enter_forge(player gracz,blacksmith kowal)
 			}
 		}
 		range(gracz);
-		tab(gracz,info,menu,ceny);
-		cout << "Twój wybór to: ";
-		string wyb;
-		cin >> wyb;
-		wyb = string_tolower(wyb);
-		switch (wyb[0])
+		tab(gracz, highlight, local, info, menu, ceny);
+		if (highlight >= 20 && highlight <= 25 && tryb == 1)
 		{
-		//helmet
-		case '1':
-		{
-			if (tryb == 0)
-			{
-				tryb = 1;
-				change_time(gracz, 0, 1);
-				kowal.load_weapons();
-				kowal.generate_merch(gracz);
-			}
-			else
-			{
-				kowal.power_up(gracz,1);
-			}
-			break;
+			kowal.power_up(23, 32, gracz, highlight - 20);
 		}
-		//chestplate
-		case '2':
+		else
 		{
-			if (tryb == 0)
+			switch (highlight)
 			{
-				;
-			}
-			else
+			case 20:
 			{
-				kowal.power_up(gracz, 2);
-			}
-			break;
-		}
-		//gloves
-		case '3':
-		{
-			if (tryb == 0)
-			{
-				;
-			}
-			else
-			{
-				kowal.power_up(gracz, 3);
-			}
-			break;
-		}
-		//pants
-		case '4':
-		{
-			if (tryb == 0)
-			{
-				;
-			}
-			else
-			{
-				kowal.power_up(gracz, 4);
-			}
-			break;
-		}
-		//shoes
-		case '5':
-		{
-			if (tryb == 0)
-			{
-				;
-			}
-			else
-			{
-				kowal.power_up(gracz, 5);
-			}
-			break;
-		}
-		//weapon
-		case '6':
-		{
-			if (tryb == 0)
-			{
-				;
-			}
-			else
-			{
-				kowal.power_up(gracz, 6);
-			}
-			break;
-		}
-		case 'c':
-		{
-			gracz = wait_n_hours(gracz,20);
-			break;
-		}
-		case 'w':
-		{
-			if (tryb == 0)
-			{
-				change_time(gracz, 0, 5);
-				return gracz;
-			}
-			else if (tryb == 1)
-			{
-				tryb = 0;
-				change_time(gracz, 0, 1);
+				if (tryb == 0)
+				{
+					tryb = 1;
+					change_time(23,32,gracz, 0, 1);
+					kowal.load_weapons();
+					kowal.generate_merch(gracz);
+				}
+				else
+				{
+					;
+				}
 				break;
 			}
+			case 1:
+			{
+				wait_n_hours(23, 32, gracz);
+				break;
+			}
+			case 0:
+			{
+				if (tryb == 0)
+				{
+					change_time(23,32,gracz, 0, 5);
+					return gracz;
+				}
+				else if (tryb == 1)
+				{
+					tryb = 0;
+					change_time(23,32,gracz, 0, 1);
+					break;
+				}
+			}
+			}
 		}
-		default:
-		{
-			system("cls");
-			break;
-		}
-		}
+		
 	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "biblioteki.h"
 
-int logo(int tryb);
+int logo(bool &tryb, WINDOW * win);
+void show_credits(WINDOW * win);
 int main();

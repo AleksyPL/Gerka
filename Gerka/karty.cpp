@@ -2,45 +2,43 @@
 #include "zakres.h"
 #include "level_up.h"
 #include "czas.h"
+#include "tabelka.h"
 
-void gambling(player &gracz)
+void gambling(int height, int startPoint, player &gracz)
 {
+	vector<string> message;
 	if (gracz.gold == 0)
 	{
 		sound_rejection();
-		fancy_text("Nie masz czym graæ, spadaj!");
+		message.push_back("You don't have money to play cards!");
+		tabSubmenuTextOnly(height, startPoint, message);
 	}
 	else
 	{
-		cout << endl << "Grasz z mieszczanami w karty" << endl;
-		cout << "Podaj stawkê: ";
-		int stawka;
-		cin >> stawka;
-		while (cin.fail() || stawka<0 || stawka>gracz.gold)
+		string temp = "You play cards with the residents, enter the stake: ";
+		int stake = stoi(tabSubmenuInputField(height, startPoint, temp));
+		while (stake<0 || stake>gracz.gold)
 		{
-			cout << "Podaj stawkê: ";
-			cin.clear();
-			cin.ignore(256, '\n');
-			cin >> stawka;
+			stake = stoi(tabSubmenuInputField(height, startPoint, temp));
 		}
-		cout << "Gracie o " << stawka << " sztuk z³ota" << endl;
+		message.push_back("Stake: " + to_string(stake));
 		int pom = rand() % 100;
 		int pom2 = rand() % 100;
 		if (gracz.luck + pom>pom2)
 		{
-			cout << "Wygrywasz " << stawka << " sztuk z³ota" << endl;
-			gracz.gold = gracz.gold + stawka;
+			message.push_back("You won " + to_string(stake) + " gold");
+			gracz.gold = gracz.gold + stake;
 			gracz.exp = gracz.exp + 5;
 		}
 		else
 		{
-			cout << "Przegrywasz " << stawka << " sztuk z³ota" << endl;
-			gracz.gold = gracz.gold - stawka;
+			message.push_back("You lose " + to_string(stake) + " gold");
+			gracz.gold = gracz.gold - stake;
 		}
-		change_time(gracz, 0, 10);
+		tabSubmenuTextOnly(height, startPoint, message);
+		change_time(height, startPoint, gracz, 0, 10);
 		gracz.exp = gracz.exp + 5;
-		level_up(gracz);
+		levelUp(height, startPoint, gracz);
 		range(gracz);
-		system("PAUSE");
 	}
 }

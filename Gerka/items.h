@@ -3,5 +3,5 @@
 #include "player.h"
 
 void use_hp_potion(player &gracz);
-void info_hp_potion();
-void use_item(string name, int tryb,player &gracz, string info);
+void info_hp_potion(int height, int startPoint);
+void use_item(int height, int startPoint, string item, int useDropInfo, player& gracz);
