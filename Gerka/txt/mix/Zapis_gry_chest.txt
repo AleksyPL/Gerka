@@ -1,180 +1,180 @@
-Przedmiot u퓓tkowy numer 1
+Usable item number 1
 
 0
-Przedmiot u퓓tkowy numer 2
+Usable item number 2
 
 0
-Przedmiot u퓓tkowy numer 3
+Usable item number 3
 
 0
-Przedmiot u퓓tkowy numer 4
+Usable item number 4
 
 0
-Przedmiot u퓓tkowy numer 5
+Usable item number 5
 
 0
-Przedmiot u퓓tkowy numer 6
+Usable item number 6
 
 0
-Przedmiot u퓓tkowy numer 7
+Usable item number 7
 
 0
-Przedmiot u퓓tkowy numer 8
+Usable item number 8
 
 0
-Przedmiot u퓓tkowy numer 9
+Usable item number 9
 
 0
-Przedmiot u퓓tkowy numer 10
+Usable item number 10
 
 0
-Przedmiot u퓓tkowy numer 11
+Usable item number 11
 
 0
-Przedmiot u퓓tkowy numer 12
+Usable item number 12
 
 0
-Przedmiot u퓓tkowy numer 13
+Usable item number 13
 
 0
-Przedmiot u퓓tkowy numer 14
+Usable item number 14
 
 0
-Przedmiot u퓓tkowy numer 15
+Usable item number 15
 
 0
-Przedmiot u퓓tkowy numer 16
+Usable item number 16
 
 0
-Przedmiot u퓓tkowy numer 17
+Usable item number 17
 
 0
-Przedmiot u퓓tkowy numer 18
+Usable item number 18
 
 0
-Przedmiot u퓓tkowy numer 19
+Usable item number 19
 
 0
-Przedmiot u퓓tkowy numer 20
+Usable item number 20
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 1
+Crafing item - alchemy number 1
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 2
+Crafing item - alchemy number 2
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 3
+Crafing item - alchemy number 3
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 4
+Crafing item - alchemy number 4
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 5
+Crafing item - alchemy number 5
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 6
+Crafing item - alchemy number 6
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 7
+Crafing item - alchemy number 7
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 8
+Crafing item - alchemy number 8
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 9
+Crafing item - alchemy number 9
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 10
+Crafing item - alchemy number 10
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 11
+Crafing item - alchemy number 11
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 12
+Crafing item - alchemy number 12
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 13
+Crafing item - alchemy number 13
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 14
+Crafing item - alchemy number 14
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 15
+Crafing item - alchemy number 15
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 16
+Crafing item - alchemy number 16
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 17
+Crafing item - alchemy number 17
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 18
+Crafing item - alchemy number 18
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 19
+Crafing item - alchemy number 19
 
 0
-Przedmiot rzemie쐋niczy alchemiczny numer 20
+Crafing item - alchemy number 20
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 1
+Crafing item - smithery number 1
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 2
+Crafing item - smithery number 2
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 3
+Crafing item - smithery number 3
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 4
+Crafing item - smithery number 4
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 5
+Crafing item - smithery number 5
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 6
+Crafing item - smithery number 6
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 7
+Crafing item - smithery number 7
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 8
+Crafing item - smithery number 8
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 9
+Crafing item - smithery number 9
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 10
+Crafing item - smithery number 10
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 11
+Crafing item - smithery number 11
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 12
+Crafing item - smithery number 12
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 13
+Crafing item - smithery number 13
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 14
+Crafing item - smithery number 14
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 15
+Crafing item - smithery number 15
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 16
+Crafing item - smithery number 16
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 17
+Crafing item - smithery number 17
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 18
+Crafing item - smithery number 18
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 19
+Crafing item - smithery number 19
 
 0
-Przedmiot rzemie쐋niczy kowalski numer 20
+Crafing item - smithery number 20
 
 0

@@ -1,10 +1,5 @@
 Twoja stara
-500
 Kapsle
-1000
-Wóda
-1000
+Woda
 Whiskey
-1000
-Mikstura ¿ycia
-200
+Mikstura zycia

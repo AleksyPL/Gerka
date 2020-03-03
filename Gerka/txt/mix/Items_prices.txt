@@ -1,0 +1,60 @@
+Durexy
+100
+Garnek
+5
+Talerz
+5
+Butelka piwa
+20
+Ludzki zab
+20
+Kupa
+1
+Kupa1
+1
+Kupa2
+1
+Kupa3
+1
+Kupa4
+1
+Kupa5
+1
+Kupa6
+1
+Kupa7
+1
+Kupa8
+1
+Kupa9
+1
+Kupa10
+1
+Kupa11
+1
+Kupa12
+1
+Kupa13
+1
+Kupa14
+1
+Twoja stara
+500
+Kapsle
+1000
+Woda
+1000
+Whiskey
+1000
+Mikstura zycia
+200
+Kupencja
+1000
+Sraczka
+1000
+Miecz
+1000
+Sztabka zlota
+5000
+Szampan
+5000

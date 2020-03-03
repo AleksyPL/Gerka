@@ -1,14 +1,14 @@
-Punkty he³mu
+Helmet points
 0
-Punkty napierœnika
+Chestplate points
 0
-Punkty rêkawic
+Gloves points
 0
-Punkty spodni
+Pants points
 0
-Punkty butów
+Shoes points
 0
-Punkty obra¿eñ broni
-100
-Nazwa broni
+Weapon damage
+1
+Weapon name
 PIÊŒCI
