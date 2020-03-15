@@ -11,4 +11,4 @@ Shoes points
 Weapon damage
 1
 Weapon name
-PIʌCI
+Fists

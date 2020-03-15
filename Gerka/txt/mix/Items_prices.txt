@@ -58,3 +58,5 @@ Sztabka zlota
 5000
 Szampan
 5000
+Lockpick
+20

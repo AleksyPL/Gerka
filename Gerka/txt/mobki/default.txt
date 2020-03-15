@@ -1,17 +1,17 @@
 Mob name
-Citizen
+Something
 Health point
-25
+10
 Experience points
-15
+1
 Damage
-4
+1
 Defence
 0
 Base dropped gold
 0
 Additional dropped gold
-10
+1
 Dropped Item
 Lockpick
 Drop rate for item

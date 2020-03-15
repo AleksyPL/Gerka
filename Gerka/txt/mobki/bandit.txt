@@ -1,5 +1,5 @@
 Mob name
-Citizen
+Bandit
 Health point
 25
 Experience points

@@ -1,5 +1,5 @@
 Mob name
-Citizen
+Skeleton
 Health point
 25
 Experience points

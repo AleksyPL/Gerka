@@ -2,13 +2,13 @@
            |             |                                                                                        
            |             |                                                                                        
            |             |                                                                    1---------------2   
-           |  e          |                                                                    |XXXXXXXXXXXXXXX|   
-           |             3---------------------9                                              |XXXXXXXXXXXXXXX|   
-           |                                              1---------------------2             |XXXXXXXXXXXXXXX|   
-   9-------4                                              |                     |             |XXXXXXXXXXXXXXX|   
-                                                          |                     |             |XXXXXXXXXXXXXXX|   
-                                                          |                     |             |XXXXXXXXXXXXXXX|   
-5------------------2                                      |                     9             3---------------4   
+           |  e          |                                                                    |               |   
+           |             3---------------------9                                              |               |   
+           |                                              1---------------------2             |               |   
+   9-------4                                              |                     |             |               |   
+                                                          |                     |             |               |   
+                                                          |                     |             3------909------4   
+5------------------2                                      |                     9                                 
                    |                                      |                                                       
                    |   1---------------------9            |                                                       
                    |   |                                  |                     9-----------------------2         
@@ -30,9 +30,3 @@
                    |   |                    |XXXXXXXXXXXXXXXXXXXX|                           |    E               
                    |   |                    |XXXXXXXXXXXXXXXXXXXX|                           |                    
                    8   8                    8XXXXXXXXXXXXXXXXXXXX8                           8                    
-Decor
-10
-Monsters
-6
-
-
