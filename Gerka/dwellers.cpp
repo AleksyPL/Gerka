@@ -179,55 +179,13 @@ barman::barman()
 void barman::gossip(int height, int startPoint, player &gracz)
 {
 	srand((unsigned int)time(NULL));
-	int ran = rand() % 11;
+	int gossipNumber = rand() % 9;
 	string linia;
 	int nr_linii = 1;
 	fstream plik;
 	vector<string> message;
-	if (ran == 0)
-	{
-		plik.open("./txt/tawerna/plota0.txt", ios::in);
-	}
-	else if (ran == 1)
-	{
-		plik.open("./txt/tawerna/plota1.txt", ios::in);
-	}
-	else if (ran == 2)
-	{
-		plik.open("./txt/tawerna/plota2.txt", ios::in);
-	}
-	else if (ran == 3)
-	{
-		plik.open("./txt/tawerna/plota3.txt", ios::in);
-	}
-	else if (ran == 4)
-	{
-		plik.open("./txt/tawerna/plota4.txt", ios::in);
-	}
-	else if (ran == 5)
-	{
-		plik.open("./txt/tawerna/plota5.txt", ios::in);
-	}
-	else if (ran == 6)
-	{
-		plik.open("./txt/tawerna/plota6.txt", ios::in);
-	}
-	else if (ran == 7)
-	{
-		plik.open("./txt/tawerna/plota7.txt", ios::in);
-	}
-	else if (ran == 8)
-	{
-		plik.open("./txt/tawerna/plota8.txt", ios::in);
-	}
-	else if (ran == 9)
-	{
-		plik.open("./txt/tawerna/plota9.txt", ios::in);
-	}
-	else if (ran == 10)
-	{
-		plik.open("./txt/tawerna/plota10.txt", ios::in);
-	}
+	string path = "./txt/tawerna/plota" + to_string(gossipNumber) + ".txt";
+	plik.open(path, ios::in);
 	while (!plik.eof())
 	{
 		getline(plik, linia);
@@ -346,7 +304,7 @@ seller::seller()
 	info[17] = "";
 	info[18] = "";
 	info[19] = "";
-	menu[0] = "Start to trade";
+	menu[0] = "Trade items";
 	menu[1] = "";
 	menu[2] = "";
 	menu[3] = "";
@@ -1747,7 +1705,7 @@ void shaman::everything_about_quests(int height, int startPoint, player &gracz)
 			gold_for_complete_quest_set(1000);
 			exp_for_complete_quest_set(100);
 			message.push_back("To make a magic amulet I need three human teeth.");
-			message.push_back("I will give you 1000 gold if you bring me these teeth.");
+			message.push_back("I will give you 1000 gold if you bring me them.");
 			tabSubmenuFancyTextOnly(height, startPoint, message, 50);
 			if (dialog_box(height,startPoint) == 0)
 			{
@@ -1816,7 +1774,7 @@ doctor::doctor()
 	info[18] = "";
 	info[18] = "";
 	info[19] = "";
-	menu[0] = "Ask for wounds healing";
+	menu[0] = "Ask for medical attention";
 	menu[1] = "Ask for alcohol detox";
 	menu[2] = "Ask for strength restore";
 	menu[3] = "Ask for agility restore";

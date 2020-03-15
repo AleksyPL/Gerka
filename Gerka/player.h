@@ -72,7 +72,8 @@ class player
 		int find_usage_item_index(string nazwa);
 		int find_crafting_alchemy_item_index(string nazwa);
 		int find_crafting_forge_item_index(string nazwa);
-		void drop_item(int height, int startPoint, string item);
+		bool dropItem(int height, int startPoint, string item);
+		bool removeItemWithoutNotification(string item);
 		void use_item(int height, int startPoint, string item, string message);
 		void add_usage_item(string nazwa, int cena, int ilosc, int height, int startPoint,int skipBackpackChecking = 0);
 		void add_crafting_alchemy_item(string nazwa, int cena, int ilosc, int height, int startPoint, int skipBackpackChecking = 0);

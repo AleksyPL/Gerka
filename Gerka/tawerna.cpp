@@ -53,57 +53,18 @@ void flirting(int height, int startPoint, player &gracz)
 	if (sukces2 > sukces)
 	{
 		message.push_back("You've managed to successfully hit on a girl");
+		vector <string> names;
 		string linia;
 		fstream plik;
-		{
-			int rand1 = rand() % 10;
-			if (rand1 == 0)
-			{
-				plik.open("./txt/tawerna/imie0.txt", ios::in);
-			}
-			else if (rand1 == 1)
-			{
-				plik.open("./txt/tawerna/imie1.txt", ios::in);
-			}
-			else if (rand1 == 2)
-			{
-				plik.open("./txt/tawerna/imie2.txt", ios::in);
-			}
-			else if (rand1 == 3)
-			{
-				plik.open("./txt/tawerna/imie3.txt", ios::in);
-			}
-			else if (rand1 == 4)
-			{
-				plik.open("./txt/tawerna/imie4.txt", ios::in);
-			}
-			else if (rand1 == 5)
-			{
-				plik.open("./txt/tawerna/imie5.txt", ios::in);
-			}
-			else if (rand1 == 6)
-			{
-				plik.open("./txt/tawerna/imie6.txt", ios::in);
-			}
-			else if (rand1 == 7)
-			{
-				plik.open("./txt/tawerna/imie7.txt", ios::in);
-			}
-			else if (rand1 == 8)
-			{
-				plik.open("./txt/tawerna/imie8.txt", ios::in);
-			}
-			else if (rand1 == 9)
-			{
-				plik.open("./txt/tawerna/imie9.txt", ios::in);
-			}
-		}
+		plik.open("./txt/tawerna/imiona.txt", ios::in);
 		while (!plik.eof())
 		{
 			getline(plik, linia);
+			names.push_back(linia);
 		}
 		plik.close();
-		message.push_back("Her name is " + linia);
+		int rand1 = rand() % names.size();
+		message.push_back("Her name is " + names[rand1]);
 		if (gracz.alko != 0)
 		{
 			message.push_back("The date goes well, both of you get a little tipsy");
@@ -112,7 +73,7 @@ void flirting(int height, int startPoint, player &gracz)
 		sukces2 = rand() % 20 + gracz.luck;
 		if (sukces2 < sukces)
 		{
-			message.push_back("It turns out she came with some guy, the two of you begin to tussle");
+			message.push_back("It turns out she came with some guy, the two of you begin to brawl");
 			message.push_back("The function is not ready yet \"TODO\"");
 			tabSubmenuTextOnly(height, startPoint, message);
 			//int rand1 = rand() % 3;
@@ -151,66 +112,12 @@ player enter_tavern(player gracz,barman bobby, chest &krzynka)
 
 		if (tryb == 1)
 		{
-			/* 1*/menu[0] = bobby.menu[0];
-			/* 2*/menu[1] = bobby.menu[1];
-			/* 3*/menu[2] = bobby.menu[2];
-			/* 4*/menu[3] = bobby.menu[3];
-			/* 5*/menu[4] = bobby.menu[4];
-			/* 6*/menu[5] = bobby.menu[5];
-			/* 7*/menu[6] = bobby.menu[6];
-			/* 8*/menu[7] = bobby.menu[7];
-			/* 9*/menu[8] = bobby.menu[8];
-			/*10*/menu[9] = bobby.menu[9];
-			/*11*/menu[10] = bobby.menu[10];
-			/*12*/menu[11] = bobby.menu[11];
-			/*13*/menu[12] = bobby.menu[12];
-			/*14*/menu[13] = bobby.menu[13];
-			/*15*/menu[14] = bobby.menu[14];
-			/*16*/menu[15] = bobby.menu[15];
-			/*17*/menu[16] = bobby.menu[16];
-			/*18*/menu[17] = bobby.menu[17];
-			/*19*/menu[18] = bobby.menu[18];
-			/*20*/menu[19] = bobby.menu[19];
-			/* 1*/ceny[0] = bobby.ceny[0];
-			/* 2*/ceny[1] = bobby.ceny[1];
-			/* 3*/ceny[2] = bobby.ceny[2];
-			/* 4*/ceny[3] = bobby.ceny[3];
-			/* 5*/ceny[4] = bobby.ceny[4];
-			/* 6*/ceny[5] = bobby.ceny[5];
-			/* 7*/ceny[6] = bobby.ceny[6];
-			/* 8*/ceny[7] = bobby.ceny[7];
-			/* 9*/ceny[8] = bobby.ceny[8];
-			/*10*/ceny[9] = bobby.ceny[9];
-			/*11*/ceny[10] = bobby.ceny[10];
-			/*12*/ceny[11] = bobby.ceny[11];
-			/*13*/ceny[12] = bobby.ceny[12];
-			/*14*/ceny[13] = bobby.ceny[13];
-			/*15*/ceny[14] = bobby.ceny[14];
-			/*16*/ceny[15] = bobby.ceny[15];
-			/*17*/ceny[16] = bobby.ceny[16];
-			/*18*/ceny[17] = bobby.ceny[17];
-			/*19*/ceny[18] = bobby.ceny[18];
-			/*20*/ceny[19] = bobby.ceny[19];
-			info[0] = bobby.info[0];
-			info[1] = bobby.info[1];
-			info[2] = bobby.info[2];
-			info[3] = bobby.info[3];
-			info[4] = bobby.info[4];
-			info[5] = bobby.info[5];
-			info[6] = bobby.info[6];
-			info[7] = bobby.info[7];
-			info[8] = bobby.info[8];
-			info[9] = bobby.info[9];
-			info[10] = bobby.info[10];
-			info[11] = bobby.info[11];
-			info[12] = bobby.info[12];
-			info[13] = bobby.info[13];
-			info[14] = bobby.info[14];
-			info[15] = bobby.info[15];
-			info[16] = bobby.info[16];
-			info[17] = bobby.info[17];
-			info[18] = bobby.info[18];
-			info[19] = bobby.info[19];
+			for (int i = 0; i < 20; i++)
+			{
+				menu[i] = bobby.menu[i];
+				ceny[i] = bobby.ceny[i];
+				info[i] = bobby.info[i];
+			}
 		}
 		else
 		{

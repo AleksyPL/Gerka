@@ -41,66 +41,19 @@ player enter_laboratory(player gracz,alchemist alchemik)
 
 		if (tryb == 1)
 		{
-			/* 1*/menu[0] = alchemik.menu[0];
-			/* 2*/menu[1] = alchemik.menu[1];
-			/* 3*/menu[2] = alchemik.menu[2];
-			/* 4*/menu[3] = alchemik.menu[3];
-			/* 5*/menu[4] = alchemik.menu[4];
-			/* 6*/menu[5] = alchemik.menu[5];
-			/* 7*/menu[6] = alchemik.menu[6];
-			/* 8*/menu[7] = alchemik.menu[7];
-			/* 9*/menu[8] = alchemik.menu[8];
-			/*10*/menu[9] = alchemik.menu[9];
-			/*11*/menu[10] = alchemik.menu[10];
-			/*12*/menu[11] = alchemik.menu[11];
-			/*13*/menu[12] = alchemik.menu[12];
-			/*14*/menu[13] = alchemik.menu[13];
-			/*15*/menu[14] = alchemik.menu[14];
-			/*16*/menu[15] = alchemik.menu[15];
-			/*17*/menu[16] = alchemik.menu[16];
-			/*18*/menu[17] = alchemik.menu[17];
-			/*19*/menu[18] = alchemik.menu[18];
-			/*20*/menu[19] = alchemik.menu[19];
-			ceny[0] = gracz.level * 100;
-			ceny[1] = alchemik.ceny[1];
-			ceny[2] = alchemik.ceny[2];
-			ceny[3] = alchemik.ceny[3];
-			ceny[4] = alchemik.ceny[4];
-			ceny[5] = alchemik.ceny[5];
-			ceny[6] = alchemik.ceny[6];
-			ceny[7] = alchemik.ceny[7];
-			ceny[8] = alchemik.ceny[8];
-			ceny[9] = alchemik.ceny[9];
-			ceny[10] = alchemik.ceny[10];
-			ceny[11] = alchemik.ceny[11];
-			ceny[12] = alchemik.ceny[12];
-			ceny[13] = alchemik.ceny[13];
-			ceny[14] = alchemik.ceny[14];
-			ceny[15] = alchemik.ceny[15];
-			ceny[16] = alchemik.ceny[16];
-			ceny[17] = alchemik.ceny[17];
-			ceny[18] = alchemik.ceny[18];
-			ceny[19] = alchemik.ceny[19];
-			info[0] = alchemik.info[0];
-			info[1] = alchemik.info[1];
-			info[2] = alchemik.info[2];
-			info[3] = alchemik.info[3];
-			info[4] = alchemik.info[4];
-			info[5] = alchemik.info[5];
-			info[6] = alchemik.info[6];
-			info[7] = alchemik.info[7];
-			info[8] = alchemik.info[8];
-			info[9] = alchemik.info[9];
-			info[10] = alchemik.info[10];
-			info[11] = alchemik.info[11];
-			info[12] = alchemik.info[12];
-			info[13] = alchemik.info[13];
-			info[14] = alchemik.info[14];
-			info[15] = alchemik.info[15];
-			info[16] = alchemik.info[16];
-			info[17] = alchemik.info[17];
-			info[18] = alchemik.info[18];
-			info[19] = alchemik.info[19];
+			for (int i = 0; i < 20; i++)
+			{
+				menu[i] = alchemik.menu[i];
+				info[i] = alchemik.info[i];
+				if (i == 0)
+				{
+					ceny[i] = gracz.level * 100;
+				}
+				else
+				{
+					ceny[i] = alchemik.ceny[i];
+				}
+			}
 		}
 		else
 		{

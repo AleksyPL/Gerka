@@ -25,7 +25,7 @@ player::player()
 	pants = 0;
 	shoes = 0;
 	weapon = 1;
-	weapon_name = "PIʌCI";
+	weapon_name = "Fists";
 	skill = "";
 	hunger = 10;
 	pseudonym = "";
@@ -176,20 +176,137 @@ int player::find_crafting_forge_item_index(string nazwa)
 		}
 	}
 }
-void player::drop_item(int height, int startPoint, string item)
+bool player::dropItem(int height, int startPoint, string item)
 {
-	int index = find_usage_item_index(item);
-	if (inventory_usage_amount[index] > 0)
+	int index = -1;
+	if (findItemOnList(item) == "Usable")
 	{
-		inventory_usage_amount[index] =inventory_usage_amount[index] - 1;
-		sound_drop_item();
-		vector <string> message = { "You are dropping one " + item };
-		tabSubmenuTextOnly(height, startPoint, message);
-		if (inventory_usage_amount[index] == 0)
+		index = find_usage_item_index(item);
+		if (inventory_usage_amount[index] > 0)
 		{
-			inventory_usage[index] = "";
-			sort_usage_backpack();
+			inventory_usage_amount[index] = inventory_usage_amount[index] - 1;
+			sound_drop_item();
+			vector <string> message = { "You are dropping one " + item };
+			tabSubmenuTextOnly(height, startPoint, message);
+			if (inventory_usage_amount[index] == 0)
+			{
+				inventory_usage[index] = "";
+				sort_usage_backpack();
+			}
+			return true;
 		}
+		else
+		{
+			return false;
+		}
+	}
+	else if (findItemOnList(item) == "Alchemy")
+	{
+		index = find_crafting_alchemy_item_index(item);
+		if (inventory_crafting_amount[index] > 0)
+		{
+			inventory_crafting_amount[index] = inventory_crafting_amount[index] - 1;
+			sound_drop_item();
+			vector <string> message = { "You are dropping one " + item };
+			tabSubmenuTextOnly(height, startPoint, message);
+			if (inventory_crafting_amount[index] == 0)
+			{
+				inventory_crafting[index] = "";
+				sort_crafting_alchemy_backpack();
+			}
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else if (findItemOnList(item) == "Smithery")
+	{
+		index = find_crafting_forge_item_index(item);
+		if (inventory_crafting_amount[20 + index] > 0)
+		{
+			inventory_crafting_amount[20 + index] = inventory_crafting_amount[20 + index] - 1;
+			sound_drop_item();
+			vector <string> message = { "You are dropping one " + item };
+			tabSubmenuTextOnly(height, startPoint, message);
+			if (inventory_crafting_amount[20 + index] == 0)
+			{
+				inventory_crafting[20 + index] = "";
+				sort_crafting_forge_backpack();
+			}
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+bool player::removeItemWithoutNotification(string item)
+{
+	int index = -1;
+	if (findItemOnList(item) == "Usable")
+	{
+		index = find_usage_item_index(item);
+		if (inventory_usage_amount[index] > 0)
+		{
+			inventory_usage_amount[index] = inventory_usage_amount[index] - 1;
+			if (inventory_usage_amount[index] == 0)
+			{
+				inventory_usage[index] = "";
+				sort_usage_backpack();
+			}
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else if (findItemOnList(item) == "Alchemy")
+	{
+		index = find_crafting_alchemy_item_index(item);
+		if (inventory_crafting_amount[index] > 0)
+		{
+			inventory_crafting_amount[index] = inventory_crafting_amount[index] - 1;
+			if (inventory_crafting_amount[index] == 0)
+			{
+				inventory_crafting[index] = "";
+				sort_crafting_alchemy_backpack();
+			}
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else if (findItemOnList(item) == "Smithery")
+	{
+		index = find_crafting_forge_item_index(item);
+		if (inventory_crafting_amount[20 + index] > 0)
+		{
+			inventory_crafting_amount[20 + index] = inventory_crafting_amount[20 + index] - 1;
+			if (inventory_crafting_amount[20 + index] == 0)
+			{
+				inventory_crafting[20 + index] = "";
+				sort_crafting_forge_backpack();
+			}
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
 	}
 }
 void player::use_item(int height, int startPoint, string item, string message)
@@ -504,7 +621,6 @@ void player::remove_quest()
 	quest_complete = 0;
 	quest_failed = 0;
 }
-
 void player::reset_fight_status()
 {
 	fight_complete = 0;

@@ -1,83 +1,64 @@
 #include "mobki1.h"
 
-Mieszkaniec_small::Mieszkaniec_small()
+void Mob::isThisMobCanDropTheItem()
 {
-	string linia;
-	fstream plik;
-	int nr_linii = 1;
-	int gold_base = 0;
-	int gold_range = 0;
-	plik.open("./txt/mobki/citizen_small.txt", ios::in);
-	while (getline(plik, linia))
+	srand((unsigned int)time(NULL));
+	int random = rand() % 100;
+	if (random > this->dropRateForItem)
 	{
-		switch (nr_linii)
-		{
-		case 2:hp = atoi(linia.c_str()); break;
-		case 4:xp = atoll(linia.c_str()); break;
-		case 6:damage = atoi(linia.c_str()); break;
-		case 8:gold_base = atoi(linia.c_str()); break;
-		case 10:gold_range = atoi(linia.c_str()); break;
-		case 12:name = linia; break;
-		case 14:drop_item = linia; break;
-		case 16:drop_rate = atoi(linia.c_str()); break;
-		}
-		nr_linii++;
+		this->thisMonsterAreAbleToDropItem = true;
 	}
-	plik.close();
-	max_hp = hp;
-	gold = (rand() % gold_range) + gold_base;
+	else
+	{
+		this->thisMonsterAreAbleToDropItem = false;
+	}
 }
-Mieszkaniec_medium::Mieszkaniec_medium()
+void Mob::loadData(string path)
 {
 	string linia;
 	fstream plik;
 	int nr_linii = 1;
-	int gold_base = 0;
-	int gold_range = 0;
-	plik.open("./txt/mobki/citizen_medium.txt", ios::in);
+	plik.open(path, ios::in);
 	while (getline(plik, linia))
 	{
 		switch (nr_linii)
 		{
-		case 2:hp = atoi(linia.c_str()); break;
-		case 4:xp = atoll(linia.c_str()); break;
-		case 6:damage = atoi(linia.c_str()); break;
-		case 8:gold_base = atoi(linia.c_str()); break;
-		case 10:gold_range = atoi(linia.c_str()); break;
-		case 12:name = linia; break;
-		case 14:drop_item = linia; break;
-		case 16:drop_rate = atoi(linia.c_str()); break;
+		case 2:this->mobName = linia; break;
+		case 4:this->HP = atoll(linia.c_str()); break;
+		case 6:this->XP = atoi(linia.c_str()); break;
+		case 8:this->damage = atoi(linia.c_str()); break;
+		case 10:this->defence = atoi(linia.c_str()); break;
+		case 12:this->baseDroppedGold = atoi(linia.c_str()); break;
+		case 14:this->additionalDroppedGold= atoi(linia.c_str()); break;
+		case 16:this->droppedItem = linia; break;
+		case 18:this->dropRateForItem = atoi(linia.c_str()); break;
 		}
 		nr_linii++;
 	}
 	plik.close();
-	max_hp = hp;
-	gold = (rand() % gold_range) + gold_base;
+	this->maxHP = this->HP;
+	{
+		this->fightInfo[0] = "Health points: " + to_string(this->HP) + "/" + to_string(this->maxHP);
+		this->fightInfo[1] = "Damage: " + to_string(this->damage);
+		this->fightInfo[2] = "Defence: " + to_string(this->defence);
+		this->fightInfo[3] = "";
+		this->fightInfo[4] = "";
+		this->fightInfo[5] = "";
+		this->fightInfo[6] = "";
+		this->fightInfo[7] = "";
+		this->fightInfo[8] = "";
+		this->fightInfo[9] = "";
+		this->fightInfo[10] = "";
+		this->fightInfo[11] = "";
+		this->fightInfo[12] = "";
+		this->fightInfo[13] = "";
+		this->fightInfo[14] = "";
+		this->fightInfo[15] = "";
+		this->fightInfo[16] = "";
+		this->fightInfo[17] = "";
+	}
 }
-Mieszkaniec_big::Mieszkaniec_big()
+int Mob::returnDroppedGold()
 {
-	string linia;
-	fstream plik;
-	int nr_linii = 1;
-	int gold_base = 0;
-	int gold_range = 0;
-	plik.open("./txt/mobki/citizen_high.txt", ios::in);
-	while (getline(plik, linia))
-	{
-		switch (nr_linii)
-		{
-		case 2:hp = atoi(linia.c_str()); break;
-		case 4:xp = atoll(linia.c_str()); break;
-		case 6:damage = atoi(linia.c_str()); break;
-		case 8:gold_base = atoi(linia.c_str()); break;
-		case 10:gold_range = atoi(linia.c_str()); break;
-		case 12:name = linia; break;
-		case 14:drop_item = linia; break;
-		case 16:drop_rate = atoi(linia.c_str()); break;
-		}
-		nr_linii++;
-	}
-	plik.close();
-	max_hp = hp;
-	gold = (rand() % gold_range) + gold_base;
+	return (rand()% this->additionalDroppedGold) + this->baseDroppedGold;
 }

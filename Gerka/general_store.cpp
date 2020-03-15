@@ -41,71 +41,16 @@ player enter_shop(player gracz, seller handlarz)
 		string local = "General store";
 		if (tryb == 1)
 		{
-			//Opcje w lokacji 35 znakow
-			/* 1*/menu[0] = handlarz.menu[0];
-			/* 2*/menu[1] = handlarz.menu[1];
-			/* 3*/menu[2] = handlarz.menu[2];
-			/* 4*/menu[3] = handlarz.menu[3];
-			/* 5*/menu[4] = handlarz.menu[4];
-			/* 6*/menu[5] = handlarz.menu[5];
-			/* 7*/menu[6] = handlarz.menu[6];
-			/* 8*/menu[7] = handlarz.menu[7];
-			/* 9*/menu[8] = handlarz.menu[8];
-			/*10*/menu[9] = handlarz.menu[9];
-			/*11*/menu[10] = handlarz.menu[10];
-			/*12*/menu[11] = handlarz.menu[11];
-			/*13*/menu[12] = handlarz.menu[12];
-			/*14*/menu[13] = handlarz.menu[13];
-			/*15*/menu[14] = handlarz.menu[14];
-			/*16*/menu[15] = handlarz.menu[15];
-			/*17*/menu[16] = handlarz.menu[16];
-			/*18*/menu[17] = handlarz.menu[17];
-			/*19*/menu[18] = handlarz.menu[18];
-			/*20*/menu[19] = handlarz.menu[19];
-			ceny[0] = handlarz.ceny[0];
-			ceny[1] = handlarz.ceny[1];
-			ceny[2] = handlarz.ceny[2];
-			ceny[3] = handlarz.ceny[3];
-			ceny[4] = handlarz.ceny[4];
-			ceny[5] = handlarz.ceny[5];
-			ceny[6] = handlarz.ceny[6];
-			ceny[7] = handlarz.ceny[7];
-			ceny[8] = handlarz.ceny[8];
-			ceny[9] = handlarz.ceny[9];
-			ceny[10] = handlarz.ceny[10];
-			ceny[11] = handlarz.ceny[11];
-			ceny[12] = handlarz.ceny[12];
-			ceny[13] = handlarz.ceny[13];
-			ceny[14] = handlarz.ceny[14];
-			ceny[15] = handlarz.ceny[15];
-			ceny[16] = handlarz.ceny[16];
-			ceny[17] = handlarz.ceny[17];
-			ceny[18] = handlarz.ceny[18];
-			ceny[19] = handlarz.ceny[19];
-			info[0] = handlarz.info[0];
-			info[1] = handlarz.info[1];
-			info[2] = handlarz.info[2];
-			info[3] = handlarz.info[3];
-			info[4] = handlarz.info[4];
-			info[5] = handlarz.info[5];
-			info[6] = handlarz.info[6];
-			info[7] = handlarz.info[7];
-			info[8] = handlarz.info[8];
-			info[9] = handlarz.info[9];
-			info[10] = handlarz.info[10];
-			info[11] = handlarz.info[11];
-			info[12] = handlarz.info[12];
-			info[13] = handlarz.info[13];
-			info[14] = handlarz.info[14];
-			info[15] = handlarz.info[15];
-			info[16] = handlarz.info[16];
-			info[17] = handlarz.info[17];
-			info[18] = handlarz.info[18];
-			info[19] = handlarz.info[19];
+			for (int i = 0; i < 20; i++)
+			{
+				menu[i] = handlarz.menu[i];
+				ceny[i] = handlarz.ceny[i];
+				info[i] = handlarz.info[i];
+			}
 		}
 		else
 		{
-			/* 1*/menu[0] = "Talk with trader";
+			/* 1*/menu[0] = "Talk to the trader";
 			/* 2*/menu[1] = "";
 			/* 3*/menu[2] = "";
 			/* 4*/menu[3] = "";

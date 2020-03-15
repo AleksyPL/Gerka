@@ -47,11 +47,10 @@
     <ClCompile Include="tabelka.cpp" />
     <ClCompile Include="tawerna.cpp" />
     <ClCompile Include="general_store.cpp" />
-    <ClCompile Include="trade_tab.cpp" />
     <ClCompile Include="tytul.cpp" />
     <ClCompile Include="town square.cpp" />
     <ClCompile Include="wait.cpp" />
-    <ClCompile Include="walka.cpp" />
+    <ClCompile Include="fight_mode.cpp" />
     <ClCompile Include="zakres.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -83,12 +82,25 @@
     <ClInclude Include="tabelka.h" />
     <ClInclude Include="tawerna.h" />
     <ClInclude Include="general_store.h" />
-    <ClInclude Include="trade_tab.h" />
     <ClInclude Include="tytul.h" />
     <ClInclude Include="town square.h" />
     <ClInclude Include="wait.h" />
-    <ClInclude Include="walka.h" />
+    <ClInclude Include="fight_mode.h" />
     <ClInclude Include="zakres.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="txt\dungeons\lvl1.txt" />
+    <Text Include="txt\dungeons\lvl1items.txt" />
+    <Text Include="txt\dungeons\lvl1monsters.txt" />
+    <Text Include="txt\mix\Zapis_gry_backpack.txt" />
+    <Text Include="txt\mix\Zapis_gry_basic.txt" />
+    <Text Include="txt\mix\Zapis_gry_boost.txt" />
+    <Text Include="txt\mix\Zapis_gry_chest.txt" />
+    <Text Include="txt\mix\Zapis_gry_eq.txt" />
+    <Text Include="txt\mix\Zapis_gry_npc.txt" />
+    <Text Include="txt\mobki\citizen_high.txt" />
+    <Text Include="txt\mobki\citizen_medium.txt" />
+    <Text Include="txt\mobki\citizen_small.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

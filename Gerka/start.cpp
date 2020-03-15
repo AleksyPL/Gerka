@@ -16,7 +16,7 @@ int logo(bool &tryb, WINDOW * win)
 	fstream plik;
 	if (tryb == false)
 	{
-		plik.open("./txt/mix/logo1.txt", ios::in);
+		plik.open("./txt/mix/logo2.txt", ios::in);
 		while (!plik.eof())
 		{
 			getline(plik, linia);
@@ -46,7 +46,7 @@ int logo(bool &tryb, WINDOW * win)
 		wclear(win);
 		box(win, 0, 0);
 		{
-			plik.open("./txt/mix/logo1.txt", ios::in);
+			plik.open("./txt/mix/logo2.txt", ios::in);
 			while (!plik.eof())
 			{
 				getline(plik, linia);
@@ -102,7 +102,7 @@ int main()
 	WINDOW * win = newwin(maxY, maxX, 0, 0);
 	noecho();
 	refresh();
-	bool play_intro = false;
+	bool playIntro = false;
 	keypad(win, true);
 	string choices[4] = {"New Game ","Load Game","Credits  ","Exit Game"};
 	int choice;
@@ -110,7 +110,7 @@ int main()
 	while (1)
 	{
 		box(win, 0, 0);
-		int line_nr_after_intro = logo(play_intro, win);
+		int line_nr_after_intro = logo(playIntro, win);
 		for (int i = 0; i < 4; i++)
 		{
 			if (i == highlight)

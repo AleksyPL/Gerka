@@ -13,17 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Pliki źródłowe\Miejsca">
-      <UniqueIdentifier>{bef258b6-15ca-4b03-b321-bc84803600bb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Pliki źródłowe\Funkcje">
       <UniqueIdentifier>{f7390db0-1848-4f74-801d-37dc7dd14d65}</UniqueIdentifier>
     </Filter>
     <Filter Include="Pliki źródłowe\Postaci">
       <UniqueIdentifier>{92127ccd-3a82-4312-87e8-22fd90479fda}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Pliki nagłówkowe\Miejsca">
-      <UniqueIdentifier>{16c30e0f-628e-4ad9-87fb-68a551ce9730}</UniqueIdentifier>
     </Filter>
     <Filter Include="Pliki nagłówkowe\Funkcje">
       <UniqueIdentifier>{c1468a06-191b-4d1f-8acc-9406bb8bbe1a}</UniqueIdentifier>
@@ -37,16 +31,22 @@
     <Filter Include="Pliki nagłówkowe\Inne">
       <UniqueIdentifier>{70c698b7-7d11-45f3-b6ed-996859d9a65d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pliki źródłowe\Lokacje">
+      <UniqueIdentifier>{bef258b6-15ca-4b03-b321-bc84803600bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Lokacje">
+      <UniqueIdentifier>{16c30e0f-628e-4ad9-87fb-68a551ce9730}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="burdel.cpp">
-      <Filter>Pliki źródłowe\Miejsca</Filter>
+      <Filter>Pliki źródłowe\Lokacje</Filter>
     </ClCompile>
     <ClCompile Include="kowal.cpp">
-      <Filter>Pliki źródłowe\Miejsca</Filter>
+      <Filter>Pliki źródłowe\Lokacje</Filter>
     </ClCompile>
     <ClCompile Include="tawerna.cpp">
-      <Filter>Pliki źródłowe\Miejsca</Filter>
+      <Filter>Pliki źródłowe\Lokacje</Filter>
     </ClCompile>
     <ClCompile Include="level_up.cpp">
       <Filter>Pliki źródłowe\Funkcje</Filter>
@@ -58,10 +58,10 @@
       <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
     <ClCompile Include="start.cpp">
-      <Filter>Pliki źródłowe\Miejsca</Filter>
+      <Filter>Pliki źródłowe\Lokacje</Filter>
     </ClCompile>
     <ClCompile Include="alchemik.cpp">
-      <Filter>Pliki źródłowe\Miejsca</Filter>
+      <Filter>Pliki źródłowe\Lokacje</Filter>
     </ClCompile>
     <ClCompile Include="game_over.cpp">
       <Filter>Pliki źródłowe\Funkcje</Filter>
@@ -72,17 +72,11 @@
     <ClCompile Include="karty.cpp">
       <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
-    <ClCompile Include="walka.cpp">
-      <Filter>Pliki źródłowe\Miejsca</Filter>
-    </ClCompile>
-    <ClCompile Include="cheat_menu.cpp">
-      <Filter>Pliki źródłowe\Miejsca</Filter>
-    </ClCompile>
     <ClCompile Include="shamans_house.cpp">
-      <Filter>Pliki źródłowe\Miejsca</Filter>
+      <Filter>Pliki źródłowe\Lokacje</Filter>
     </ClCompile>
     <ClCompile Include="szpital.cpp">
-      <Filter>Pliki źródłowe\Miejsca</Filter>
+      <Filter>Pliki źródłowe\Lokacje</Filter>
     </ClCompile>
     <ClCompile Include="dwellers.cpp">
       <Filter>Pliki źródłowe\Postaci</Filter>
@@ -97,9 +91,6 @@
       <Filter>Pliki źródłowe\Inne</Filter>
     </ClCompile>
     <ClCompile Include="inventory.cpp">
-      <Filter>Pliki źródłowe\Inne</Filter>
-    </ClCompile>
-    <ClCompile Include="trade_tab.cpp">
       <Filter>Pliki źródłowe\Inne</Filter>
     </ClCompile>
     <ClCompile Include="chest.cpp">
@@ -127,10 +118,10 @@
       <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
     <ClCompile Include="town square.cpp">
-      <Filter>Pliki źródłowe\Miejsca</Filter>
+      <Filter>Pliki źródłowe\Lokacje</Filter>
     </ClCompile>
     <ClCompile Include="general_store.cpp">
-      <Filter>Pliki źródłowe\Miejsca</Filter>
+      <Filter>Pliki źródłowe\Lokacje</Filter>
     </ClCompile>
     <ClCompile Include="trade_mode.cpp">
       <Filter>Pliki źródłowe\Inne</Filter>
@@ -139,21 +130,27 @@
       <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
     <ClCompile Include="dungeon.cpp">
-      <Filter>Pliki źródłowe\Miejsca</Filter>
+      <Filter>Pliki źródłowe\Lokacje</Filter>
+    </ClCompile>
+    <ClCompile Include="fight_mode.cpp">
+      <Filter>Pliki źródłowe\Inne</Filter>
+    </ClCompile>
+    <ClCompile Include="cheat_menu.cpp">
+      <Filter>Pliki źródłowe\Inne</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="burdel.h">
-      <Filter>Pliki nagłówkowe\Miejsca</Filter>
+      <Filter>Pliki nagłówkowe\Lokacje</Filter>
     </ClInclude>
     <ClInclude Include="kowal.h">
-      <Filter>Pliki nagłówkowe\Miejsca</Filter>
+      <Filter>Pliki nagłówkowe\Lokacje</Filter>
     </ClInclude>
     <ClInclude Include="tawerna.h">
-      <Filter>Pliki nagłówkowe\Miejsca</Filter>
+      <Filter>Pliki nagłówkowe\Lokacje</Filter>
     </ClInclude>
     <ClInclude Include="start.h">
-      <Filter>Pliki nagłówkowe\Miejsca</Filter>
+      <Filter>Pliki nagłówkowe\Lokacje</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
       <Filter>Pliki nagłówkowe\Postaci</Filter>
@@ -168,7 +165,7 @@
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
     <ClInclude Include="alchemik.h">
-      <Filter>Pliki nagłówkowe\Miejsca</Filter>
+      <Filter>Pliki nagłówkowe\Lokacje</Filter>
     </ClInclude>
     <ClInclude Include="game_over.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
@@ -182,28 +179,19 @@
     <ClInclude Include="mobki1.h">
       <Filter>Pliki nagłówkowe\Postaci</Filter>
     </ClInclude>
-    <ClInclude Include="walka.h">
-      <Filter>Pliki nagłówkowe\Miejsca</Filter>
-    </ClInclude>
-    <ClInclude Include="cheat_menu.h">
-      <Filter>Pliki nagłówkowe\Miejsca</Filter>
-    </ClInclude>
     <ClInclude Include="dwellers.h">
       <Filter>Pliki nagłówkowe\Postaci</Filter>
     </ClInclude>
     <ClInclude Include="shamans_house.h">
-      <Filter>Pliki nagłówkowe\Miejsca</Filter>
+      <Filter>Pliki nagłówkowe\Lokacje</Filter>
     </ClInclude>
     <ClInclude Include="szpital.h">
-      <Filter>Pliki nagłówkowe\Miejsca</Filter>
+      <Filter>Pliki nagłówkowe\Lokacje</Filter>
     </ClInclude>
     <ClInclude Include="boost_syf.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
     <ClInclude Include="inventory.h">
-      <Filter>Pliki nagłówkowe\Inne</Filter>
-    </ClInclude>
-    <ClInclude Include="trade_tab.h">
       <Filter>Pliki nagłówkowe\Inne</Filter>
     </ClInclude>
     <ClInclude Include="biblioteki.h">
@@ -231,10 +219,10 @@
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
     <ClInclude Include="town square.h">
-      <Filter>Pliki nagłówkowe\Miejsca</Filter>
+      <Filter>Pliki nagłówkowe\Lokacje</Filter>
     </ClInclude>
     <ClInclude Include="general_store.h">
-      <Filter>Pliki nagłówkowe\Miejsca</Filter>
+      <Filter>Pliki nagłówkowe\Lokacje</Filter>
     </ClInclude>
     <ClInclude Include="trade_mode.h">
       <Filter>Pliki nagłówkowe\Inne</Filter>
@@ -243,7 +231,51 @@
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
     <ClInclude Include="dungeon.h">
-      <Filter>Pliki nagłówkowe\Miejsca</Filter>
+      <Filter>Pliki nagłówkowe\Lokacje</Filter>
     </ClInclude>
+    <ClInclude Include="fight_mode.h">
+      <Filter>Pliki nagłówkowe\Inne</Filter>
+    </ClInclude>
+    <ClInclude Include="cheat_menu.h">
+      <Filter>Pliki nagłówkowe\Inne</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="txt\dungeons\lvl1items.txt">
+      <Filter>Pliki zasobów</Filter>
+    </Text>
+    <Text Include="txt\dungeons\lvl1monsters.txt">
+      <Filter>Pliki zasobów</Filter>
+    </Text>
+    <Text Include="txt\mobki\citizen_high.txt">
+      <Filter>Pliki zasobów</Filter>
+    </Text>
+    <Text Include="txt\mobki\citizen_medium.txt">
+      <Filter>Pliki zasobów</Filter>
+    </Text>
+    <Text Include="txt\mobki\citizen_small.txt">
+      <Filter>Pliki zasobów</Filter>
+    </Text>
+    <Text Include="txt\dungeons\lvl1.txt">
+      <Filter>Pliki zasobów</Filter>
+    </Text>
+    <Text Include="txt\mix\Zapis_gry_backpack.txt">
+      <Filter>Pliki zasobów</Filter>
+    </Text>
+    <Text Include="txt\mix\Zapis_gry_basic.txt">
+      <Filter>Pliki zasobów</Filter>
+    </Text>
+    <Text Include="txt\mix\Zapis_gry_boost.txt">
+      <Filter>Pliki zasobów</Filter>
+    </Text>
+    <Text Include="txt\mix\Zapis_gry_chest.txt">
+      <Filter>Pliki zasobów</Filter>
+    </Text>
+    <Text Include="txt\mix\Zapis_gry_eq.txt">
+      <Filter>Pliki zasobów</Filter>
+    </Text>
+    <Text Include="txt\mix\Zapis_gry_npc.txt">
+      <Filter>Pliki zasobów</Filter>
+    </Text>
   </ItemGroup>
 </Project>

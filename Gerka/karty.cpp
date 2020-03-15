@@ -15,7 +15,7 @@ void gambling(int height, int startPoint, player &gracz)
 	}
 	else
 	{
-		string temp = "You play cards with the residents, enter the stake: ";
+		string temp = "You play cards with the residents, place bet: ";
 		int stake = stoi(tabSubmenuInputField(height, startPoint, temp));
 		while (stake<0 || stake>gracz.gold)
 		{

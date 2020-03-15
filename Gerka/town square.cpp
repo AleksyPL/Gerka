@@ -20,7 +20,7 @@
 int enterTownSquare(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist alchemik,shaman szaman, doctor lekarz, chest krzynka)
 {
 	srand((unsigned int)time(NULL));
-	int highlight = 27;
+	int highlight = 0;
 	while (1)
 	{
 		check_quest_status(gracz);

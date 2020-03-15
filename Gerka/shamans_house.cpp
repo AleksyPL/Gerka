@@ -42,66 +42,12 @@ player enter_shaman_house(player gracz, shaman szaman)
 		
 		if (tryb == 1)
 		{
-			/* 1*/menu[0] = szaman.menu[0];
-			/* 2*/menu[1] = szaman.menu[1];
-			/* 3*/menu[2] = szaman.menu[2];
-			/* 4*/menu[3] = szaman.menu[3];
-			/* 5*/menu[4] = szaman.menu[4];
-			/* 6*/menu[5] = szaman.menu[5];
-			/* 7*/menu[6] = szaman.menu[6];
-			/* 8*/menu[7] = szaman.menu[7];
-			/* 9*/menu[8] = szaman.menu[8];
-			/*10*/menu[9] = szaman.menu[9];
-			/*11*/menu[10] = szaman.menu[10];
-			/*12*/menu[11] = szaman.menu[11];
-			/*13*/menu[12] = szaman.menu[12];
-			/*14*/menu[13] = szaman.menu[13];
-			/*15*/menu[14] = szaman.menu[14];
-			/*16*/menu[15] = szaman.menu[15];
-			/*17*/menu[16] = szaman.menu[16];
-			/*18*/menu[17] = szaman.menu[17];
-			/*19*/menu[18] = szaman.menu[18];
-			/*20*/menu[19] = szaman.menu[19];
-			ceny[0] = szaman.ceny[0];
-			ceny[1] = szaman.ceny[1];
-			ceny[2] = szaman.ceny[2];
-			ceny[3] = szaman.ceny[3];
-			ceny[4] = szaman.ceny[4];
-			ceny[5] = szaman.ceny[5];
-			ceny[6] = szaman.ceny[6];
-			ceny[7] = szaman.ceny[7];
-			ceny[8] = szaman.ceny[8];
-			ceny[9] = szaman.ceny[9];
-			ceny[10] = szaman.ceny[10];
-			ceny[11] = szaman.ceny[11];
-			ceny[12] = szaman.ceny[12];
-			ceny[13] = szaman.ceny[13];
-			ceny[14] = szaman.ceny[14];
-			ceny[15] = szaman.ceny[15];
-			ceny[16] = szaman.ceny[16];
-			ceny[17] = szaman.ceny[17];
-			ceny[18] = szaman.ceny[18];
-			ceny[19] = szaman.ceny[19];
-			info[0] = szaman.info[0];
-			info[1] = szaman.info[1];
-			info[2] = szaman.info[2];
-			info[3] = szaman.info[3];
-			info[4] = szaman.info[4];
-			info[5] = szaman.info[5];
-			info[6] = szaman.info[6];
-			info[7] = szaman.info[7];
-			info[8] = szaman.info[8];
-			info[9] = szaman.info[9];
-			info[10] = szaman.info[10];
-			info[11] = szaman.info[11];
-			info[12] = szaman.info[12];
-			info[13] = szaman.info[13];
-			info[14] = szaman.info[14];
-			info[15] = szaman.info[15];
-			info[16] = szaman.info[16];
-			info[17] = szaman.info[17];
-			info[18] = szaman.info[18];
-			info[19] = szaman.info[19];
+			for (int i = 0; i < 20; i++)
+			{
+				menu[i] = szaman.menu[i];
+				ceny[i] = szaman.ceny[i];
+				info[i] = szaman.info[i];
+			}
 		}
 		else
 		{

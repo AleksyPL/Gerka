@@ -63,7 +63,7 @@ void use_item(int height, int startPoint, string item, int useDropInfo,player &g
 		}
 		else if (useDropInfo == 2)
 		{
-			gracz.drop_item(height, startPoint, item);
+			gracz.dropItem(height, startPoint, item);
 		}
 		else if (useDropInfo == 3)
 		{

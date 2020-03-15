@@ -1192,7 +1192,7 @@ string tabSubmenuInputField(int height, int startPoint, string message)
 	string temp = s;
 	return temp;
 }
-int tabDungeon(player gracz, int mode, string local, string shorty[20], char tab[32][114])
+int tabDungeon(player gracz, bool &mode, string local, string shorty[20], char tab[32][114], vector <char> levelMonstersSymbols)
 {
 	int shortyBorder = 19;
 	{
@@ -1332,7 +1332,7 @@ int tabDungeon(player gracz, int mode, string local, string shorty[20], char tab
 			wborder(shortcuts, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LTEE, ACS_LRCORNER);
 			for (int i = 0; i < shortyBorder; i++)
 			{
-				if (mode == 1 && highlight == i)
+				if (mode == true && highlight == i)
 				{
 					wattron(shortcuts, A_REVERSE);
 				}
@@ -1351,8 +1351,16 @@ int tabDungeon(player gracz, int mode, string local, string shorty[20], char tab
 				for (int j = 0; j < sizeof(tab[i]); j++)
 				{
 					char temp = (char)tab[i][j];
-					switch (temp)
+					if (std::find(levelMonstersSymbols.begin(), levelMonstersSymbols.end(), temp) != levelMonstersSymbols.end())
 					{
+						wattron(display, COLOR_PAIR(1));
+						mvwprintw(display, i + 1, j + 1, "%c", temp);
+						wattroff(display, COLOR_PAIR(1));
+					}
+					else
+					{
+						switch (temp)
+						{
 						case '1':
 						{
 							mvwaddch(display, i + 1, j + 1, ACS_ULCORNER);
@@ -1430,6 +1438,11 @@ int tabDungeon(player gracz, int mode, string local, string shorty[20], char tab
 							mvwaddch(display, i + 1, j + 1, ACS_DIAMOND);
 							break;
 						}
+						case '0':
+						{
+							mvwprintw(display, i + 1, j + 1, "%c", '=');
+							break;
+						}
 						case '-':
 						{
 							mvwaddch(display, i + 1, j + 1, ACS_HLINE);
@@ -1476,17 +1489,11 @@ int tabDungeon(player gracz, int mode, string local, string shorty[20], char tab
 							wattroff(display, COLOR_PAIR(3));
 							break;
 						}
-						case 'B':
-						{
-							wattron(display, COLOR_PAIR(1));
-							mvwprintw(display, i + 1, j + 1, "%c", 'B');
-							wattroff(display, COLOR_PAIR(1));
-							break;
-						}
 						default:
 						{
 							mvwprintw(display, i + 1, j + 1, "%c", temp);
 							break;
+						}
 						}
 					}
 				}
@@ -1500,51 +1507,228 @@ int tabDungeon(player gracz, int mode, string local, string shorty[20], char tab
 		wrefresh(shortcuts);
 		wrefresh(display);
 		choice = wgetch(win);
+		if (choice == 27)
+		{
+			mode = true;
+		}
+		else
+		{
+			switch (choice)
+			{
+			case KEY_UP:
+			{
+				if (mode == 0)
+				{
+					return 28;
+				}
+				else
+				{
+					if (highlight > 0)
+					{
+						highlight--;
+					}
+				}
+				break;
+			}
+			case KEY_DOWN:
+			{
+				if (mode == 0)
+				{
+					return 22;
+				}
+				else
+				{
+					if (highlight < shortyBorder)
+					{
+						highlight++;
+					}
+				}
+				break;
+			}
+			case KEY_LEFT:
+			{
+				if (mode == 0)
+				{
+					return 24;
+				}
+				break;
+			}
+			case KEY_RIGHT:
+			{
+				if (mode == 0)
+				{
+					return 26;
+				}
+				break;
+			}
+			default:
+			{
+				break;
+			}
+			}
+		}
+		if (choice == 10 and mode == true)
+		{
+			return highlight;
+		}
+	}
+}
+int tabFight(player gracz, Mob enemy, int& highlight, string playerInfo[18], string shortcuts[20], string actions[20])
+{
+	int shortcutsBorder = 19;
+	int actionsBorder = 19;
+	for (int i = 0; i < 20; i++)
+	{
+		if (shortcuts[i] == "")
+		{
+			shortcutsBorder--;
+		}
+		if (actions[i] == "")
+		{
+			actionsBorder--;
+		}
+	}
+	int maxX, maxY;
+	getyx(stdscr, maxY, maxX);
+	WINDOW* win = newwin(maxY, maxX, 0, 0);
+	WINDOW* topBar = newwin(3, maxX, 0, 0);
+	WINDOW* playerSide = newwin(20, 70, 2, 0);
+	WINDOW* enemySide = newwin(20, 70, 2, 69);
+	WINDOW* shortcutsTab = newwin(22, 24, 21, 0);
+	WINDOW* display = newwin(22, 116, 21, 23);
+	int choice;
+	keypad(win, true);
+	while (1)
+	{
+		wborder(win, 0, 0, 0, 0, ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
+		wrefresh(win);
+		//topbar
+		{
+			wborder(topBar, 0, 0, 0, 0, ACS_ULCORNER, ACS_URCORNER, ACS_LTEE, ACS_RTEE);
+			windowDrawOnCenter(topBar, 1, 67, gracz.nazwa);
+			windowDrawOnCenter(topBar, 1, 67, enemy.mobName, 70);
+			mvwaddch(topBar, 0, 69, ACS_TTEE);
+			mvwaddch(topBar, 1, 69, ACS_VLINE);
+			mvwaddch(topBar, 2, 69, ACS_BTEE);
+			wrefresh(topBar);
+		}
+		//player info
+		{
+			wborder(playerSide, 0, 0, 0, 0, ACS_LTEE, ACS_PLUS, ACS_LTEE, ACS_BTEE);
+			for (int i = 0; i < 18; i++)
+			{
+				windowDrawOnCenter(playerSide, i + 1, 68, playerInfo[i]);
+			}
+			wrefresh(playerSide);
+		}
+		//monster info
+		{
+			wborder(enemySide, 0, 0, 0, 0, ACS_PLUS, ACS_RTEE, ACS_LTEE, ACS_BTEE);
+			for (int i = 0; i < 18; i++)
+			{
+				windowDrawOnCenter(enemySide, i + 1, 68, enemy.fightInfo[i]);
+			}
+			wrefresh(enemySide);
+		}
+		//shortcuts
+		{
+			wborder(shortcutsTab, 0, 0, 0, 0, ACS_LTEE, ACS_TTEE, ACS_LTEE, ACS_BTEE);
+			for (int i = 0; i < 20; i++)
+			{
+				if (highlight < 20 && highlight == i)
+				{
+					wattron(shortcutsTab, A_REVERSE);
+				}
+				mvwprintw(shortcutsTab, i + 1, 2, shortcuts[i].c_str());
+				wattroff(shortcutsTab, A_REVERSE);
+			}
+			wrefresh(shortcutsTab);
+		}
+		//main display
+		{
+			wborder(display, 0, 0, 0, 0, ACS_TTEE, ACS_RTEE, ACS_BTEE, ACS_RTEE);
+			mvwaddch(display, 0, 46, ACS_BTEE);
+			for (int i = 0; i < 20; i++)
+			{
+				if (highlight - 20 == i && highlight >= 20)
+				{
+					wattron(display, A_REVERSE);
+				}
+				string temp = actions[i];
+				int loop_max = 113 - temp.size();
+				for (int i = 0; i < loop_max; i++)
+				{
+					temp += " ";
+				}
+				mvwprintw(display, i + 1, 2, temp.c_str());
+				wattroff(display, A_REVERSE);
+			}
+			wrefresh(display);
+		}
+		choice = wgetch(win);
 		switch (choice)
 		{
 		case KEY_UP:
 		{
-			if (mode == 0)
+			if (highlight > 0 && highlight < 20 && highlight < shortcutsBorder)
 			{
-				return 28;
+				highlight--;
 			}
-			else
+			else if (highlight > 20 && highlight < 40 && highlight <= 20 + actionsBorder)
 			{
-				if (highlight > 0)
-				{
-					highlight--;
-				}
+				highlight--;
+			}
+			else if (highlight == 20)
+			{
+				highlight = shortcutsBorder;
 			}
 			break;
 		}
 		case KEY_DOWN:
 		{
-			if (mode == 0)
+			if (highlight < 20 && highlight < shortcutsBorder)
 			{
-				return 22;
+				highlight++;
 			}
-			else
+			else if (highlight >= 20 && highlight < 40 && highlight < 20 + actionsBorder)
 			{
-				if (highlight < shortyBorder)
-				{
-					highlight++;
-				}
+				highlight++;
+			}
+			else if (highlight < 20 && highlight == shortcutsBorder)
+			{
+				highlight = 20 + actionsBorder;
 			}
 			break;
 		}
 		case KEY_LEFT:
 		{
-			if (mode == 0)
+			if (highlight >= 20 && highlight < 40)
 			{
-				return 24;
+				highlight -= 20;
+				if (highlight > actionsBorder)
+				{
+					highlight = shortcutsBorder;
+				}
+			}
+			else if (highlight > 40)
+			{
+				highlight--;
 			}
 			break;
 		}
 		case KEY_RIGHT:
 		{
-			if (mode == 0)
+			if (highlight < 20)
 			{
-				return 26;
+				highlight += 20;
+				if (highlight >= 20 + shortcutsBorder)
+				{
+					highlight = 20 + actionsBorder;
+				}
+			}
+			else if (highlight >= 40 && highlight < 42)
+			{
+				highlight++;
 			}
 			break;
 		}
@@ -1553,273 +1737,9 @@ int tabDungeon(player gracz, int mode, string local, string shorty[20], char tab
 			break;
 		}
 		}
-		if (choice == 10 and mode == 1)
+		if (choice == 10)
 		{
-			return highlight;
+			return 0;
 		}
 	}
 }
-/*
-void tab_fight(player gracz, string menu[80], Przeciwnik enemy)
-{
-	system("cls");
-	string pom1;
-	int pomoc_lokacja;
-	cout << "X--------------------------------------------------------------------------------------------------------------X" << endl;
-	{
-		cout << "|";
-		string pomoc = "GRACZ";
-		pomoc_lokacja = 51 - pomoc.length();
-		int i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << "~~" << pomoc << "~~";
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|";
-		pomoc = enemy.name;
-		pomoc_lokacja = 50 - pomoc.length();
-		i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << "~~" << pomoc << "~~";
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout <<"|"<<endl;
-	}
-	{
-		int barWidth = 53;
-		cout << "|[";
-		change_color(12);
-		int pos = barWidth * gracz.hp / gracz.max_hp;
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos)
-			{
-				cout << "#";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		change_color(7);
-		std::cout << "]|[";
-
-		barWidth = 52;
-		change_color(12);
-		pos = barWidth * enemy.hp / enemy.max_hp;
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos)
-			{
-				cout << "#";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		change_color(7);
-		std::cout << "]|" << endl;
-	}
-	{
-		cout << "|";
-		string pomoc = to_string(gracz.hp) + "/" + to_string(gracz.max_hp);
-		pomoc_lokacja = 55 - pomoc.length();
-		int i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pomoc ;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|";
-	}
-	{
-		string pomoc = to_string(enemy.hp) + "/" + to_string(enemy.max_hp);
-		pomoc_lokacja = 54 - pomoc.length();
-		int i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pomoc;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
-	}
-	cout << "X-----------------------------------------X-----------------------------------------------X--------------------X" << endl;
-	cout << "|            STATYSTYKI GRACZA            |                   ~~WALCZ~~                   |     ~~SKRÓTY~~     |" << endl;
-	cout << "X-----------------------------------------X-----------------------------------------------X--------------------X" << endl;
-	for (int i = 0; i < 20; i++)
-	{
-		if (menu[i] != "" || menu[20 + i] != "" || menu[40 + i] != "" || menu[60 + i] != "")
-		{
-			if (menu[i] == "PRZEDMIOT 1:" || menu[i] == "PRZEDMIOT 2:" || menu[i] == "PRZEDMIOT 3:")
-			{
-				cout << "| " << menu[i];
-				pomoc_lokacja = 14 - menu[i].length();
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-				pomoc_lokacja = 17 + 8 - menu[i + 20].length();
-				cout << menu[i + 20];
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-			}
-			else
-			{
-				cout << "| " << menu[i];
-				pomoc_lokacja = 23 - menu[i].length();
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-				pomoc_lokacja = 16 - menu[i + 20].length();
-				if (menu[i] == "PUNKTY SIŁY:" && gracz.counter_nerf_str != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY SIŁY:" && gracz.counter_boost_str != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY ZRĘCZNOŚCI:" && gracz.counter_nerf_agility != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY ZRĘCZNOŚCI:" && gracz.counter_boost_agility != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY INTELIGENCJI:" && gracz.counter_nerf_intel != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY INTELIGENCJI:" && gracz.counter_boost_intel != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY SZCZĘŚCIA:" && gracz.counter_nerf_luck != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY SZCZĘŚCIA:" && gracz.counter_boost_luck != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else
-				{
-					cout << menu[i + 20];
-				}
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-			}
-			cout << " |";
-			if (menu[i + 40] != "")
-			{
-				string pomoc2;
-				if (i >= 9)
-				{
-					pomoc2 = " " + to_string(i + 1) + ": " + menu[i + 40];
-				}
-				else
-				{
-					pomoc2 = "  " + to_string(i + 1) + ": " + menu[i + 40];
-				}
-				cout << pomoc2;
-				pomoc_lokacja = 47 - pomoc2.length();
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-			}
-			else
-			{
-				cout << "                                               ";
-			}
-			cout << "| " << menu[i + 60];
-			pomoc_lokacja = 19 - menu[i + 60].length();
-			for (int j = 0; j < pomoc_lokacja; j++)
-			{
-				cout << " ";
-			}
-			cout << "|" << endl;
-		}
-	}
-	cout << "X-----------------------------------------X-----------------------------------------------X--------------------X" << endl;
-}
-*/

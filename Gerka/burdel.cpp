@@ -45,7 +45,7 @@ player enter_brothel(player gracz)
 		long ceny[20]; 
 
 		/* 1*/menu[0] = "Use sexual services [unavailable]";
-		/* 2*/menu[1] = "Get the informations [unavailable]";
+		/* 2*/menu[1] = "Obtain information [unavailable]";
 		/* 3*/menu[2] = "Play cards";
 		/* 4*/menu[3] = "";
 		/* 5*/menu[4] = "";
