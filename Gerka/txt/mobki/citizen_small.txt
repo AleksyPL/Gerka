@@ -1,0 +1,18 @@
+Mob name
+Citizen
+Health point
+20
+Experience points
+10
+Damage
+3
+Defence
+0
+Base dropped gold
+0
+Additional dropped gold
+10
+Dropped Item
+Lockpick
+Drop rate for item
+20

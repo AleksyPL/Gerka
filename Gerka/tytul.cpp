@@ -1,5 +1,5 @@
-#include "player.h"
 #include "level_up.h"
+#include "tytul.h"
 
 void give_the_title(player &gracz)
 {

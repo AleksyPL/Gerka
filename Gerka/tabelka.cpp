@@ -1,1756 +1,1745 @@
-#include "biblioteki.h"
-#include "tawerna.h"
-#include "walka.h"
-#include "dwellers.h"
+ï»¿#include "tabelka.h"
 
-
-void tab(player gracz, string info[8], string menu[100], long ceny[20])
+string return_progress_bar(int min, int max, int how_long)
 {
-	system("cls");
-	string pom1;
-	int pomoc_lokacja;
-	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
-	{
-		pom1 = "~~STATYSTYKI POSTACI~~";
-		pomoc_lokacja = 41 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
+	string temp = "[";
+	int pos = how_long * min / max;
+	for (int i = 0; i < how_long; ++i) {
+		if (i < pos)
 		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
+			temp += "#";
 		}
 		else
 		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
+			temp += " ";
 		}
 	}
-	{
-		cout << "|";
-		pom1 = "~~DZIEÑ " + to_string(gracz.licznik_dnia) + "~~";
-		pomoc_lokacja = 62 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-	}
-	{
-		pom1 = "~~EKWIPUNEK POSTACI~~";
-		pomoc_lokacja = 41 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-	}
-	cout << "|" << endl;
-	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
-	{
-		cout << "| IMIÊ POSTACI:         ";
-		string expikk = gracz.nazwa;
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-	}
-	{
-		cout << "|";
-		pom1 = "~~ZADANIE: " + gracz.quest + "~~";
-		pomoc_lokacja = 92 - pom1.length();
-		if (pomoc_lokacja < 0)
-		{
-			cout << "                     ~~B£¥D ZADANIA!!!~~                      ";
-		}
-		if (pomoc_lokacja == 79)
-		{
-			cout << "                       ~~BRAK ZADANIA~~                       ";
-		}
-		else
-		{
-			int i = pomoc_lokacja % 2;
-			if (i == 0)
-			{
-				for (int j = 0; j < pomoc_lokacja / 2; j++)
-				{
-					cout << " ";
-				}
-			}
-			else
-			{
-				for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-				{
-					cout << " ";
-				}
-			}
-			cout << pom1;
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-	}
-	{
-		cout << "| Z£OTO:                 ";
-		string expikk = to_string(gracz.gold);
-		pomoc_lokacja = 17 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
-	}
-	{
-		cout << "| UMIEJÊTNOŒÆ POSTACI:  ";
-		string expikk;
-		if (gracz.skill == "")
-		{
-			expikk = "BRAK";
-		}
-		else
-		{
-			expikk = gracz.skill;
-		}
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-	}
-	cout << "X--------------------X--------------------X--------------------X";
-	{
-		cout << " PUNKTY HE£MU:          ";
-		string expikk = to_string(gracz.helmet);
-		pomoc_lokacja = 17 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
-	}
-	{
-		cout << "| PUNKTY ¯YCIA:         ";
-		string expikk = to_string(gracz.hp) + "/" + to_string(gracz.max_hp);
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		int barWidth = 60;
-		cout << "|[";
-		change_color(12);
-		int pos = barWidth * gracz.hp / gracz.max_hp;
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos)
-			{
-				cout << "#";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		change_color(7);
-		cout << "]| PUNKTY NAPIERŒNIKA:    ";
-		expikk = to_string(gracz.chestplate);
-		pomoc_lokacja = 17 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
-	}
-	{
-		cout << "| PUNKTY DOŒWIADCZENIA: ";
-		string expikk = to_string(gracz.exp) + "/" + to_string(gracz.exp_to_next_level);
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		int barWidth = 60;
-		cout << "|[";
-		change_color(14);
-		int pos = barWidth * gracz.exp / gracz.exp_to_next_level;
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos)
-			{
-				cout << "#";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		change_color(7);
-		cout << "]| PUNKTY RÊKAWIC:        ";
-		expikk = to_string(gracz.gloves);
-		pomoc_lokacja = 17 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
-	}
-	{
-		cout << "| PUNKTY NAJEDZENIA:    ";
-		string expikk = to_string(gracz.hunger) + "/10";
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		int barWidth = 60;
-		cout << "|[";
-		change_color(10);
-		int pos = barWidth * gracz.hunger / 10;
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos)
-			{
-				cout << "#";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		change_color(7);
-		cout << "]| PUNKTY SPODNI:         ";
-		expikk = to_string(gracz.pants);
-		pomoc_lokacja = 17 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
-	}
-	{
-		cout << "| UPOJENIE ALKOHOLOWE:  ";
-		string expikk = to_string(gracz.alko) + "/10";
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		int barWidth = 60;
-		cout << "|[";
-		change_color(13);
-		int pos = barWidth * gracz.alko / 10;
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos)
-			{
-				cout << "#";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		change_color(7);
-		cout << "]| PUNKTY BUTÓW:          ";
-		expikk = to_string(gracz.shoes);
-		pomoc_lokacja = 17 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
-	}
-	{
-		cout << "| POZIOM POSTACI:       ";
-		string expikk = to_string(gracz.level);
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "X--------------------X--------------------X--------------------X OBRA¯ENIA BRONI:       ";
-		expikk = to_string(gracz.weapon);
-		pomoc_lokacja = 17 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
-	}
-	{
-		cout << "| RANGA POSTACI:        ";
-		string expikk = gracz.pseudonym;
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|";
-		pomoc_lokacja = 58 - info[0].length();
-		int i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << "~~" << info[0] << "~~";
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|                                         |"<<endl;
-	}
-	cout << "X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X" << endl;
-	for (int i = 0; i < 20; i++)
-	{
-		if (menu[i] != "" || menu[20 + i] != "" || menu[40 + i] != "" || menu[60 + i] != "" || menu[80 + i] !="")
-		{
-			{
-				cout << "| " << menu[i];
-				pomoc_lokacja = 22 - menu[i].length();
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-				pomoc_lokacja = 17 - menu[i + 20].length();
-				if (menu[i] == "PUNKTY SI£Y:" && gracz.counter_nerf_str != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY SI£Y:" && gracz.counter_boost_str != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY ZRÊCZNOŒCI:" && gracz.counter_nerf_agility != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY ZRÊCZNOŒCI:" && gracz.counter_boost_agility != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY INTELIGENCJI:" && gracz.counter_nerf_intel != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY INTELIGENCJI:" && gracz.counter_boost_intel != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY SZCZÊŒCIA:" && gracz.counter_nerf_luck != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY SZCZÊŒCIA:" && gracz.counter_boost_luck != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY CHARYZMY:" && gracz.counter_nerf_charisma != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY CHARYZMY:" && gracz.counter_boost_charisma != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else
-				{
-					cout << menu[i + 20];
-				}
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-			}
-			
-			cout << " |";
-			if (menu[i + 40] != "")
-			{
-				string pomoc2;
-				if (i >= 9)
-				{
-					pomoc2 = " " + to_string(i + 1) + ": " + menu[i + 40];
-				}
-				else
-				{
-					pomoc2 = "  " + to_string(i + 1) + ": " + menu[i + 40];
-				}
-				cout << pomoc2;
-				if (ceny[i] == 0)
-				{
-					pomoc_lokacja = 62 - pomoc2.length();
-					for (int j = 0; j < pomoc_lokacja; j++)
-					{
-						cout << " ";
-					}
-				}
-				else
-				{
-					string pom3 = "[" + to_string(ceny[i]) + " Z£OTA]";
-					pomoc_lokacja = 62 - (pomoc2.length() + pom3.length());
-					for (int j = 0; j < pomoc_lokacja; j++)
-					{
-						cout << " ";
-					}
-					cout << pom3;
-				}
-			}
-			else
-			{
-				cout << "                                                              ";
-			}
-			cout << "| " << menu[i + 60];
-			pomoc_lokacja = 22 - menu[i + 60].length();
-			for (int j = 0; j < pomoc_lokacja; j++)
-			{
-				cout << " ";
-			}
-			cout << " " << menu[i + 80];
-			pomoc_lokacja = 17 - menu[i + 80].length();
-			for (int j = 0; j < pomoc_lokacja; j++)
-			{
-				cout << " ";
-			}
-			cout << "|" << endl;
-		}
-	}
-	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
-	cout << "| " << info[1];
-	pomoc_lokacja = 19 - info[1].length();
-	for (int j = 0; j < pomoc_lokacja; j++)
-	{
-		cout << " ";
-	}
-	cout << "| " << info[2];
-	pomoc_lokacja = 19 - info[2].length();
-	for (int j = 0; j < pomoc_lokacja; j++)
-	{
-		cout << " ";
-	}
-	cout << "| " << info[3];
-	pomoc_lokacja = 19 - info[3].length();
-	for (int j = 0; j < pomoc_lokacja; j++)
-	{
-		cout << " ";
-	}
-	cout << "| " << info[4];
-	pomoc_lokacja = 19 - info[4].length();
-	for (int j = 0; j < pomoc_lokacja; j++)
-	{
-		cout << " ";
-	}
-	cout << "| " << info[5];
-	pomoc_lokacja = 19 - info[5].length();
-	for (int j = 0; j < pomoc_lokacja; j++)
-	{
-		cout << " ";
-	}
-	cout << "| " << info[6];
-	pomoc_lokacja = 19 - info[6].length();
-	for (int j = 0; j < pomoc_lokacja; j++)
-	{
-		cout << " ";
-	}
-	cout << "| " << info[7];
-	pomoc_lokacja = 19 - info[7].length();
-	for (int j = 0; j < pomoc_lokacja; j++)
-	{
-		cout << " ";
-	}
-	cout << "|";
-	cout << "X-----------------------------------------X--------------------X--------------------X--------------------X-----------------------------------------X" << endl;
+	temp += "]";
+	return temp;
 }
-void tab_items(player gracz,string menu[60])
+int tab(player gracz, int &highlight, string local, string shorty[20], string menu[20], long ceny[20])
 {
-	system("cls");
-	cout << "X------------------------------------------------X------------------------------------------------X------------------------------------------------X" << endl;
-	string pom1;
-	int pomoc_lokacja;
+	int context_menu_border = 0;
+	int go_to_places_border = 0;
 	{
-		pom1 = "~~PRZEDMIOTY U¯YTKOWE~~";
-		pomoc_lokacja = 48 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-	}
-	{
-		pom1 = "~~PRZEDMIOTY RZEMIEŒLNICZE~~";
-		pomoc_lokacja = 48 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-	}
-	{
-		pom1 = "~~MIKSTURY~~";
-		pomoc_lokacja = 48 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
-	}
-	cout << "X------------------------------------------------X------------------------------------------------X------------------------------------------------X" << endl;
-	for (int i = 0; i < 20; i++)
-	{
-		if (menu[i] != "" || menu[20 + i] != "" || menu[40 + i] != "")
-		{
-			cout << "|";
-			if (i < 9)
-			{
-				cout << "  " + to_string(i + 1) + ": ";
-			}
-			else
-			{
-				cout << " " + to_string(i + 1) + ": ";
-			}
-			cout << menu[i];
-			pomoc_lokacja = 43 - menu[i].length();
-			for (int j = 0; j < pomoc_lokacja; j++)
-			{
-				cout << " ";
-			}
-			cout << "|";
-			cout << " " + to_string(i + 21) + ": ";
-			cout << menu[20 + i];
-			pomoc_lokacja = 43 - menu[20 + i].length();
-			for (int j = 0; j < pomoc_lokacja; j++)
-			{
-				cout << " ";
-			}
-			cout << "|";
-			cout << " " + to_string(i + 41) + ": ";
-			cout << menu[40 + i];
-			pomoc_lokacja = 43 - menu[40 + i].length();
-			for (int j = 0; j < pomoc_lokacja; j++)
-			{
-				cout << " ";
-			}
-			cout << "|" << endl;
-		}
-	}
-	cout << "X-----------------------X------------------------X-----------------------X------------------------X-----------------------X------------------------X" << endl;
-	cout << "|                                                | W: WYJD Z EKWIPUNKU  |                        |                                                |" << endl;
-	cout << "X-----------------------X------------------------X-----------------------X------------------------X-----------------------X------------------------X" << endl;
-}
-
-void tab_trade(player &gracz, seller &handlarz, string temp_table[80], string info[7],int temp_table_price[80], int temp_table_amount[80])
-{
-	system("cls");
-	cout << "X-----------------------X-------------------------------------------------X------------------------------------------------X-----------------------X" << endl;
-	{
-		string pom1 = "HANDLARZ";
-		int pomoc_lokacja = 23 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-	}
-	{
-		string pom1 = "Z£OTO: " + to_string(handlarz.gold_info());
-		int pomoc_lokacja = 49 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|";
-	}
-	{
-		string pom1 = "Z£OTO: " + to_string(gracz.gold);
-		int pomoc_lokacja = 48 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|";
-	}
-	{
-		string pom1 = gracz.nazwa;
-		int pomoc_lokacja = 23 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
-	}
-	cout << "X-----------------------X-------------------------------------------------X------------------------------------------------X-----------------------X" << endl;
-	{
-		int pomoc_lokacja;
-		string pom1 = "KUPNO TOWARÓW";
-		pomoc_lokacja = 73 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-	}
-	{
-		int pomoc_lokacja;
-		string pom1 = "SPRZEDA¯ TOWARÓW";
-		pomoc_lokacja = 72 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-	}
-	cout << "|" << endl;
-	cout << "X-------------------------------------------------------------------------X------------------------------------------------------------------------X" << endl;
-	int pomoc_lokacja;
-	for (int i = 0; i < 20; i++)
-	{
-		if (temp_table[i] != "" || temp_table[40 + i] != "")
-		{
-			string pomoc2;
-			cout << "|";
-			if (i < 9)
-			{
-				pomoc2 = "  " + to_string(i + 1) + ": " + temp_table[i];
-			}
-			else
-			{
-				pomoc2 = " " + to_string(i + 1) + ": " + temp_table[i];
-			}
-			if (temp_table_amount[i] > 1)
-			{
-				pomoc2 = pomoc2 + " x" +to_string(temp_table_amount[i]);
-			}
-			cout << pomoc2;
-			if (temp_table_price[i] == 0)
-			{
-				pomoc_lokacja = 68 - temp_table[i].length();
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-			}
-			else
-			{
-				
-				string pom3 = "[" + to_string(temp_table_price[i] * temp_table_amount[i]) + " Z£OTA]";
-				pomoc_lokacja = 73 - (pomoc2.length() + pom3.length());
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-				cout << pom3;
-			}
-			cout << "|";
-			pomoc2 = " " + to_string(i + 41) + ": " + temp_table[40 + i];
-			if (temp_table_amount[40 + i] > 1)
-			{
-				pomoc2 = pomoc2 + " x" + to_string(temp_table_amount[40 + i]);
-			}
-			cout << pomoc2;
-			if (temp_table_price[40 + i] == 0)
-			{
-				pomoc_lokacja = 67 - temp_table[40 + i].length();
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-			}
-			else
-			{
-				string pom3 = "[" + to_string(temp_table_price[40 + i] * temp_table_amount[40 + i]) + " Z£OTA]";
-				pomoc_lokacja = 72 - (pomoc2.length() + pom3.length());
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-				cout << pom3;
-			}
-			cout << "|" << endl;
-			
-		}
-	}
-	cout << "X-------------------------------------------------------------------------X------------------------------------------------------------------------X" << endl;
-	{
-		int suma = 0;
 		for (int i = 0; i < 20; i++)
 		{
-			suma = suma + temp_table_price[i]*temp_table_amount[i];
-		}
-		string pom1 = "SUMA: " + to_string(suma);
-		pomoc_lokacja = 73 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
+			if (shorty[i] != "")
 			{
-				cout << " ";
+				context_menu_border++;
 			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
+			if (menu[i] != "")
 			{
-				cout << " ";
+				go_to_places_border++;
 			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
 		}
 	}
+	string citymap[18];
+	citymap[0] = "Town square";
+	citymap[1] = "Tavern";
+	citymap[2] = "Forge";
+	citymap[3] = "Alchemist lab";
+	citymap[4] = "Brothel";
+	citymap[5] = "General store";
+	citymap[6] = "Shaman's house";
+	citymap[7] = "Hospital";
+	citymap[8] = "";
+	citymap[9] = "";
+	citymap[10] = "";
+	citymap[11] = "";
+	citymap[12] = "";
+	citymap[13] = "";
+	citymap[14] = "";
+	citymap[15] = "";
+	citymap[16] = "";
+	citymap[17] = "";
+	int maxX, maxY;
+	getyx(stdscr, maxY, maxX);
+	WINDOW * win = newwin(maxY, maxX, 0, 0);
+	WINDOW * topbar = newwin(3, maxX, 0, 0);
+	WINDOW * bars = newwin(9,93,2,46);
+	WINDOW * stats = newwin(9, 47, 2, 0);
+	WINDOW * map = newwin(22, 47, 10, 0);
+	WINDOW * contextmenu = newwin(22, 93, 10, 46);
+	WINDOW * shortcuts = newwin(22, 24, 10, 23);
+	int choice;
+	keypad(win, true);
+	while (1)
 	{
-		int suma = 0;
+		box(win, 0, 0);
+		//stats
+		{
+			wborder(stats, 0, 0, 0, 0, ACS_LTEE, ACS_PLUS, ACS_LTEE, ACS_LRCORNER);
+			mvwprintw(stats, 1, 2, "Character name:");
+			mvwprintw(stats, 1, 25, gracz.nazwa.c_str());
+			mvwprintw(stats, 2, 2, "Level:");
+			mvwprintw(stats, 2, 25, to_string(gracz.level).c_str());
+			mvwprintw(stats, 3, 2, "Alias:");
+			mvwprintw(stats, 3, 25, gracz.pseudonym.c_str());
+			mvwprintw(stats, 4, 2, "Health points:");
+			string temp = to_string(gracz.hp) + "/" + to_string(gracz.max_hp);
+			mvwprintw(stats, 4, 25, temp.c_str());
+			mvwprintw(stats, 5, 2, "Experience points:");
+			temp = to_string(gracz.exp) + "/" + to_string(gracz.exp_to_next_level);
+			mvwprintw(stats, 5, 25, temp.c_str());
+			mvwprintw(stats, 6, 2, "Nutrition points:");
+			temp = to_string(gracz.hunger) + "/10";
+			mvwprintw(stats, 6, 25, temp.c_str());
+			mvwprintw(stats, 7, 2, "Drunk level:");
+			temp = to_string(gracz.alko) + "/10";
+			mvwprintw(stats, 7, 25, temp.c_str());
+		}
+		//bars
+		{
+			wborder(bars, 0, 0, 0, 0, ACS_PLUS, ACS_RTEE, ACS_PLUS, ACS_RTEE);
+			start_color();
+			init_pair(1, COLOR_RED, COLOR_BLACK);
+			init_pair(2, COLOR_YELLOW, COLOR_BLACK);
+			init_pair(3, COLOR_GREEN, COLOR_BLACK);
+			init_pair(4, COLOR_MAGENTA, COLOR_BLACK);
+			string temp = return_progress_bar(gracz.hp, gracz.max_hp, 89);
+			wattron(bars, COLOR_PAIR(1));
+			mvwprintw(bars, 4, 1, temp.c_str());
+			wattroff(bars, COLOR_PAIR(1));
+			temp = return_progress_bar(gracz.exp, gracz.exp_to_next_level, 89);
+			wattron(bars, COLOR_PAIR(2));
+			mvwprintw(bars, 5, 1, temp.c_str());
+			wattroff(bars, COLOR_PAIR(2));
+			temp = return_progress_bar(gracz.hunger, 10, 89);
+			wattron(bars, COLOR_PAIR(3));
+			mvwprintw(bars, 6, 1, temp.c_str());
+			wattroff(bars, COLOR_PAIR(3));
+			temp = return_progress_bar(gracz.alko, 10, 89);
+			wattron(bars, COLOR_PAIR(4));
+			mvwprintw(bars, 7, 1, temp.c_str());
+			wattroff(bars, COLOR_PAIR(4));
+		}
+		//topbar
+		{
+			wborder(topbar, 0, 0, 0, 0, ACS_ULCORNER, ACS_URCORNER, ACS_LTEE, ACS_RTEE);
+			mvwaddch(topbar, 0, 46, ACS_TTEE);
+			mvwaddch(topbar, 1, 46, ACS_VLINE);
+			mvwaddch(topbar, 2, 46, ACS_PLUS);
+			windowDrawOnCenter(topbar, 1, 44, "Character Statistics");
+			mvwaddch(topbar, 0, 92, ACS_TTEE);
+			mvwaddch(topbar, 1, 92, ACS_VLINE);
+			mvwaddch(topbar, 2, 92, ACS_BTEE);
+			{
+				string temp = "Day " + to_string(gracz.licznik_dnia) + " - ";
+				if (gracz.hour < 10)
+				{
+					temp += "0" + to_string(gracz.hour);
+				}
+				else
+				{
+					temp += to_string(gracz.hour);
+				}
+				temp += ":";
+				if (gracz.minute < 10)
+				{
+					temp += "0" + to_string(gracz.minute);
+				}
+				else
+				{
+					temp += to_string(gracz.minute);
+				}
+				windowDrawOnCenter(topbar, 1, 44, temp.c_str(),47);
+			}
+			{
+				string temp = "Gold: " + to_string(gracz.gold);
+				windowDrawOnCenter(topbar, 1, 44, temp.c_str(), 93);
+			}
+		}
+		//map
+		{
+			wborder(map, 0, 0, 0, 0, ACS_LTEE, ACS_PLUS, ACS_LTEE, ACS_BTEE);
+			windowDrawOnCenter(map, 1, 22, "City Map");
+			mvwaddch(map, 2, 0, ACS_LTEE);
+			for (int i = 0; i < 22; i++)
+			{
+				mvwaddch(map, 2, i + 1, ACS_HLINE);
+			}
+			for (int i = 0; i < 18; i++)
+			{
+				if (local == citymap[i])
+				{
+					wattron(map, A_REVERSE);
+				}
+				mvwprintw(map,i+3,2,citymap[i].c_str());
+				wattroff(map, A_REVERSE);
+			}
+		}
+		wborder(shortcuts, 0, 0, 0, 0, ACS_TTEE, ACS_PLUS, ACS_BTEE, ACS_BTEE);
+		wborder(contextmenu, 0, 0, 0, 0, ACS_PLUS, ACS_RTEE, ACS_BTEE, ACS_RTEE);
+		mvwaddch(shortcuts, 2, 0, ACS_RTEE);
 		for (int i = 0; i < 20; i++)
 		{
-			suma = suma + temp_table_price[40 + i] * temp_table_amount[40 + i];
-		}
-		string pom1 = "SUMA: " + to_string(suma);
-		pomoc_lokacja = 72 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
+			if (i == highlight && highlight <20)
 			{
-				cout << " ";
+				wattron(shortcuts, A_REVERSE);
 			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
+			else if (i == (highlight - 20) && highlight >= 20)
 			{
-				cout << " ";
+				wattron(contextmenu, A_REVERSE);
 			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
-	}
-	cout << "X-------------------------------------------------------------------------X------------------------------------------------------------------------X" << endl;
-	{
-		int pomoc_lokacja;
-		string pom1 = "EKWIPUNEK HANDLARZA";
-		pomoc_lokacja = 73 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
+			mvwprintw(shortcuts, i + 1, 2, shorty[i].c_str());
+			if(ceny[i]==0)
 			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-	}
-	{
-		int pomoc_lokacja;
-		string pom1 = "EKWIPUNEK POSTACI";
-		pomoc_lokacja = 72 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-	}
-	cout << "|" << endl;
-	cout << "X-------------------------------------------------------------------------X------------------------------------------------------------------------X" << endl;
-	for (int i = 0; i < 20; i++)
-	{
-		if (temp_table[20 + i] != "" || temp_table[60 + i] != "")
-		{
-			string pomoc2;
-			cout << "|";
-			pomoc2 = " " + to_string(i + 21) + ": " + temp_table[20 + i];
-			cout << pomoc2;
-			if (temp_table_price[20 + i] == 0)
-			{
-				pomoc_lokacja = 68 - temp_table[20 + i].length();
-				for (int j = 0; j < pomoc_lokacja; j++)
+				string temp = menu[i];
+				int loop_max = 89 - temp.size();
+				for (int i = 0; i < loop_max; i++)
 				{
-					cout << " ";
+					temp += " ";
 				}
+				mvwprintw(contextmenu, i + 1, 2, temp.c_str());
 			}
 			else
 			{
-				string pom3 = "[" + to_string(temp_table_price[20 + i]) + " Z£OTA]";
-				pomoc_lokacja = 73 - (pomoc2.length() + pom3.length());
-				for (int j = 0; j < pomoc_lokacja; j++)
+				string temp = menu[i];
+				string temp2 = "[" + to_string(ceny[i]) + " GOLD]";
+				int loop_max = 89 - temp.size() - temp2.size();
+				for (int i = 0; i < loop_max; i++)
 				{
-					cout << " ";
+					temp += " ";
 				}
-				cout << pom3;
+				temp += temp2;
+				mvwprintw(contextmenu, i + 1, 2, temp.c_str());
 			}
-			cout << "|";
-			pomoc2 = " " + to_string(i + 61) + ": " + temp_table[60 + i];
-			if (temp_table_amount[60 + i] > 1)
+			
+			wattroff(shortcuts, A_REVERSE);
+			wattroff(contextmenu, A_REVERSE);
+		}
+		wrefresh(win);
+		wrefresh(stats);
+		wrefresh(bars);
+		wrefresh(topbar);
+		wrefresh(map);
+		wrefresh(shortcuts);
+		wrefresh(contextmenu);
+		choice = wgetch(win);
+		switch (choice)
+		{
+		case KEY_UP:
+		{
+			highlight--;
+			if (highlight < 20 && highlight > context_menu_border)
 			{
-				pomoc2 = pomoc2 + " x" + to_string(temp_table_amount[60 + i]);
+				highlight = context_menu_border - 1;
 			}
-			cout << pomoc2;
-			if (temp_table_price[60 + i] == 0)
+			if (highlight < 0)
 			{
-				pomoc_lokacja = 67 - temp_table[60 + i].length();
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
+				highlight = 0;
 			}
-			else
+			break;
+		}
+		case KEY_DOWN:
+		{
+			highlight++;
+			if (highlight < 20 && highlight > context_menu_border - 1)
 			{
-				string pom3 = "[" + to_string(temp_table_price[60 + i]) + " Z£OTA]";
-				pomoc_lokacja = 72 - (pomoc2.length() + pom3.length());
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-				cout << pom3;
+				highlight = 20;
 			}
-			cout << "|" << endl;
+			if (highlight >= 20 && highlight == 20 + go_to_places_border)
+			{
+				highlight = 20 + go_to_places_border - 1;
+			}
+			break;
+		}
+		case KEY_LEFT:
+		{
+			highlight -= 20;
+			if (highlight<20 && highlight>=context_menu_border)
+			{
+				highlight = context_menu_border - 1;
+			}
+			if (highlight < 0)
+			{
+				highlight +=20;
+			}
+			break;
+		}
+		case KEY_RIGHT:
+		{
+			highlight += 20;
+			if (highlight >= 20 && highlight >= (20 + go_to_places_border))
+			{
+				highlight = 20 + go_to_places_border - 1;
+			}
+			if (highlight > 40)
+			{
+				highlight -= 20;
+			}
+			break;
+		}
+		default:
+		{
+			break;
+		}
+		}
+		if (choice == 10)
+		{
+			return 0;
 		}
 	}
-	cout << "X-------------------------------------------------------------------------X------------------------------------------------------------------------X" << endl;
-	{
-		cout << "| " << info[0];
-		pomoc_lokacja = 19 - info[0].length();
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "| " << info[1];
-		pomoc_lokacja = 19 - info[1].length();
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "| " << info[2];
-		pomoc_lokacja = 19 - info[2].length();
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "| " << info[3];
-		pomoc_lokacja = 19 - info[3].length();
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "| " << info[4];
-		pomoc_lokacja = 19 - info[4].length();
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "| " << info[5];
-		pomoc_lokacja = 19 - info[5].length();
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "| " << info[6];
-		pomoc_lokacja = 19 - info[6].length();
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		cout << "|";
-	}
-	cout << "X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X--------------------X" << endl;
 }
-
-void tab_fight(player gracz, string menu[80], Przeciwnik enemy)
+int tabItemsLeftOnly(int highlight, string top_side, string left_side[21], string right_side[21], vector <string> bottom_side)
 {
-	system("cls");
-	string pom1;
-	int pomoc_lokacja;
-	cout << "X--------------------------------------------------------------------------------------------------------------X" << endl;
-	{
-		cout << "|";
-		string pomoc = "GRACZ";
-		pomoc_lokacja = 51 - pomoc.length();
-		int i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << "~~" << pomoc << "~~";
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|";
-		pomoc = enemy.name;
-		pomoc_lokacja = 50 - pomoc.length();
-		i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << "~~" << pomoc << "~~";
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout <<"|"<<endl;
-	}
-	{
-		int barWidth = 53;
-		cout << "|[";
-		change_color(12);
-		int pos = barWidth * gracz.hp / gracz.max_hp;
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos)
-			{
-				cout << "#";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		change_color(7);
-		std::cout << "]|[";
-
-		barWidth = 52;
-		change_color(12);
-		pos = barWidth * enemy.hp / enemy.max_hp;
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos)
-			{
-				cout << "#";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		change_color(7);
-		std::cout << "]|" << endl;
-	}
-	{
-		cout << "|";
-		string pomoc = to_string(gracz.hp) + "/" + to_string(gracz.max_hp);
-		pomoc_lokacja = 55 - pomoc.length();
-		int i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pomoc ;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|";
-	}
-	{
-		string pomoc = to_string(enemy.hp) + "/" + to_string(enemy.max_hp);
-		pomoc_lokacja = 54 - pomoc.length();
-		int i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pomoc;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
-	}
-	cout << "X-----------------------------------------X-----------------------------------------------X--------------------X" << endl;
-	cout << "|            STATYSTYKI GRACZA            |                   ~~WALCZ~~                   |     ~~SKRÓTY~~     |" << endl;
-	cout << "X-----------------------------------------X-----------------------------------------------X--------------------X" << endl;
+	int leftSideBorder = 0;
+	int rightSideBorder = 0;
 	for (int i = 0; i < 20; i++)
 	{
-		if (menu[i] != "" || menu[20 + i] != "" || menu[40 + i] != "" || menu[60 + i] != "")
+		if (left_side[i] != "")
 		{
-			if (menu[i] == "PRZEDMIOT 1:" || menu[i] == "PRZEDMIOT 2:" || menu[i] == "PRZEDMIOT 3:")
-			{
-				cout << "| " << menu[i];
-				pomoc_lokacja = 14 - menu[i].length();
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-				pomoc_lokacja = 17 + 8 - menu[i + 20].length();
-				cout << menu[i + 20];
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-			}
-			else
-			{
-				cout << "| " << menu[i];
-				pomoc_lokacja = 23 - menu[i].length();
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-				pomoc_lokacja = 16 - menu[i + 20].length();
-				if (menu[i] == "PUNKTY SI£Y:" && gracz.counter_nerf_str != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY SI£Y:" && gracz.counter_boost_str != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY ZRÊCZNOŒCI:" && gracz.counter_nerf_agility != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY ZRÊCZNOŒCI:" && gracz.counter_boost_agility != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY INTELIGENCJI:" && gracz.counter_nerf_intel != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY INTELIGENCJI:" && gracz.counter_boost_intel != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY SZCZÊŒCIA:" && gracz.counter_nerf_luck != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY SZCZÊŒCIA:" && gracz.counter_boost_luck != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else
-				{
-					cout << menu[i + 20];
-				}
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-			}
-			cout << " |";
-			if (menu[i + 40] != "")
-			{
-				string pomoc2;
-				if (i >= 9)
-				{
-					pomoc2 = " " + to_string(i + 1) + ": " + menu[i + 40];
-				}
-				else
-				{
-					pomoc2 = "  " + to_string(i + 1) + ": " + menu[i + 40];
-				}
-				cout << pomoc2;
-				pomoc_lokacja = 47 - pomoc2.length();
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-			}
-			else
-			{
-				cout << "                                               ";
-			}
-			cout << "| " << menu[i + 60];
-			pomoc_lokacja = 19 - menu[i + 60].length();
-			for (int j = 0; j < pomoc_lokacja; j++)
-			{
-				cout << " ";
-			}
-			cout << "|" << endl;
+			leftSideBorder++;
+		}
+		if (right_side[i] != "")
+		{
+			rightSideBorder++;
 		}
 	}
-	cout << "X-----------------------------------------X-----------------------------------------------X--------------------X" << endl;
+	int maxX, maxY;
+	getyx(stdscr, maxY, maxX);
+	WINDOW* win = newwin(maxY, maxX, 0, 0);
+	WINDOW* topbar = newwin(5, maxX, 0, 0);
+	WINDOW* eq = newwin(22, 70, 4, 0);
+	WINDOW* stats = newwin(22, 70, 4, 69);
+	WINDOW* bottombar = newwin(3, maxX, 25, 0);
+	int choice;
+	keypad(win, true);
+	while (1)
+	{
+		box(win, 0, 0);
+		//topbar
+		{
+			wborder(topbar, 0, 0, 0, 0, ACS_ULCORNER, ACS_URCORNER, ACS_LTEE, ACS_RTEE);
+			windowDrawOnCenter(topbar, 1, 136, top_side);
+			for (int i = 1; i < 138; i++)
+			{
+				mvwaddch(topbar, 2, i, ACS_HLINE);
+			}
+			mvwaddch(topbar, 2, 0, ACS_LTEE);
+			mvwaddch(topbar, 2, 138, ACS_RTEE);
+			mvwaddch(topbar, 2, 69, ACS_TTEE);
+			mvwaddch(topbar, 3, 69, ACS_VLINE);
+			mvwaddch(topbar, 4, 69, ACS_BTEE);
+			windowDrawOnCenter(topbar, 3, 67, left_side[20]);
+			windowDrawOnCenter(topbar, 3, 67, right_side[20], 70);
+		}
+		//equipment
+		{
+			wborder(eq, 0, 0, 0, 0, ACS_LTEE, ACS_PLUS, ACS_LTEE, ACS_BTEE);
+			for (int i = 0; i < 20; i++)
+			{
+				if (highlight == i && highlight < 20)
+				{
+					wattron(eq, A_REVERSE);
+				}
+				windowDrawOnCenter(eq, i + 1, 68, left_side[i]);
+				wattroff(eq, A_REVERSE);
+			}
+		}
+		//stats
+		{
+			wborder(stats, 0, 0, 0, 0, ACS_PLUS, ACS_RTEE, ACS_BTEE, ACS_RTEE);
+			for (int i = 0; i < 20; i++)
+			{
+				windowDrawOnCenter(stats, i + 1, 68, right_side[i]);
+			}
+		}
+		//bottombar
+		{
+			if (bottom_side.size()==3)
+			{
+				wborder(bottombar, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LTEE, ACS_RTEE);
+				mvwaddch(bottombar, 0, 69, ACS_BTEE);
+				mvwaddch(bottombar, 0, 46, ACS_TTEE);
+				mvwaddch(bottombar, 1, 46, ACS_VLINE);
+				mvwaddch(bottombar, 2, 46, ACS_BTEE);
+				mvwaddch(bottombar, 0, 92, ACS_TTEE);
+				mvwaddch(bottombar, 1, 92, ACS_VLINE);
+				mvwaddch(bottombar, 2, 92, ACS_BTEE);
+				for (int i = 0; i < 3; i++)
+				{
+					if (highlight >= 20 && highlight - 20 == i)
+					{
+						wattron(bottombar, A_REVERSE);
+					}
+					windowDrawOnCenter(bottombar, 1, 45, bottom_side[i], (i*46)+1);
+					wattroff(bottombar, A_REVERSE);
+				}
+			}
+			else if (bottom_side.size() == 5)
+			{
+				wborder(bottombar, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LTEE, ACS_RTEE);
+				mvwaddch(bottombar, 0, 69, ACS_BTEE);
+				mvwaddch(bottombar, 0, 23, ACS_TTEE);
+				mvwaddch(bottombar, 1, 23, ACS_VLINE);
+				mvwaddch(bottombar, 2, 23, ACS_BTEE);
+				mvwaddch(bottombar, 0, 46, ACS_TTEE);
+				mvwaddch(bottombar, 1, 46, ACS_VLINE);
+				mvwaddch(bottombar, 2, 46, ACS_BTEE);
+				mvwaddch(bottombar, 0, 92, ACS_TTEE);
+				mvwaddch(bottombar, 1, 92, ACS_VLINE);
+				mvwaddch(bottombar, 2, 92, ACS_BTEE);
+				mvwaddch(bottombar, 0, 115, ACS_TTEE);
+				mvwaddch(bottombar, 1, 115, ACS_VLINE);
+				mvwaddch(bottombar, 2, 115, ACS_BTEE);
+				for (int i = 0; i < 5; i++)
+				{
+					if (highlight >= 20 && highlight - 20 == i)
+					{
+						wattron(bottombar, A_REVERSE);
+					}
+					if (i == 0)
+					{
+						windowDrawOnCenter(bottombar, 1, 22, bottom_side[0]);
+					}
+					else if (i == 1)
+					{
+						windowDrawOnCenter(bottombar, 1, 22, bottom_side[1], 24);
+					}
+					else if (i == 2)
+					{
+						windowDrawOnCenter(bottombar, 1, 45, bottom_side[2], 47);
+					}
+					else if (i == 3)
+					{
+						windowDrawOnCenter(bottombar, 1, 22, bottom_side[3], 93);
+					}
+					else
+					{
+						windowDrawOnCenter(bottombar, 1, 22, bottom_side[4], 116);
+					}
+					wattroff(bottombar, A_REVERSE);
+				}
+			}
+		}
+		wrefresh(win);
+		wrefresh(topbar);
+		wrefresh(eq);
+		wrefresh(stats);
+		wrefresh(bottombar);
+		choice = wgetch(win);
+		switch (choice)
+		{
+		case KEY_UP:
+		{
+			if (highlight == 20 || highlight == 21)
+			{
+				highlight = leftSideBorder -1;
+			}
+			else if (highlight < 20)
+			{
+				highlight--;
+			}
+			if (highlight < 0)
+			{
+				highlight = 0;
+			}
+			break;
+		}
+		case KEY_DOWN:
+		{
+			if (highlight < 20)
+			{
+				highlight++;
+				if (highlight < 20 && highlight > leftSideBorder - 1)
+				{
+					highlight = 20;
+				}
+			}
+			break;
+		}
+		case KEY_LEFT:
+		{
+			if (highlight >= 20 && highlight < 25)
+			{
+				highlight--;
+				if (highlight < 20)
+				{
+					highlight = 20;
+				}
+			}
+			break;
+		}
+		case KEY_RIGHT:
+		{
+			if (highlight >= 20 && highlight < 25)
+			{
+				highlight++;
+				if (highlight >= 25)
+				{
+					highlight = 24;
+				}
+			}
+			break;
+		}
+		default:
+		{
+			break;
+		}
+		}
+		if (choice == 10)
+		{
+			return highlight;
+		}
+
+	}
 }
-
-void tab_cheat(player gracz, string info[8], string menu[80])
+int tabItemsLeftAndRight(int highlight, string top_side, string left_side[21], string right_side[21], vector <string> bottom_side)
 {
-	system("cls");
-	string pom1;
-	int pomoc_lokacja;
-	cout << "X--------------------X--------------------------------------------------------------------X--------------------X" << endl;
-	//licznik dnia
-	{
-		pom1 = "~~DZIEÑ " + to_string(gracz.licznik_dnia) + "~~";
-		pomoc_lokacja = 20 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		cout << "|";
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-	}
-	//zadanie
-	{
-		cout << "|";
-		pom1 = "~~ZADANIE: " + gracz.quest + "~~";
-		pomoc_lokacja = 68 - pom1.length();
-		if (pomoc_lokacja < 0)
-		{
-			cout << "                       ~~B£¥D ZADANIA!!!~~                         ";
-		}
-		if (pomoc_lokacja == 55)
-		{
-			cout << "                         ~~BRAK ZADANIA~~                           ";
-		}
-		else
-		{
-			int i = pomoc_lokacja % 2;
-			if (i == 0)
-			{
-				for (int j = 0; j < pomoc_lokacja / 2; j++)
-				{
-					cout << " ";
-				}
-			}
-			else
-			{
-				for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-				{
-					cout << " ";
-				}
-			}
-			cout << pom1;
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-	}
-	//z³oto
-	{
-		cout << "|";
-		pom1 = "Z£OTO: " + to_string(gracz.gold);
-		pomoc_lokacja = 20 - pom1.length();
-		int i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << pom1;
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|" << endl;
-	}
-	cout << "X--------------------X--------------------X-----------------------------------------------X--------------------X" << endl;
-	//pasek hp
-	{
-		cout << "| PUNKTY ¯YCIA:         ";
-		string expikk = to_string(gracz.hp) + "/" + to_string(gracz.max_hp);;
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		int barWidth = 66;
-		cout << "|[";
-		change_color(12);
-		int pos = barWidth * gracz.hp / gracz.max_hp;
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos)
-			{
-				cout << "#";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		change_color(7);
-		std::cout << "]|" << endl;
-	}
-	//pasek expa
-	{
-		cout << "| PUNKTY DOŒWIADCZENIA: ";
-		string expikk = to_string(gracz.exp) + "/" + to_string(gracz.exp_to_next_level);
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		int barWidth = 66;
-		cout << "|[";
-		change_color(14);
-		int pos = barWidth * gracz.exp / gracz.exp_to_next_level;
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos)
-			{
-				cout << "#";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		change_color(7);
-		std::cout << "]|" << endl;
-	}
-	//pasek jedzenia
-	{
-		cout << "| PUNKTY NAJEDZENIA:    ";
-		string expikk = to_string(gracz.hunger) + "/10";
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-		int barWidth = 66;
-		cout << "|[";
-		change_color(10);
-		int pos = barWidth * gracz.hunger / 10;
-		for (int i = 0; i < barWidth; ++i) {
-			if (i < pos)
-			{
-				cout << "#";
-			}
-			else
-			{
-				cout << " ";
-			}
-		}
-		change_color(7);
-		std::cout << "]|" << endl;
-	}
-	if (gracz.alko != 0)
-	{
-		{
-			cout << "| UPOJENIE ALKOHOLOWE:  ";
-			string expikk = to_string(gracz.alko) + "/10";
-			pomoc_lokacja = 18 - expikk.length();
-			cout << expikk;
-			for (int j = 0; j < pomoc_lokacja; j++)
-			{
-				cout << " ";
-			}
-			int barWidth = 66;
-			cout << "|[";
-			change_color(13);
-			int pos = barWidth * gracz.alko / 10;
-			for (int i = 0; i < barWidth; ++i) {
-				if (i < pos)
-				{
-					cout << "#";
-				}
-				else
-				{
-					cout << " ";
-				}
-			}
-			change_color(7);
-			std::cout << "]|" << endl;
-		}
-	}
-	{
-		cout << "| POZIOM POSTACI:       ";
-		string expikk = to_string(gracz.level);
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-	}
-	cout << "X-----------------------------------------------X--------------------X" << endl;
-	//g³ówna statystyka
-	{
-		cout << "| RANGA POSTACI:        ";
-		string expikk = gracz.pseudonym;
-		pomoc_lokacja = 18 - expikk.length();
-		cout << expikk;
-		for (int j = 0; j < pomoc_lokacja; j++)
-		{
-			cout << " ";
-		}
-	}
-	cout << "| ";
-	//lokacja
-	{
-		pomoc_lokacja = 42 - info[0].length();
-		int i = pomoc_lokacja % 2;
-		if (i == 0)
-		{
-			for (int j = 0; j < pomoc_lokacja / 2; j++)
-			{
-				cout << " ";
-			}
-		}
-		else
-		{
-			for (int j = 0; j < (pomoc_lokacja / 2) + 1; j++)
-			{
-				cout << " ";
-			}
-		}
-		cout << "~~" << info[0] << "~~";
-		for (int j = 0; j < pomoc_lokacja / 2; j++)
-		{
-			cout << " ";
-		}
-		cout << "|     ~~SKRÓTY~~     |" << endl;
-	}
-	cout << "X-----------------------------------------X-----------------------------------------------X--------------------X" << endl;
+	int leftSideBorder = 19;
+	int rightSideBorder = 19;
 	for (int i = 0; i < 20; i++)
 	{
-		if (menu[i] != "" || menu[20 + i] != "" || menu[40 + i] != "" || menu[60 + i] != "")
+		if (left_side[i] == "")
 		{
-			if (menu[i] == "PRZEDMIOT 1:" || menu[i] == "PRZEDMIOT 2:" || menu[i] == "PRZEDMIOT 3:")
-			{
-				cout << "| " << menu[i];
-				pomoc_lokacja = 14 - menu[i].length();
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-				pomoc_lokacja = 17 + 8 - menu[i + 20].length();
-				cout << menu[i + 20];
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-			}
-			else
-			{
-				cout << "| " << menu[i];
-				pomoc_lokacja = 23 - menu[i].length();
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-				pomoc_lokacja = 16 - menu[i + 20].length();
-				if (menu[i] == "PUNKTY SI£Y:" && gracz.counter_nerf_str != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY SI£Y:" && gracz.counter_boost_str != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY ZRÊCZNOŒCI:" && gracz.counter_nerf_agility != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY ZRÊCZNOŒCI:" && gracz.counter_boost_agility != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY INTELIGENCJI:" && gracz.counter_nerf_intel != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY INTELIGENCJI:" && gracz.counter_boost_intel != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY SZCZÊŒCIA:" && gracz.counter_nerf_luck != 0)
-				{
-					change_color(12);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else if (menu[i] == "PUNKTY SZCZÊŒCIA:" && gracz.counter_boost_luck != 0)
-				{
-					change_color(10);
-					cout << menu[i + 20];
-					change_color(7);
-				}
-				else
-				{
-					cout << menu[i + 20];
-				}
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-			}
-			cout << " |";
-			if (menu[i + 40] != "")
-			{
-				string pomoc2;
-				if (i >= 9)
-				{
-					pomoc2 = " " + to_string(i + 1) + ": " + menu[i + 40];
-				}
-				else
-				{
-					pomoc2 = "  " + to_string(i + 1) + ": " + menu[i + 40];
-				}
-				cout << pomoc2;
-				pomoc_lokacja = 47 - pomoc2.length();
-				for (int j = 0; j < pomoc_lokacja; j++)
-				{
-					cout << " ";
-				}
-			}
-			else
-			{
-				cout << "                                               ";
-			}
-			cout << "| " << menu[i + 60];
-			pomoc_lokacja = 19 - menu[i + 60].length();
-			for (int j = 0; j < pomoc_lokacja; j++)
-			{
-				cout << " ";
-			}
-			cout << "|" << endl;
+			leftSideBorder--;
+		}
+		if (right_side[i] == "")
+		{
+			rightSideBorder--;
 		}
 	}
-	cout << "X-----------------------------------------X-----------------------------------------------X--------------------X" << endl;
+	int maxX, maxY;
+	getyx(stdscr, maxY, maxX);
+	WINDOW* win = newwin(maxY, maxX, 0, 0);
+	WINDOW* topbar = newwin(5, maxX, 0, 0);
+	WINDOW* eq = newwin(22, 70, 4, 0);
+	WINDOW* stats = newwin(22, 70, 4, 69);
+	WINDOW* bottombar = newwin(3, maxX, 25, 0);
+	int choice;
+	keypad(win, true);
+	while (1)
+	{
+		box(win, 0, 0);
+		//topbar
+		{
+			wborder(topbar, 0, 0, 0, 0, ACS_ULCORNER, ACS_URCORNER, ACS_LTEE, ACS_RTEE);
+			windowDrawOnCenter(topbar, 1, 136, top_side);
+			for (int i = 1; i < 138; i++)
+			{
+				mvwaddch(topbar, 2, i, ACS_HLINE);
+			}
+			mvwaddch(topbar, 2, 0, ACS_LTEE);
+			mvwaddch(topbar, 2, 138, ACS_RTEE);
+			mvwaddch(topbar, 2, 69, ACS_TTEE);
+			mvwaddch(topbar, 3, 69, ACS_VLINE);
+			mvwaddch(topbar, 4, 69, ACS_BTEE);
+			windowDrawOnCenter(topbar, 3, 67, left_side[20]);
+			windowDrawOnCenter(topbar, 3, 67, right_side[20], 70);
+		}
+		//Left
+		{
+			wborder(eq, 0, 0, 0, 0, ACS_LTEE, ACS_PLUS, ACS_LTEE, ACS_BTEE);
+			for (int i = 0; i < 20; i++)
+			{
+				if (highlight == i && highlight < 20)
+				{
+					wattron(eq, A_REVERSE);
+				}
+				windowDrawOnCenter(eq, i + 1, 68, left_side[i]);
+				wattroff(eq, A_REVERSE);
+			}
+		}
+		//Right
+		{
+			wborder(stats, 0, 0, 0, 0, ACS_PLUS, ACS_RTEE, ACS_BTEE, ACS_RTEE);
+			for (int i = 0; i < 20; i++)
+			{
+				if (highlight - 20 == i && highlight >= 20 && highlight < 40)
+				{
+					wattron(stats, A_REVERSE);
+				}
+				windowDrawOnCenter(stats, i + 1, 68, right_side[i]);
+				wattroff(stats, A_REVERSE);
+			}
+		}
+		//bottombar
+		{
+			if (bottom_side.size() == 3)
+			{
+				wborder(bottombar, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LTEE, ACS_RTEE);
+				mvwaddch(bottombar, 0, 69, ACS_BTEE);
+				mvwaddch(bottombar, 0, 46, ACS_TTEE);
+				mvwaddch(bottombar, 1, 46, ACS_VLINE);
+				mvwaddch(bottombar, 2, 46, ACS_BTEE);
+				mvwaddch(bottombar, 0, 92, ACS_TTEE);
+				mvwaddch(bottombar, 1, 92, ACS_VLINE);
+				mvwaddch(bottombar, 2, 92, ACS_BTEE);
+				for (int i = 0; i < 3; i++)
+				{
+					if (highlight >= 40 && highlight - 40 == i)
+					{
+						wattron(bottombar, A_REVERSE);
+					}
+					windowDrawOnCenter(bottombar, 1, 45, bottom_side[i], (i * 46) + 1);
+					wattroff(bottombar, A_REVERSE);
+				}
+			}
+			else if (bottom_side.size() == 5)
+			{
+				wborder(bottombar, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LTEE, ACS_RTEE);
+				mvwaddch(bottombar, 0, 69, ACS_BTEE);
+				mvwaddch(bottombar, 0, 23, ACS_TTEE);
+				mvwaddch(bottombar, 1, 23, ACS_VLINE);
+				mvwaddch(bottombar, 2, 23, ACS_BTEE);
+				mvwaddch(bottombar, 0, 46, ACS_TTEE);
+				mvwaddch(bottombar, 1, 46, ACS_VLINE);
+				mvwaddch(bottombar, 2, 46, ACS_BTEE);
+				mvwaddch(bottombar, 0, 92, ACS_TTEE);
+				mvwaddch(bottombar, 1, 92, ACS_VLINE);
+				mvwaddch(bottombar, 2, 92, ACS_BTEE);
+				mvwaddch(bottombar, 0, 115, ACS_TTEE);
+				mvwaddch(bottombar, 1, 115, ACS_VLINE);
+				mvwaddch(bottombar, 2, 115, ACS_BTEE);
+				for (int i = 0; i < 5; i++)
+				{
+					if (highlight >= 40 && highlight - 40 == i)
+					{
+						wattron(bottombar, A_REVERSE);
+					}
+					if (i == 0)
+					{
+						windowDrawOnCenter(bottombar, 1, 22, bottom_side[0]);
+					}
+					else if (i == 1)
+					{
+						windowDrawOnCenter(bottombar, 1, 22, bottom_side[1], 24);
+					}
+					else if (i == 2)
+					{
+						windowDrawOnCenter(bottombar, 1, 45, bottom_side[2], 47);
+					}
+					else if (i == 3)
+					{
+						windowDrawOnCenter(bottombar, 1, 22, bottom_side[3], 93);
+					}
+					else
+					{
+						windowDrawOnCenter(bottombar, 1, 22, bottom_side[4], 116);
+					}
+					wattroff(bottombar, A_REVERSE);
+				}
+			}
+		}
+		wrefresh(win);
+		wrefresh(topbar);
+		wrefresh(eq);
+		wrefresh(stats);
+		wrefresh(bottombar);
+		choice = wgetch(win);
+		switch (choice)
+		{
+			if (bottom_side.size() == 3)
+			{
+			case KEY_UP:
+			{
+				if (highlight > 0 && highlight < 20 && highlight <= leftSideBorder)
+				{
+					highlight--;
+				}
+				else if (highlight > 20 && highlight < 40 && highlight <= 20 + rightSideBorder)
+				{
+					highlight--;
+				}
+				else if (highlight == 40)
+				{
+					highlight = leftSideBorder;
+				}
+				else if (highlight == 42)
+				{
+					highlight = 20 + rightSideBorder;
+				}
+				break;
+			}
+			case KEY_DOWN:
+			{
+				if (highlight < 20 && highlight < leftSideBorder)
+				{
+					highlight++;
+				}
+				else if (highlight >= 20 && highlight < 40 && highlight < 20 + rightSideBorder)
+				{
+					highlight++;
+				}
+				else if (highlight < 20 && highlight == leftSideBorder)
+				{
+					highlight = 40;
+				}
+				else if (highlight >= 20 && highlight < 40 && highlight == 20 + rightSideBorder)
+				{
+					highlight = 42;
+				}
+
+				break;
+			}
+			case KEY_LEFT:
+			{
+				if (highlight >= 20 && highlight < 40)
+				{
+					highlight -= 20;
+					if (highlight > leftSideBorder)
+					{
+						highlight = leftSideBorder;
+					}
+				}
+				else if (highlight > 40)
+				{
+					highlight--;
+				}
+				break;
+			}
+			case KEY_RIGHT:
+			{
+				if (highlight < 20)
+				{
+					highlight += 20;
+					if (highlight >= 20 + rightSideBorder)
+					{
+						highlight = 20 + rightSideBorder;
+					}
+				}
+				else if (highlight >= 40 && highlight < 42)
+				{
+					highlight++;
+				}
+				break;
+			}
+			default:
+			{
+				break;
+			}
+			}
+		}
+		if (choice == 10)
+		{
+			return highlight;
+		}
+
+	}
+}
+void tabSubmenuTextOnly(int height, int startPoint, vector<string> myDisplay)
+{
+	int maxX, maxY;
+	getyx(stdscr, maxY, maxX);
+	WINDOW* win = newwin(height, maxX, startPoint, 0);
+	wborder(win, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LLCORNER, ACS_LRCORNER);
+	if (myDisplay.size() >= (height - 4))
+	{
+		myDisplay.resize(height - 4);
+	}
+	for (int i = 0; i < myDisplay.size(); i++)
+	{
+		mvwprintw(win, i + 1, 2, myDisplay[i].c_str());
+	}
+	windowDrawOnCenter(win, height - 2, 136, "Press any key to continue...");
+	wrefresh(win);
+	getch();
+}
+void tabSubmenuFancyTextOnly(int height, int startPoint, vector<string> myDisplay, int delay)
+{
+	int maxX, maxY;
+	getyx(stdscr, maxY, maxX);
+	WINDOW* win = newwin(height, maxX, startPoint, 0);
+	wborder(win, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LLCORNER, ACS_LRCORNER);
+	if (myDisplay.size() >= (height - 4))
+	{
+		myDisplay.resize(height - 4);
+	}
+	for (int i = 0; i < myDisplay.size(); i++)
+	{
+		for (int j = 0; j < myDisplay[i].length(); j++)
+		{
+			char temp = (char)(myDisplay[i])[j];
+			mvwprintw(win, i + 1, 2 + j, "%c", temp);
+			wrefresh(win);
+			Sleep(delay);
+		}
+	}
+	windowDrawOnCenter(win, height - 2, 136, "Press any key to continue...");
+	wrefresh(win);
+	getch();
+}
+int tabSubmenuOneColumnChoice(int height, int startPoint, vector<string> message, vector<string> options)
+{
+	int maxX, maxY;
+	getyx(stdscr, maxY, maxX);
+	WINDOW* win = newwin(height, maxX, startPoint, 0);
+	wborder(win, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LLCORNER, ACS_LRCORNER);
+	int highlight = 0;
+	int choice;
+	int lineHelper = message.size() + 2;
+	keypad(win, true);
+	for (int i = 0; i < options.size(); i++)
+	{
+		if (options[i].empty())
+		{
+			options.erase(options.begin()+i);
+			i--;
+		}
+	}
+	if (message.size() + options.size() + 1 > height)
+	{
+		options.resize(height - message.size() - 3);
+	}
+	while (1)
+	{
+		for (int i = 0; i < message.size(); i++)
+		{
+			mvwprintw(win, i + 1, 2, message[i].c_str());
+		}
+		for (int i = 0; i < options.size(); i++)
+		{
+			if (highlight == i)
+			{
+				wattron(win, A_REVERSE);
+			}
+			mvwprintw(win, lineHelper + i, 2, options[i].c_str());
+			wattroff(win, A_REVERSE);
+		}
+		wrefresh(win);
+		choice = wgetch(win);
+		switch (choice)
+		{
+		case KEY_UP:
+		{
+			highlight--;
+			if (highlight < 0)
+			{
+				highlight = 0;
+			}
+			break;
+		}
+		case KEY_DOWN:
+		{
+			highlight++;
+			if (highlight > options.size() - 1)
+			{
+				highlight = options.size() - 1;
+			}
+			break;
+		}
+		default:
+		{
+			break;
+		}
+		}
+		if (choice == 10)
+		{
+			return highlight;
+		}
+	}
+	
+}
+/*
+int tabSubmenuTwoColumnChoice(int height, int startPoint, int optionsLeftStart, int optionsRightStart, vector<string> message, vector<string> optionsLeft, vector<string> optionsRight)
+{
+	int maxX, maxY;
+	getyx(stdscr, maxY, maxX);
+	WINDOW* win = newwin(height, maxX, startPoint, 0);
+	wborder(win, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LLCORNER, ACS_LRCORNER);
+	int highlight = 0;
+	int choice;
+	keypad(win, true);
+	for (int i = 0; i < optionsLeft.size(); i++)
+	{
+		if (optionsLeft[i].empty())
+		{
+			optionsLeft.erase(optionsLeft.begin() + i);
+			i--;
+		}
+	}
+	for (int i = 0; i < optionsRight.size(); i++)
+	{
+		if (optionsRight[i].empty())
+		{
+			optionsRight.erase(optionsRight.begin() + i);
+			i--;
+		}
+	}
+	if (optionsLeft.size() > optionsRight.size())
+	{
+		if (message.size() + optionsLeft.size() + 1 > height)
+		{
+			optionsLeft.resize(height - message.size() - 3);
+			while (optionsRight.size() > optionsLeft.size())
+			{
+				optionsRight.resize(optionsRight.size()-1);
+			}
+		}
+	}
+	else if (optionsLeft.size() < optionsRight.size())
+	{
+		if (message.size() + optionsRight.size() + 1 > height)
+		{
+			optionsRight.resize(height - message.size() - 3);
+			while (optionsLeft.size() > optionsRight.size())
+			{
+				optionsLeft.resize(optionsLeft.size() - 1);
+			}
+		}
+	}
+	else if ((optionsLeft.size() == optionsRight.size()))
+	{
+		if (message.size() + optionsLeft.size() + 1 > height)
+		{
+			optionsLeft.resize(height - message.size() - 3);
+			optionsRight.resize(height - message.size() - 3);
+		}
+	}
+	int lineHelper = message.size() + 2;
+	while (1)
+	{
+		for (int i = 0; i < message.size(); i++)
+		{
+			mvwprintw(win, i + 1, 2, message[i].c_str());
+		}
+		for (int i = 0; i < optionsLeft.size(); i++)
+		{
+			mvwprintw(win, lineHelper + i, optionsLeftStart, optionsLeft[i].c_str());
+		}
+		for (int i = 0; i < optionsRight.size(); i++)
+		{
+			mvwprintw(win, lineHelper + i, optionsRightStart, optionsRight[i].c_str());
+		}
+		choice = wgetch(win);
+		switch (choice)
+		{
+		case KEY_UP:
+		{
+			highlight--;
+			
+			break;
+		}
+		case KEY_DOWN:
+		{
+			highlight++;
+			
+			break;
+		}
+		case KEY_LEFT:
+		{
+			highlight = 20;
+			
+			break;
+		}
+		case KEY_RIGHT:
+		{
+			highlight += 20;
+			
+			break;
+		}
+		default:
+		{
+			break;
+		}
+		}
+		if (choice == 10)
+		{
+			return highlight;
+		}
+	}
+}
+*/
+int tabTrade(int highlight, string top_side[3], string left_side[21], string right_side[21], vector <string> bottom_side)
+{
+	int leftSideBorder = 19;
+	int rightSideBorder = 19;
+	for (int i = 0; i < 20; i++)
+	{
+		if (left_side[i] == "")
+		{
+			leftSideBorder--;
+		}
+		if (right_side[i] == "")
+		{
+			rightSideBorder--;
+		}
+	}
+	int maxX, maxY;
+	getyx(stdscr, maxY, maxX);
+	WINDOW* win = newwin(maxY, maxX, 0, 0);
+	WINDOW* topbar = newwin(5, maxX, 0, 0);
+	WINDOW* eq = newwin(22, 70, 4, 0);
+	WINDOW* stats = newwin(22, 70, 4, 69);
+	WINDOW* bottombar = newwin(3, maxX, 25, 0);
+	int choice;
+	keypad(win, true);
+	while (1)
+	{
+		box(win, 0, 0);
+		//topbar
+		{
+			wborder(topbar, 0, 0, 0, 0, ACS_ULCORNER, ACS_URCORNER, ACS_LTEE, ACS_RTEE);
+			for (int i = 1; i < 138; i++)
+			{
+				mvwaddch(topbar, 2, i, ACS_HLINE);
+			}
+			windowDrawOnCenter(topbar, 1, 45, top_side[0], 1);
+			windowDrawOnCenter(topbar, 1, 45, top_side[1], 47);
+			windowDrawOnCenter(topbar, 1, 45, top_side[2], 93);
+			mvwaddch(topbar, 0, 46, ACS_TTEE);
+			mvwaddch(topbar, 1, 46, ACS_VLINE);
+			mvwaddch(topbar, 2, 46, ACS_BTEE);
+			mvwaddch(topbar, 0, 92, ACS_TTEE);
+			mvwaddch(topbar, 1, 92, ACS_VLINE);
+			mvwaddch(topbar, 2, 92, ACS_BTEE);
+			mvwaddch(topbar, 2, 0, ACS_LTEE);
+			mvwaddch(topbar, 2, 138, ACS_RTEE);
+			mvwaddch(topbar, 2, 69, ACS_TTEE);
+			mvwaddch(topbar, 3, 69, ACS_VLINE);
+			mvwaddch(topbar, 4, 69, ACS_BTEE);
+			windowDrawOnCenter(topbar, 3, 67, left_side[20]);
+			windowDrawOnCenter(topbar, 3, 67, right_side[20], 70);
+		}
+		//Left
+		{
+			wborder(eq, 0, 0, 0, 0, ACS_LTEE, ACS_PLUS, ACS_LTEE, ACS_BTEE);
+			for (int i = 0; i < 20; i++)
+			{
+				if (highlight == i && highlight < 20)
+				{
+					wattron(eq, A_REVERSE);
+				}
+				windowDrawOnCenter(eq, i + 1, 68, left_side[i]);
+				wattroff(eq, A_REVERSE);
+			}
+		}
+		//Right
+		{
+			wborder(stats, 0, 0, 0, 0, ACS_PLUS, ACS_RTEE, ACS_BTEE, ACS_RTEE);
+			for (int i = 0; i < 20; i++)
+			{
+				if (highlight - 20 == i && highlight >= 20 && highlight < 40)
+				{
+					wattron(stats, A_REVERSE);
+				}
+				windowDrawOnCenter(stats, i + 1, 68, right_side[i]);
+				wattroff(stats, A_REVERSE);
+			}
+		}
+		//bottombar
+		{
+			if (bottom_side.size() == 3)
+			{
+				wborder(bottombar, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LTEE, ACS_RTEE);
+				mvwaddch(bottombar, 0, 69, ACS_BTEE);
+				mvwaddch(bottombar, 0, 46, ACS_TTEE);
+				mvwaddch(bottombar, 1, 46, ACS_VLINE);
+				mvwaddch(bottombar, 2, 46, ACS_BTEE);
+				mvwaddch(bottombar, 0, 92, ACS_TTEE);
+				mvwaddch(bottombar, 1, 92, ACS_VLINE);
+				mvwaddch(bottombar, 2, 92, ACS_BTEE);
+				for (int i = 0; i < 3; i++)
+				{
+					if (highlight >= 40 && highlight - 40 == i)
+					{
+						wattron(bottombar, A_REVERSE);
+					}
+					windowDrawOnCenter(bottombar, 1, 45, bottom_side[i], (i * 46) + 1);
+					wattroff(bottombar, A_REVERSE);
+				}
+			}
+			else if (bottom_side.size() == 5)
+			{
+				wborder(bottombar, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LTEE, ACS_RTEE);
+				mvwaddch(bottombar, 0, 69, ACS_BTEE);
+				mvwaddch(bottombar, 0, 23, ACS_TTEE);
+				mvwaddch(bottombar, 1, 23, ACS_VLINE);
+				mvwaddch(bottombar, 2, 23, ACS_BTEE);
+				mvwaddch(bottombar, 0, 46, ACS_TTEE);
+				mvwaddch(bottombar, 1, 46, ACS_VLINE);
+				mvwaddch(bottombar, 2, 46, ACS_BTEE);
+				mvwaddch(bottombar, 0, 92, ACS_TTEE);
+				mvwaddch(bottombar, 1, 92, ACS_VLINE);
+				mvwaddch(bottombar, 2, 92, ACS_BTEE);
+				mvwaddch(bottombar, 0, 115, ACS_TTEE);
+				mvwaddch(bottombar, 1, 115, ACS_VLINE);
+				mvwaddch(bottombar, 2, 115, ACS_BTEE);
+				for (int i = 0; i < 5; i++)
+				{
+					if (highlight >= 40 && highlight - 40 == i)
+					{
+						wattron(bottombar, A_REVERSE);
+					}
+					if (i == 0)
+					{
+						windowDrawOnCenter(bottombar, 1, 22, bottom_side[0]);
+					}
+					else if (i == 1)
+					{
+						windowDrawOnCenter(bottombar, 1, 22, bottom_side[1], 24);
+					}
+					else if (i == 2)
+					{
+						windowDrawOnCenter(bottombar, 1, 45, bottom_side[2], 47);
+					}
+					else if (i == 3)
+					{
+						windowDrawOnCenter(bottombar, 1, 22, bottom_side[3], 93);
+					}
+					else
+					{
+						windowDrawOnCenter(bottombar, 1, 22, bottom_side[4], 116);
+					}
+					wattroff(bottombar, A_REVERSE);
+				}
+			}
+		}
+		wrefresh(win);
+		wrefresh(topbar);
+		wrefresh(eq);
+		wrefresh(stats);
+		wrefresh(bottombar);
+		choice = wgetch(win);
+		switch (choice)
+		{
+		case KEY_UP:
+		{
+			if (highlight > 0 && highlight < 20 && highlight <= leftSideBorder)
+			{
+				highlight--;
+			}
+			else if (highlight > 20 && highlight < 40 && highlight <= 20 + rightSideBorder)
+			{
+				highlight--;
+			}
+			else if (highlight == 40 || highlight == 41)
+			{
+				highlight = leftSideBorder;
+			}
+			else if (highlight == 43 || highlight == 44)
+			{
+				highlight = 20 + rightSideBorder;
+			}
+			break;
+		}
+		case KEY_DOWN:
+		{
+			if (highlight < 20 && highlight < leftSideBorder)
+			{
+				highlight++;
+			}
+			else if (highlight >= 20 && highlight < 40 && highlight < 20 + rightSideBorder)
+			{
+				highlight++;
+			}
+			else if (highlight < 20 && highlight == leftSideBorder)
+			{
+				highlight = 40;
+			}
+			else if (highlight >= 20 && highlight < 40 && highlight == 20 + rightSideBorder)
+			{
+				highlight = 43;
+			}
+			break;
+		}
+		case KEY_LEFT:
+		{
+			if (highlight >= 20 && highlight < 40)
+			{
+				highlight -= 20;
+				if (highlight > leftSideBorder)
+				{
+					highlight = leftSideBorder;
+				}
+			}
+			else if (highlight > 40)
+			{
+				highlight--;
+			}
+			break;
+		}
+		case KEY_RIGHT:
+		{
+			if (highlight < 20)
+			{
+				highlight += 20;
+				if (highlight >= 20 + rightSideBorder)
+				{
+					highlight = 20 + rightSideBorder;
+				}
+			}
+			else if (highlight >= 40 && highlight < 45)
+			{
+				highlight++;
+			}
+			break;
+		}
+		default:
+		{
+			break;
+		}
+		}
+		if (choice == 10)
+		{
+			return highlight;
+		}
+	}
+}
+string tabSubmenuInputField(int height, int startPoint, string message)
+{
+	int maxX, maxY;
+	getyx(stdscr, maxY, maxX);
+	WINDOW* win = newwin(height, maxX, startPoint, 0);
+	wborder(win, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LLCORNER, ACS_LRCORNER);
+	mvwprintw(win, 1, 2, message.c_str());
+	echo();
+	char s[136];
+	wgetstr(win, s);
+	noecho();
+	string temp = s;
+	return temp;
+}
+int tabDungeon(player gracz, bool &mode, string local, string shorty[20], char tab[32][114], vector <char> levelMonstersSymbols)
+{
+	int shortyBorder = 19;
+	{
+		for (int i = 0; i < 20; i++)
+		{
+			if (shorty[i] == "")
+			{
+				shortyBorder--;
+			}
+		}
+	}
+	string citymap[10];
+	for (int i = 0; i < 10; i++)
+	{
+		citymap[i] = "Level " + to_string(i+1);
+	}
+	int maxX, maxY;
+	getyx(stdscr, maxY, maxX);
+	WINDOW* win = newwin(maxY, maxX, 0, 0);
+	WINDOW* topbar = newwin(3, maxX, 0, 0);
+	WINDOW* bars = newwin(9, 93, 2, 46);
+	WINDOW* stats = newwin(9, 47, 2, 0);
+	WINDOW* map = newwin(13, 24, 10, 0);
+	WINDOW* shortcuts = newwin(22, 24, 22, 0);
+	WINDOW* display = newwin(34, 116, 10, 23);
+	int highlight = 0;
+	int choice;
+	keypad(win, true);
+	while (1)
+	{
+		box(win, 0, 0);
+		//stats
+		{
+			wborder(stats, 0, 0, 0, 0, ACS_LTEE, ACS_PLUS, ACS_LTEE, ACS_LRCORNER);
+			mvwprintw(stats, 1, 2, "Character name:");
+			mvwprintw(stats, 1, 25, gracz.nazwa.c_str());
+			mvwprintw(stats, 2, 2, "Level:");
+			mvwprintw(stats, 2, 25, to_string(gracz.level).c_str());
+			mvwprintw(stats, 3, 2, "Alias:");
+			mvwprintw(stats, 3, 25, gracz.pseudonym.c_str());
+			mvwprintw(stats, 4, 2, "Health points:");
+			string temp = to_string(gracz.hp) + "/" + to_string(gracz.max_hp);
+			mvwprintw(stats, 4, 25, temp.c_str());
+			mvwprintw(stats, 5, 2, "Experience points:");
+			temp = to_string(gracz.exp) + "/" + to_string(gracz.exp_to_next_level);
+			mvwprintw(stats, 5, 25, temp.c_str());
+			mvwprintw(stats, 6, 2, "Nutrition points:");
+			temp = to_string(gracz.hunger) + "/10";
+			mvwprintw(stats, 6, 25, temp.c_str());
+			mvwprintw(stats, 7, 2, "Drunk level:");
+			temp = to_string(gracz.alko) + "/10";
+			mvwprintw(stats, 7, 25, temp.c_str());
+		}
+		//bars
+		{
+			wborder(bars, 0, 0, 0, 0, ACS_PLUS, ACS_RTEE, ACS_BTEE, ACS_RTEE);
+			start_color();
+			init_pair(1, COLOR_RED, COLOR_BLACK);
+			init_pair(2, COLOR_YELLOW, COLOR_BLACK);
+			init_pair(3, COLOR_GREEN, COLOR_BLACK);
+			init_pair(4, COLOR_MAGENTA, COLOR_BLACK);
+			string temp = return_progress_bar(gracz.hp, gracz.max_hp, 89);
+			wattron(bars, COLOR_PAIR(1));
+			mvwprintw(bars, 4, 1, temp.c_str());
+			wattroff(bars, COLOR_PAIR(1));
+			temp = return_progress_bar(gracz.exp, gracz.exp_to_next_level, 89);
+			wattron(bars, COLOR_PAIR(2));
+			mvwprintw(bars, 5, 1, temp.c_str());
+			wattroff(bars, COLOR_PAIR(2));
+			temp = return_progress_bar(gracz.hunger, 10, 89);
+			wattron(bars, COLOR_PAIR(3));
+			mvwprintw(bars, 6, 1, temp.c_str());
+			wattroff(bars, COLOR_PAIR(3));
+			temp = return_progress_bar(gracz.alko, 10, 89);
+			wattron(bars, COLOR_PAIR(4));
+			mvwprintw(bars, 7, 1, temp.c_str());
+			wattroff(bars, COLOR_PAIR(4));
+		}
+		//topbar
+		{
+			wborder(topbar, 0, 0, 0, 0, ACS_ULCORNER, ACS_URCORNER, ACS_LTEE, ACS_RTEE);
+			mvwaddch(topbar, 0, 46, ACS_TTEE);
+			mvwaddch(topbar, 1, 46, ACS_VLINE);
+			mvwaddch(topbar, 2, 46, ACS_PLUS);
+			windowDrawOnCenter(topbar, 1, 44, "Character Statistics");
+			mvwaddch(topbar, 0, 92, ACS_TTEE);
+			mvwaddch(topbar, 1, 92, ACS_VLINE);
+			mvwaddch(topbar, 2, 92, ACS_BTEE);
+			{
+				string temp = "Day " + to_string(gracz.licznik_dnia) + " - ";
+				if (gracz.hour < 10)
+				{
+					temp += "0" + to_string(gracz.hour);
+				}
+				else
+				{
+					temp += to_string(gracz.hour);
+				}
+				temp += ":";
+				if (gracz.minute < 10)
+				{
+					temp += "0" + to_string(gracz.minute);
+				}
+				else
+				{
+					temp += to_string(gracz.minute);
+				}
+				windowDrawOnCenter(topbar, 1, 44, temp.c_str(), 47);
+			}
+			{
+				string temp = "Gold: " + to_string(gracz.gold);
+				windowDrawOnCenter(topbar, 1, 44, temp.c_str(), 93);
+			}
+		}
+		//map
+		{
+			wborder(map, 0, 0, 0, 0, ACS_LTEE, ACS_TTEE, ACS_LTEE, ACS_RTEE);
+			windowDrawOnCenter(map, 1, 22, "Dungeon");
+			mvwaddch(map, 2, 0, ACS_LTEE);
+			for (int i = 0; i < 22; i++)
+			{
+				mvwaddch(map, 2, i + 1, ACS_HLINE);
+			}
+			mvwaddch(map, 2, 23, ACS_RTEE);
+			for (int i = 0; i < 10; i++)
+			{
+				if (local == citymap[i])
+				{
+					wattron(map, A_REVERSE);
+				}
+				mvwprintw(map, i + 3, 2, citymap[i].c_str());
+				wattroff(map, A_REVERSE);
+			}
+		}
+		//options
+		{
+			wborder(shortcuts, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LTEE, ACS_LRCORNER);
+			for (int i = 0; i < shortyBorder; i++)
+			{
+				if (mode == true && highlight == i)
+				{
+					wattron(shortcuts, A_REVERSE);
+				}
+				mvwprintw(shortcuts, i + 1, 2, shorty[i].c_str());
+				wattroff(shortcuts, A_REVERSE);
+			}
+		}
+		//display
+		{
+			wborder(display, 0, 0, 0, 0, ACS_TTEE, ACS_RTEE, ACS_BTEE, ACS_RTEE);
+			mvwaddch(display, 0, 23, ACS_BTEE);
+			mvwaddch(display, 2, 0, ACS_RTEE);
+			mvwaddch(display, 12, 0, ACS_RTEE);
+			for (int i = 0; i < 32; i++)
+			{
+				for (int j = 0; j < sizeof(tab[i]); j++)
+				{
+					char temp = (char)tab[i][j];
+					if (std::find(levelMonstersSymbols.begin(), levelMonstersSymbols.end(), temp) != levelMonstersSymbols.end())
+					{
+						wattron(display, COLOR_PAIR(1));
+						mvwprintw(display, i + 1, j + 1, "%c", temp);
+						wattroff(display, COLOR_PAIR(1));
+					}
+					else
+					{
+						switch (temp)
+						{
+						case '1':
+						{
+							mvwaddch(display, i + 1, j + 1, ACS_ULCORNER);
+							break;
+						}
+						case '2':
+						{
+							mvwaddch(display, i + 1, j + 1, ACS_URCORNER);
+							break;
+						}
+						case '3':
+						{
+							mvwaddch(display, i + 1, j + 1, ACS_LLCORNER);
+							break;
+						}
+						case '4':
+						{
+							mvwaddch(display, i + 1, j + 1, ACS_LRCORNER);
+							break;
+						}
+						case '5':
+						{
+							if (j == 0)
+							{
+								mvwaddch(display, i + 1, j, ACS_LTEE);
+								mvwaddch(display, i + 1, j + 1, ACS_HLINE);
+							}
+							else
+							{
+								mvwaddch(display, i + 1, j + 1, ACS_LTEE);
+							}
+							break;
+						}
+						case '6':
+						{
+							if (j == sizeof(tab[i]))
+							{
+								mvwaddch(display, i + 1, j + 2, ACS_TTEE);
+								mvwaddch(display, i + 1, j + 1, ACS_HLINE);
+							}
+							else
+							{
+								mvwaddch(display, i + 1, j + 1, ACS_RTEE);
+							}
+							break;
+						}
+						case '7':
+						{
+							if (i == 0)
+							{
+								mvwaddch(display, i, j + 1, ACS_TTEE);
+								mvwaddch(display, i + 1, j + 1, ACS_VLINE);
+							}
+							else
+							{
+								mvwaddch(display, i + 1, j + 1, ACS_TTEE);
+							}
+							break;
+						}
+						case '8':
+						{
+							if (i == 31)
+							{
+								mvwaddch(display, i + 2, j + 1, ACS_BTEE);
+								mvwaddch(display, i + 1, j + 1, ACS_VLINE);
+							}
+							else
+							{
+								mvwaddch(display, i + 1, j + 1, ACS_BTEE);
+							}
+							break;
+						}
+						case '9':
+						{
+							mvwaddch(display, i + 1, j + 1, ACS_DIAMOND);
+							break;
+						}
+						case '0':
+						{
+							mvwprintw(display, i + 1, j + 1, "%c", '=');
+							break;
+						}
+						case '-':
+						{
+							mvwaddch(display, i + 1, j + 1, ACS_HLINE);
+							break;
+						}
+						case '|':
+						{
+							mvwaddch(display, i + 1, j + 1, ACS_VLINE);
+							break;
+						}
+						case 'X':
+						{
+							mvwaddch(display, i + 1, j + 1, ACS_CKBOARD);
+							break;
+						}
+						case 'x':
+						{
+							mvwaddch(display, i + 1, j + 1, ACS_CKBOARD);
+							break;
+						}
+						case '!':
+						{
+							mvwprintw(display, i + 1, j + 1, "%c", '!');
+							break;
+						}
+						case 'E':
+						{
+							wattron(display, COLOR_PAIR(3));
+							mvwprintw(display, i + 1, j + 1, "%c", 'E');
+							wattroff(display, COLOR_PAIR(3));
+							break;
+						}
+						case 'l':
+						{
+							wattron(display, COLOR_PAIR(2));
+							mvwaddch(display, i + 1, j + 1, ACS_LANTERN);
+							wattroff(display, COLOR_PAIR(2));
+							break;
+						}
+						case 'e':
+						{
+							wattron(display, COLOR_PAIR(3));
+							mvwprintw(display, i + 1, j + 1, "%c", 'e');
+							wattroff(display, COLOR_PAIR(3));
+							break;
+						}
+						default:
+						{
+							mvwprintw(display, i + 1, j + 1, "%c", temp);
+							break;
+						}
+						}
+					}
+				}
+			}
+		}
+		wrefresh(win);
+		wrefresh(stats);
+		wrefresh(bars);
+		wrefresh(topbar);
+		wrefresh(map);
+		wrefresh(shortcuts);
+		wrefresh(display);
+		choice = wgetch(win);
+		if (choice == 27)
+		{
+			mode = true;
+		}
+		else
+		{
+			switch (choice)
+			{
+			case KEY_UP:
+			{
+				if (mode == 0)
+				{
+					return 28;
+				}
+				else
+				{
+					if (highlight > 0)
+					{
+						highlight--;
+					}
+				}
+				break;
+			}
+			case KEY_DOWN:
+			{
+				if (mode == 0)
+				{
+					return 22;
+				}
+				else
+				{
+					if (highlight < shortyBorder)
+					{
+						highlight++;
+					}
+				}
+				break;
+			}
+			case KEY_LEFT:
+			{
+				if (mode == 0)
+				{
+					return 24;
+				}
+				break;
+			}
+			case KEY_RIGHT:
+			{
+				if (mode == 0)
+				{
+					return 26;
+				}
+				break;
+			}
+			default:
+			{
+				break;
+			}
+			}
+		}
+		if (choice == 10 and mode == true)
+		{
+			return highlight;
+		}
+	}
+}
+int tabFight(player gracz, Mob enemy, int& highlight, string playerInfo[18], string shortcuts[20], string actions[20])
+{
+	int shortcutsBorder = 19;
+	int actionsBorder = 19;
+	for (int i = 0; i < 20; i++)
+	{
+		if (shortcuts[i] == "")
+		{
+			shortcutsBorder--;
+		}
+		if (actions[i] == "")
+		{
+			actionsBorder--;
+		}
+	}
+	int maxX, maxY;
+	getyx(stdscr, maxY, maxX);
+	WINDOW* win = newwin(maxY, maxX, 0, 0);
+	WINDOW* topBar = newwin(3, maxX, 0, 0);
+	WINDOW* playerSide = newwin(20, 70, 2, 0);
+	WINDOW* enemySide = newwin(20, 70, 2, 69);
+	WINDOW* shortcutsTab = newwin(22, 24, 21, 0);
+	WINDOW* display = newwin(22, 116, 21, 23);
+	int choice;
+	keypad(win, true);
+	while (1)
+	{
+		wborder(win, 0, 0, 0, 0, ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
+		wrefresh(win);
+		//topbar
+		{
+			wborder(topBar, 0, 0, 0, 0, ACS_ULCORNER, ACS_URCORNER, ACS_LTEE, ACS_RTEE);
+			windowDrawOnCenter(topBar, 1, 67, gracz.nazwa);
+			windowDrawOnCenter(topBar, 1, 67, enemy.mobName, 70);
+			mvwaddch(topBar, 0, 69, ACS_TTEE);
+			mvwaddch(topBar, 1, 69, ACS_VLINE);
+			mvwaddch(topBar, 2, 69, ACS_BTEE);
+			wrefresh(topBar);
+		}
+		//player info
+		{
+			wborder(playerSide, 0, 0, 0, 0, ACS_LTEE, ACS_PLUS, ACS_LTEE, ACS_BTEE);
+			for (int i = 0; i < 18; i++)
+			{
+				windowDrawOnCenter(playerSide, i + 1, 68, playerInfo[i]);
+			}
+			wrefresh(playerSide);
+		}
+		//monster info
+		{
+			wborder(enemySide, 0, 0, 0, 0, ACS_PLUS, ACS_RTEE, ACS_LTEE, ACS_BTEE);
+			for (int i = 0; i < 18; i++)
+			{
+				windowDrawOnCenter(enemySide, i + 1, 68, enemy.fightInfo[i]);
+			}
+			wrefresh(enemySide);
+		}
+		//shortcuts
+		{
+			wborder(shortcutsTab, 0, 0, 0, 0, ACS_LTEE, ACS_TTEE, ACS_LTEE, ACS_BTEE);
+			for (int i = 0; i < 20; i++)
+			{
+				if (highlight < 20 && highlight == i)
+				{
+					wattron(shortcutsTab, A_REVERSE);
+				}
+				mvwprintw(shortcutsTab, i + 1, 2, shortcuts[i].c_str());
+				wattroff(shortcutsTab, A_REVERSE);
+			}
+			wrefresh(shortcutsTab);
+		}
+		//main display
+		{
+			wborder(display, 0, 0, 0, 0, ACS_TTEE, ACS_RTEE, ACS_BTEE, ACS_RTEE);
+			mvwaddch(display, 0, 46, ACS_BTEE);
+			for (int i = 0; i < 20; i++)
+			{
+				if (highlight - 20 == i && highlight >= 20)
+				{
+					wattron(display, A_REVERSE);
+				}
+				string temp = actions[i];
+				int loop_max = 113 - temp.size();
+				for (int i = 0; i < loop_max; i++)
+				{
+					temp += " ";
+				}
+				mvwprintw(display, i + 1, 2, temp.c_str());
+				wattroff(display, A_REVERSE);
+			}
+			wrefresh(display);
+		}
+		choice = wgetch(win);
+		switch (choice)
+		{
+		case KEY_UP:
+		{
+			if (highlight > 0 && highlight < 20 && highlight < shortcutsBorder)
+			{
+				highlight--;
+			}
+			else if (highlight > 20 && highlight < 40 && highlight <= 20 + actionsBorder)
+			{
+				highlight--;
+			}
+			else if (highlight == 20)
+			{
+				highlight = shortcutsBorder;
+			}
+			break;
+		}
+		case KEY_DOWN:
+		{
+			if (highlight < 20 && highlight < shortcutsBorder)
+			{
+				highlight++;
+			}
+			else if (highlight >= 20 && highlight < 40 && highlight < 20 + actionsBorder)
+			{
+				highlight++;
+			}
+			else if (highlight < 20 && highlight == shortcutsBorder)
+			{
+				highlight = 20 + actionsBorder;
+			}
+			break;
+		}
+		case KEY_LEFT:
+		{
+			if (highlight >= 20 && highlight < 40)
+			{
+				highlight -= 20;
+				if (highlight > actionsBorder)
+				{
+					highlight = shortcutsBorder;
+				}
+			}
+			else if (highlight > 40)
+			{
+				highlight--;
+			}
+			break;
+		}
+		case KEY_RIGHT:
+		{
+			if (highlight < 20)
+			{
+				highlight += 20;
+				if (highlight >= 20 + shortcutsBorder)
+				{
+					highlight = 20 + actionsBorder;
+				}
+			}
+			else if (highlight >= 40 && highlight < 42)
+			{
+				highlight++;
+			}
+			break;
+		}
+		default:
+		{
+			break;
+		}
+		}
+		if (choice == 10)
+		{
+			return 0;
+		}
+	}
 }

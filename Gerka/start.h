@@ -1,9 +1,6 @@
 #pragma once
 #include "biblioteki.h"
-#include "start.h"
-#include "ui.h"
-#include "player.h"
-#include "tytul.h"
-#include "dwellers.h"
 
-int logo(int introo);
+int logo(bool &tryb, WINDOW * win);
+void show_credits(WINDOW * win);
+int main();

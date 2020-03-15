@@ -1,5 +1,4 @@
-#include "biblioteki.h"
-#include "player.h"
+#include "jedzenie.h"
 
 void eat_food(player &gracz, int cena, int ile_punktow)
 {

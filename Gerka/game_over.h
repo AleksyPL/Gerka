@@ -1,5 +1,4 @@
 #pragma once
 #include "biblioteki.h"
-#include "player.h"
 
-void game_over();
+void game_over(int height, int startPoint);

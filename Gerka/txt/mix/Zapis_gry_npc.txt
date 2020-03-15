@@ -1,29 +1,32 @@
-Barman - poziom reputacji
+Barman - reputation level
 1
-Barman - punkty reputacji
+Barman - reputation points
 0
-Barman - punkty reputacji do nastêpnego poziomu
+Barman - reputation points to the next level
 500
-Barman - iloœæ z³ota
-5000Handlarz - poziom reputacji
-0
-Handlarz - punkty reputacji
-0
-Handlarz - punkty reputacji do nastêpnego poziomu
-0
-Handlarz - iloœæ z³ota
-500Kowal - poziom reputacji
+Barman - gold
 5000
-Kowal - punkty reputacji
+Merchant - reputation level
 0
-Kowal - punkty reputacji do nastêpnego poziomu
+Merchant - reputation points
 0
-Kowal - iloœæ z³ota
-0Alchemik - poziom reputacji
+Merchant - reputation points to the next level
 0
-Alchemik - punkty reputacji
+Merchant - gold
+50000
+Blacksmith - reputation level
 0
-Alchemik - punkty reputacji do nastêpnego poziomu
+Blacksmith - reputation points
+0
+Blacksmith - reputation points to the next level
+0
+Blacksmith - gold
+0
+Alchemist - reputation level
+0
+Alchemist - reputation points
+0
+Alchemist - reputation points to the next level
 500
-Alchemik - iloœæ z³ota
+Alchemist - gold
 5000

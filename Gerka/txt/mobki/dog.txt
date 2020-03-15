@@ -1,0 +1,18 @@
+Mob name
+Dog
+Health point
+25
+Experience points
+15
+Damage
+4
+Defence
+0
+Base dropped gold
+0
+Additional dropped gold
+10
+Dropped Item
+Lockpick
+Drop rate for item
+20

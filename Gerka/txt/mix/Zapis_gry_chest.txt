@@ -1,0 +1,180 @@
+Usable item number 1
+
+0
+Usable item number 2
+
+0
+Usable item number 3
+
+0
+Usable item number 4
+
+0
+Usable item number 5
+
+0
+Usable item number 6
+
+0
+Usable item number 7
+
+0
+Usable item number 8
+
+0
+Usable item number 9
+
+0
+Usable item number 10
+
+0
+Usable item number 11
+
+0
+Usable item number 12
+
+0
+Usable item number 13
+
+0
+Usable item number 14
+
+0
+Usable item number 15
+
+0
+Usable item number 16
+
+0
+Usable item number 17
+
+0
+Usable item number 18
+
+0
+Usable item number 19
+
+0
+Usable item number 20
+
+0
+Crafing item - alchemy number 1
+
+0
+Crafing item - alchemy number 2
+
+0
+Crafing item - alchemy number 3
+
+0
+Crafing item - alchemy number 4
+
+0
+Crafing item - alchemy number 5
+
+0
+Crafing item - alchemy number 6
+
+0
+Crafing item - alchemy number 7
+
+0
+Crafing item - alchemy number 8
+
+0
+Crafing item - alchemy number 9
+
+0
+Crafing item - alchemy number 10
+
+0
+Crafing item - alchemy number 11
+
+0
+Crafing item - alchemy number 12
+
+0
+Crafing item - alchemy number 13
+
+0
+Crafing item - alchemy number 14
+
+0
+Crafing item - alchemy number 15
+
+0
+Crafing item - alchemy number 16
+
+0
+Crafing item - alchemy number 17
+
+0
+Crafing item - alchemy number 18
+
+0
+Crafing item - alchemy number 19
+
+0
+Crafing item - alchemy number 20
+
+0
+Crafing item - smithery number 1
+
+0
+Crafing item - smithery number 2
+
+0
+Crafing item - smithery number 3
+
+0
+Crafing item - smithery number 4
+
+0
+Crafing item - smithery number 5
+
+0
+Crafing item - smithery number 6
+
+0
+Crafing item - smithery number 7
+
+0
+Crafing item - smithery number 8
+
+0
+Crafing item - smithery number 9
+
+0
+Crafing item - smithery number 10
+
+0
+Crafing item - smithery number 11
+
+0
+Crafing item - smithery number 12
+
+0
+Crafing item - smithery number 13
+
+0
+Crafing item - smithery number 14
+
+0
+Crafing item - smithery number 15
+
+0
+Crafing item - smithery number 16
+
+0
+Crafing item - smithery number 17
+
+0
+Crafing item - smithery number 18
+
+0
+Crafing item - smithery number 19
+
+0
+Crafing item - smithery number 20
+
+0

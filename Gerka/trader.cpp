@@ -1,16 +1,39 @@
-#include "biblioteki.h"
+#include "trader.h"
 #include "tabelka.h"
-#include "dwellers.h"
 #include "trade.h"
+#include "trade_tab.h"
+#include "level_up.h"
+#include "czas.h"
+#include "wait.h"
+
 
 player enter_shop(player gracz, seller handlarz)
 {
+	change_time(gracz, 0, 5);
+	if (gracz.hour >= 20 || gracz.hour <6)
+	{
+		system("cls");
+		print_info_box_from_file("shop_closed");
+		change_time(gracz, 0, 5);
+		return gracz;
+	}
 	int tryb = 0;
 	while (1)
 	{
+		if (gracz.hour >= 20 || gracz.hour < 6)
+		{
+			print_info_box_from_string("Musisz ju¿ iœæ, zamykamy");
+			change_time(gracz, 0, 5);
+			return gracz;
+		}
+		if (gracz.hp <= 0)
+		{
+			return gracz;
+		}
 		level_up(gracz);
 		system("cls");
-		string menu[100];
+		table menuu;
+		string menu[60];
 		string info[8];
 		long ceny[20];
 		//glowne staty 23 znaki
@@ -153,55 +176,13 @@ player enter_shop(player gracz, seller handlarz)
 			ceny[19] = 0;
 			info[0] = "SKLEP WIELOBRAN¯OWY";
 			info[1] = "W: WRÓÆ NA RYNEK";
-			info[2] = "M: MIKSTURA ¯YCIA";
+			info[2] = "C: CZEKAJ";
 			info[3] = "";
 			info[4] = "";
 			info[5] = "";
 			info[6] = "";
 			info[7] = "";
 		}
-
-		/* 1*/menu[60] = "MIKSTURY ¯YCIA:";
-		/* 2*/menu[61] = "MIKSTURY SI£Y:";
-		/* 3*/menu[62] = "MIKSTURY ZRÊCZNOŒCI:";
-		/* 4*/menu[63] = "MIKSTURY INTELIGENCJI:";
-		/* 5*/menu[64] = "MIKSTURY CHARYZMY:";
-		/* 6*/menu[65] = "MIKSTURY SZCZÊŒCIA:";
-		/* 7*/menu[66] = "";
-		/* 8*/menu[67] = "";
-		/* 9*/menu[68] = "";
-		/*10*/menu[69] = "";
-		/*11*/menu[70] = "";
-		/*12*/menu[71] = "";
-		/*13*/menu[72] = "";
-		/*14*/menu[73] = "";
-		/*15*/menu[74] = "";
-		/*16*/menu[75] = "";
-		/*17*/menu[76] = "";
-		/*18*/menu[77] = "";
-		/*19*/menu[78] = "";
-		/*20*/menu[79] = "";
-
-		/* 1*/menu[80] = to_string(gracz.hp_potion);
-		/* 2*/menu[81] = to_string(gracz.str_potion);
-		/* 3*/menu[82] = to_string(gracz.agility_potion);
-		/* 4*/menu[83] = to_string(gracz.intel_potion);
-		/* 5*/menu[84] = to_string(gracz.charisma_potion);
-		/* 6*/menu[85] = to_string(gracz.luck_potion);
-		/* 7*/menu[86] = "";
-		/* 8*/menu[87] = "";
-		/* 9*/menu[88] = "";
-		/*10*/menu[89] = "";
-		/*11*/menu[90] = "";
-		/*12*/menu[91] = "";
-		/*13*/menu[92] = "";
-		/*14*/menu[93] = "";
-		/*15*/menu[94] = "";
-		/*16*/menu[95] = "";
-		/*17*/menu[96] = "";
-		/*18*/menu[97] = "";
-		/*19*/menu[98] = "";
-		/*20*/menu[99] = "";
 
 
 		for (int i = 0; i < 20; i++)
@@ -219,51 +200,38 @@ player enter_shop(player gracz, seller handlarz)
 		cout << "Twój wybór to: ";
 		string wyb;
 		cin >> wyb;
+		wyb = string_tolower(wyb);
 		switch (wyb[0])
 		{
 		case '1':
 		{
 			if (tryb == 0)
 			{
+				change_time(gracz, 0, 1);
 				tryb = 1;
 			}
 			else
 			{
-				gracz = trade_mode(gracz, handlarz);
+				gracz = trade_mode(gracz, handlarz, menuu);
 			}
 			break;
 		}
-		case 'M':
+		case 'c':
 		{
-			gracz.use_hp_potion();
+			gracz = wait_n_hours(gracz,20);
 			break;
-		}
-		case 'm':
-		{
-			gracz.use_hp_potion();
-			break;
-		}
-		case 'W':
-		{
-			if (tryb == 0)
-			{
-				return gracz;
-			}
-			else if (tryb == 1)
-			{
-				tryb = 0;
-				break;
-			}
 		}
 		case 'w':
 		{
 			if (tryb == 0)
 			{
+				change_time(gracz, 0, 5);
 				return gracz;
 			}
 			else if (tryb == 1)
 			{
 				tryb = 0;
+				change_time(gracz, 0, 1);
 				break;
 			}
 		}

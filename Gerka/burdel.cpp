@@ -1,34 +1,54 @@
-#include "biblioteki.h"
-#include "ui.h"
-#include "boost-syf.h"
-#include "seksik.h"
+#include "karty.h"
+#include "burdel.h"
+#include "level_up.h"
+#include "tabelka.h"
+#include "czas.h"
+#include "wait.h"
 
 
 player enter_brothel(player gracz)
 {
+	int highlight = 0;
+	change_time(23,32,gracz, 0, 5);
 	while (1)
 	{
-		level_up(gracz);
+		if (gracz.hp <= 0)
+		{
+			return gracz;
+		}
+		levelUp(23, 32, gracz);
 		srand((unsigned int)time(NULL));
-		system("cls");
-		string menu[100];
-		string info[8];
-		info[0] = "BURDEL";
-		info[1] = "W: WRÓÆ NA RYNEK";
-		info[2] = "M: MIKSTURA ¯YCIA";
+		string menu[20];
+		string info[20];
+		string local = "Brothel";
+
+		info[0] = "Leave brothel";
+		info[1] = "Wait";
+		info[2] = "";
 		info[3] = "";
 		info[4] = "";
 		info[5] = "";
 		info[6] = "";
 		info[7] = "";
+		info[8] = "";
+		info[9] = "";
+		info[10] = "";
+		info[11] = "";
+		info[12] = "";
+		info[13] = "";
+		info[14] = "";
+		info[15] = "";
+		info[16] = "";
+		info[17] = "";
+		info[18] = "";
+		info[19] = "";
 		long ceny[20]; 
 
-		//glowne staty 23 znaki
-		/* 1*/menu[0] = "PUNKTY SI£Y:";
-		/* 2*/menu[1] = "PUNKTY ZRÊCZNOŒCI:";
-		/* 3*/menu[2] = "PUNKTY INTELIGENCJI:";
-		/* 4*/menu[3] = "PUNKTY CHARYZMY";
-		/* 5*/menu[4] = "PUNKTY SZCZÊŒCIA:";
+		/* 1*/menu[0] = "Use sexual services [unavailable]";
+		/* 2*/menu[1] = "Obtain information [unavailable]";
+		/* 3*/menu[2] = "Play cards";
+		/* 4*/menu[3] = "";
+		/* 5*/menu[4] = "";
 		/* 6*/menu[5] = "";
 		/* 7*/menu[6] = "";
 		/* 8*/menu[7] = "";
@@ -45,94 +65,8 @@ player enter_brothel(player gracz)
 		/*19*/menu[18] = "";
 		/*20*/menu[19] = "";
 
-		//wartosci glownych statow
-		/* 1*/menu[20] = to_string(gracz.str);
-		/* 2*/menu[21] = to_string(gracz.agility);
-		/* 3*/menu[22] = to_string(gracz.intel);
-		/* 4*/menu[23] = to_string(gracz.charisma);
-		/* 5*/menu[24] = to_string(gracz.luck);
-		/* 6*/menu[25] = "";
-		/* 7*/menu[26] = "";
-		/* 8*/menu[27] = "";
-		/* 9*/menu[28] = "";
-		/*10*/menu[29] = "";
-		/*11*/menu[30] = "";
-		/*12*/menu[31] = "";
-		/*13*/menu[32] = "";
-		/*14*/menu[33] = "";
-		/*15*/menu[34] = "";
-		/*16*/menu[35] = "";
-		/*17*/menu[36] = "";
-		/*18*/menu[37] = "";
-		/*19*/menu[38] = "";
-		/*20*/menu[39] = "";
-
-		//Opcje w lokacji 48 znakow
-		/* 1*/menu[40] = "ID NA DZIWKI";
-		/* 2*/menu[41] = "ZAGRAJ W KARTY";
-		/* 3*/menu[42] = "";
-		/* 4*/menu[43] = "";
-		/* 5*/menu[44] = "";
-		/* 6*/menu[45] = "";
-		/* 7*/menu[46] = "";
-		/* 8*/menu[47] = "";
-		/* 9*/menu[48] = "";
-		/*10*/menu[49] = "";
-		/*11*/menu[50] = "";
-		/*12*/menu[51] = "";
-		/*13*/menu[52] = "";
-		/*14*/menu[53] = "";
-		/*15*/menu[54] = "";
-		/*16*/menu[55] = "";
-		/*17*/menu[56] = "";
-		/*18*/menu[57] = "";
-		/*19*/menu[58] = "";
-		/*20*/menu[59] = "";
-
-		/* 1*/menu[60] = "MIKSTURY ¯YCIA:";
-		/* 2*/menu[61] = "MIKSTURY SI£Y:";
-		/* 3*/menu[62] = "MIKSTURY ZRÊCZNOŒCI:";
-		/* 4*/menu[63] = "MIKSTURY INTELIGENCJI:";
-		/* 5*/menu[64] = "MIKSTURY CHARYZMY:";
-		/* 6*/menu[65] = "MIKSTURY SZCZÊŒCIA:";
-		/* 7*/menu[66] = "";
-		/* 8*/menu[67] = "";
-		/* 9*/menu[68] = "";
-		/*10*/menu[69] = "";
-		/*11*/menu[70] = "";
-		/*12*/menu[71] = "";
-		/*13*/menu[72] = "";
-		/*14*/menu[73] = "";
-		/*15*/menu[74] = "";
-		/*16*/menu[75] = "";
-		/*17*/menu[76] = "";
-		/*18*/menu[77] = "";
-		/*19*/menu[78] = "";
-		/*20*/menu[79] = "";
-
-		/* 1*/menu[80] = to_string(gracz.hp_potion);
-		/* 2*/menu[81] = to_string(gracz.str_potion);
-		/* 3*/menu[82] = to_string(gracz.agility_potion);
-		/* 4*/menu[83] = to_string(gracz.intel_potion);
-		/* 5*/menu[84] = to_string(gracz.charisma_potion);
-		/* 6*/menu[85] = to_string(gracz.luck_potion);
-		/* 7*/menu[86] = "";
-		/* 8*/menu[87] = "";
-		/* 9*/menu[88] = "";
-		/*10*/menu[89] = "";
-		/*11*/menu[90] = "";
-		/*12*/menu[91] = "";
-		/*13*/menu[92] = "";
-		/*14*/menu[93] = "";
-		/*15*/menu[94] = "";
-		/*16*/menu[95] = "";
-		/*17*/menu[96] = "";
-		/*18*/menu[97] = "";
-		/*19*/menu[98] = "";
-		/*20*/menu[99] = "";
-
 		//Ceny za poszczególne akcje
-		ceny[0] = 300;
+		ceny[0] = 0;
 		ceny[1] = 0;
 		ceny[2] = 0;
 		ceny[3] = 0;
@@ -164,43 +98,36 @@ player enter_brothel(player gracz)
 				ceny[i] = 0;
 			}
 		}
-		tab(gracz, info, menu,ceny);
-		cout << "Twoj wybor to: ";
-		string wyb;
-		cin >> wyb;
-		switch (wyb[0])
+		tab(gracz, highlight, local, info, menu, ceny);
+		switch (highlight)
 		{
-		case '1':
+		case 20:
 		{
-			have_sex(gracz,ceny[0]);
+			vector <string> message;
+			message.push_back("The function is not ready yet \"TODO\"");
+			tabSubmenuTextOnly(23,32,message);
 			break;
 		}
-		case '2':
+		case 21:
 		{
-			gambling(gracz);
+			vector <string> message;
+			message.push_back("The function is not ready yet \"TODO\"");
+			tabSubmenuTextOnly(23, 32, message);
 			break;
 		}
-		case 'W':
+		case 22:
 		{
+			gambling(23, 32, gracz);
+			break;
+		}
+		case 0:
+		{
+			change_time(23,32,gracz, 0, 5);
 			return gracz;
 		}
-		case 'w':
+		case 1:
 		{
-			return gracz;
-		}
-		case 'M':
-		{
-			gracz.use_hp_potion();
-			break;
-		}
-		case 'm':
-		{
-			gracz.use_hp_potion();
-			break;
-		}
-		default:
-		{
-			system("cls");
+			wait_n_hours(23, 32, gracz);
 			break;
 		}
 		}

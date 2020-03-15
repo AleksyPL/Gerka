@@ -1,40 +1,40 @@
-Licznik os³abienia si³y
+Strength weakness - counter
 0
-Przed os³abieniem si³y
+Strength weakness - before effect
 0
-Licznik wzmocnienia si³y
+Strength boost - counter
 0
-Przed wzmocnieniem si³y
+Strength boost - before effect
 0
-Licznik os³abienia zrêcznoœci
+Agility weakness - counter
 0
-Przed os³abieniem zrêcznoœci
+Agility weakness - before effect
 0
-Licznik wzmocnienia zrêcznoœci
+Agility boost - counter
 0
-Przed wzmocnieniem zrêcznoœci
+Agility boost - before effect
 0
-Licznik os³abienia inteligencji
+Inteligence weakness - counter
 0
-Przed os³abieniem inteligencji
+Inteligence weakness - before effect
 0
-Licznik wzmocnienia inteligencji
+Inteligence boost - counter
 0
-Przed wzmocnieniem inteligencji
+Inteligence boost - before effect
 0
-Licznik os³abienia szczêœcia
+Charisma weakness - counter
 0
-Przed os³abieniem szczêœcia
+Charisma weakness - before effect
 0
-Licznik wzmocnienia szczêœcia
+Charisma boost - counter
 0
-Przed wzmocnieniem szczêœcia
+Charisma boost - before effect
 0
-Licznik os³abienia charyzmy
+Luck weakness - counter
+23
+Luck weakness - before effect
+4
+Luck boost - counter
 0
-Przed os³abieniem charyzmy
-0
-Licznik wzmocnienia charyzmy
-0
-Przed wzmocnieniem charyzmy
+Luck boost - before effect
 0

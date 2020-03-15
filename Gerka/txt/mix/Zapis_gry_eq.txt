@@ -1,26 +1,14 @@
-Ilosc mikstur lecz¹cych
-5
-Ilosc mikstur si³y
+Helmet points
 0
-Ilosc mikstur zrêcznoœci
+Chestplate points
 0
-Ilosc mikstur inteligencji
+Gloves points
 0
-Ilosc mikstur charyzmy
+Pants points
 0
-Ilosc mikstur szczêœcia
+Shoes points
 0
-Punkty he³mu
-0
-Punkty napierœnika
-0
-Punkty rêkawic
-0
-Punkty spodni
-0
-Punkty butów
-0
-Punkty obra¿eñ broni
-5
-Nazwa broni
-SZTYLET
+Weapon damage
+1
+Weapon name
+Fists

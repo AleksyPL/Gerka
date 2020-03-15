@@ -1,0 +1,18 @@
+Mob name
+Something
+Health point
+10
+Experience points
+1
+Damage
+1
+Defence
+0
+Base dropped gold
+0
+Additional dropped gold
+1
+Dropped Item
+Lockpick
+Drop rate for item
+20

@@ -64,10 +64,18 @@ void sound_no_money()
 {
 	PlaySound(TEXT("./wav/no_money.wav"), NULL, SND_ASYNC);
 }
-void no_money()
+void sound_drop_item()
+{
+	PlaySound(TEXT("./wav/drop_item.wav"), NULL, SND_ASYNC);
+}
+void sound_rejection()
+{
+	PlaySound(TEXT("./wav/no.wav"), NULL, SND_ASYNC);
+}
+string no_money()
 {
 	sound_no_money();
-	cout << "Nie staæ ciê na to!!!" << endl;
+	return "You don't have enough money";
 }
 void change_color(int num)
 {
@@ -90,4 +98,93 @@ void change_color(int num)
 	//13 - jasnopurpurowy
 	//14 - jasno¿ó³ty
 	//15 - jaskrawobia³y
+}
+string string_tolower(string data)
+{
+	transform(data.begin(), data.end(), data.begin(), tolower);
+	return data;
+}
+void windowDrawOnCenter(WINDOW * win, int y, int how_log, string name, int x, int spaces_on_the_end)
+{
+	int j = name.length();
+	int i = how_log - j;
+	string temp;
+	if ((how_log - j) % 2 == 0)
+	{
+		for (int j = 0; j < i / 2; j++)
+		{
+			temp = temp + " ";
+		}
+	}
+	else
+	{
+		for (int j = 0; j < (i / 2) + 1; j++)
+		{
+			temp = temp + " ";
+		}
+	}
+	temp = temp + name;
+	if (spaces_on_the_end == 0)
+	{
+		mvwprintw(win, y, x, temp.c_str());
+	}
+	else
+	{
+		for (int j = 0; j < i / 2; j++)
+		{
+			temp = temp + " ";
+		}
+		mvwprintw(win, y, x, temp.c_str());
+	}
+}
+string findItemOnList(string item)
+{
+	int nr_linii = 1;
+	string linia;
+	fstream plik;
+	plik.open("./txt/mix/Items_usable.txt", ios::in);
+	while (!plik.eof())
+	{
+		getline(plik, linia);
+		if (linia == item)
+		{
+			return "Usable";
+		}
+		else
+		{
+			nr_linii++;
+		}
+	}
+	plik.close();
+	nr_linii = 1;
+	plik.open("./txt/mix/Items_alchemy.txt", ios::in);
+	while (!plik.eof())
+	{
+		getline(plik, linia);
+		if (linia == item)
+		{
+			return "Alchemy";
+		}
+		else
+		{
+			nr_linii++;
+		}
+	}
+	plik.close();
+	nr_linii = 1;
+	plik.open("./txt/mix/Items_smithery.txt", ios::in);
+	while (!plik.eof())
+	{
+		getline(plik, linia);
+		if (linia == item)
+		{
+			return "Smithery";
+		}
+		else
+		{
+			nr_linii++;
+		}
+	}
+	plik.close();
+	return "Error";
 }

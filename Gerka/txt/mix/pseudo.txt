@@ -1,15 +1,10 @@
-Dziwka
-Œcierwo
-Æpun
-Patus
-Wyrzutek
-£ajdak
-Drañ
-Huligan
-Nieudacznik
-Pechowiec
-Kot
-Z³odziej
+Outcast
+Rascal
+Bastard
+Hooligan
+Loser
+Unlucky
+Thief
 
 
 

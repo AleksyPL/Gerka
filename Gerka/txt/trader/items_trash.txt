@@ -1,12 +1,20 @@
 Durexy
-100
 Garnek
-5
 Talerz
-5
 Butelka piwa
-20
-Ksi¹¿ka
-50
+Ludzki zab
 Kupa
-0
+Kupa1
+Kupa2
+Kupa3
+Kupa4
+Kupa5
+Kupa6
+Kupa7
+Kupa8
+Kupa9
+Kupa10
+Kupa11
+Kupa12
+Kupa13
+Kupa14

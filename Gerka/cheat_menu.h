@@ -1,8 +1,6 @@
 #pragma once
 #include "biblioteki.h"
-#include "ui.h"
-#include "tabelka.h"
-#include "zakres.h"
-#include "level_up.h"
+#include "player.h"
 
-player enter_cheat_menu(player gracz);
+int load_value(int height, int startPoint, string comment, string type, int active0, string mark, int min, int active1=0, string mark1="", int max=0);
+player enter_cheat_menu(player &gracz);

@@ -1,33 +1,37 @@
-Nazwa postaci
-aleksy
-Poziom gracza
-100
-Ilosc z³ota
-99999499
-Punkty ¿ycia
-50
-Max punktów ¿ycia
-50
-Punkty si³y
-6
-Punkty zrêcznoœci
-6
-Punkty inteligencji
-6
-Punkty szczêœcia
-5
-Punkty charyzmy
-5
-Punkty najedzenia
-10
-Punkty upojenia alkoholowego
-0
-Punkty doœwiadczenia
-0
-Punkty doœwiadczenia do nastêpnego poziomu
-50
-Licznik dnia
+Character name
+Aleksy
+Character level
 1
-Zadanie
+Gold
+499005
+Health points
+50
+Max health points
+50
+Strength level
+10
+Agility level
+5
+Inteligence level
+5
+Charisma level
+5
+Luck level
+5
+Nutrition points
+7
+Drunk level
+0
+Experience points
+0
+Experience points to the next level
+1000
+Day counter
+2
+Day hour
+12
+Day minute
+44
+Quest
 
-Umiejêtnoœæ
+Character skill
