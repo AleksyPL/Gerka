@@ -46,36 +46,46 @@ public:
 	void sell_food(int height, int startPoint, player &gracz, int ilosc);
 	void sell_beer(int height, int startPoint, player &gracz);
 };
-
 class seller : public dweller
 {
 public:
-	string menu_items[20];
-	int menu_price[20];
-	seller();
-	void loadMerch(int leftSideCard);
-	int loadPrices(string item);
-	string makeString(int howLong, string item, int amount, int price);
+	string itemName[20];
+	int itemPrice[20];
+	void loadItems(string path);
+	int loadPrices(string item, string path);
+	string makeString(int howLong, string item, int amount, int price, bool skipPrice = false);
+};
+
+class generalStoreSeller : public seller
+{
+public:
+	generalStoreSeller();
 	void buyItem(int height, int startPoint, player& gracz, string item, int amount, int price, bool &anythingSoldOrBought);
 	void sellItem(int height, int startPoint, player &gracz, string item, int amount, int price, bool &anythingSoldOrBought);
-	//int find_item_index(string nazwa);
-	
-	//int search_on_lists(string nazwa);
 };
 
 class blacksmith : public dweller
 {
 public:
-	string weapons[20];
-	int weapon_dmg[20];
-	blacksmith(player gracz);
-	void load_weapons();
-	void generate_merch(player gracz);
+	blacksmith();
 	void load_player_points(player gracz);
 	void print_image(vector <string>& message);
 	void power_up(int height, int startPoint, player &gracz, int tryb);
 };
 
+class bladesmith : public seller
+{
+public:
+	int weaponsDamage[20];
+	bool weaponsRarity[20];
+	vector <string> weaponNames;
+	bladesmith();
+	void upgradeWeapon(int height, int startPoint, player& gracz);
+	void generateMerch(player gracz);
+	void buyItem(int height, int startPoint, player& gracz, int index);
+	void sellItem(int height, int startPoint, player& gracz);
+	void printImage(vector <string>& message);
+};
 class alchemist : public dweller
 {
 public:

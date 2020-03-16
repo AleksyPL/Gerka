@@ -6,7 +6,6 @@
 #include "level_up.h"
 #include "chest.h"
 #include "sleep.h"
-#include "wait.h"
 
 void drunked(int height, int startPoint, player &gracz)
 {
@@ -108,7 +107,7 @@ player enter_tavern(player gracz,barman bobby, chest &krzynka)
 		string local = "Tavern";
 
 		string menu[20];
-		long ceny[20]; 
+		__int64 ceny[20];
 
 		if (tryb == 1)
 		{

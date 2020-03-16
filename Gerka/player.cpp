@@ -24,8 +24,10 @@ player::player()
 	gloves = 0;
 	pants = 0;
 	shoes = 0;
-	weapon = 1;
-	weapon_name = "Fists";
+	weaponDamage = 1;
+	weaponName = "Fists";
+	isTheWeaponRare = false;
+	weaponPrice = 0;
 	skill = "";
 	hunger = 10;
 	pseudonym = "";
@@ -92,7 +94,7 @@ void player::a_bit_hungry(int height, int startPoint, int number)
 		tabSubmenuTextOnly(height, startPoint, message);
 	}
 }
-int player::find_usage_item(string nazwa)
+bool player::find_usage_item(string nazwa)
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -110,7 +112,7 @@ int player::find_usage_item(string nazwa)
 		}
 	}
 }
-int player::find_crafting_alchemy_item(string nazwa)
+bool player::find_crafting_alchemy_item(string nazwa)
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -128,7 +130,7 @@ int player::find_crafting_alchemy_item(string nazwa)
 		}
 	}
 }
-int player::find_crafting_forge_item(string nazwa)
+bool player::find_crafting_forge_item(string nazwa)
 {
 	for (int i = 0; i < 20; i++)
 	{

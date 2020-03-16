@@ -15,7 +15,7 @@ class player
 		int level;							//poziom postaci
 		int exp;							//doswiadczenie
 		int exp_to_next_level;				//doswiadczenie do nastepnego poziomu
-		long long gold;						//iloœæ z³ota
+		__int64 gold;						//iloœæ z³ota
 		int licznik_dnia;					//licznik dnia
 		int hour;							//aktualny czas - godziny
 		int minute;							//aktualny czas - minuty
@@ -24,8 +24,10 @@ class player
 		int gloves;							//punkty obrony z rekawic
 		int pants;							//punkty obrony ze spodni
 		int shoes;							//punkty obrony z butow
-		int weapon;							//punkty obrony z broni
-		string weapon_name;					//nazwa broni
+		int weaponDamage;
+		bool isTheWeaponRare;
+		string weaponName;
+		int weaponPrice;
 		string skill;						//specjalna umiejêtnoœæ
 		int hunger;							//punkty g³odu
 		string inventory_usage[20];			//tablica na przedmioty u¿ytkowe
@@ -66,9 +68,9 @@ class player
 		player();
 		void a_bit_sober();
 		void a_bit_hungry(int height, int startPoint, int number = 0);
-		int find_usage_item(string nazwa);
-		int find_crafting_alchemy_item(string nazwa);
-		int find_crafting_forge_item(string nazwa);
+		bool find_usage_item(string nazwa);
+		bool find_crafting_alchemy_item(string nazwa);
+		bool find_crafting_forge_item(string nazwa);
 		int find_usage_item_index(string nazwa);
 		int find_crafting_alchemy_item_index(string nazwa);
 		int find_crafting_forge_item_index(string nazwa);

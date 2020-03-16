@@ -3,7 +3,6 @@
 #include "level_up.h"
 #include "tabelka.h"
 #include "czas.h"
-#include "wait.h"
 
 
 player enter_brothel(player gracz)
@@ -42,7 +41,7 @@ player enter_brothel(player gracz)
 		info[17] = "";
 		info[18] = "";
 		info[19] = "";
-		long ceny[20]; 
+		__int64 ceny[20];
 
 		/* 1*/menu[0] = "Use sexual services [unavailable]";
 		/* 2*/menu[1] = "Obtain information [unavailable]";

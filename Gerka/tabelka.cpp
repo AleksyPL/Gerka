@@ -17,7 +17,7 @@ string return_progress_bar(int min, int max, int how_long)
 	temp += "]";
 	return temp;
 }
-int tab(player gracz, int &highlight, string local, string shorty[20], string menu[20], long ceny[20])
+int tab(player gracz, int &highlight, string local, string shorty[20], string menu[20], __int64 ceny[20])
 {
 	int context_menu_border = 0;
 	int go_to_places_border = 0;
@@ -38,12 +38,12 @@ int tab(player gracz, int &highlight, string local, string shorty[20], string me
 	citymap[0] = "Town square";
 	citymap[1] = "Tavern";
 	citymap[2] = "Forge";
-	citymap[3] = "Alchemist lab";
-	citymap[4] = "Brothel";
-	citymap[5] = "General store";
-	citymap[6] = "Shaman's house";
-	citymap[7] = "Hospital";
-	citymap[8] = "";
+	citymap[3] = "Bladesmith Shop";
+	citymap[4] = "Alchemist lab";
+	citymap[5] = "Brothel";
+	citymap[6] = "General store";
+	citymap[7] = "Shaman's house";
+	citymap[8] = "Hospital";
 	citymap[9] = "";
 	citymap[10] = "";
 	citymap[11] = "";
@@ -1021,6 +1021,23 @@ int tabTrade(int highlight, string top_side[3], string left_side[21], string rig
 		}
 		//bottombar
 		{
+			if (bottom_side.size() == 1)
+			{
+				wborder(bottombar, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LTEE, ACS_RTEE);
+				mvwaddch(bottombar, 0, 69, ACS_BTEE);
+				mvwaddch(bottombar, 0, 46, ACS_TTEE);
+				mvwaddch(bottombar, 1, 46, ACS_VLINE);
+				mvwaddch(bottombar, 2, 46, ACS_BTEE);
+				mvwaddch(bottombar, 0, 92, ACS_TTEE);
+				mvwaddch(bottombar, 1, 92, ACS_VLINE);
+				mvwaddch(bottombar, 2, 92, ACS_BTEE);
+				if (highlight >= 40 && highlight - 40 == 0)
+				{
+					wattron(bottombar, A_REVERSE);
+				}
+				windowDrawOnCenter(bottombar, 1, 45, bottom_side[0], 47);
+				wattroff(bottombar, A_REVERSE);
+			}
 			if (bottom_side.size() == 3)
 			{
 				wborder(bottombar, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LTEE, ACS_RTEE);

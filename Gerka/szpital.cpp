@@ -3,7 +3,6 @@
 #include "szpital.h"
 #include "level_up.h"
 #include "czas.h"
-#include "wait.h"
 #include "boost_syf.h"
 
 player enter_hospital(player gracz, doctor lekarz)
@@ -20,7 +19,7 @@ player enter_hospital(player gracz, doctor lekarz)
 		levelUp(23,32, gracz);
 		string menu[20];
 		string info[20];
-		long ceny[20];
+		__int64 ceny[20];
 		string local = "Hospital";
 		
 		if (tryb == 1)

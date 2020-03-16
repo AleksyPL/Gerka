@@ -1,18 +1,19 @@
-#include "zakres.h"
+#include "bladesmithShop.h"
 #include "tabelka.h"
-#include "level_up.h"
-#include "alchemik.h"
 #include "czas.h"
+#include "level_up.h"
+#include "zakres.h"
+#include "trade_mode.h"
 
-player enter_laboratory(player gracz,alchemist alchemik)
+player enterBladesmithShop(player gracz, bladesmith miecznik)
 {
 	int highlight = 0;
-	change_time(23,32,gracz, 0, 5);
-	if (gracz.hour >= 20 || gracz.hour <6)
+	change_time(23, 32, gracz, 0, 5);
+	if (gracz.hour >= 20 || gracz.hour < 6)
 	{
 		vector<string> message;
-		message.push_back("Lab closed");
-		tabSubmenuFancyTextOnly(23, 32, message,50);
+		message.push_back("Forge closed");
+		tabSubmenuFancyTextOnly(23, 32, message, 50);
 		return gracz;
 	}
 	int tryb = 0;
@@ -20,43 +21,35 @@ player enter_laboratory(player gracz,alchemist alchemik)
 	{
 		if (gracz.hour >= 20 || gracz.hour < 6)
 		{
-			alchemik.weAreClosing(gracz);
+			miecznik.weAreClosing(gracz);
 			vector<string> message;
 			message.push_back("You have to go. We're closing.");
 			tabSubmenuFancyTextOnly(23, 32, message, 50);
-			change_time(23,32,gracz, 0, 5);
+			change_time(23, 32, gracz, 0, 5);
 			return gracz;
 		}
 		if (gracz.hp <= 0)
 		{
 			return gracz;
 		}
-		levelUp(23,32,gracz);
+		levelUp(23, 32, gracz);
 		string menu[20];
-		__int64 ceny[20];
-
 		string info[20];
-		string local = "Alchemist lab";
-
+		__int64 ceny[20];
+		string local = "Bladesmith Shop";
 		if (tryb == 1)
 		{
+			miecznik.generateMerch(gracz);
 			for (int i = 0; i < 20; i++)
 			{
-				menu[i] = alchemik.menu[i];
-				info[i] = alchemik.info[i];
-				if (i == 0)
-				{
-					ceny[i] = (__int64)gracz.level * 100;
-				}
-				else
-				{
-					ceny[i] = alchemik.ceny[i];
-				}
+				menu[i] = miecznik.menu[i];
+				ceny[i] = miecznik.ceny[i];
+				info[i] = miecznik.info[i];
 			}
 		}
 		else
 		{
-			/* 1*/menu[0] = "Talk to alchemist";
+			/* 1*/menu[0] = "Talk to bladesmith";
 			/* 2*/menu[1] = "";
 			/* 3*/menu[2] = "";
 			/* 4*/menu[3] = "";
@@ -96,7 +89,7 @@ player enter_laboratory(player gracz,alchemist alchemik)
 			ceny[17] = 0;
 			ceny[18] = 0;
 			ceny[19] = 0;
-			info[0] = "Leave tavern";
+			info[0] = "Leave Bladesmith shop";
 			info[1] = "Wait";
 			info[2] = "";
 			info[3] = "";
@@ -117,6 +110,7 @@ player enter_laboratory(player gracz,alchemist alchemik)
 			info[18] = "";
 			info[19] = "";
 		}
+
 		for (int i = 0; i < 20; i++)
 		{
 			if (ceny[i] > 10000)
@@ -129,7 +123,7 @@ player enter_laboratory(player gracz,alchemist alchemik)
 			}
 		}
 		range(gracz);
-		tab(gracz,highlight, local, info, menu, ceny);
+		tab(gracz, highlight, local, info, menu, ceny);
 		switch (highlight)
 		{
 		case 20:
@@ -137,23 +131,11 @@ player enter_laboratory(player gracz,alchemist alchemik)
 			if (tryb == 0)
 			{
 				tryb = 1;
-				change_time(23,32,gracz, 0, 1);
+				change_time(23, 32, gracz, 0, 1);
 			}
 			else
 			{
-				alchemik.buy_new_level_potion(23,32,gracz);
-			}
-			break;
-		}
-		case 21:
-		{
-			if (tryb == 0)
-			{
-				;
-			}
-			else
-			{
-				alchemik.buy_hp_potion(23,32,gracz);
+				gracz = tradeModeBladesmithShop(gracz, miecznik);
 			}
 			break;
 		}
@@ -166,16 +148,15 @@ player enter_laboratory(player gracz,alchemist alchemik)
 		{
 			if (tryb == 0)
 			{
-				change_time(23,32,gracz, 0, 5);
+				change_time(23, 32, gracz, 0, 5);
 				return gracz;
 			}
 			else if (tryb == 1)
 			{
 				tryb = 0;
-				change_time(23,32,gracz, 0, 1);
+				change_time(23, 32, gracz, 0, 1);
 				break;
 			}
-			break;
 		}
 		}
 	}

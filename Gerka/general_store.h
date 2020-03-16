@@ -3,4 +3,4 @@
 #include "dwellers.h"
 #include "player.h"
 
-player enter_shop(player gracz, seller handlarz);
+player enter_shop(player gracz, generalStoreSeller handlarz);

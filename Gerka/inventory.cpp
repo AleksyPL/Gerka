@@ -172,8 +172,15 @@ player enter_inventory(player &gracz)
 			rightSide[2] = "Gloves points: " + to_string(gracz.gloves);
 			rightSide[3] = "Pants points: " + to_string(gracz.pants);
 			rightSide[4] = "Shoes points: " + to_string(gracz.shoes);
-			rightSide[5] = "Weapon name: " + gracz.weapon_name;
-			rightSide[6] = "Weapon points: " + to_string(gracz.weapon);
+			if (gracz.isTheWeaponRare == true)
+			{
+				rightSide[5] = "Weapon name: [RARE]" + gracz.weaponName;
+			}
+			else
+			{
+				rightSide[5] = "Weapon name: " + gracz.weaponName;
+			}
+			rightSide[6] = "Weapon damage: " + to_string((int)(0.2 * gracz.str * gracz.agility)+gracz.weaponDamage);
 			rightSide[7] = "";
 			rightSide[8] = "";
 			rightSide[9] = "";

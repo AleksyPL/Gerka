@@ -5,7 +5,7 @@
 #include "mobki1.h"
 
 string return_progress_bar(int min, int max, int how_long);
-int tab(player gracz, int &highlight, string local, string shorty[20], string menu[20], long ceny[20]);
+int tab(player gracz, int &highlight, string local, string shorty[20], string menu[20], __int64 ceny[20]);
 int tabItemsLeftOnly(int highlight, string top_side, string left_side[21], string right_side[21], vector <string> bottom_side);
 int tabItemsLeftAndRight(int highlight, string top_side, string left_side[21], string right_side[21], vector <string> bottom_side);
 void tabSubmenuTextOnly(int height, int startPoint, vector<string> myDisplay);
