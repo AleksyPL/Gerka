@@ -1,6 +1,6 @@
 #include "load.h"
 
-void loadGame(player &gracz, barman &bobby, seller &handlarz, blacksmith &kowal, alchemist &alchemik, chest &krzynka)
+void loadGame(player &gracz, barman &bobby, generalStoreSeller &handlarz, blacksmith &kowal, alchemist &alchemik, chest &krzynka)
 {
 string linia;
 fstream plik;
@@ -44,8 +44,22 @@ while (getline(plik, linia))
 	case 6:gracz.gloves = atoi(linia.c_str()); break;
 	case 8:gracz.pants = atoi(linia.c_str()); break;
 	case 10:gracz.shoes = atoi(linia.c_str()); break;
-	case 12:gracz.weapon = atoi(linia.c_str()); break;
-	case 14:gracz.weapon_name = linia; break;
+	case 12:gracz.weaponDamage = atoi(linia.c_str()); break;
+	case 14:gracz.weaponName = linia; break;
+	case 16:gracz.weaponPrice= atoi(linia.c_str()); break;
+	case 18:
+	{
+		linia = string_tolower(linia);
+		if (linia == "true")
+		{
+			gracz.isTheWeaponRare = true;
+		}
+		else
+		{
+			gracz.isTheWeaponRare = false;
+		}
+		break;
+	}
 	}
 	nr_linii++;
 }

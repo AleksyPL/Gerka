@@ -90,8 +90,9 @@ int main()
 	SetWindowLong(consoleWindow, GWL_STYLE, GetWindowLong(consoleWindow, GWL_STYLE) & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX);
 	player gracz;
 	barman bobby;
-	seller handlarz;
-	blacksmith kowal(gracz);
+	generalStoreSeller handlarz;
+	blacksmith kowal;
+	bladesmith miecznik;
 	alchemist alchemik;
 	shaman szaman;
 	doctor lekarz;
@@ -343,7 +344,7 @@ int main()
 		gracz.charisma = skills_temp[10];
 		gracz.luck = skills_temp[11];
 		give_the_title(gracz);
-		enterTownSquare(gracz, bobby, handlarz, kowal, alchemik, szaman, lekarz, krzynka);
+		enterTownSquare(gracz, bobby, handlarz, kowal, miecznik, alchemik, szaman, lekarz, krzynka);
 	}
 	else if (highlight == 1)
 	{
@@ -353,7 +354,7 @@ int main()
 		krzynka.sort_forge();
 		range(gracz);
 		give_the_title(gracz);
-		enterTownSquare(gracz, bobby, handlarz, kowal, alchemik, szaman, lekarz, krzynka);
+		enterTownSquare(gracz, bobby, handlarz, kowal, miecznik, alchemik, szaman, lekarz, krzynka);
 	}
 	else if (highlight == 2)
 	{

@@ -114,9 +114,6 @@
     <ClCompile Include="czas.cpp">
       <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
-    <ClCompile Include="wait.cpp">
-      <Filter>Pliki źródłowe\Funkcje</Filter>
-    </ClCompile>
     <ClCompile Include="town square.cpp">
       <Filter>Pliki źródłowe\Lokacje</Filter>
     </ClCompile>
@@ -137,6 +134,9 @@
     </ClCompile>
     <ClCompile Include="cheat_menu.cpp">
       <Filter>Pliki źródłowe\Inne</Filter>
+    </ClCompile>
+    <ClCompile Include="bladesmithShop.cpp">
+      <Filter>Pliki źródłowe\Lokacje</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +215,6 @@
     <ClInclude Include="czas.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
-    <ClInclude Include="wait.h">
-      <Filter>Pliki nagłówkowe\Funkcje</Filter>
-    </ClInclude>
     <ClInclude Include="town square.h">
       <Filter>Pliki nagłówkowe\Lokacje</Filter>
     </ClInclude>
@@ -238,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="cheat_menu.h">
       <Filter>Pliki nagłówkowe\Inne</Filter>
+    </ClInclude>
+    <ClInclude Include="bladesmithShop.h">
+      <Filter>Pliki nagłówkowe\Lokacje</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

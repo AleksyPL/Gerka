@@ -1,7 +1,7 @@
 #include "save.h"
 #include "tabelka.h"
 
-void save(int height, int startPoint, player gracz,barman bobby,seller handlarz,blacksmith kowal, alchemist alchemik, chest krzynka)
+void save(int height, int startPoint, player gracz,barman bobby,generalStoreSeller handlarz,blacksmith kowal, alchemist alchemik, chest krzynka)
 {
 	vector <string> message;
 	vector <string> options;
@@ -43,8 +43,10 @@ void save(int height, int startPoint, player gracz,barman bobby,seller handlarz,
 		plik << "Gloves points" << endl << gracz.gloves << endl;//5-6
 		plik << "Pants points" << endl << gracz.pants << endl;//7-8
 		plik << "Shoes points" << endl << gracz.shoes << endl;//9-10
-		plik << "Weapon damage" << endl << gracz.weapon << endl;//11-12
-		plik << "Weapon name" << endl << gracz.weapon_name;//13-14
+		plik << "Weapon damage" << endl << gracz.weaponDamage << endl;//11-12
+		plik << "Weapon name" << endl << gracz.weaponName;//13-14
+		plik << "Weapon price" << endl << gracz.weaponPrice;//15-16
+		plik << "Is the weapon rare?" << endl << gracz.isTheWeaponRare;//17-18
 		plik.close();
 		remove("./txt/mix/Zapis_gry_backpack.txt");
 		gracz.sort_usage_backpack();

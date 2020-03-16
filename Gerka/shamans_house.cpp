@@ -3,7 +3,6 @@
 #include "zakres.h"
 #include "level_up.h"
 #include "czas.h"
-#include "wait.h"
 #include "quest.h"
 
 player enter_shaman_house(player gracz, shaman szaman)
@@ -37,7 +36,7 @@ player enter_shaman_house(player gracz, shaman szaman)
 		levelUp(23, 32, gracz);
 		string menu[20];
 		string info[20];
-		long ceny[20];
+		__int64 ceny[20];
 		string local = "Shaman's house";
 		
 		if (tryb == 1)

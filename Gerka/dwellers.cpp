@@ -227,7 +227,7 @@ void barman::sell_food(int height, int startPoint, player &gracz, int ilosc)
 			message.push_back("You're having a meal");
 			gracz.gold = gracz.gold - ceny[2];
 			gracz.hunger = gracz.hunger + ilosc;
-			gracz.hp = gracz.hp + (0.01*gracz.max_hp);
+			gracz.hp += (int)(0.01*gracz.max_hp);
 			if (gracz.hp > gracz.max_hp)
 			{
 				gracz.hp = gracz.max_hp;
@@ -281,7 +281,81 @@ void barman::sell_beer(int height, int startPoint, player &gracz)
 	}
 	tabSubmenuTextOnly(height, startPoint, message);
 }
-seller::seller()
+void seller::loadItems(string path)
+{
+	for (int i = 0; i < 20; i++)
+	{
+		this->itemName[i] = "";
+	}
+	string linia;
+	fstream plik;
+	int nr_linii = 1;
+	if (path != "")
+	{
+		plik.open(path, ios::in);
+		while (getline(plik, linia))
+		{
+			this->itemName[nr_linii - 1] = linia;
+			nr_linii++;
+		}
+		plik.close();
+	}
+}
+int seller::loadPrices(string item, string path)
+{
+	for (int i = 0; i < 20; i++)
+	{
+		itemPrice[i] = 0;
+	}
+	string linia;
+	fstream plik;
+	int nr_linii = 1;
+	int price = 0;
+	plik.open(path, ios::in);
+	while (getline(plik, linia))
+	{
+		if (linia == item)
+		{
+			nr_linii++;
+			getline(plik, linia);
+			price = atoi(linia.c_str());
+			break;
+		}
+		nr_linii++;
+	}
+	plik.close();
+	return price;
+}
+string seller::makeString(int howLong, string item, int amount, int price, bool skipPrice)
+{
+	string price_string = "";
+	string amount_string = "";
+	string temp = "";
+	if (skipPrice == false)
+	{
+		if (price <= 0)
+		{
+			price_string = "[WORTHLESS]";
+		}
+		else
+		{
+			price_string = "[" + to_string(price) + " GOLD]";
+		}
+	}
+	if (amount > 1)
+	{
+		amount_string = " x" + to_string(amount);
+	}
+	howLong -= (item.length() + amount_string.length() + price_string.length());
+	temp = item + amount_string;
+	for (int i = 0; i < howLong; i++)
+	{
+		temp += " ";
+	}
+	temp += price_string;
+	return temp;
+}
+generalStoreSeller::generalStoreSeller()
 {
 	name = "HANDLARZ";
 	info[0] = "End the conversation";
@@ -346,124 +420,11 @@ seller::seller()
 	ceny[19] = 0;
 	for (int i = 0; i < 20; i++)
 	{
-		menu_items[i] = "";
-		menu_price[i] = 0;
+		this->itemName[i] = "";
+		this->itemPrice[i] = 0;
 	}
 }
-void seller::loadMerch(int leftSideCard)
-{
-	for (int i = 0; i < 20; i++)
-	{
-		menu_items[i] = "";
-	}
-	string linia;
-	fstream plik;
-	int nr_linii = 1;
-	if (leftSideCard == 0)
-	{
-		plik.open("./txt/trader/items_trash.txt", ios::in);
-		while (getline(plik, linia))
-		{
-			menu_items[nr_linii - 1] = linia;
-			nr_linii++;
-		}
-		plik.close();
-	}
-	else if (leftSideCard == 1)
-	{
-		plik.open("./txt/trader/items_low.txt", ios::in);
-		while (getline(plik, linia))
-		{
-			menu_items[nr_linii - 1] = linia;
-			nr_linii++;
-		}
-		plik.close();
-	}
-	else if (leftSideCard == 2)
-	{
-		plik.open("./txt/trader/items_mid.txt", ios::in);
-		while (getline(plik, linia))
-		{
-			menu_items[nr_linii - 1] = linia;
-			nr_linii++;
-		}
-		plik.close();
-	}
-	else if (leftSideCard == 3)
-	{
-		plik.open("./txt/trader/items_high.txt", ios::in);
-		while (getline(plik, linia))
-		{
-			menu_items[nr_linii - 1] = linia;
-			nr_linii++;
-		}
-		plik.close();
-	}
-	else
-	{
-		for (int i = 0; i < 20; i++)
-		{
-			menu_items[i] = "";
-			menu_price[i] = 0;
-		}
-	}
-}
-int seller::loadPrices(string item)
-{
-	for (int i = 0; i < 20; i++)
-	{
-		menu_price[i] = 0;
-	}
-	string linia;
-	fstream plik;
-	int nr_linii = 1;
-	int price = 0;
-	plik.open("./txt/mix/items_prices.txt", ios::in);
-	while (getline(plik, linia))
-	{
-		if (linia == item)
-		{
-			nr_linii++;
-			getline(plik, linia);
-			price = atoi(linia.c_str());
-			break;
-		}
-		nr_linii++;
-	}
-	plik.close();
-	return price;
-}
-string seller::makeString(int howLong, string item, int amount, int price)
-{
-	string price_string="";
-	string amount_string="";
-	string temp="";
-	if (price <= 0)
-	{
-		price_string = "[WORTHLESS]";
-	}
-	else
-	{
-		price_string = "[" + to_string(price) + " GOLD]";
-	}
-	if (amount > 1)
-	{
-		amount_string = " x" + to_string(amount);
-	}
-	else
-	{
-
-	}
-	howLong -= (item.length() + amount_string.length() + price_string.length());
-	temp = item + amount_string;
-	for (int i = 0; i < howLong; i++)
-	{
-		temp += " ";
-	}
-	temp += price_string;
-	return temp;
-}
-void seller::buyItem(int height, int startPoint, player& gracz, string item, int amount, int price, bool &anythingSoldOrBought)
+void generalStoreSeller::buyItem(int height, int startPoint, player& gracz, string item, int amount, int price, bool &anythingSoldOrBought)
 {
 	vector <string> message;
 	vector <string> options = { "Yes","No" };
@@ -479,6 +440,7 @@ void seller::buyItem(int height, int startPoint, player& gracz, string item, int
 			{
 				gracz.add_usage_item(item,price,amount,height,startPoint);
 				gold += price;
+				sound_cash();
 			}
 		}
 		else
@@ -498,6 +460,7 @@ void seller::buyItem(int height, int startPoint, player& gracz, string item, int
 			{
 				gracz.add_crafting_alchemy_item(item, price, amount, height, startPoint);
 				gold += price;
+				sound_cash();
 			}
 		}
 		else
@@ -517,6 +480,7 @@ void seller::buyItem(int height, int startPoint, player& gracz, string item, int
 			{
 				gracz.add_crafting_forge_item(item, price, amount, height, startPoint);
 				gold += price;
+				sound_cash();
 			}
 		}
 		else
@@ -533,7 +497,7 @@ void seller::buyItem(int height, int startPoint, player& gracz, string item, int
 		tabSubmenuTextOnly(height, startPoint, message);
 	}
 }
-void seller::sellItem(int height, int startPoint, player &gracz, string item, int amount, int price, bool &anythingSoldOrBought)
+void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, string item, int amount, int price, bool &anythingSoldOrBought)
 {
 	vector <string> message;
 	vector <string> options = {"Yes","No"};
@@ -581,7 +545,7 @@ void seller::sellItem(int height, int startPoint, player &gracz, string item, in
 					{
 						gracz.inventory_usage_amount[index] -= amountWritten;
 					}
-					gracz.gold += price * amountWritten;
+					gracz.gold += (__int64)price * amountWritten;
 					gold -= price * amountWritten;
 					anythingSoldOrBought = true;
 				}
@@ -599,7 +563,7 @@ void seller::sellItem(int height, int startPoint, player &gracz, string item, in
 						{
 							gracz.inventory_usage_amount[index] -= amount;
 						}
-						gracz.gold += price * amount;
+						gracz.gold += (__int64)price * amount;
 						gold -= price * amount;
 						anythingSoldOrBought = true;
 					}
@@ -700,7 +664,7 @@ void seller::sellItem(int height, int startPoint, player &gracz, string item, in
 				{
 					gracz.inventory_crafting_amount[index] -= amountWritten;
 				}
-				gracz.gold += price * amountWritten;
+				gracz.gold += (__int64)price * amountWritten;
 				gold -= price * amountWritten;
 				anythingSoldOrBought = true;
 			}
@@ -718,7 +682,7 @@ void seller::sellItem(int height, int startPoint, player &gracz, string item, in
 					{
 						gracz.inventory_crafting_amount[index] -= amount;
 					}
-					gracz.gold += price * amount;
+					gracz.gold += (__int64)price * amount;
 					gold -= price * amount;
 					anythingSoldOrBought = true;
 				}
@@ -819,7 +783,7 @@ void seller::sellItem(int height, int startPoint, player &gracz, string item, in
 				{
 					gracz.inventory_crafting_amount[20 + index] -= amountWritten;
 				}
-				gracz.gold += price * amountWritten;
+				gracz.gold += (__int64)price * amountWritten;
 				gold -= price * amountWritten;
 				anythingSoldOrBought = true;
 			}
@@ -837,7 +801,7 @@ void seller::sellItem(int height, int startPoint, player &gracz, string item, in
 					{
 						gracz.inventory_crafting_amount[20 + index] -= amount;
 					}
-					gracz.gold += price * amount;
+					gracz.gold += (__int64)price * amount;
 					gold -= price * amount;
 					anythingSoldOrBought = true;
 				}
@@ -901,77 +865,7 @@ void seller::sellItem(int height, int startPoint, player &gracz, string item, in
 		tabSubmenuTextOnly(height, startPoint, message);
 	}
 }
-/*
-int seller::find_item_index(string nazwa)
-{
-	for (int i = 0; i < 120; i++)
-	{
-		if (menu_items[i] == nazwa)
-		{
-			return i;
-		}
-	}
-}
-void seller::add_prices(player &gracz)
-{
-	for (int i = 0; i < 20; i++)
-	{
-		if (gracz.inventory_usage[i] == "")
-		{
-			continue;
-		}
-		else
-		{
-			for (int j = 0; j < 120; j++)
-			{
-				if (gracz.inventory_usage[i] == menu_items[j])
-				{
-					gracz.inventory_usage_price[i] = menu_price[j];
-				}
-			}
-		}
-	}
-	for (int i = 0; i < 20; i++)
-	{
-		if (gracz.inventory_crafting[i] == "")
-		{
-			continue;
-		}
-		else
-		{
-			for (int j = 0; j < 120; j++)
-			{
-				if (gracz.inventory_crafting[i] == menu_items[j])
-				{
-					gracz.inventory_crafting_price[i] = menu_price[j];
-				}
-			}
-		}
-	}
-}
-int seller::search_on_lists(string nazwa)
-{
-	for (int i = 0; i < 120; i++)
-	{
-		if (menu_items[i] == nazwa)
-		{
-			if (i < 80)
-			{
-				return 0;
-			}
-			else if (i < 100 && i >= 80)
-			{
-				return 1;
-			}
-			else
-			{
-				return 2;
-			}
-		}
-	}
-}
-*/
-blacksmith::blacksmith(player gracz)
+blacksmith::blacksmith()
 {
 	name = "KOWAL";
 	info[0] = "End the conversation";
@@ -1035,189 +929,6 @@ blacksmith::blacksmith(player gracz)
 	ceny[17] = 0;
 	ceny[18] = 0;
 	ceny[19] = 0;
-	for (int i = 0; i < 20; i++)
-	{
-		weapons[i] = "";
-		weapon_dmg[i] = 0;
-	}
-}
-void blacksmith::load_weapons()
-{
-	string linia;
-	fstream plik;
-	int nr_linii = 1;
-	plik.open("./txt/kowal/weapons_blunt.txt", ios::in);
-	while (getline(plik, linia))
-	{
-		switch (nr_linii)
-		{
-		case 1:
-		{
-			weapons[0] = linia;
-			break;
-		}
-		case 2:
-		{
-			weapons[1] = linia;
-			break;
-		}
-		case 3:
-		{
-			weapons[2] = linia;
-			break;
-		}
-		case 4:
-		{
-			weapons[3] = linia;
-			break;
-		}
-		case 5:
-		{
-			weapons[4] = linia;
-			break;
-		}
-		case 6:
-		{
-			weapons[5] = linia;
-			break;
-		}
-		}
-		nr_linii++;
-	}
-	plik.close();
-	nr_linii = 1;
-	plik.open("./txt/kowal/weapons_stabbing.txt", ios::in);
-	while (getline(plik, linia))
-	{
-		switch (nr_linii)
-		{
-		case 1:
-		{
-			weapons[6] = linia;
-			break;
-		}
-		case 2:
-		{
-			weapons[7] = linia;
-			break;
-		}
-		case 3:
-		{
-			weapons[8] = linia;
-			break;
-		}
-		case 4:
-		{
-			weapons[9] = linia;
-			break;
-		}
-		case 5:
-		{
-			weapons[10] = linia;
-			break;
-		}
-		}
-		nr_linii++;
-	}
-	plik.close();
-	nr_linii = 1;
-	plik.open("./txt/kowal/weapons_cutting.txt", ios::in);
-	while (getline(plik, linia))
-	{
-		switch (nr_linii)
-		{
-		case 1:
-		{
-			weapons[11] = linia;
-			break;
-		}
-		case 2:
-		{
-			weapons[12] = linia;
-			break;
-		}
-		case 3:
-		{
-			weapons[13] = linia;
-			break;
-		}
-		case 4:
-		{
-			weapons[14] = linia;
-			break;
-		}
-		case 5:
-		{
-			weapons[15] = linia;
-			break;
-		}
-		case 6:
-		{
-			weapons[16] = linia;
-			break;
-		}
-		case 7:
-		{
-			weapons[17] = linia;
-			break;
-		}
-		case 8:
-		{
-			weapons[18] = linia;
-			break;
-		}
-		case 9:
-		{
-			weapons[19] = linia;
-			break;
-		}
-		}
-		nr_linii++;
-	}
-	plik.close();
-}
-void blacksmith::generate_merch(player gracz)
-{
-	for (int i = 0; i < 20; i++)
-	{
-		int pomoc = rand() % 3;
-		if (pomoc == 0)
-		{
-			weapon_dmg[i] = gracz.level * 5;
-		}
-		else if(pomoc==1)
-		{
-			int pomoc2 = rand() % 2;
-			if (pomoc2 == 0)
-			{
-				weapon_dmg[i] = (gracz.level * 5) - 1;
-			}
-			else if (pomoc2 == 1)
-			{
-				weapon_dmg[i] = (gracz.level * 5) + 1;
-			}
-		}
-		else if (pomoc == 2)
-		{
-			int pomoc2 = rand() % 4;
-			if (pomoc2 == 0)
-			{
-				weapon_dmg[i] = (gracz.level * 5) - 2;
-			}
-			else if (pomoc2 == 1)
-			{
-				weapon_dmg[i] = (gracz.level * 5) - 1;
-			}
-			else if (pomoc2 == 2)
-			{
-				weapon_dmg[i] = (gracz.level * 5) + 1;
-			}
-			else if (pomoc2 == 3)
-			{
-				weapon_dmg[i] = (gracz.level * 5) + 2;
-			}
-		}
-	}
 }
 void blacksmith::load_player_points(player gracz)
 {
@@ -1243,8 +954,8 @@ void blacksmith::load_player_points(player gracz)
 	this->ceny[3] = ceny[3] + (100 * gracz.pants);
 	this->menu[4] = menu[4] + " (" + to_string(gracz.shoes) + ")";
 	this->ceny[4] = ceny[4] + (100 * gracz.shoes);
-	this->menu[5] = menu[5] + " (" + to_string(gracz.weapon) + ")";
-	this->ceny[5] = ceny[5] + (100 * gracz.weapon);
+	this->menu[5] = menu[5] + " (" + to_string(gracz.weaponDamage) + ")";
+	this->ceny[5] = ceny[5] + (100 * gracz.weaponDamage);
 }
 void blacksmith::print_image(vector <string>& message)
 {
@@ -1271,8 +982,8 @@ void blacksmith::power_up(int height, int startPoint, player &gracz, int tryb)
 			message.push_back("The helmet has been strengthened");
 			message.push_back("");
 			print_image(message);
-			gracz.helmet = gracz.helmet + 1;
-			gracz.gold = gracz.gold - ceny[0];
+			gracz.helmet ++;
+			gracz.gold -= ceny[0];
 			change_time(height, startPoint, gracz, 1, 0);
 		}
 		else
@@ -1288,8 +999,8 @@ void blacksmith::power_up(int height, int startPoint, player &gracz, int tryb)
 			message.push_back("The chestplate has been strengthened");
 			message.push_back("");
 			print_image(message);
-			gracz.chestplate = gracz.chestplate + 1;
-			gracz.gold = gracz.gold - ceny[1];
+			gracz.chestplate ++;
+			gracz.gold -= ceny[1];
 			change_time(height, startPoint, gracz, 1, 0);
 		}
 		else
@@ -1305,8 +1016,8 @@ void blacksmith::power_up(int height, int startPoint, player &gracz, int tryb)
 			message.push_back("The gloves have been strengthened");
 			message.push_back("");
 			print_image(message);
-			gracz.gloves = gracz.gloves + 1;
-			gracz.gold = gracz.gold - ceny[2];
+			gracz.gloves ++;
+			gracz.gold -= ceny[2];
 			change_time(height, startPoint, gracz, 1, 0);
 		}
 		else
@@ -1322,8 +1033,8 @@ void blacksmith::power_up(int height, int startPoint, player &gracz, int tryb)
 			message.push_back("The pants have been strengthened");
 			message.push_back("");
 			print_image(message);
-			gracz.pants = gracz.pants + 1;
-			gracz.gold = gracz.gold - ceny[3];
+			gracz.pants ++;
+			gracz.gold -= ceny[3];
 			change_time(height, startPoint, gracz, 1, 0);
 		}
 		else
@@ -1339,8 +1050,8 @@ void blacksmith::power_up(int height, int startPoint, player &gracz, int tryb)
 			message.push_back("The shoes have been strengthened");
 			message.push_back("");
 			print_image(message);
-			gracz.shoes = gracz.shoes + 1;
-			gracz.gold = gracz.gold - ceny[4];
+			gracz.shoes ++;
+			gracz.gold -= ceny[4];
 			change_time(height, startPoint, gracz, 1, 0);
 		}
 		else
@@ -1353,11 +1064,11 @@ void blacksmith::power_up(int height, int startPoint, player &gracz, int tryb)
 	{
 		if (gracz.gold >= ceny[5])
 		{
-			message.push_back("The weapon (" + gracz.weapon_name + ") have been strengthened");
+			message.push_back("The weapon (" + gracz.weaponName + ") have been strengthened");
 			message.push_back("");
 			print_image(message);
-			gracz.weapon = gracz.weapon + 1;
-			gracz.gold = gracz.gold - ceny[5];
+			gracz.weaponDamage ++;
+			gracz.gold -= ceny[5];
 			change_time(height, startPoint, gracz, 1, 0);
 		}
 		else
@@ -1368,6 +1079,291 @@ void blacksmith::power_up(int height, int startPoint, player &gracz, int tryb)
 	}
 	}
 	tabSubmenuTextOnly(23, 32, message);
+}
+bladesmith::bladesmith()
+{
+	name = "Bladesmith";
+	info[0] = "End the conversation";
+	info[1] = "";
+	info[2] = "";
+	info[3] = "";
+	info[4] = "";
+	info[5] = "";
+	info[6] = "";
+	info[7] = "";
+	info[8] = "";
+	info[8] = "";
+	info[10] = "";
+	info[11] = "";
+	info[12] = "";
+	info[13] = "";
+	info[14] = "";
+	info[15] = "";
+	info[16] = "";
+	info[17] = "";
+	info[18] = "";
+	info[18] = "";
+	info[19] = "";
+	menu[0] = "Trade items";
+	menu[1] = "Upgrade weapon";
+	menu[2] = "";
+	menu[3] = "";
+	menu[4] = "";
+	menu[5] = "";
+	menu[6] = "";
+	menu[7] = "";
+	menu[8] = "";
+	menu[9] = "";
+	menu[10] = "";
+	menu[11] = "";
+	menu[12] = "";
+	menu[13] = "";
+	menu[14] = "";
+	menu[15] = "";
+	menu[16] = "";
+	menu[17] = "";
+	menu[18] = "";
+	menu[19] = "";
+	ceny[0] = 0;
+	ceny[1] = 0;
+	ceny[2] = 0;
+	ceny[3] = 0;
+	ceny[4] = 0;
+	ceny[5] = 0;
+	ceny[6] = 0;
+	ceny[7] = 0;
+	ceny[8] = 0;
+	ceny[9] = 0;
+	ceny[10] = 0;
+	ceny[11] = 0;
+	ceny[12] = 0;
+	ceny[13] = 0;
+	ceny[14] = 0;
+	ceny[15] = 0;
+	ceny[16] = 0;
+	ceny[17] = 0;
+	ceny[18] = 0;
+	ceny[19] = 0;
+	for (int i = 0; i < 20; i++)
+	{
+		this->itemName[i] = "";
+		this->itemPrice[i] = 0;
+		weaponsDamage[i] = 0;
+		weaponsRarity[i] = false;
+	}
+	string linia;
+	fstream plik;
+	int nr_linii = 1;
+	string path = "./txt/bladesmith/weapons.txt";
+	plik.open(path, ios::in);
+	while (getline(plik, linia))
+	{
+		this->weaponNames.push_back(linia);
+		nr_linii++;
+	}
+	plik.close();
+}
+void bladesmith::generateMerch(player gracz)
+{
+	loadItems("./txt/bladesmith/weapons.txt");
+	int weaponsBorder = 20;
+	for (int i = 0; i < 20; i++)
+	{
+		if (itemName[i] == "")
+		{
+			weaponsBorder--;
+		}
+	}
+	for (int i = 0; i < weaponsBorder; i++)
+	{
+		int isLegendary = rand() % 100;
+		itemPrice[i] = 20;
+		if (isLegendary < 5)
+		{
+			weaponsRarity[i] = true;
+			weaponsDamage[i] = (gracz.level * 10);
+			itemPrice[i] += gracz.level * 20 + 20;
+		}
+		else
+		{
+			weaponsRarity[i] = false;
+			int pomoc = rand() % 3;
+			if (pomoc == 0)
+			{
+				weaponsDamage[i] = gracz.level * 5;
+				itemPrice[i] += gracz.level * 10;
+			}
+			else if (pomoc == 1)
+			{
+				int pomoc2 = rand() % 2;
+				if (pomoc2 == 0)
+				{
+					weaponsDamage[i] = (gracz.level * 5) - 1;
+					itemPrice[i] += (gracz.level * 10) - 5;
+				}
+				else if (pomoc2 == 1)
+				{
+					weaponsDamage[i] = (gracz.level * 5) + 1;
+					itemPrice[i] += (gracz.level * 10) + 5;
+				}
+			}
+			else if (pomoc == 2)
+			{
+				int pomoc2 = rand() % 4;
+				if (pomoc2 == 0)
+				{
+					weaponsDamage[i] = (gracz.level * 5) - 2;
+					itemPrice[i] += (gracz.level * 10) - 10;
+				}
+				else if (pomoc2 == 1)
+				{
+					weaponsDamage[i] = (gracz.level * 5) - 1;
+					itemPrice[i] += (gracz.level * 10) - 5;
+				}
+				else if (pomoc2 == 2)
+				{
+					weaponsDamage[i] = (gracz.level * 5) + 1;
+					itemPrice[i] += (gracz.level * 10) + 5;
+				}
+				else if (pomoc2 == 3)
+				{
+					weaponsDamage[i] = (gracz.level * 5) + 2;
+					itemPrice[i] += (gracz.level * 10) + 10;
+				}
+			}
+		}
+	}
+}
+void bladesmith::upgradeWeapon(int height, int startPoint, player& gracz)
+{
+	if (gracz.weaponName == "Fists")
+	{
+		vector <string> message = {"You don't have a weapon to upgrade."};
+		tabSubmenuTextOnly(height, startPoint, message);
+	}
+	else
+	{
+
+	}
+}
+void bladesmith::printImage(vector <string>& message)
+{
+	string linia;
+	fstream plik;
+	plik.open("./txt/bladesmith/image.txt", ios::in);
+	while (!plik.eof())
+	{
+		getline(plik, linia);
+		message.push_back(linia);
+	}
+	plik.close();
+	sound_blacksmith();
+}
+void bladesmith::buyItem(int height, int startPoint, player& gracz, int index)
+{
+	vector <string> message;
+	vector <string> options = { "Yes","No" };
+	if (itemName[index] == "Unavable")
+	{
+		message.push_back("You cannot buy this weapon.");
+	}
+	else if (gracz.weaponName != "Fists")
+	{
+		message.push_back("You already have a weapon, you have to sell the first.");
+	}
+	else if (gracz.gold >= itemPrice[index] && gracz.weaponName == "Fists")
+	{
+		if (weaponsRarity[index] == true)
+		{
+			string temp = "[RARE]" + itemName[index] + "(" + to_string(weaponsDamage[index]) + ")";
+			message.push_back("Do you want to buy " + temp + " for " + to_string(itemPrice[index]) + " gold?");
+		}
+		else
+		{
+			string temp = itemName[index] + "(" + to_string(weaponsDamage[index]) + ")";
+			message.push_back("Do you want to buy " + temp + " for " + to_string(itemPrice[index]) + " gold?");
+		}
+		int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
+		if (highlight == 0)
+		{
+			gracz.gold -= itemPrice[index];
+			gracz.weaponName = itemName[index];
+			if (weaponsRarity[index] == true)
+			{
+				gracz.isTheWeaponRare = true;
+			}
+			gracz.weaponDamage = weaponsDamage[index];
+			gracz.weaponPrice = (int)(0.8 * itemPrice[index]);
+			sound_cash();
+			itemName[index] = "Unavable";
+			itemPrice[index] = 0;
+			weaponsDamage[index] = 0;
+			weaponsRarity[index] = false;
+		}
+		message.clear();
+	}
+	else
+	{
+		message.push_back("You don't have enough gold to buy " + itemName[index]);
+	}
+	if (message.size() != 0)
+	{
+		tabSubmenuTextOnly(height, startPoint, message);
+	}
+}
+void bladesmith::sellItem(int height, int startPoint, player& gracz)
+{
+	vector <string> message;
+	vector <string> options = { "Yes","No" };
+	if ((std::find(weaponNames.begin(), weaponNames.end(), gracz.weaponName) != weaponNames.end()) && gracz.weaponDamage > 0)
+	{
+		if (gold_info() > gracz.weaponPrice)
+		{
+			if (gracz.weaponName == "Fists")
+			{
+				message.push_back("You have nothing to sell.");
+			}
+			else
+			{
+				if (gracz.isTheWeaponRare == true)
+				{
+					string temp = "[RARE]" + gracz.weaponName + "(" + to_string(gracz.weaponPrice) + ")";
+					message.push_back("Do you want to sell " + temp + " for " + to_string(gracz.weaponPrice) + " gold?");
+				}
+				else
+				{
+					string temp = gracz.weaponName + "(" + to_string(gracz.weaponPrice) + ")";
+					message.push_back("Do you want to sell " + temp + " for " + to_string(gracz.weaponPrice) + " gold?");
+				}
+				int hightlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
+				if (hightlight == 0)
+				{
+					sound_cash();
+					gracz.gold += gracz.weaponPrice;
+					gracz.weaponName = "Fists";
+					gracz.weaponDamage = 1;
+					gracz.weaponPrice = 0;
+					gracz.isTheWeaponRare = false;
+				}
+				message.clear();
+			}
+		}
+		else
+		{
+			if (gracz.isTheWeaponRare == true)
+			{
+				message.push_back(name + " does not have enough gold to buy [RARE]" + gracz.weaponName + " from you.");
+			}
+			else
+			{
+				message.push_back(name + " does not have enough gold to buy " + gracz.weaponName + " from you.");
+			}
+		}
+		if (message.size() != 0)
+		{
+			tabSubmenuTextOnly(height, startPoint, message);
+		}
+	}
 }
 alchemist::alchemist()
 {
@@ -1450,7 +1446,7 @@ void alchemist::show_image(vector <string> &message)
 void alchemist::buy_new_level_potion(int height, int startPoint, player &gracz)
 {
 	vector <string> message;
-	if (gracz.gold > (gracz.level * 100))
+	if (gracz.gold > ((__int64)gracz.level * 100))
 	{
 		message.push_back("You bought a level up potion");
 		message.push_back("");
@@ -2023,8 +2019,8 @@ chest::chest()
 {
 	for (int i = 0; i < 60; i++)
 	{
-		menu[i] = "";
-		menu_amount[i] = 0;
+		this->menu[i] = "";
+		this->menu_amount[i] = 0;
 	}
 }
 int chest::count_free_fields_usage()
@@ -2294,7 +2290,7 @@ void chest::move_to_player(int height, int startPoint, int numer, player &gracz)
 		{
 			if (menu_amount[numer] > 1)
 			{
-				string temp = "In the chest is more than one item of this type (" + to_string(gracz.inventory_usage_amount[numer]) + "), how many of them you want to transfer to your inventory? ";
+				string temp = "In the chest is more than one item of this type (" + to_string(gracz.inventory_usage_amount[numer - 40]) + "), how many of them you want to transfer to your inventory? ";
 				int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 				while (ile<0 || ile>menu_amount[numer])
 				{
@@ -2334,7 +2330,7 @@ void chest::move_to_player(int height, int startPoint, int numer, player &gracz)
 		{
 			if (menu_amount[numer] > 1)
 			{
-				string temp = "In the chest is more than one item of this type (" + to_string(gracz.inventory_usage_amount[numer]) + "), how many of them you want to transfer to your inventory? ";
+				string temp = "In the chest is more than one item of this type (" + to_string(gracz.inventory_usage_amount[40 - numer]) + "), how many of them you want to transfer to your inventory? "; 
 				int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 				while (ile<0 || ile>menu_amount[numer])
 				{
@@ -2527,12 +2523,12 @@ void chest::move_to_chest(int height, int startPoint, int numer, player &gracz)
 	}
 	else if(numer >= 40)
 	{
-		numer = numer - 20;
+		numer -= 40;
 		if (count_free_fields_forge() == 0)
 		{
 			message.push_back("You cannot move this item to the chest because the chest is full.");
 		}
-		else if (gracz.inventory_crafting[20 + numer] == "")
+		else if (gracz.inventory_crafting[numer+20] == "")
 		{
 			message.push_back("No item");
 		}

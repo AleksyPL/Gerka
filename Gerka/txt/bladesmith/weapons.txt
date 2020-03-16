@@ -1,0 +1,6 @@
+Sword
+Axe
+Mace
+Hammer
+Knife
+Spear

@@ -3,7 +3,6 @@
 #include "kowal.h"
 #include "level_up.h"
 #include "czas.h"
-#include "wait.h"
 
 player enter_forge(player gracz,blacksmith kowal)
 {
@@ -35,7 +34,7 @@ player enter_forge(player gracz,blacksmith kowal)
 		levelUp(23,32, gracz);
 		string menu[20];
 		string info[20];
-		long ceny[20];
+		__int64 ceny[20];
 		string local = "Forge";
 		if (tryb == 1)
 		{
@@ -138,8 +137,6 @@ player enter_forge(player gracz,blacksmith kowal)
 				{
 					tryb = 1;
 					change_time(23,32,gracz, 0, 1);
-					kowal.load_weapons();
-					kowal.generate_merch(gracz);
 				}
 				else
 				{

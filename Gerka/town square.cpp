@@ -12,12 +12,12 @@
 #include "inventory.h"
 #include "level_up.h"
 #include "tabelka.h"
-#include "wait.h"
 #include "quest.h"
 #include "dungeon.h"
+#include "czas.h"
+#include "bladesmithShop.h"
 
-
-int enterTownSquare(player gracz,barman bobby, seller handlarz, blacksmith kowal, alchemist alchemik,shaman szaman, doctor lekarz, chest krzynka)
+int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blacksmith kowal, bladesmith miecznik, alchemist alchemik,shaman szaman, doctor lekarz, chest krzynka)
 {
 	srand((unsigned int)time(NULL));
 	int highlight = 0;
@@ -57,13 +57,13 @@ int enterTownSquare(player gracz,barman bobby, seller handlarz, blacksmith kowal
 		string menu[20];
 		/* 1*/menu[0] = "Go to the tavern";
 		/* 2*/menu[1] = "Go to the forge"; 
-		/* 3*/menu[2] = "Go to the alchemist's lab";
-		/* 4*/menu[3] = "Go to the brothel";
-		/* 5*/menu[4] = "Go to the general store";
-		/* 6*/menu[5] = "Go to the shaman's house";
-		/* 7*/menu[6] = "Go to the hospital";
-		/* 8*/menu[7] = "Enter the dungeon";
-		/* 9*/menu[8] = "";
+		/* 3*/menu[2] = "Go to the bladesmith shop";
+		/* 4*/menu[3] = "Go to the alchemist's lab";
+		/* 5*/menu[4] = "Go to the brothel";
+		/* 6*/menu[5] = "Go to the general store";
+		/* 7*/menu[6] = "Go to the shaman's house";
+		/* 8*/menu[7] = "Go to the hospital";
+		/* 9*/menu[8] = "Enter the dungeon";
 		/*10*/menu[9] = "";
 		/*11*/menu[10] = "";
 		/*12*/menu[11] = "";
@@ -76,7 +76,7 @@ int enterTownSquare(player gracz,barman bobby, seller handlarz, blacksmith kowal
 		/*19*/menu[18] = "";
 		/*20*/menu[19] = "";
 
-		long ceny[20];
+		__int64 ceny[20];
 		ceny[0] = 0;
 		ceny[1] = 0;
 		ceny[2] = 0;
@@ -124,30 +124,35 @@ int enterTownSquare(player gracz,barman bobby, seller handlarz, blacksmith kowal
 		}
 		case 22:
 		{
-			gracz = enter_laboratory(gracz,alchemik);
+			gracz = enterBladesmithShop(gracz, miecznik);
 			break;
 		}
 		case 23:
 		{
-			gracz = enter_brothel(gracz);
+			gracz = enter_laboratory(gracz,alchemik);
 			break;
 		}
 		case 24:
 		{
-			gracz = enter_shop(gracz,handlarz);
+			gracz = enter_brothel(gracz);
 			break;
 		}
 		case 25:
 		{
-			gracz = enter_shaman_house(gracz,szaman);
+			gracz = enter_shop(gracz,handlarz);
 			break;
 		}
 		case 26:
 		{
-			gracz = enter_hospital(gracz, lekarz);
+			gracz = enter_shaman_house(gracz,szaman);
 			break;
 		}
 		case 27:
+		{
+			gracz = enter_hospital(gracz, lekarz);
+			break;
+		}
+		case 28:
 		{
 			gracz = enterDungeon(gracz);
 			break;

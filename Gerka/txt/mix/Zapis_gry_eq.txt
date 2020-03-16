@@ -12,3 +12,7 @@ Weapon damage
 1
 Weapon name
 Fists
+Weapon price
+0
+Is the weapon rare?
+false

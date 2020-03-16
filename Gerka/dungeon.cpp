@@ -2,8 +2,8 @@
 #include "tabelka.h"
 #include "mobki1.h"
 #include "inventory.h"
-#include "wait.h"
 #include "fight_mode.h"
+#include "czas.h"
 
 
 bool loadDungeon(char (&tabOriginal)[32][114], char(&tabCopy)[32][114], int& dungeonLevel, character &hero, vector <monster> &levelMonsters, vector <char>& levelMonstersSymbols, vector <item>& levelItems)

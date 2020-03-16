@@ -47,8 +47,21 @@ void findANewHighlight(int& highlight, string left_side[20], string right_side[2
 	}
 }
 
-player trade_mode(player &gracz, seller &handlarz)
+void changeData(string whichFunction, string whichSide,string (&array)[21], int card)
 {
+	if (whichFunction == "General Store")
+	{
+
+	}
+	else if (whichFunction == "Bladesmith Shop")
+	{
+		
+	}
+}
+
+player tradeModeGeneralStore(player &gracz, generalStoreSeller &handlarz)
+{
+	string functionToSwitchData = "General Store";
 	bool anythingSoldOrBought = false;
 	int leftSideCard = 0;
 	int rightSideCard = 0;
@@ -85,26 +98,29 @@ player trade_mode(player &gracz, seller &handlarz)
 			if (leftSideCard == 0)
 			{
 				left_side[20] = handlarz.name + " - Trash items";
+				handlarz.loadItems("./txt/trader/items_trash.txt");
 			}
 			else if (leftSideCard == 1)
 			{
 				left_side[20] = handlarz.name + " - Low items";
+				handlarz.loadItems("./txt/trader/items_low.txt");
 			}
 			else if (leftSideCard == 2)
 			{
 				left_side[20] = handlarz.name + " - Mid items";
+				handlarz.loadItems("./txt/trader/items_mid.txt");
 			}
 			else if (leftSideCard == 3)
 			{
 				left_side[20] = handlarz.name + " - Rare items";
+				handlarz.loadItems("./txt/trader/items_high.txt");
 			}
-			handlarz.loadMerch(leftSideCard);
 			for (int i = 0; i < 20; i++)
 			{
-				handlarz.menu_price[i] = handlarz.loadPrices(handlarz.menu_items[i]);
-				if (handlarz.menu_items[i] != "")
+				handlarz.itemPrice[i] = handlarz.loadPrices(handlarz.itemName[i], "./txt/mix/items_prices.txt");
+				if (handlarz.itemName[i] != "")
 				{
-					left_side[i] = handlarz.makeString(66, handlarz.menu_items[i], 1, handlarz.menu_price[i]);
+					left_side[i] = handlarz.makeString(66, handlarz.itemName[i], 1, handlarz.itemPrice[i]);
 				}
 			}
 		}
@@ -116,7 +132,7 @@ player trade_mode(player &gracz, seller &handlarz)
 				for (int i = 0; i < 20; i++)
 				{
 					right_side[i] = gracz.inventory_usage[i];
-					right_side_prices[i] = handlarz.loadPrices(right_side[i]);
+					right_side_prices[i] = handlarz.loadPrices(right_side[i], "./txt/mix/items_prices.txt");
 					if (right_side[i] != "")
 					{
 						right_side[i] = handlarz.makeString(66, right_side[i], gracz.inventory_usage_amount[i], right_side_prices[i]);
@@ -129,7 +145,7 @@ player trade_mode(player &gracz, seller &handlarz)
 				for (int i = 0; i < 20; i++)
 				{
 					right_side[i] = gracz.inventory_crafting[i];
-					right_side_prices[i] = handlarz.loadPrices(right_side[i]);
+					right_side_prices[i] = handlarz.loadPrices(right_side[i], "./txt/mix/items_prices.txt");
 					if (right_side[i] != "")
 					{
 						right_side[i] = handlarz.makeString(66, right_side[i], gracz.inventory_crafting_amount[i], right_side_prices[i]);
@@ -142,7 +158,7 @@ player trade_mode(player &gracz, seller &handlarz)
 				for (int i = 0; i < 20; i++)
 				{
 					right_side[i] = gracz.inventory_crafting[20 + i];
-					right_side_prices[i] = handlarz.loadPrices(right_side[i]);
+					right_side_prices[i] = handlarz.loadPrices(right_side[i], "./txt/mix/items_prices.txt");
 					if (right_side[i] != "")
 					{
 						right_side[i] = handlarz.makeString(66, right_side[i], gracz.inventory_crafting_amount[20 + i], right_side_prices[i]);
@@ -160,7 +176,7 @@ player trade_mode(player &gracz, seller &handlarz)
 		highlight = tabTrade(highlight, top_side, left_side, right_side, bottomSide);
 		if (highlight < 20)
 		{
-			handlarz.buyItem(27, 28, gracz, handlarz.menu_items[highlight],1,handlarz.loadPrices(handlarz.menu_items[highlight]),anythingSoldOrBought);
+			handlarz.buyItem(27, 28, gracz, handlarz.itemName[highlight],1,handlarz.loadPrices(handlarz.itemName[highlight], "./txt/mix/items_prices.txt"),anythingSoldOrBought);
 		}
 		else if (highlight >= 20 && highlight < 40)
 		{
@@ -206,6 +222,159 @@ player trade_mode(player &gracz, seller &handlarz)
 				}
 				break;
 			}
+			}
+		}
+	}
+}
+player tradeModeBladesmithShop(player &gracz, bladesmith &miecznik)
+{
+	string functionToSwitchData = "Bladesmith Shop";
+	bool anythingSoldOrBought = false;
+	int leftSideCard = 0;
+	int rightSideCard = 0;
+	int highlight = 0;
+	string top_side[3];
+	string left_side[21];
+	string right_side[21];
+	int right_side_prices[20];
+	miecznik.generateMerch(gracz);
+	vector <string> bottomSide = { "<-","->","Return","<-","->" };
+	top_side[1] = "Trade";
+	while (1)
+	{
+		top_side[0] = miecznik.name + "'s gold: " + to_string(miecznik.gold_info());
+		top_side[2] = gracz.nazwa + "'s gold: " + to_string(gracz.gold);
+		for (int i = 0; i < 20; i++)
+		{
+			left_side[i] = "";
+			right_side[i] = "";
+			right_side_prices[i] = 0;
+		}
+		//handlarz
+		{
+			/*if (gracz.level < 10)
+			{
+				if (leftSideCard > 1)
+				{
+					leftSideCard = 1;
+				}
+			}
+			else if (gracz.level < 20)
+			{
+				if (leftSideCard > 2)
+				{
+					leftSideCard = 2;
+				}
+			}*/
+			if (leftSideCard == 0)
+			{
+				left_side[20] = miecznik.name + " - Weapons";
+				//miecznik.loadItems("./txt/bladesmith/weapons.txt");
+			}
+			for (int i = 0; i < 20; i++)
+			{
+				//handlarz.itemPrice[i] = handlarz.loadPrices(handlarz.itemName[i], "./txt/mix/items_prices.txt");
+				if (miecznik.itemName[i] != "")
+				{
+					if (miecznik.weaponsRarity[i] == true)
+					{
+						string temp = "[RARE]" + miecznik.itemName[i] + "(" + to_string(miecznik.weaponsDamage[i]) + ")";
+						left_side[i] = miecznik.makeString(66, temp, 1, miecznik.itemPrice[i]);
+					}
+					else
+					{
+						if (miecznik.weaponsDamage[i] == 0)
+						{
+							left_side[i] = miecznik.makeString(66, miecznik.itemName[i], 1, miecznik.itemPrice[i], true);
+						}
+						else
+						{
+							string temp = miecznik.itemName[i] + "(" + to_string(miecznik.weaponsDamage[i]) + ")";
+							left_side[i] = miecznik.makeString(66, temp, 1, miecznik.itemPrice[i]);
+						}
+					}
+				}
+			}
+		}
+		// gracz
+		{
+			if (rightSideCard == 0)
+			{
+				right_side[20] = gracz.nazwa + " - Weapons";
+				if (gracz.isTheWeaponRare == true)
+				{
+					right_side[0] = "[RARE]" + gracz.weaponName;
+				}
+				else
+				{
+					right_side[0] = gracz.weaponName;
+				}
+				right_side_prices[0] = gracz.weaponPrice;
+				right_side[0] = miecznik.makeString(66, right_side[0], 1, right_side_prices[0]);
+				/*for (int i = 0; i < 20; i++)
+				{
+					right_side[i] = gracz.inventory_usage[i];
+					right_side_prices[i] = handlarz.loadPrices(right_side[i], "./txt/mix/items_prices.txt");
+					if (right_side[i] != "")
+					{
+						right_side[i] = handlarz.makeString(66, right_side[i], gracz.inventory_usage_amount[i], right_side_prices[i]);
+					}
+				}*/
+			}
+		}
+		if (anythingSoldOrBought == true)
+		{
+			findANewHighlight(highlight, left_side, right_side);
+		}
+		highlight = tabTrade(highlight, top_side, left_side, right_side, bottomSide);
+		if (highlight < 20)
+		{
+			miecznik.buyItem(27, 28, gracz, highlight);
+		}
+		else if (highlight >= 20 && highlight < 40)
+		{
+			miecznik.sellItem(27, 28, gracz);
+		}
+		else
+		{
+			switch (highlight)
+			{
+			/*case 40:
+			{
+				if (leftSideCard != 0)
+				{
+					leftSideCard--;
+				}
+				break;
+			}
+			case 41:
+			{
+				if (leftSideCard < 3)
+				{
+					leftSideCard++;
+				}
+				break;
+			}*/
+			case 42:
+			{
+				return gracz;
+			}
+			/*case 43:
+			{
+				if (rightSideCard != 0)
+				{
+					rightSideCard--;
+				}
+				break;
+			}
+			case 44:
+			{
+				if (rightSideCard < 2)
+				{
+					rightSideCard++;
+				}
+				break;
+			}*/
 			}
 		}
 	}

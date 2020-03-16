@@ -3,125 +3,117 @@
 #include "level_up.h"
 #include "cheat_menu.h"
 
-int load_value(int height, int startPoint, string comment, string type, int active0,string mark,int min, int active1, string mark1, int max)
+int loadValueInt(int height, int startPoint, bool& succes, string comment, int active0,string mark,int min, int active1, string mark1, int max)
 {
-	if (type == "int")
+	int number = 0;
+	if (active0 == 1 && active1 == 1)
 	{
-		int numer = stoi(tabSubmenuInputField(height, startPoint, comment));
-		if (active0 == 1 && active1 == 1)
+		try
 		{
+			int number = stoi(tabSubmenuInputField(height, startPoint, comment));
 			if (mark == "<" && mark1 == ">")
 			{
-				while (numer<min || numer>max)
+				while (number<min || number>max)
 				{
-					numer = stoi(tabSubmenuInputField(height, startPoint, comment));
+					number = stoi(tabSubmenuInputField(height, startPoint, comment));
 				}
 			}
 			else if (mark == ">" && mark1 == "<")
 			{
-				while (numer>min || numer<max)
+				while (number > min || number < max)
 				{
-					numer = stoi(tabSubmenuInputField(height, startPoint, comment));
+					number = stoi(tabSubmenuInputField(height, startPoint, comment));
 				}
 			}
 		}
-		else if (active0 == 1 && active1 == 0)
+		catch (std::exception)
 		{
+			succes = false;
+		}
+	}
+	else if (active0 == 1 && active1 == 0)
+	{
+		try
+		{
+			int number = stoi(tabSubmenuInputField(height, startPoint, comment));
 			if (mark == "<")
 			{
-				while (numer<min)
+				while (number < min)
 				{
-					numer = stoi(tabSubmenuInputField(height, startPoint, comment));
+					number = stoi(tabSubmenuInputField(height, startPoint, comment));
 				}
 			}
 			else if (mark == ">")
 			{
-				while (numer>min)
+				while (number > min)
 				{
-					numer = stoi(tabSubmenuInputField(height, startPoint, comment));
+					number = stoi(tabSubmenuInputField(height, startPoint, comment));
 				}
 			}
 		}
-		return numer;
-	}
-	else if (type == "long")
-	{
-		long numer = stoi(tabSubmenuInputField(height, startPoint, comment));
-		if (active0 == 1 && active1 == 1)
+		catch (std::exception)
 		{
+			succes = false;
+		}
+	}
+	return number;
+}
+__int64 loadValue__int64(int height, int startPoint, bool& succes, string comment, int active0, string mark, int min, int active1, string mark1, int max)
+{
+	__int64 number = 0;
+	if (active0 == 1 && active1 == 1)
+	{
+		try
+		{
+			long long temp = stoll(tabSubmenuInputField(height, startPoint, comment));
 			if (mark == "<" && mark1 == ">")
 			{
-				while (numer<min || numer>max)
+				while (temp<min || temp>max)
 				{
-					numer = stoi(tabSubmenuInputField(height, startPoint, comment));
+					temp = stoll(tabSubmenuInputField(height, startPoint, comment));
 				}
 			}
 			else if (mark == ">" && mark1 == "<")
 			{
-				while (numer>min || numer<max)
+				while (temp > min || temp < max)
 				{
-					numer = stoi(tabSubmenuInputField(height, startPoint, comment));
+					temp = stoll(tabSubmenuInputField(height, startPoint, comment));
 				}
 			}
+			number = temp;
 		}
-		else if (active0 == 1 && active1 == 0)
+		catch (std::exception)
 		{
-			if (mark == "<")
-			{
-				while (numer<min)
-				{
-					numer = stoi(tabSubmenuInputField(height, startPoint, comment));
-				}
-			}
-			else if (mark == ">")
-			{
-				while (numer>min)
-				{
-					numer = stoi(tabSubmenuInputField(height, startPoint, comment));
-				}
-			}
+			succes = false;
 		}
-		return numer;
 	}
-	else if (type == "long long")
+	else if (active0 == 1 && active1 == 0)
 	{
-		long long numer = stoi(tabSubmenuInputField(height, startPoint, comment));
-		if (active0 == 1 && active1 == 1)
+		try
 		{
-			if (mark == "<" && mark1 == ">")
-			{
-				while (numer<min || numer>max)
-				{
-					numer = stoi(tabSubmenuInputField(height, startPoint, comment));
-				}
-			}
-			else if (mark == ">" && mark1 == "<")
-			{
-				while (numer>min || numer<max)
-				{
-					numer = stoi(tabSubmenuInputField(height, startPoint, comment));
-				}
-			}
-		}
-		else if (active0 == 1 && active1 == 0)
-		{
+			long long temp = stoll(tabSubmenuInputField(height, startPoint, comment));
 			if (mark == "<")
 			{
-				while (numer<min)
+				while (temp < min)
 				{
-					numer = stoi(tabSubmenuInputField(height, startPoint, comment));
+					temp = stoll(tabSubmenuInputField(height, startPoint, comment));
 				}
 			}
 			else if (mark == ">")
 			{
-				while (numer>min)
+				while (temp > min)
 				{
-					numer = stoi(tabSubmenuInputField(height, startPoint, comment));
+					temp = stoll(tabSubmenuInputField(height, startPoint, comment));
 				}
 			}
+			number = temp;
 		}
-		return numer;
+		catch (std::exception)
+		{
+			succes = false;
+		}
 	}
+	return number;
 }
 player enter_cheat_menu(player &gracz)
 {
@@ -255,9 +247,16 @@ player enter_cheat_menu(player &gracz)
 			rightSide[2] = "Gloves points: " + to_string(gracz.gloves);
 			rightSide[3] = "Pants points: " + to_string(gracz.pants);
 			rightSide[4] = "Shoes points: " + to_string(gracz.shoes);
-			rightSide[5] = "Weapon name: " + gracz.weapon_name;
-			rightSide[6] = "Weapon points: " + to_string(gracz.weapon);
-			rightSide[7] = "";
+			if (gracz.isTheWeaponRare == true)
+			{
+				rightSide[5] = "Weapon name: [RARE]" + gracz.weaponName;
+			}
+			else
+			{
+				rightSide[5] = "Weapon name: " + gracz.weaponName;
+			}
+			rightSide[6] = "Weapon points: " + to_string(gracz.weaponDamage);
+			rightSide[7] = "Gold: " + to_string(gracz.gold);
 			rightSide[8] = "";
 			rightSide[9] = "";
 			rightSide[10] = "";
@@ -273,6 +272,7 @@ player enter_cheat_menu(player &gracz)
 		}
 		range(gracz);
 		highlight = tabItemsLeftOnly(highlight, "Cheat Menu", leftSide, rightSide, bottomSide);
+		bool succes = true;
 		if (highlight < 20)
 		{
 			switch (highlight)
@@ -281,7 +281,12 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.hp = load_value(27, 28, "Enter the new health points value: ", "int", 1, "<", 0, 1, ">", gracz.max_hp);
+					int temp = loadValueInt(27, 28, succes, "Enter the new health points value: ", 1, "<", 0, 1, ">", gracz.max_hp);
+					if (succes == true)
+					{
+						gracz.hp = temp;
+					}
+					
 				}
 				break;
 			}
@@ -289,7 +294,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.max_hp = load_value(27, 28, "Enter the new maximum health points value: ", "int", 1, "<", 0, 1, ">", gracz.hp);
+					int temp = loadValueInt(27, 28, succes, "Enter the new maximum health points value: ", 1, "<", 0, 1, ">", gracz.hp);
+					if (succes == true)
+					{
+						gracz.max_hp = temp;
+					}
 				}
 				break;
 			}
@@ -297,7 +306,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.exp = load_value(27, 28, "Enter the new experience points value: ", "int", 1, "<", 0);
+					int temp = loadValueInt(27, 28, succes, "Enter the new experience points value: ", 1, "<", 0);
+					if (succes == true)
+					{
+						gracz.exp = temp;
+					}
 				}
 				break;
 			}
@@ -305,7 +318,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.exp_to_next_level = load_value(27, 28, "Enter the new maximum experience points value: ", "int", 1, "<", 0);
+					int temp = loadValueInt(27, 28, succes, "Enter the new maximum experience points value: ", 1, "<", 0);
+					if (succes == true)
+					{
+						gracz.exp_to_next_level = temp;
+					}
 				}
 				break;
 			}
@@ -313,7 +330,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.hunger = load_value(27, 28, "Enter the new nutrition level value: ", "int", 1, "<", 0, 1, ">", 10);
+					int temp = loadValueInt(27, 28, succes, "Enter the new nutrition level value: ", 1, "<", 0, 1, ">", 10);
+					if (succes == true)
+					{
+						gracz.hunger = temp;
+					}
 				}
 				break;
 			}
@@ -321,7 +342,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.alko = load_value(27, 28, "Enter the new drunk level value: ", "int", 1, "<", 0, 1, ">", 10);
+					int temp = loadValueInt(27, 28, succes, "Enter the new drunk level value: ", 1, "<", 0, 1, ">", 10);
+					if (succes == true)
+					{
+						gracz.alko = temp;
+					}
 				}
 				break;
 			}
@@ -329,7 +354,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.gold = load_value(27, 28, "Enter the new gold amount value: ", "long long", 1, "<", 0);
+					__int64 temp = loadValue__int64(27, 28, succes, "Enter the new gold amount value: ", 1, "<", 0);
+					if (succes == true)
+					{
+						gracz.gold = temp;
+					}
 				}
 				break;
 			}
@@ -337,7 +366,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.level = load_value(27, 28, "Enter the new character level value: ", "int", 1, "<", 0);
+					int temp = loadValueInt(27, 28, succes, "Enter the new character level value: ", 1, "<", 0);
+					if (succes == true)
+					{
+						gracz.level = temp;
+					}
 				}
 				break;
 			}
@@ -345,7 +378,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.str = load_value(27, 28, "Enter the new strength level value: ", "int", 1, "<", 0);
+					int temp = loadValueInt(27, 28, succes, "Enter the new strength level value: ", 1, "<", 0);
+					if (succes == true)
+					{
+						gracz.str = temp;
+					}
 				}
 				break;
 			}
@@ -353,7 +390,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.agility = load_value(27, 28, "Enter the new agility level value: ", "int", 1, "<", 0);
+					int temp = loadValueInt(27, 28, succes, "Enter the new agility level value: ", 1, "<", 0);
+					if (succes == true)
+					{
+						gracz.agility = temp;
+					}
 				}
 				break;
 			}
@@ -361,7 +402,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.intel = load_value(27, 28, "Enter the new inteligence level value: ", "int", 1, "<", 0);
+					int temp = loadValueInt(27, 28, succes, "Enter the new inteligence level value: ", 1, "<", 0);
+					if (succes == true)
+					{
+						gracz.intel = temp;
+					}
 				}
 				break;
 			}
@@ -369,7 +414,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.charisma = load_value(27, 28, "Enter the new charisma level value: ", "int", 1, "<", 0);
+					int temp = loadValueInt(27, 28, succes, "Enter the new charisma level value: ", 1, "<", 0);
+					if (succes == true)
+					{
+						gracz.charisma = temp;
+					}
 				}
 				break;
 			}
@@ -377,7 +426,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.luck = load_value(27, 28, "Enter the new luck level value: ", "int", 1, "<", 0);
+					int temp = loadValueInt(27, 28, succes, "Enter the new luck level value: ", 1, "<", 0);
+					if (succes == true)
+					{
+						gracz.luck = temp;
+					}
 				}
 				break;
 			}
@@ -385,7 +438,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.weapon = load_value(27, 28, "Enter the new weapon damage value: ", "int", 1, "<", 0);
+					int temp = loadValueInt(27, 28, succes, "Enter the new weapon damage value: ", 1, "<", 0);
+					if (succes == true)
+					{
+						gracz.weaponDamage = temp;
+					}
 				}
 				break;
 			}
@@ -393,7 +450,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.helmet = load_value(27, 28, "Enter the new helmet level value: ", "int", 1, "<", 0);
+					int temp = loadValueInt(27, 28, succes, "Enter the new helmet level value: ", 1, "<", 0);
+					if (succes == true)
+					{
+						gracz.helmet = temp;
+					}
 				}
 				break;
 			}
@@ -401,7 +462,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.chestplate = load_value(27, 28, "Enter the new chestplate level value: ", "int", 1, "<", 0);
+					int temp = loadValueInt(27, 28, succes, "Enter the new chestplate level value: ", 1, "<", 0);
+					if (succes == true)
+					{
+						gracz.chestplate = temp;
+					}
 				}
 				break;
 			}
@@ -409,7 +474,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.gloves = load_value(27, 28, "Enter the new gloves level value: ", "int", 1, "<", 0);
+					int temp = loadValueInt(27, 28, succes, "Enter the new gloves level value: ", 1, "<", 0);
+					if (succes == true)
+					{
+						gracz.gloves = temp;
+					}
 				}
 				break;
 			}
@@ -417,7 +486,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.pants = load_value(27, 28, "Enter the new pants level value: ", "int", 1, "<", 0);
+					int temp = loadValueInt(27, 28, succes, "Enter the new pants level value: ", 1, "<", 0);
+					if (succes == true)
+					{
+						gracz.pants = temp;
+					}
 				}
 				break;
 			}
@@ -425,7 +498,11 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.shoes = load_value(27, 28, "Enter the new shoes level value: ", "int", 1, "<", 0);
+					int temp = loadValueInt(27, 28, succes, "Enter the new shoes level value: ", 1, "<", 0);
+					if (succes == true)
+					{
+						gracz.shoes = temp;
+					}
 				}
 				break;
 			}
@@ -433,13 +510,21 @@ player enter_cheat_menu(player &gracz)
 			{
 				if (leftSideCard == 0)
 				{
-					gracz.hour = load_value(27, 28, "Enter the new hour: ", "int", 1, "<", 0, 1, ">", 23);
-					gracz.minute = load_value(27, 28, "Enter the new minute: ", "int", 1, "<", 0, 1, ">", 59);
+					int temp = loadValueInt(27, 28, succes, "Enter the new hour: ", 1, "<", 0, 1, ">", 23);
+					int temp2 = loadValueInt(27, 28, succes, "Enter the new minute: ", 1, "<", 0, 1, ">", 59);
+					if (succes == true)
+					{
+						gracz.hour = temp;
+						gracz.minute = temp2;
+					}
 				}
 				break;
 			}
 			}
-			sound_cheat_activated();
+			if (succes == true)
+			{
+				sound_cheat_activated();
+			}
 		}
 		else
 		{

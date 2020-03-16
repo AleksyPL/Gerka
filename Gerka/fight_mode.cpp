@@ -216,7 +216,14 @@ player enterFightMode(player gracz, string monsterName, bool playerGoesFirst, bo
 	{
 		playerInfo[6] = "Luck Level: " + to_string(gracz.luck);
 	}
-	playerInfo[7] = "Weapon: " + gracz.weapon_name + " (" + to_string(gracz.weapon) + ")";
+	if (gracz.isTheWeaponRare == true)
+	{
+		playerInfo[7] = "Weapon: [RARE]" + gracz.weaponName + " (" + to_string(gracz.weaponDamage) + ")";
+	}
+	else
+	{
+		playerInfo[7] = "Weapon: " + gracz.weaponName + " (" + to_string(gracz.weaponDamage) + ")";
+	}
 	playerInfo[8] = "Defence: " + to_string(gracz.helmet + gracz.chestplate + gracz.gloves + gracz.pants + gracz.shoes);
 	playerInfo[9] = "";
 	playerInfo[10] = "";
@@ -271,6 +278,15 @@ player enterFightMode(player gracz, string monsterName, bool playerGoesFirst, bo
 	actions[19] = "";
 	Mob enemy = loadMonsterData(monsterName);
 	bool isItThePlayersTurnNow = playerGoesFirst;
+	bool nonLethalFight;
+	if (enemy.mobName == "Citizen")
+	{
+		nonLethalFight = true;
+	}
+	else
+	{
+		nonLethalFight = false;
+	}
 	victoryCondition(11, 44, enemy, gracz, victory, itemName);
 	while (victory==false)
 	{

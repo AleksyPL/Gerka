@@ -23,7 +23,7 @@ public:
 	int returnDroppedGold();
 	Mob(string path)
 	{
-		for (int i = 0; i < fightInfo->size(); i++)
+		for (int i = 0; i < 18; i++)
 		{
 			this->fightInfo[i] = "";
 		}

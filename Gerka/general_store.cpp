@@ -1,13 +1,11 @@
 #include "general_store.h"
 #include "tabelka.h"
 #include "trade_mode.h"
-#include "trade_tab.h"
 #include "level_up.h"
 #include "czas.h"
-#include "wait.h"
 
 
-player enter_shop(player gracz, seller handlarz)
+player enter_shop(player gracz, generalStoreSeller handlarz)
 {
 	int highlight = 0;
 	change_time(23,32,gracz, 0, 5);
@@ -37,7 +35,7 @@ player enter_shop(player gracz, seller handlarz)
 		levelUp(23,32,gracz);
 		string menu[20];
 		string info[20];
-		long ceny[20];
+		__int64 ceny[20];
 		string local = "General store";
 		if (tryb == 1)
 		{
@@ -134,8 +132,7 @@ player enter_shop(player gracz, seller handlarz)
 			}
 			else
 			{
-				//table menuu;
-				gracz = trade_mode(gracz, handlarz);
+				gracz = tradeModeGeneralStore(gracz, handlarz);
 			}
 			break;
 		}
