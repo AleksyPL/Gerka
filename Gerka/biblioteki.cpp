@@ -1,80 +1,80 @@
 #include "biblioteki.h"
 
-void sound_drums()
+void soundDrums()
 {
 	PlaySound(TEXT("./wav/drums.wav"), NULL, SND_ASYNC);
 }
-void sound_damage()
+void soundDamage()
 {
 	PlaySound(TEXT("./wav/damage.wav"), NULL, SND_ASYNC);
 }
-void sound_drink()
+void soundDrink()
 {
 	PlaySound(TEXT("./wav/picie.wav"), NULL, SND_ASYNC);
 }
-void sound_start_fight()
+void soundStartFight()
 {
 	PlaySound(TEXT("./wav/start_fight.wav"), NULL, SND_ASYNC);
 }
-void sound_hit()
+void soundHit()
 {
 	PlaySound(TEXT("./wav/hit.wav"), NULL, SND_ASYNC);
 }
-void sound_beer()
+void soundBeer()
 {
 	PlaySound(TEXT("./wav/beer.wav"), NULL, SND_ASYNC);
 }
-void sound_success()
+void soundSuccess()
 {
 	PlaySound(TEXT("./wav/sukces.wav"), NULL, SND_ASYNC);
 }
-void sound_alchemy()
+void soundAlchemy()
 {
 	PlaySound(TEXT("./wav/alchemik.wav"), NULL, SND_ASYNC);
 }
-void sound_cash()
+void soundCash()
 {
 	PlaySound(TEXT("./wav/cash.wav"), NULL, SND_ASYNC);
 }
-void sound_blacksmith()
+void soundBlacksmith()
 {
 	PlaySound(TEXT("./wav/kowal_up.wav"), NULL, SND_ASYNC);
 }
-void sound_heal_up()
+void soundHealUp()
 {
 	PlaySound(TEXT("./wav/heal_up.wav"), NULL, SND_ASYNC);
 }
-void sound_shaman()
+void soundShaman()
 {
 	PlaySound(TEXT("./wav/shaman.wav"), NULL, SND_ASYNC);
 }
-void sound_cheat_activated()
+void soundCheatActivated()
 {
 	PlaySound(TEXT("./wav/cheat_activated.wav"), NULL, SND_ASYNC);
 }
-void sound_game_over()
+void soundGameOver()
 {
-	PlaySound(TEXT("./wav/hugo.wav"), NULL, SND_SYNC);
+	PlaySound(TEXT("./wav/church_bells.wav"), NULL, SND_SYNC);
 }
-void sound_stop()
+void soundStop()
 {
 	PlaySound(NULL, NULL, 0);
 }
-void sound_no_money()
+void soundNoMoney()
 {
 	PlaySound(TEXT("./wav/no_money.wav"), NULL, SND_ASYNC);
 }
-void sound_drop_item()
+void soundDropItem()
 {
 	PlaySound(TEXT("./wav/drop_item.wav"), NULL, SND_ASYNC);
 }
-void sound_rejection()
+void soundRejection()
 {
 	PlaySound(TEXT("./wav/no.wav"), NULL, SND_ASYNC);
 }
-string no_money()
+string noMoney()
 {
-	sound_no_money();
+	soundNoMoney();
 	return "You don't have enough money";
 }
 void change_color(int num)
@@ -99,7 +99,7 @@ void change_color(int num)
 	//14 - jasno¿ó³ty
 	//15 - jaskrawobia³y
 }
-string string_tolower(string data)
+string stringToLower(string data)
 {
 	transform(data.begin(), data.end(), data.begin(), tolower);
 	return data;
@@ -187,4 +187,16 @@ string findItemOnList(string item)
 	}
 	plik.close();
 	return "Error";
+}
+bool fileExist(string path)
+{
+	std::ifstream ifile(path);
+	if (ifile)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

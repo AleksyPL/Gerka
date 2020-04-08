@@ -115,7 +115,7 @@ __int64 loadValue__int64(int height, int startPoint, bool& succes, string commen
 	}
 	return number;
 }
-player enter_cheat_menu(player &gracz)
+player enterCheatMenu(player &gracz)
 {
 	int leftSideCard = 0;
 	int rightSideCard = 0;
@@ -523,7 +523,7 @@ player enter_cheat_menu(player &gracz)
 			}
 			if (succes == true)
 			{
-				sound_cheat_activated();
+				soundCheatActivated();
 			}
 		}
 		else

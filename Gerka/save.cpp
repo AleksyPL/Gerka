@@ -49,9 +49,9 @@ void save(int height, int startPoint, player gracz,barman bobby,generalStoreSell
 		plik << "Is the weapon rare?" << endl << gracz.isTheWeaponRare;//17-18
 		plik.close();
 		remove("./txt/mix/Zapis_gry_backpack.txt");
-		gracz.sort_usage_backpack();
-		gracz.sort_crafting_alchemy_backpack();
-		gracz.sort_crafting_forge_backpack();
+		gracz.sortUsageBackpack();
+		gracz.sortCraftingAlchemyBackpack();
+		gracz.sortCraftingForgeBackpack();
 		plik.open("./txt/mix/Zapis_gry_backpack.txt", ios::out);
 		plik << "Usable item number 1" << endl << gracz.inventory_usage[0] << endl << gracz.inventory_usage_amount[0] << endl;//1-3
 		plik << "Usable item number 2" << endl << gracz.inventory_usage[1] << endl << gracz.inventory_usage_amount[1] << endl;//4-6
@@ -116,22 +116,22 @@ void save(int height, int startPoint, player gracz,barman bobby,generalStoreSell
 		plik.close();
 		remove("./txt/mix/Zapis_gry_npc.txt");
 		plik.open("./txt/mix/Zapis_gry_npc.txt", ios::out);
-		plik << "Barman - reputation level" << endl << bobby.rep_level_info() << endl;//1-2
-		plik << "Barman - reputation points" << endl << bobby.rep_points_info() << endl;//3-4
-		plik << "Barman - reputation points to the next level" << endl << bobby.rep_points_to_next_level_info() << endl;//5-6
-		plik << "Barman - gold" << endl << bobby.gold_info() << endl;//7-8
-		plik << "Merchant - reputation level" << endl << handlarz.rep_level_info() << endl;//9-10
-		plik << "Merchant - reputation points" << endl << handlarz.rep_points_info() << endl;//11-12
-		plik << "Merchant - reputation points to the next level" << endl << handlarz.rep_points_to_next_level_info() << endl;//13-14
-		plik << "Merchant - gold" << endl << handlarz.gold_info() << endl;//15-16
-		plik << "Blacksmith - reputation level" << endl << kowal.rep_level_info() << endl;//17-18
-		plik << "Blacksmith - reputation points" << endl << kowal.rep_points_info() << endl;//19-20
-		plik << "Blacksmith - reputation points to the next level" << endl << kowal.rep_points_to_next_level_info() << endl;//21-22
-		plik << "Blacksmith - gold" << endl << kowal.gold_info() << endl;//23-24
-		plik << "Alchemist - reputation level" << endl << alchemik.rep_level_info() << endl;//25-26
-		plik << "Alchemist - reputation points" << endl << alchemik.rep_points_info() << endl;//27-28
-		plik << "Alchemist - reputation points to the next level" << endl << alchemik.rep_points_to_next_level_info() << endl;//29-30
-		plik << "Alchemist - gold" << endl << alchemik.gold_info();//31-32
+		plik << "Barman - reputation level" << endl << bobby.repLevelInfo() << endl;//1-2
+		plik << "Barman - reputation points" << endl << bobby.repPointsInfo() << endl;//3-4
+		plik << "Barman - reputation points to the next level" << endl << bobby.repPointsToNextLevelInfo() << endl;//5-6
+		plik << "Barman - gold" << endl << bobby.goldInfo() << endl;//7-8
+		plik << "Merchant - reputation level" << endl << handlarz.repLevelInfo() << endl;//9-10
+		plik << "Merchant - reputation points" << endl << handlarz.repPointsInfo() << endl;//11-12
+		plik << "Merchant - reputation points to the next level" << endl << handlarz.repPointsToNextLevelInfo() << endl;//13-14
+		plik << "Merchant - gold" << endl << handlarz.goldInfo() << endl;//15-16
+		plik << "Blacksmith - reputation level" << endl << kowal.repLevelInfo() << endl;//17-18
+		plik << "Blacksmith - reputation points" << endl << kowal.repPointsInfo() << endl;//19-20
+		plik << "Blacksmith - reputation points to the next level" << endl << kowal.repPointsToNextLevelInfo() << endl;//21-22
+		plik << "Blacksmith - gold" << endl << kowal.goldInfo() << endl;//23-24
+		plik << "Alchemist - reputation level" << endl << alchemik.repLevelInfo() << endl;//25-26
+		plik << "Alchemist - reputation points" << endl << alchemik.repPointsInfo() << endl;//27-28
+		plik << "Alchemist - reputation points to the next level" << endl << alchemik.repPointsToNextLevelInfo() << endl;//29-30
+		plik << "Alchemist - gold" << endl << alchemik.goldInfo();//31-32
 		plik.close();
 		remove("./txt/mix/Zapis_gry_boost.txt");
 		plik.open("./txt/mix/Zapis_gry_boost.txt", ios::out);
@@ -158,9 +158,9 @@ void save(int height, int startPoint, player gracz,barman bobby,generalStoreSell
 		
 		plik.close();
 		remove("./txt/mix/Zapis_gry_chest.txt");
-		krzynka.sort_usage();
-		krzynka.sort_alchemy();
-		krzynka.sort_forge();
+		krzynka.sortUsage();
+		krzynka.sortAlchemy();
+		krzynka.sortForge();
 		plik.open("./txt/mix/Zapis_gry_chest.txt", ios::out);
 		plik << "Usable item number 1" << endl << krzynka.menu[0] << endl << krzynka.menu_amount[0] << endl;//1-3
 		plik << "Usable item number 2" << endl << krzynka.menu[1] << endl << krzynka.menu_amount[1] << endl;//4-6

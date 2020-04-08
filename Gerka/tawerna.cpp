@@ -11,7 +11,7 @@ void drunked(int height, int startPoint, player &gracz)
 {
 	vector <string> message;
 	message.push_back("You're too drunk, you fall asleep in a tavern");
-	change_time(height, startPoint, gracz, 8, 0);
+	changeTime(height, startPoint, gracz, 8, 0);
 	robbery(height, startPoint, gracz, message);
 }
 
@@ -25,15 +25,15 @@ void robbery(int height, int startPoint, player &gracz, vector <string> message)
 		message.push_back("Someone stole some money from you");
 		if (gracz.gold > 10000)
 		{
-			gracz.gold=gracz.gold - (0.2*gracz.gold);
+			gracz.gold-= (0.2*gracz.gold);
 		}
 		else if (gracz.gold > 1000)
 		{
-			gracz.gold = gracz.gold - (0.1*gracz.gold);
+			gracz.gold -= (0.1*gracz.gold);
 		}
 		else
 		{
-			gracz.gold = gracz.gold - (0.05*gracz.gold);
+			gracz.gold -= (0.05*gracz.gold);
 		}
 	}
 	else
@@ -91,9 +91,9 @@ void flirting(int height, int startPoint, player &gracz)
 	tabSubmenuTextOnly(height,startPoint,message);
 }
 
-player enter_tavern(player gracz,barman bobby, chest &krzynka)
+player enterTavern(player gracz,barman bobby, chest &krzynka)
 {
-	change_time(23,32,gracz, 0, 5);
+	changeTime(23,32,gracz, 0, 5);
 	int tryb = 0;
 	int highlight = 0;
 	while (1)
@@ -206,26 +206,26 @@ player enter_tavern(player gracz,barman bobby, chest &krzynka)
 			}
 			else if (tryb == 0)
 			{
-				change_time(23,32,gracz, 0, 5);
+				changeTime(23,32,gracz, 0, 5);
 				return gracz;
 			}
 			else if (tryb == 1)
 			{
 				tryb = 0;
-				change_time(23,32,gracz, 0, 1);
+				changeTime(23,32,gracz, 0, 1);
 				break;
 			}
 		}
 		case 1:
 		{
-			wait_n_hours(23, 32, gracz);
+			waitNHours(23, 32, gracz);
 			break;
 		}
 		case 20:
 		{
 			if (tryb == 0)
 			{
-				change_time(23,32,gracz, 0, 1);
+				changeTime(23,32,gracz, 0, 1);
 				tryb = 1;
 			}
 			else
@@ -243,7 +243,7 @@ player enter_tavern(player gracz,barman bobby, chest &krzynka)
 			}
 			else
 			{
-				bobby.give_room(23, 32, gracz);
+				bobby.giveRoom(23, 32, gracz);
 				tryb = 0;
 			}
 			break;
@@ -261,7 +261,7 @@ player enter_tavern(player gracz,barman bobby, chest &krzynka)
 			}
 			else
 			{
-				bobby.sell_food(23, 32, gracz, 2);
+				bobby.sellFood(23, 32, gracz, 2);
 			}
 			break;
 		}
@@ -276,7 +276,7 @@ player enter_tavern(player gracz,barman bobby, chest &krzynka)
 			}
 			else
 			{
-				bobby.sell_beer(23, 32, gracz);
+				bobby.sellBeer(23, 32, gracz);
 				if (gracz.alko == 10)
 				{
 					drunked(23, 32, gracz);
@@ -300,7 +300,7 @@ player enter_tavern(player gracz,barman bobby, chest &krzynka)
 		{
 			if (tryb == 0)
 			{
-				enter_chest_mode(gracz, krzynka);
+				enterChestMode(gracz, krzynka);
 			}
 			else
 			{

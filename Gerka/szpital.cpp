@@ -5,10 +5,10 @@
 #include "czas.h"
 #include "boost_syf.h"
 
-player enter_hospital(player gracz, doctor lekarz)
+player enterHospital(player gracz, doctor lekarz)
 {
 	int highlight = 0;
-	change_time(23,32,gracz, 0, 5);
+	changeTime(23,32,gracz, 0, 5);
 	int tryb = 0;
 	while (1)
 	{
@@ -111,7 +111,7 @@ player enter_hospital(player gracz, doctor lekarz)
 		tab(gracz, highlight, local, info, menu, ceny);
 		if (highlight >= 22 && highlight <= 26 && tryb == 1)
 		{
-			lekarz.remove_nerf(23, 32, gracz, highlight-22);
+			lekarz.removeNerf(23, 32, gracz, highlight-22);
 		}
 		switch (highlight)
 		{
@@ -119,7 +119,7 @@ player enter_hospital(player gracz, doctor lekarz)
 		{
 			if (tryb == 0)
 			{
-				change_time(23,32,gracz, 0, 1);
+				changeTime(23,32,gracz, 0, 1);
 				tryb = 1;
 			}
 			else
@@ -142,20 +142,20 @@ player enter_hospital(player gracz, doctor lekarz)
 		}
 		case 1:
 		{
-			wait_n_hours(23, 32, gracz);
+			waitNHours(23, 32, gracz);
 			break;
 		}
 		case 0:
 		{
 			if (tryb == 0)
 			{
-				change_time(23,32,gracz, 0, 5);
+				changeTime(23,32,gracz, 0, 5);
 				return gracz;
 			}
 			else if (tryb == 1)
 			{
 				tryb = 0;
-				change_time(23,32,gracz, 0, 1);
+				changeTime(23,32,gracz, 0, 1);
 				break;
 			}
 		}

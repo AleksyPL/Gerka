@@ -9,7 +9,7 @@ void gambling(int height, int startPoint, player &gracz)
 	vector<string> message;
 	if (gracz.gold == 0)
 	{
-		sound_rejection();
+		soundRejection();
 		message.push_back("You don't have money to play cards!");
 		tabSubmenuTextOnly(height, startPoint, message);
 	}
@@ -36,7 +36,7 @@ void gambling(int height, int startPoint, player &gracz)
 			gracz.gold = gracz.gold - stake;
 		}
 		tabSubmenuTextOnly(height, startPoint, message);
-		change_time(height, startPoint, gracz, 0, 10);
+		changeTime(height, startPoint, gracz, 0, 10);
 		gracz.exp = gracz.exp + 5;
 		levelUp(height, startPoint, gracz);
 		range(gracz);

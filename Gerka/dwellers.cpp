@@ -18,63 +18,63 @@ dweller::dweller()
 	gold_for_complete_quest = 0;
 	exp_for_complete_quest = 0;
 }
-int dweller::gold_info()
+int dweller::goldInfo()
 {
 	return this->gold;
 }
-int dweller::rep_level_info()
+int dweller::repLevelInfo()
 {
 	return this->rep_level;
 }
-int dweller::rep_points_info()
+int dweller::repPointsInfo()
 {
 	return this->rep_points;
 }
-int dweller::rep_points_to_next_level_info()
+int dweller::repPointsToNextLevelInfo()
 {
 	return this->rep_points_to_next_level;
 }
-string dweller::quest_id_info()
+string dweller::questIDInfo()
 {
 	return this->quest_id;
 }
-int dweller::gold_for_complete_quest_info()
+int dweller::goldForCompleteQuestInfo()
 {
 	return this->gold_for_complete_quest;
 }
-int dweller::exp_for_complete_quest_info()
+int dweller::expForCompleteQuestInfo()
 {
 	return this->exp_for_complete_quest;
 }
-string dweller::name_info()
+string dweller::nameInfo()
 {
 	return this->name;
 }
-void dweller::gold_set(int a)
+void dweller::goldSet(int a)
 {
 	this->gold = a;
 }
-void dweller::rep_level_set(int a)
+void dweller::repLevelSet(int a)
 {
 	this->rep_level = a;
 }
-void dweller::rep_points_set(int a)
+void dweller::repPointsSet(int a)
 {
 	this->rep_points = a;
 }
-void dweller::rep_points_to_next_level_set(int a)
+void dweller::repPointsToNextLevelSet(int a)
 {
 	this->rep_points_to_next_level = a;
 }
-void dweller::quest_id_set(string a)
+void dweller::questIDSet(string a)
 {
 	this->quest_id = a;
 }
-void dweller::gold_for_complete_quest_set(int a)
+void dweller::goldForCompleteQuestSet(int a)
 {
 	this->gold_for_complete_quest = a;
 }
-void dweller::exp_for_complete_quest_set(int a)
+void dweller::expForCompleteQuestSet(int a)
 {
 	this->exp_for_complete_quest = a;
 }
@@ -105,10 +105,10 @@ void dweller::weAreClosing(player gracz)
 	}
 	wrefresh(topbar);
 }
-void dweller::reject_quest_giving(int height, int startPoint)
+void dweller::rejectQuestGiving(int height, int startPoint)
 {
 	vector <string> message = { "You're already doing some task" };
-	sound_rejection();
+	soundRejection();
 	tabSubmenuTextOnly(height,startPoint,message);
 }
 barman::barman()
@@ -193,9 +193,9 @@ void barman::gossip(int height, int startPoint, player &gracz)
 	}
 	plik.close();
 	tabSubmenuFancyTextOnly(height, startPoint, message,50);
-	change_time(height, startPoint, gracz, 0, 1);
+	changeTime(height, startPoint, gracz, 0, 1);
 }
-void barman::give_room(int height, int startPoint, player &gracz)
+void barman::giveRoom(int height, int startPoint, player &gracz)
 {
 	if (gracz.hunger >= 5)
 	{
@@ -203,17 +203,17 @@ void barman::give_room(int height, int startPoint, player &gracz)
 		if (gracz.gold >= ceny[1])
 		{
 			message.push_back("The barman leads you to the free room");
-			change_time(height, startPoint, gracz, 0, 5);
+			changeTime(height, startPoint, gracz, 0, 5);
 			sleep(gracz, ceny[1], 8, 0, height, startPoint,message);
 		}
 		else
 		{
-			message.push_back(no_money());
+			message.push_back(noMoney());
 		}
 		tabSubmenuTextOnly(height, startPoint, message);
 	}
 }
-void barman::sell_food(int height, int startPoint, player &gracz, int ilosc)
+void barman::sellFood(int height, int startPoint, player &gracz, int ilosc)
 {
 	vector<string> message;
 	if (gracz.hunger == 10)
@@ -236,16 +236,16 @@ void barman::sell_food(int height, int startPoint, player &gracz, int ilosc)
 			{
 				gracz.hunger = 10;
 			}
-			change_time(height, startPoint, gracz, 0, 10);
+			changeTime(height, startPoint, gracz, 0, 10);
 		}
 		else
 		{
-			message.push_back(no_money());
+			message.push_back(noMoney());
 		}
 	}
 	tabSubmenuTextOnly(height, startPoint, message);
 }
-void barman::sell_beer(int height, int startPoint, player &gracz)
+void barman::sellBeer(int height, int startPoint, player &gracz)
 {
 	vector<string> message;
 	if (gracz.alko == 10)
@@ -257,9 +257,9 @@ void barman::sell_beer(int height, int startPoint, player &gracz)
 		message.push_back("You're drinking a cold beer");
 		message.push_back("");
 		gracz.gold = gracz.gold - ceny[3];
-		sound_beer();
+		soundBeer();
 		gracz.alko = gracz.alko + 1;
-		change_time(height, startPoint, gracz, 0, 10, 0, 1);
+		changeTime(height, startPoint, gracz, 0, 10, 0, 1);
 		if (gracz.alko == 2 || gracz.alko == 4 || gracz.alko == 6 || gracz.alko == 8 || gracz.alko == 10)
 		{
 			gracz.hunger = gracz.hunger - 1;
@@ -277,7 +277,7 @@ void barman::sell_beer(int height, int startPoint, player &gracz)
 	}
 	else
 	{
-		message.push_back(no_money());
+		message.push_back(noMoney());
 	}
 	tabSubmenuTextOnly(height, startPoint, message);
 }
@@ -430,7 +430,7 @@ void generalStoreSeller::buyItem(int height, int startPoint, player& gracz, stri
 	vector <string> options = { "Yes","No" };
 	if (item != "" && findItemOnList(item) == "Usable" && amount != 0)
 	{
-		if (gracz.count_free_fields_usage() !=0)
+		if (gracz.countFreeFieldsUsage() !=0)
 		{
 			if (price > gracz.gold)
 			{
@@ -438,9 +438,9 @@ void generalStoreSeller::buyItem(int height, int startPoint, player& gracz, stri
 			}
 			else
 			{
-				gracz.add_usage_item(item,price,amount,height,startPoint);
+				gracz.addUsageItem(item,price,amount,height,startPoint);
 				gold += price;
-				sound_cash();
+				soundCash();
 			}
 		}
 		else
@@ -450,7 +450,7 @@ void generalStoreSeller::buyItem(int height, int startPoint, player& gracz, stri
 	}
 	else if (item != "" && findItemOnList(item) == "Alchemy" && amount != 0)
 	{
-		if (gracz.count_free_fields_alchemy() != 0)
+		if (gracz.countFreeFieldsAlchemy() != 0)
 		{
 			if (price > gracz.gold)
 			{
@@ -458,9 +458,9 @@ void generalStoreSeller::buyItem(int height, int startPoint, player& gracz, stri
 			}
 			else
 			{
-				gracz.add_crafting_alchemy_item(item, price, amount, height, startPoint);
+				gracz.addCraftingAlchemyItem(item, price, amount, height, startPoint);
 				gold += price;
-				sound_cash();
+				soundCash();
 			}
 		}
 		else
@@ -470,7 +470,7 @@ void generalStoreSeller::buyItem(int height, int startPoint, player& gracz, stri
 	}
 	else if (item != "" && findItemOnList(item) == "Smithery" && amount != 0)
 	{
-		if (gracz.count_free_fields_forge() != 0)
+		if (gracz.countFreeFieldsForge() != 0)
 		{
 			if (price > gracz.gold)
 			{
@@ -478,9 +478,9 @@ void generalStoreSeller::buyItem(int height, int startPoint, player& gracz, stri
 			}
 			else
 			{
-				gracz.add_crafting_forge_item(item, price, amount, height, startPoint);
+				gracz.addCraftingForgeItem(item, price, amount, height, startPoint);
 				gold += price;
-				sound_cash();
+				soundCash();
 			}
 		}
 		else
@@ -502,7 +502,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 	vector <string> message;
 	vector <string> options = {"Yes","No"};
 	int priceForItems = 0;
-	if (item != "" && gracz.find_usage_item(item) == 1 && amount != 0)
+	if (item != "" && gracz.findUsageItem(item) == 1 && amount != 0)
 	{
 		if (price > 0)
 		{
@@ -520,7 +520,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 			int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
 			if (highlight == 0)
 			{
-				int index = gracz.find_usage_item_index(item);
+				int index = gracz.findUsageItemIndex(item);
 				if (amount > 1)
 				{
 					temp = "How many " + item + " you want to sell? ";
@@ -539,7 +539,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 					{
 						gracz.inventory_usage[index] = "";
 						gracz.inventory_usage_amount[index] = 0;
-						gracz.sort_usage_backpack();
+						gracz.sortUsageBackpack();
 					}
 					else
 					{
@@ -557,7 +557,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 						{
 							gracz.inventory_usage[index] = "";
 							gracz.inventory_usage_amount[index] = 0;
-							gracz.sort_usage_backpack();
+							gracz.sortUsageBackpack();
 						}
 						else
 						{
@@ -583,7 +583,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 			int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
 			if (highlight == 0)
 			{
-				int index = gracz.find_usage_item_index(item);
+				int index = gracz.findUsageItemIndex(item);
 				if (amount > 1)
 				{
 					string temp = "How many " + item + " you want to give? ";
@@ -596,7 +596,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 					{
 						gracz.inventory_usage[index] = "";
 						gracz.inventory_usage_amount[index] = 0;
-						gracz.sort_usage_backpack();
+						gracz.sortUsageBackpack();
 					}
 					else
 					{
@@ -610,7 +610,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 					{
 						gracz.inventory_usage[index] = "";
 						gracz.inventory_usage_amount[index] = 0;
-						gracz.sort_usage_backpack();
+						gracz.sortUsageBackpack();
 					}
 					else
 					{
@@ -621,7 +621,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 			}
 		}
 	}
-	else if (item != "" && gracz.find_crafting_alchemy_item(item) == 1 && amount != 0)
+	else if (item != "" && gracz.findCraftingAlchemyItem(item) == 1 && amount != 0)
 	{
 	if (price > 0)
 	{
@@ -639,7 +639,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 		int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
 		if (highlight == 0)
 		{
-			int index = gracz.find_crafting_alchemy_item_index(item);
+			int index = gracz.findCraftingAlchemyItemIndex(item);
 			if (amount > 1)
 			{
 				temp = "How many " + item + " you want to sell? ";
@@ -658,7 +658,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 				{
 					gracz.inventory_crafting[index] = "";
 					gracz.inventory_crafting_amount[index] = 0;
-					gracz.sort_crafting_alchemy_backpack();
+					gracz.sortCraftingAlchemyBackpack();
 				}
 				else
 				{
@@ -676,7 +676,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 					{
 						gracz.inventory_crafting[index] = "";
 						gracz.inventory_crafting_amount[index] = 0;
-						gracz.sort_crafting_alchemy_backpack();
+						gracz.sortCraftingAlchemyBackpack();
 					}
 					else
 					{
@@ -702,7 +702,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 		int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
 		if (highlight == 0)
 		{
-			int index = gracz.find_crafting_alchemy_item_index(item);
+			int index = gracz.findCraftingAlchemyItemIndex(item);
 			if (amount > 1)
 			{
 				string temp = "How many " + item + " you want to give? ";
@@ -715,7 +715,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 				{
 					gracz.inventory_crafting[index] = "";
 					gracz.inventory_crafting_amount[index] = 0;
-					gracz.sort_crafting_alchemy_backpack();
+					gracz.sortCraftingAlchemyBackpack();
 				}
 				else
 				{
@@ -729,7 +729,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 				{
 					gracz.inventory_crafting[index] = "";
 					gracz.inventory_crafting_amount[index] = 0;
-					gracz.sort_crafting_alchemy_backpack();
+					gracz.sortCraftingAlchemyBackpack();
 				}
 				else
 				{
@@ -740,7 +740,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 		}
 	}
 	}
-	else if(item != "" && gracz.find_crafting_forge_item(item) == 1 && amount != 0)
+	else if(item != "" && gracz.findCraftingForgeItem(item) == 1 && amount != 0)
 	{
 	if (price > 0)
 	{
@@ -758,7 +758,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 		int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
 		if (highlight == 0)
 		{
-			int index = gracz.find_crafting_forge_item_index(item);
+			int index = gracz.findCraftingForgeItemIndex(item);
 			if (amount > 1)
 			{
 				temp = "How many " + item + " you want to sell? ";
@@ -777,7 +777,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 				{
 					gracz.inventory_crafting[20 + index] = "";
 					gracz.inventory_crafting_amount[20 + index] = 0;
-					gracz.sort_crafting_forge_backpack();
+					gracz.sortCraftingForgeBackpack();
 				}
 				else
 				{
@@ -795,7 +795,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 					{
 						gracz.inventory_crafting[20 + index] = "";
 						gracz.inventory_crafting_amount[20 + index] = 0;
-						gracz.sort_crafting_forge_backpack();
+						gracz.sortCraftingForgeBackpack();
 					}
 					else
 					{
@@ -821,7 +821,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 		int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
 		if (highlight == 0)
 		{
-			int index = gracz.find_crafting_forge_item_index(item);
+			int index = gracz.findCraftingForgeItemIndex(item);
 			if (amount > 1)
 			{
 				string temp = "How many " + item + " you want to give? ";
@@ -834,7 +834,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 				{
 					gracz.inventory_crafting[20 + index] = "";
 					gracz.inventory_crafting_amount[20 + index] = 0;
-					gracz.sort_crafting_forge_backpack();
+					gracz.sortCraftingForgeBackpack();
 				}
 				else
 				{
@@ -848,7 +848,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 				{
 					gracz.inventory_crafting[20 + index] = "";
 					gracz.inventory_crafting_amount[20 + index] = 0;
-					gracz.sort_crafting_forge_backpack();
+					gracz.sortCraftingForgeBackpack();
 				}
 				else
 				{
@@ -930,7 +930,7 @@ blacksmith::blacksmith()
 	ceny[18] = 0;
 	ceny[19] = 0;
 }
-void blacksmith::load_player_points(player gracz)
+void blacksmith::loadPlayerPoints(player gracz)
 {
 	menu[0] = "Upgrade helmet";
 	menu[1] = "Upgrade chestplate";
@@ -957,7 +957,7 @@ void blacksmith::load_player_points(player gracz)
 	this->menu[5] = menu[5] + " (" + to_string(gracz.weaponDamage) + ")";
 	this->ceny[5] = ceny[5] + (100 * gracz.weaponDamage);
 }
-void blacksmith::print_image(vector <string>& message)
+void blacksmith::printImage(vector <string>& message)
 {
 	string linia;
 	fstream plik;
@@ -968,9 +968,9 @@ void blacksmith::print_image(vector <string>& message)
 		message.push_back(linia);
 	}
 	plik.close();
-	sound_blacksmith();
+	soundBlacksmith();
 }
-void blacksmith::power_up(int height, int startPoint, player &gracz, int tryb)
+void blacksmith::powerUp(int height, int startPoint, player &gracz, int tryb)
 {
 	vector <string> message;
 	switch (tryb)
@@ -981,14 +981,14 @@ void blacksmith::power_up(int height, int startPoint, player &gracz, int tryb)
 		{
 			message.push_back("The helmet has been strengthened");
 			message.push_back("");
-			print_image(message);
+			printImage(message);
 			gracz.helmet ++;
 			gracz.gold -= ceny[0];
-			change_time(height, startPoint, gracz, 1, 0);
+			changeTime(height, startPoint, gracz, 1, 0);
 		}
 		else
 		{
-			message.push_back(no_money());
+			message.push_back(noMoney());
 		}
 		break;
 	}
@@ -998,14 +998,14 @@ void blacksmith::power_up(int height, int startPoint, player &gracz, int tryb)
 		{
 			message.push_back("The chestplate has been strengthened");
 			message.push_back("");
-			print_image(message);
+			printImage(message);
 			gracz.chestplate ++;
 			gracz.gold -= ceny[1];
-			change_time(height, startPoint, gracz, 1, 0);
+			changeTime(height, startPoint, gracz, 1, 0);
 		}
 		else
 		{
-			message.push_back(no_money());
+			message.push_back(noMoney());
 		}
 		break;
 	}
@@ -1015,14 +1015,14 @@ void blacksmith::power_up(int height, int startPoint, player &gracz, int tryb)
 		{
 			message.push_back("The gloves have been strengthened");
 			message.push_back("");
-			print_image(message);
+			printImage(message);
 			gracz.gloves ++;
 			gracz.gold -= ceny[2];
-			change_time(height, startPoint, gracz, 1, 0);
+			changeTime(height, startPoint, gracz, 1, 0);
 		}
 		else
 		{
-			message.push_back(no_money());
+			message.push_back(noMoney());
 		}
 		break;
 	}
@@ -1032,14 +1032,14 @@ void blacksmith::power_up(int height, int startPoint, player &gracz, int tryb)
 		{
 			message.push_back("The pants have been strengthened");
 			message.push_back("");
-			print_image(message);
+			printImage(message);
 			gracz.pants ++;
 			gracz.gold -= ceny[3];
-			change_time(height, startPoint, gracz, 1, 0);
+			changeTime(height, startPoint, gracz, 1, 0);
 		}
 		else
 		{
-			message.push_back(no_money());
+			message.push_back(noMoney());
 		}
 		break;
 	}
@@ -1049,14 +1049,14 @@ void blacksmith::power_up(int height, int startPoint, player &gracz, int tryb)
 		{
 			message.push_back("The shoes have been strengthened");
 			message.push_back("");
-			print_image(message);
+			printImage(message);
 			gracz.shoes ++;
 			gracz.gold -= ceny[4];
-			change_time(height, startPoint, gracz, 1, 0);
+			changeTime(height, startPoint, gracz, 1, 0);
 		}
 		else
 		{
-			message.push_back(no_money());
+			message.push_back(noMoney());
 		}
 		break;
 	}
@@ -1066,14 +1066,14 @@ void blacksmith::power_up(int height, int startPoint, player &gracz, int tryb)
 		{
 			message.push_back("The weapon (" + gracz.weaponName + ") have been strengthened");
 			message.push_back("");
-			print_image(message);
+			printImage(message);
 			gracz.weaponDamage ++;
 			gracz.gold -= ceny[5];
-			change_time(height, startPoint, gracz, 1, 0);
+			changeTime(height, startPoint, gracz, 1, 0);
 		}
 		else
 		{
-			message.push_back(no_money());
+			message.push_back(noMoney());
 		}
 		break;
 	}
@@ -1257,7 +1257,7 @@ void bladesmith::printImage(vector <string>& message)
 		message.push_back(linia);
 	}
 	plik.close();
-	sound_blacksmith();
+	soundBlacksmith();
 }
 void bladesmith::buyItem(int height, int startPoint, player& gracz, int index)
 {
@@ -1294,7 +1294,7 @@ void bladesmith::buyItem(int height, int startPoint, player& gracz, int index)
 			}
 			gracz.weaponDamage = weaponsDamage[index];
 			gracz.weaponPrice = (int)(0.8 * itemPrice[index]);
-			sound_cash();
+			soundCash();
 			itemName[index] = "Unavable";
 			itemPrice[index] = 0;
 			weaponsDamage[index] = 0;
@@ -1317,7 +1317,7 @@ void bladesmith::sellItem(int height, int startPoint, player& gracz)
 	vector <string> options = { "Yes","No" };
 	if ((std::find(weaponNames.begin(), weaponNames.end(), gracz.weaponName) != weaponNames.end()) && gracz.weaponDamage > 0)
 	{
-		if (gold_info() > gracz.weaponPrice)
+		if (goldInfo() > gracz.weaponPrice)
 		{
 			if (gracz.weaponName == "Fists")
 			{
@@ -1338,7 +1338,7 @@ void bladesmith::sellItem(int height, int startPoint, player& gracz)
 				int hightlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
 				if (hightlight == 0)
 				{
-					sound_cash();
+					soundCash();
 					gracz.gold += gracz.weaponPrice;
 					gracz.weaponName = "Fists";
 					gracz.weaponDamage = 1;
@@ -1430,7 +1430,7 @@ alchemist::alchemist()
 	ceny[18] = 0;
 	ceny[19] = 0;
 }
-void alchemist::show_image(vector <string> &message)
+void alchemist::showImage(vector <string> &message)
 {
 	string linia;
 	fstream plik;
@@ -1441,39 +1441,39 @@ void alchemist::show_image(vector <string> &message)
 		message.push_back(linia);
 	}
 	plik.close();
-	sound_alchemy();
+	soundAlchemy();
 }
-void alchemist::buy_new_level_potion(int height, int startPoint, player &gracz)
+void alchemist::buyNewLevelPotion(int height, int startPoint, player &gracz)
 {
 	vector <string> message;
 	if (gracz.gold > ((__int64)gracz.level * 100))
 	{
 		message.push_back("You bought a level up potion");
 		message.push_back("");
-		gracz.add_usage_item("Mikstura nowego poziomu", (gracz.level * 100), 23,32,1);
-		change_time(height, startPoint, gracz, 0, 5);
-		show_image(message);
+		gracz.addUsageItem("Mikstura nowego poziomu", (gracz.level * 100), 23,32,1);
+		changeTime(height, startPoint, gracz, 0, 5);
+		showImage(message);
 	}
 	else
 	{
-		message.push_back(no_money());
+		message.push_back(noMoney());
 	}
 	tabSubmenuTextOnly(height,startPoint,message);
 }
-void alchemist::buy_hp_potion(int height, int startPoint, player &gracz)
+void alchemist::buyHpPotion(int height, int startPoint, player &gracz)
 {
 	vector <string> message;
 	if (gracz.gold > ceny[1])
 	{
 		message.push_back("You bought a health points potion");
 		message.push_back("");
-		gracz.add_usage_item("Mikstura ¿ycia", ceny[1], 23,32, 1);
-		change_time(height, startPoint, gracz, 0, 5);
-		show_image(message);
+		gracz.addUsageItem("Mikstura ¿ycia", ceny[1], 23,32, 1);
+		changeTime(height, startPoint, gracz, 0, 5);
+		showImage(message);
 	}
 	else
 	{
-		message.push_back(no_money());
+		message.push_back(noMoney());
 	}
 	tabSubmenuTextOnly(height, startPoint, message);
 }
@@ -1543,7 +1543,7 @@ shaman::shaman()
 	ceny[19] = 0;
 	quest_id = "s00";
 }
-void shaman::show_image(vector <string> &message)
+void shaman::showImage(vector <string> &message)
 {
 	string linia;
 	fstream plik;
@@ -1554,9 +1554,9 @@ void shaman::show_image(vector <string> &message)
 		message.push_back(linia);
 	}
 	plik.close();
-	sound_shaman();
+	soundShaman();
 }
-void shaman::add_boost(int height, int startPoint, player &gracz, int tryb)
+void shaman::addBoost(int height, int startPoint, player &gracz, int tryb)
 {
 	vector <string> message;
 	switch (tryb)
@@ -1568,14 +1568,14 @@ void shaman::add_boost(int height, int startPoint, player &gracz, int tryb)
 			if (gracz.gold >= ceny[0])
 			{
 				message.push_back("Your strength has been temporarily strengthened");
-				add_boost_str(gracz, 24, 1);
+				addBoostStrenght(gracz, 24, 1);
 				gracz.gold = gracz.gold - ceny[0];
-				show_image(message);
-				change_time(height, startPoint, gracz, 0, 15);
+				showImage(message);
+				changeTime(height, startPoint, gracz, 0, 15);
 			}
 			else
 			{
-				message.push_back(no_money());
+				message.push_back(noMoney());
 			}
 		}
 		else
@@ -1592,14 +1592,14 @@ void shaman::add_boost(int height, int startPoint, player &gracz, int tryb)
 			if (gracz.gold >= ceny[1])
 			{
 				message.push_back("Your agility has been temporarily strengthened");
-				add_boost_agility(gracz, 24, 1);
+				addBoostAgility(gracz, 24, 1);
 				gracz.gold = gracz.gold - ceny[1];
-				show_image(message);
-				change_time(height, startPoint, gracz, 0, 15);
+				showImage(message);
+				changeTime(height, startPoint, gracz, 0, 15);
 			}
 			else
 			{
-				message.push_back(no_money());
+				message.push_back(noMoney());
 			}
 		}
 		else
@@ -1616,14 +1616,14 @@ void shaman::add_boost(int height, int startPoint, player &gracz, int tryb)
 			if (gracz.gold >= ceny[2])
 			{
 				message.push_back("Your inteligence has been temporarily strengthened");
-				add_boost_intel(gracz, 24, 1);
+				addBoostIntelligence(gracz, 24, 1);
 				gracz.gold = gracz.gold - ceny[2];
-				show_image(message);
-				change_time(height, startPoint, gracz, 0, 15);
+				showImage(message);
+				changeTime(height, startPoint, gracz, 0, 15);
 			}
 			else
 			{
-				message.push_back(no_money());
+				message.push_back(noMoney());
 			}
 		}
 		else
@@ -1640,14 +1640,14 @@ void shaman::add_boost(int height, int startPoint, player &gracz, int tryb)
 			if (gracz.gold >= ceny[3])
 			{
 				message.push_back("Your charisma has been temporarily strengthened");
-				add_boost_charisma(gracz, 24, 1);
+				addBoostCharisma(gracz, 24, 1);
 				gracz.gold = gracz.gold - ceny[3];
-				show_image(message);
-				change_time(height, startPoint, gracz, 0, 15);
+				showImage(message);
+				changeTime(height, startPoint, gracz, 0, 15);
 			}
 			else
 			{
-				message.push_back(no_money());
+				message.push_back(noMoney());
 			}
 		}
 		else
@@ -1664,14 +1664,14 @@ void shaman::add_boost(int height, int startPoint, player &gracz, int tryb)
 			if (gracz.gold >= ceny[4])
 			{
 				message.push_back("Your luck has been temporarily strengthened");
-				add_boost_luck(gracz, 24, 1);
+				addBoostLuck(gracz, 24, 1);
 				gracz.gold = gracz.gold - ceny[4];
-				show_image(message);
-				change_time(height, startPoint, gracz, 0, 15);
+				showImage(message);
+				changeTime(height, startPoint, gracz, 0, 15);
 			}
 			else
 			{
-				message.push_back(no_money());
+				message.push_back(noMoney());
 			}
 		}
 		else
@@ -1684,28 +1684,28 @@ void shaman::add_boost(int height, int startPoint, player &gracz, int tryb)
 	}
 	tabSubmenuTextOnly(height, startPoint, message);
 }
-int shaman::dialog_box(int height, int startPoint)
+int shaman::dialogBox(int height, int startPoint)
 {
 	vector <string> message = {"Could you do that for me?"};
 	vector <string> options = {"Yes","No"};
 	int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
 	return highlight;
 }
-void shaman::everything_about_quests(int height, int startPoint, player &gracz)
+void shaman::everythingAboutQuests(int height, int startPoint, player &gracz)
 {
 	vector <string> message;
 	if (gracz.quest_name == "" && gracz.quest_id == "")
 	{
-		if (quest_id_info() == "s00")
+		if (questIDInfo() == "s00")
 		{
-			gold_for_complete_quest_set(1000);
-			exp_for_complete_quest_set(100);
+			goldForCompleteQuestSet(1000);
+			expForCompleteQuestSet(100);
 			message.push_back("To make a magic amulet I need three human teeth.");
 			message.push_back("I will give you 1000 gold if you bring me them.");
 			tabSubmenuFancyTextOnly(height, startPoint, message, 50);
-			if (dialog_box(height,startPoint) == 0)
+			if (dialogBox(height,startPoint) == 0)
 			{
-				gracz.add_quest("Zdob¹dŸ trzy ludzkie zêby", "s00");
+				gracz.addQuest("Zdob¹dŸ trzy ludzkie zêby", "s00");
 			}
 			else
 			{
@@ -1715,34 +1715,34 @@ void shaman::everything_about_quests(int height, int startPoint, player &gracz)
 			}
 		}
 	}
-	else if(gracz.quest_name != "" && gracz.quest_id !=quest_id_info())
+	else if(gracz.quest_name != "" && gracz.quest_id !=questIDInfo())
 	{
-		reject_quest_giving(height,startPoint);
+		rejectQuestGiving(height,startPoint);
 	}
-	else if (gracz.quest_name != "" && gracz.quest_id == quest_id_info())
+	else if (gracz.quest_name != "" && gracz.quest_id == questIDInfo())
 	{
 		if (gracz.quest_complete == 1 && gracz.quest_failed == 0)
 		{
-			if (quest_id_info() == "s00")
+			if (questIDInfo() == "s00")
 			{
 				message.clear();
 				message.push_back("Thank you, this is your gold.");
 				tabSubmenuFancyTextOnly(height, startPoint, message, 50);
-				gracz.remove_usage_item(height,startPoint,"Ludzki z¹b",3);
-				quest_id_set("s01");
+				gracz.removeUsageItem(height,startPoint,"Ludzki z¹b",3);
+				questIDSet("s01");
 			}
-			gracz.gold = gracz.gold + this->gold_for_complete_quest_info();
-			this->gold_for_complete_quest_set(0);
-			gracz.exp = gracz.exp + this->exp_for_complete_quest_info();
-			this->exp_for_complete_quest_set(0);
-			gracz.remove_quest();
+			gracz.gold = gracz.gold + this->goldForCompleteQuestInfo();
+			this->goldForCompleteQuestSet(0);
+			gracz.exp = gracz.exp + this->expForCompleteQuestInfo();
+			this->expForCompleteQuestSet(0);
+			gracz.removeQuest();
 		}
 		else if(gracz.quest_complete == 0 && gracz.quest_failed == 1)
 		{
 			message.clear();
 			message.push_back("You didn't make it this time but you can try again");
 			tabSubmenuFancyTextOnly(height, startPoint, message, 50);
-			gracz.remove_quest();
+			gracz.removeQuest();
 		}
 	}
 }
@@ -1811,7 +1811,7 @@ doctor::doctor()
 	ceny[18] = 0;
 	ceny[19] = 0;
 }
-void doctor::show_image(vector <string>& message)
+void doctor::showImage(vector <string>& message)
 {
 	string linia;
 	fstream plik;
@@ -1822,7 +1822,7 @@ void doctor::show_image(vector <string>& message)
 		message.push_back(linia);
 	}
 	plik.close();
-	sound_heal_up();
+	soundHealUp;
 }
 void doctor::heal(int height, int startPoint, player &gracz)
 {
@@ -1834,12 +1834,12 @@ void doctor::heal(int height, int startPoint, player &gracz)
 			message.push_back("Your wounds have been healed");
 			gracz.hp = gracz.max_hp;
 			gracz.gold = gracz.gold - ceny[0];
-			show_image(message);
-			change_time(height, startPoint, gracz, 1, 0);
+			showImage(message);
+			changeTime(height, startPoint, gracz, 1, 0);
 		}
 		else
 		{
-			message.push_back(no_money());
+			message.push_back(noMoney());
 		}
 	}
 	else
@@ -1858,12 +1858,12 @@ void doctor::sober(int height, int startPoint, player &gracz)
 			message.push_back("You sober up");
 			gracz.alko = 0;
 			gracz.gold = gracz.gold - ceny[1];
-			show_image(message);
-			change_time(height, startPoint, gracz, 1, 0);
+			showImage(message);
+			changeTime(height, startPoint, gracz, 1, 0);
 		}
 		else
 		{
-			message.push_back(no_money());
+			message.push_back(noMoney());
 		}
 	}
 	else
@@ -1872,7 +1872,7 @@ void doctor::sober(int height, int startPoint, player &gracz)
 	}
 	tabSubmenuTextOnly(height, startPoint, message);
 }
-void doctor::remove_nerf(int height, int startPoint, player &gracz, int tryb)
+void doctor::removeNerf(int height, int startPoint, player &gracz, int tryb)
 {
 	vector <string> message;
 	switch (tryb)
@@ -1884,14 +1884,14 @@ void doctor::remove_nerf(int height, int startPoint, player &gracz, int tryb)
 			if (gracz.gold >= ceny[2])
 			{
 				message.push_back("Your strength is returning to normal");
-				remove_nerf_str(gracz);
+				removeNerfStrenght(gracz);
 				gracz.gold = gracz.gold - ceny[2];
-				show_image(message);
-				change_time(height, startPoint, gracz, 0, 30);
+				showImage(message);
+				changeTime(height, startPoint, gracz, 0, 30);
 			}
 			else
 			{
-				message.push_back(no_money());
+				message.push_back(noMoney());
 			}
 		}
 		else if (gracz.counter_boost_str != 0)
@@ -1911,14 +1911,14 @@ void doctor::remove_nerf(int height, int startPoint, player &gracz, int tryb)
 			if (gracz.gold >= ceny[3])
 			{
 				message.push_back("Your agility is returning to normal");
-				remove_nerf_agility(gracz);
+				removeNerfAgility(gracz);
 				gracz.gold = gracz.gold - ceny[3];
-				show_image(message);
-				change_time(height, startPoint, gracz, 0, 30);
+				showImage(message);
+				changeTime(height, startPoint, gracz, 0, 30);
 			}
 			else
 			{
-				message.push_back(no_money());
+				message.push_back(noMoney());
 			}
 		}
 		else if (gracz.counter_boost_agility != 0)
@@ -1938,14 +1938,14 @@ void doctor::remove_nerf(int height, int startPoint, player &gracz, int tryb)
 			if (gracz.gold >= ceny[4])
 			{
 				message.push_back("Your inteligence is returning to normal");
-				remove_nerf_intel(gracz);
+				removeNerfIntelligence(gracz);
 				gracz.gold = gracz.gold - ceny[4];
-				show_image(message);
-				change_time(height, startPoint, gracz, 0, 30);
+				showImage(message);
+				changeTime(height, startPoint, gracz, 0, 30);
 			}
 			else
 			{
-				message.push_back(no_money());
+				message.push_back(noMoney());
 			}
 		}
 		else if (gracz.counter_boost_intel != 0)
@@ -1965,14 +1965,14 @@ void doctor::remove_nerf(int height, int startPoint, player &gracz, int tryb)
 			if (gracz.gold >= ceny[5])
 			{
 				message.push_back("Your charisma is returning to normal");
-				remove_nerf_charisma(gracz);
+				removeNerfCharisma(gracz);
 				gracz.gold = gracz.gold - ceny[5];
-				show_image(message);
-				change_time(height, startPoint, gracz, 0, 30);
+				showImage(message);
+				changeTime(height, startPoint, gracz, 0, 30);
 			}
 			else
 			{
-				message.push_back(no_money());
+				message.push_back(noMoney());
 			}
 		}
 		else if (gracz.counter_boost_charisma != 0)
@@ -1992,14 +1992,14 @@ void doctor::remove_nerf(int height, int startPoint, player &gracz, int tryb)
 			if (gracz.gold >= ceny[6])
 			{
 				message.push_back("Your luck is returning to normal");
-				remove_nerf_luck(gracz);
+				removeNerfLuck(gracz);
 				gracz.gold = gracz.gold - ceny[6];
-				show_image(message);
-				change_time(height, startPoint, gracz, 0, 30);
+				showImage(message);
+				changeTime(height, startPoint, gracz, 0, 30);
 			}
 			else
 			{
-				message.push_back(no_money());
+				message.push_back(noMoney());
 			}
 		}
 		else if (gracz.counter_boost_luck != 0)
@@ -2023,7 +2023,7 @@ chest::chest()
 		this->menu_amount[i] = 0;
 	}
 }
-int chest::count_free_fields_usage()
+int chest::countFreeFieldsUsage()
 {
 	int licznik = 0;
 	for (int i = 0; i < 20; i++)
@@ -2035,7 +2035,7 @@ int chest::count_free_fields_usage()
 	}
 	return licznik;
 }
-int chest::count_free_fields_alchemy()
+int chest::countFreeFieldsAlchemy()
 {
 	int licznik = 0;
 	for (int i = 0; i < 20; i++)
@@ -2047,7 +2047,7 @@ int chest::count_free_fields_alchemy()
 	}
 	return licznik;
 }
-int chest::count_free_fields_forge()
+int chest::countFreeFieldsForge()
 {
 	int licznik = 0;
 	for (int i = 0; i < 20; i++)
@@ -2059,7 +2059,7 @@ int chest::count_free_fields_forge()
 	}
 	return licznik;
 }
-int chest::is_in_chest_usage(player gracz,string nazwa)
+int chest::isInChestUsage(player gracz,string nazwa)
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -2073,7 +2073,7 @@ int chest::is_in_chest_usage(player gracz,string nazwa)
 		}
 	}
 }
-int chest::find_free_usage_index()
+int chest::findFreeUsageIndex()
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -2083,7 +2083,7 @@ int chest::find_free_usage_index()
 		}
 	}
 }
-int chest::find_selected_usage_index(string nazwa)
+int chest::findSelectedUsageIndex(string nazwa)
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -2093,7 +2093,7 @@ int chest::find_selected_usage_index(string nazwa)
 		}
 	}
 }
-int chest::is_in_chest_alchemy(player gracz, string nazwa)
+int chest::isInChestAlchemy(player gracz, string nazwa)
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -2107,7 +2107,7 @@ int chest::is_in_chest_alchemy(player gracz, string nazwa)
 		}
 	}
 }
-int chest::find_free_alchemy_index()
+int chest::findFreeAlchemyIndex()
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -2117,7 +2117,7 @@ int chest::find_free_alchemy_index()
 		}
 	}
 }
-int chest::find_selected_alchemy_index(string nazwa)
+int chest::findSelectedAlchemyIndex(string nazwa)
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -2127,7 +2127,7 @@ int chest::find_selected_alchemy_index(string nazwa)
 		}
 	}
 }
-int chest::is_in_chest_forge(player gracz, string nazwa)
+int chest::isInChestForge(player gracz, string nazwa)
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -2141,7 +2141,7 @@ int chest::is_in_chest_forge(player gracz, string nazwa)
 		}
 	}
 }
-int chest::find_free_forge_index()
+int chest::findFreeForgeIndex()
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -2151,7 +2151,7 @@ int chest::find_free_forge_index()
 		}
 	}
 }
-int chest::find_selected_forge_index(string nazwa)
+int chest::findSelectedForgeIndex(string nazwa)
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -2161,7 +2161,7 @@ int chest::find_selected_forge_index(string nazwa)
 		}
 	}
 }
-void chest::sort_usage()
+void chest::sortUsage()
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -2185,7 +2185,7 @@ void chest::sort_usage()
 		}
 	}
 }
-void chest::sort_alchemy()
+void chest::sortAlchemy()
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -2209,7 +2209,7 @@ void chest::sort_alchemy()
 		}
 	}
 }
-void chest::sort_forge()
+void chest::sortForge()
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -2233,12 +2233,12 @@ void chest::sort_forge()
 		}
 	}
 }
-void chest::move_to_player(int height, int startPoint, int numer, player &gracz)
+void chest::moveToPlayer(int height, int startPoint, int numer, player &gracz)
 {
 	vector <string> message;
 	if (numer < 20)
 	{
-		if (gracz.count_free_fields_usage() == 0)
+		if (gracz.countFreeFieldsUsage() == 0)
 		{
 			message.push_back("You cannot move this item to your inventory because it is full.");
 		}
@@ -2257,28 +2257,28 @@ void chest::move_to_player(int height, int startPoint, int numer, player &gracz)
 					ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 				}
 				menu_amount[numer] = menu_amount[numer] - ile;
-				gracz.add_usage_item(menu[numer], 0,ile, height, startPoint, 1);
+				gracz.addUsageItem(menu[numer], 0,ile, height, startPoint, 1);
 				if (menu_amount[numer] == 0)
 				{
 					menu[numer] = "";
-					sort_usage();
+					sortUsage();
 				}
 			}
 			else
 			{
 				menu_amount[numer]--;
-				gracz.add_usage_item(menu[numer], 0,1, height, startPoint, 1);
+				gracz.addUsageItem(menu[numer], 0,1, height, startPoint, 1);
 				if (menu_amount[numer] == 0)
 				{
 					menu[numer] = "";
-					sort_usage();
+					sortUsage();
 				}
 			}
 		}
 	}
 	else if (numer < 40 && numer >= 20)
 	{
-		if (gracz.count_free_fields_alchemy() == 0)
+		if (gracz.countFreeFieldsAlchemy() == 0)
 		{
 			message.push_back("You cannot move this item to your inventory because it is full.");
 		}
@@ -2297,28 +2297,28 @@ void chest::move_to_player(int height, int startPoint, int numer, player &gracz)
 					ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 				}
 				menu_amount[numer] = menu_amount[numer] - ile;
-				gracz.add_crafting_alchemy_item(menu[numer], 0, ile, height, startPoint, 1);
+				gracz.addCraftingAlchemyItem(menu[numer], 0, ile, height, startPoint, 1);
 				if (menu_amount[numer] == 0)
 				{
 					menu[numer] = "";
-					sort_alchemy();
+					sortAlchemy();
 				}
 			}
 			else
 			{
 				menu_amount[numer]--;
-				gracz.add_crafting_alchemy_item(menu[numer], 0, 1, height, startPoint, 1);
+				gracz.addCraftingAlchemyItem(menu[numer], 0, 1, height, startPoint, 1);
 				if (menu_amount[numer] == 0)
 				{
 					menu[numer] = "";
-					sort_alchemy();
+					sortAlchemy();
 				}
 			}
 		}
 	}
 	else if (numer >= 40)
 	{
-		if (gracz.count_free_fields_forge() == 0)
+		if (gracz.countFreeFieldsForge() == 0)
 		{
 			message.push_back("You cannot move this item to your inventory because it is full.");
 		}
@@ -2337,21 +2337,21 @@ void chest::move_to_player(int height, int startPoint, int numer, player &gracz)
 					ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 				}
 				menu_amount[numer] = menu_amount[numer] - ile;
-				gracz.add_crafting_forge_item(menu[numer], 0, ile, height, startPoint, 1);
+				gracz.addCraftingForgeItem(menu[numer], 0, ile, height, startPoint, 1);
 				if (menu_amount[numer] == 0)
 				{
 					menu[numer] = "";
-					sort_forge();
+					sortForge();
 				}
 			}
 			else
 			{
 				menu_amount[numer]--;
-				gracz.add_crafting_forge_item(menu[numer], 0, 1, height, startPoint, 1);
+				gracz.addCraftingForgeItem(menu[numer], 0, 1, height, startPoint, 1);
 				if (menu_amount[numer] == 0)
 				{
 					menu[numer] = "";
-					sort_forge();
+					sortForge();
 				}
 			}
 		}
@@ -2361,12 +2361,12 @@ void chest::move_to_player(int height, int startPoint, int numer, player &gracz)
 		tabSubmenuTextOnly(height, startPoint, message);
 	}
 }
-void chest::move_to_chest(int height, int startPoint, int numer, player &gracz)
+void chest::moveToChest(int height, int startPoint, int numer, player &gracz)
 {
 	vector <string> message;
 	if (numer < 20)
 	{
-		if (count_free_fields_usage() == 0)
+		if (countFreeFieldsUsage() == 0)
 		{
 			message.push_back("You cannot move this item to the chest because the chest is full.");
 		}
@@ -2376,7 +2376,7 @@ void chest::move_to_chest(int height, int startPoint, int numer, player &gracz)
 		}
 		else
 		{
-			if (is_in_chest_usage(gracz, gracz.inventory_usage[numer]) == 1)
+			if (isInChestUsage(gracz, gracz.inventory_usage[numer]) == 1)
 			{
 				if (gracz.inventory_usage_amount[numer] > 1)
 				{
@@ -2387,23 +2387,23 @@ void chest::move_to_chest(int height, int startPoint, int numer, player &gracz)
 						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 					}
 					gracz.inventory_usage_amount[numer] = gracz.inventory_usage_amount[numer] - ile;
-					menu_amount[find_selected_usage_index(gracz.inventory_usage[numer])] = menu_amount[find_selected_usage_index(gracz.inventory_usage[numer])] + ile;
+					menu_amount[findSelectedUsageIndex(gracz.inventory_usage[numer])] = menu_amount[findSelectedUsageIndex(gracz.inventory_usage[numer])] + ile;
 					if (gracz.inventory_usage_amount[numer] == 0)
 					{
 						gracz.inventory_usage[numer] = "";
 						gracz.inventory_usage_price[numer] = 0;
-						gracz.sort_usage_backpack();
+						gracz.sortUsageBackpack();
 					}
 				}
 				else
 				{
 					gracz.inventory_usage_amount[numer]--;
-					menu_amount[find_selected_usage_index(gracz.inventory_usage[numer])]++;
+					menu_amount[findSelectedUsageIndex(gracz.inventory_usage[numer])]++;
 					if (gracz.inventory_usage_amount[numer] == 0)
 					{
 						gracz.inventory_usage[numer] = "";
 						gracz.inventory_usage_price[numer] = 0;
-						gracz.sort_usage_backpack();
+						gracz.sortUsageBackpack();
 					}
 				}
 			}
@@ -2418,25 +2418,25 @@ void chest::move_to_chest(int height, int startPoint, int numer, player &gracz)
 						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 					}
 					gracz.inventory_usage_amount[numer] = gracz.inventory_usage_amount[numer] - ile;
-					menu_amount[find_free_usage_index()] = menu_amount[find_free_usage_index()] + ile;
-					menu[find_free_usage_index()] = gracz.inventory_usage[numer];
+					menu_amount[findFreeUsageIndex()] = menu_amount[findFreeUsageIndex()] + ile;
+					menu[findFreeUsageIndex()] = gracz.inventory_usage[numer];
 					if (gracz.inventory_usage_amount[numer] == 0)
 					{
 						gracz.inventory_usage[numer] = "";
 						gracz.inventory_usage_price[numer] = 0;
-						gracz.sort_usage_backpack();
+						gracz.sortUsageBackpack();
 					}
 				}
 				else
 				{
 					gracz.inventory_usage_amount[numer]--;
-					menu_amount[find_free_usage_index()]++;
-					menu[find_free_usage_index()] = gracz.inventory_usage[numer];
+					menu_amount[findFreeUsageIndex()]++;
+					menu[findFreeUsageIndex()] = gracz.inventory_usage[numer];
 					if (gracz.inventory_usage_amount[numer] == 0)
 					{
 						gracz.inventory_usage[numer] = "";
 						gracz.inventory_usage_price[numer] = 0;
-						gracz.sort_usage_backpack();
+						gracz.sortUsageBackpack();
 					}
 				}
 			}
@@ -2445,7 +2445,7 @@ void chest::move_to_chest(int height, int startPoint, int numer, player &gracz)
 	else if (numer < 40 && numer >= 20)
 	{
 		numer = numer - 20;
-		if (count_free_fields_alchemy() == 0)
+		if (countFreeFieldsAlchemy() == 0)
 		{
 			message.push_back("You cannot move this item to the chest because the chest is full.");
 		}
@@ -2455,7 +2455,7 @@ void chest::move_to_chest(int height, int startPoint, int numer, player &gracz)
 		}
 		else
 		{
-			if (is_in_chest_alchemy(gracz, gracz.inventory_crafting[numer]) == 1)
+			if (isInChestAlchemy(gracz, gracz.inventory_crafting[numer]) == 1)
 			{
 				if (gracz.inventory_crafting_amount[numer] > 1)
 				{
@@ -2466,23 +2466,23 @@ void chest::move_to_chest(int height, int startPoint, int numer, player &gracz)
 						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 					}
 					gracz.inventory_crafting_amount[numer] = gracz.inventory_crafting_amount[numer] - ile;
-					menu_amount[find_selected_alchemy_index(gracz.inventory_crafting[numer])] = menu_amount[find_selected_alchemy_index(gracz.inventory_crafting[numer])] + ile;
+					menu_amount[findSelectedAlchemyIndex(gracz.inventory_crafting[numer])] = menu_amount[findSelectedAlchemyIndex(gracz.inventory_crafting[numer])] + ile;
 					if (gracz.inventory_crafting_amount[numer] == 0)
 					{
 						gracz.inventory_crafting[numer] = "";
 						gracz.inventory_crafting_price[numer] = 0;
-						gracz.sort_crafting_alchemy_backpack();
+						gracz.sortCraftingAlchemyBackpack();
 					}
 				}
 				else
 				{
 					gracz.inventory_crafting_amount[numer]--;
-					menu_amount[find_selected_alchemy_index(gracz.inventory_crafting[numer])]++;
+					menu_amount[findSelectedAlchemyIndex(gracz.inventory_crafting[numer])]++;
 					if (gracz.inventory_crafting_amount[numer] == 0)
 					{
 						gracz.inventory_crafting[numer] = "";
 						gracz.inventory_crafting_price[numer] = 0;
-						gracz.sort_crafting_alchemy_backpack();
+						gracz.sortCraftingAlchemyBackpack();
 					}
 				}
 			}
@@ -2497,25 +2497,25 @@ void chest::move_to_chest(int height, int startPoint, int numer, player &gracz)
 						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 					}
 					gracz.inventory_crafting_amount[numer] = gracz.inventory_crafting_amount[numer] - ile;
-					menu_amount[find_free_alchemy_index()] = menu_amount[find_free_alchemy_index()] + ile;
-					menu[find_free_alchemy_index()] = gracz.inventory_crafting[numer];
+					menu_amount[findFreeAlchemyIndex()] = menu_amount[findFreeAlchemyIndex()] + ile;
+					menu[findFreeAlchemyIndex()] = gracz.inventory_crafting[numer];
 					if (gracz.inventory_crafting_amount[numer] == 0)
 					{
 						gracz.inventory_crafting[numer] = "";
 						gracz.inventory_crafting_price[numer] = 0;
-						gracz.sort_crafting_alchemy_backpack();
+						gracz.sortCraftingAlchemyBackpack();
 					}
 				}
 				else
 				{
 					gracz.inventory_crafting_amount[numer]--;
-					menu_amount[find_free_alchemy_index()]++;
-					menu[find_free_alchemy_index()] = gracz.inventory_crafting[numer];
+					menu_amount[findFreeAlchemyIndex()]++;
+					menu[findFreeAlchemyIndex()] = gracz.inventory_crafting[numer];
 					if (gracz.inventory_crafting_amount[numer] == 0)
 					{
 						gracz.inventory_crafting[numer] = "";
 						gracz.inventory_crafting_price[numer] = 0;
-						gracz.sort_crafting_alchemy_backpack();
+						gracz.sortCraftingAlchemyBackpack();
 					}
 				}
 			}
@@ -2524,7 +2524,7 @@ void chest::move_to_chest(int height, int startPoint, int numer, player &gracz)
 	else if(numer >= 40)
 	{
 		numer -= 40;
-		if (count_free_fields_forge() == 0)
+		if (countFreeFieldsForge() == 0)
 		{
 			message.push_back("You cannot move this item to the chest because the chest is full.");
 		}
@@ -2534,7 +2534,7 @@ void chest::move_to_chest(int height, int startPoint, int numer, player &gracz)
 		}
 		else
 		{
-			if (is_in_chest_forge(gracz, gracz.inventory_crafting[20 + numer]) == 1)
+			if (isInChestForge(gracz, gracz.inventory_crafting[20 + numer]) == 1)
 			{
 				if (gracz.inventory_crafting_amount[20 + numer] > 1)
 				{
@@ -2545,23 +2545,23 @@ void chest::move_to_chest(int height, int startPoint, int numer, player &gracz)
 						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 					}
 					gracz.inventory_crafting_amount[20 + numer] = gracz.inventory_crafting_amount[20 + numer] - ile;
-					menu_amount[find_selected_forge_index(gracz.inventory_crafting[20 + numer])] = menu_amount[find_selected_forge_index(gracz.inventory_crafting[20 + numer])] + ile;
+					menu_amount[findSelectedForgeIndex(gracz.inventory_crafting[20 + numer])] = menu_amount[findSelectedForgeIndex(gracz.inventory_crafting[20 + numer])] + ile;
 					if (gracz.inventory_crafting_amount[20 + numer] == 0)
 					{
 						gracz.inventory_crafting[20 + numer] = "";
 						gracz.inventory_crafting_price[20 + numer] = 0;
-						gracz.sort_crafting_forge_backpack();
+						gracz.sortCraftingForgeBackpack();
 					}
 				}
 				else
 				{
 					gracz.inventory_crafting_amount[20 + numer]--;
-					menu_amount[find_selected_forge_index(gracz.inventory_crafting[20 + numer])]++;
+					menu_amount[findSelectedForgeIndex(gracz.inventory_crafting[20 + numer])]++;
 					if (gracz.inventory_crafting_amount[20 + numer] == 0)
 					{
 						gracz.inventory_crafting[20 + numer] = "";
 						gracz.inventory_crafting_price[20 + numer] = 0;
-						gracz.sort_crafting_forge_backpack();
+						gracz.sortCraftingForgeBackpack();
 					}
 				}
 			}
@@ -2576,25 +2576,25 @@ void chest::move_to_chest(int height, int startPoint, int numer, player &gracz)
 						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
 					}
 					gracz.inventory_crafting_amount[20 + numer] = gracz.inventory_crafting_amount[20 + numer] - ile;
-					menu_amount[find_free_forge_index()] = menu_amount[find_free_forge_index()] + ile;
-					menu[find_free_forge_index()] = gracz.inventory_crafting[20 + numer];
+					menu_amount[findFreeForgeIndex()] = menu_amount[findFreeForgeIndex()] + ile;
+					menu[findFreeForgeIndex()] = gracz.inventory_crafting[20 + numer];
 					if (gracz.inventory_crafting_amount[20 + numer] == 0)
 					{
 						gracz.inventory_crafting[20 + numer] = "";
 						gracz.inventory_crafting_price[20 + numer] = 0;
-						gracz.sort_crafting_forge_backpack();
+						gracz.sortCraftingForgeBackpack();
 					}
 				}
 				else
 				{
 					gracz.inventory_crafting_amount[20 + numer]--;
-					menu_amount[find_free_forge_index()]++;
-					menu[find_free_forge_index()] = gracz.inventory_crafting[20 + numer];
+					menu_amount[findFreeForgeIndex()]++;
+					menu[findFreeForgeIndex()] = gracz.inventory_crafting[20 + numer];
 					if (gracz.inventory_crafting_amount[20 + numer] == 0)
 					{
 						gracz.inventory_crafting[20 + numer] = "";
 						gracz.inventory_crafting_price[20 + numer] = 0;
-						gracz.sort_crafting_forge_backpack();
+						gracz.sortCraftingForgeBackpack();
 					}
 				}
 			}

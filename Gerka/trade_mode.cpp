@@ -166,7 +166,7 @@ player tradeModeGeneralStore(player &gracz, generalStoreSeller &handlarz)
 				}
 			}
 		}
-		top_side[0] = handlarz.name + "'s gold: " + to_string(handlarz.gold_info());
+		top_side[0] = handlarz.name + "'s gold: " + to_string(handlarz.goldInfo());
 		top_side[1] = "Trade";
 		top_side[2] = gracz.nazwa + "'s gold: " + to_string(gracz.gold);
 		if (anythingSoldOrBought==true)
@@ -242,7 +242,7 @@ player tradeModeBladesmithShop(player &gracz, bladesmith &miecznik)
 	top_side[1] = "Trade";
 	while (1)
 	{
-		top_side[0] = miecznik.name + "'s gold: " + to_string(miecznik.gold_info());
+		top_side[0] = miecznik.name + "'s gold: " + to_string(miecznik.goldInfo());
 		top_side[2] = gracz.nazwa + "'s gold: " + to_string(gracz.gold);
 		for (int i = 0; i < 20; i++)
 		{

@@ -1,6 +1,6 @@
 #pragma once
-#include "biblioteki.h"
+//#include "biblioteki.h"
 #include "dwellers.h"
 #include "player.h"
 
-player enter_laboratory(player gracz,alchemist alchemik);
+player enterLaboratory(player gracz,alchemist alchemik);

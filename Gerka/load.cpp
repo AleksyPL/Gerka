@@ -49,7 +49,7 @@ while (getline(plik, linia))
 	case 16:gracz.weaponPrice= atoi(linia.c_str()); break;
 	case 18:
 	{
-		linia = string_tolower(linia);
+		linia = stringToLower(linia);
 		if (linia == "true")
 		{
 			gracz.isTheWeaponRare = true;
@@ -194,31 +194,31 @@ while (getline(plik, linia))
 	nr_linii++;
 }
 plik.close();
-gracz.sort_usage_backpack();
-gracz.sort_crafting_alchemy_backpack();
-gracz.sort_crafting_forge_backpack();
+gracz.sortUsageBackpack();
+gracz.sortCraftingAlchemyBackpack();
+gracz.sortCraftingForgeBackpack();
 nr_linii = 1;
 plik.open("./txt/mix/Zapis_gry_npc.txt", ios::in);
 while (getline(plik, linia))
 {
 	switch (nr_linii)
 	{
-	case 2:bobby.rep_level_set(atoi(linia.c_str())); break;
-	case 4:bobby.rep_points_set(atoi(linia.c_str())); break;
-	case 6:bobby.rep_points_to_next_level_set(atoi(linia.c_str())); break;
-	case 8:bobby.gold_set(atoi(linia.c_str())); break;
-	case 10:handlarz.rep_level_set(atoi(linia.c_str())); break;
-	case 12:handlarz.rep_points_set(atoi(linia.c_str())); break;
-	case 14:handlarz.rep_points_to_next_level_set(atoi(linia.c_str())); break;
-	case 16:handlarz.gold_set(atoi(linia.c_str())); break;
-	case 18:kowal.rep_level_set(atoi(linia.c_str())); break;
-	case 20:kowal.rep_points_set(atoi(linia.c_str())); break;
-	case 22:kowal.rep_points_to_next_level_set(atoi(linia.c_str())); break;
-	case 24:kowal.gold_set(atoi(linia.c_str())); break;
-	case 26:alchemik.rep_level_set(atoi(linia.c_str())); break;
-	case 28:alchemik.rep_points_set(atoi(linia.c_str())); break;
-	case 30:alchemik.rep_points_to_next_level_set(atoi(linia.c_str())); break;
-	case 32:alchemik.gold_set(atoi(linia.c_str())); break;
+	case 2:bobby.repLevelSet(atoi(linia.c_str())); break;
+	case 4:bobby.repPointsSet(atoi(linia.c_str())); break;
+	case 6:bobby.repPointsToNextLevelSet(atoi(linia.c_str())); break;
+	case 8:bobby.goldSet(atoi(linia.c_str())); break;
+	case 10:handlarz.repLevelSet(atoi(linia.c_str())); break;
+	case 12:handlarz.repPointsSet(atoi(linia.c_str())); break;
+	case 14:handlarz.repPointsToNextLevelSet(atoi(linia.c_str())); break;
+	case 16:handlarz.goldSet(atoi(linia.c_str())); break;
+	case 18:kowal.repLevelSet(atoi(linia.c_str())); break;
+	case 20:kowal.repPointsSet(atoi(linia.c_str())); break;
+	case 22:kowal.repPointsToNextLevelSet(atoi(linia.c_str())); break;
+	case 24:kowal.goldSet(atoi(linia.c_str())); break;
+	case 26:alchemik.repLevelSet(atoi(linia.c_str())); break;
+	case 28:alchemik.repPointsSet(atoi(linia.c_str())); break;
+	case 30:alchemik.repPointsToNextLevelSet(atoi(linia.c_str())); break;
+	case 32:alchemik.goldSet(atoi(linia.c_str())); break;
 	}
 	nr_linii++;
 }

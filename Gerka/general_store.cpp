@@ -5,10 +5,10 @@
 #include "czas.h"
 
 
-player enter_shop(player gracz, generalStoreSeller handlarz)
+player enterShop(player gracz, generalStoreSeller handlarz)
 {
 	int highlight = 0;
-	change_time(23,32,gracz, 0, 5);
+	changeTime(23,32,gracz, 0, 5);
 	if (gracz.hour >= 20 || gracz.hour <6)
 	{
 		vector<string> message;
@@ -25,7 +25,7 @@ player enter_shop(player gracz, generalStoreSeller handlarz)
 			vector<string> message;
 			message.push_back("You have to go. We're closing.");
 			tabSubmenuFancyTextOnly(23, 32, message, 50);
-			change_time(23,32,gracz, 0, 5);
+			changeTime(23,32,gracz, 0, 5);
 			return gracz;
 		}
 		if (gracz.hp <= 0)
@@ -127,7 +127,7 @@ player enter_shop(player gracz, generalStoreSeller handlarz)
 		{
 			if (tryb == 0)
 			{
-				change_time(23,32,gracz, 0, 1);
+				changeTime(23,32,gracz, 0, 1);
 				tryb = 1;
 			}
 			else
@@ -138,20 +138,20 @@ player enter_shop(player gracz, generalStoreSeller handlarz)
 		}
 		case 1:
 		{
-			wait_n_hours(23, 32, gracz);
+			waitNHours(23, 32, gracz);
 			break;
 		}
 		case 0:
 		{
 			if (tryb == 0)
 			{
-				change_time(23,32,gracz, 0, 5);
+				changeTime(23,32,gracz, 0, 5);
 				return gracz;
 			}
 			else if (tryb == 1)
 			{
 				tryb = 0;
-				change_time(23,32,gracz, 0, 1);
+				changeTime(23,32,gracz, 0, 1);
 				break;
 			}
 		}

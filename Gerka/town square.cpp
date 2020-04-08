@@ -1,7 +1,7 @@
 #include "town square.h"
 #include "tawerna.h"
 #include "kowal.h"
-#include "burdel.h"
+//#include "burdel.h"
 #include "alchemik.h"
 #include "general_store.h"
 #include "game_over.h"
@@ -16,6 +16,7 @@
 #include "dungeon.h"
 #include "czas.h"
 #include "bladesmithShop.h"
+#include "playerTransport.h"
 
 int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blacksmith kowal, bladesmith miecznik, alchemist alchemik,shaman szaman, doctor lekarz, chest krzynka)
 {
@@ -23,17 +24,17 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 	int highlight = 0;
 	while (1)
 	{
-		check_quest_status(gracz);
+		checkQuestStatus(gracz);
 		levelUp(23,32,gracz);
 		if (gracz.hp <= 0)
 		{
-			game_over(55,0);
+			gameOver(55,0);
 			return 0;
 		}
 		string local = "Town square";
 
 		string info[20];
-		info[0] = "Close game";
+		info[0] = "Back to main menu";
 		info[1] = "Save game";
 		info[2] = "Equipment & Stats";
 		info[3] = "Skills";
@@ -114,12 +115,12 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 		{
 		case 20:
 		{
-			gracz = enter_tavern(gracz,bobby,krzynka);
+			gracz = enterTavern(gracz,bobby,krzynka);
 			break;
 		}
 		case 21:
 		{
-			gracz = enter_forge(gracz,kowal);
+			gracz = enterForge(gracz,kowal);
 			break;
 		}
 		case 22:
@@ -129,27 +130,51 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 		}
 		case 23:
 		{
-			gracz = enter_laboratory(gracz,alchemik);
+			gracz = enterLaboratory(gracz,alchemik);
 			break;
 		}
 		case 24:
 		{
-			gracz = enter_brothel(gracz);
+			typedef void(*Shit_fun)();
+			Shit_fun shit;
+			HINSTANCE cos = LoadLibrary("./dll/Brothel.dll");
+			//HINSTANCE cos = LoadLibrary("C:/Users/Aleksy/source/repos/Gerka/Debug/Brothel.dll");
+			if (cos)
+			{
+				shit = (Shit_fun)GetProcAddress(cos, "enterBrothel");
+				if (shit)
+				{
+					savePlayerTemp(gracz);
+					shit();
+					loadPlayerTemp(gracz);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(cos);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 25:
 		{
-			gracz = enter_shop(gracz,handlarz);
+			gracz = enterShop(gracz,handlarz);
 			break;
 		}
 		case 26:
 		{
-			gracz = enter_shaman_house(gracz,szaman);
+			gracz = enterShamanHouse(gracz,szaman);
 			break;
 		}
 		case 27:
 		{
-			gracz = enter_hospital(gracz, lekarz);
+			gracz = enterHospital(gracz, lekarz);
 			break;
 		}
 		case 28:
@@ -161,7 +186,7 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 		{
 			vector <string> message;
 			vector <string> options;
-			message.push_back("Are you sure you want to close the game?");
+			message.push_back("Are you sure you want to back to the main menu?");
 			message.push_back("The progress will not be saved.");
 			options.push_back("Yes");
 			options.push_back("No");
@@ -179,12 +204,12 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 		}
 		case 2:
 		{
-			gracz = enter_inventory(gracz);
+			gracz = enterInventory(gracz);
 			break;
 		}
 		case 6:
 		{
-			wait_n_hours(23, 32, gracz);
+			waitNHours(23, 32, gracz);
 			break;
 		}
 		case 5:
@@ -193,7 +218,7 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 		}
 		case 7:
 		{
-			gracz = enter_cheat_menu(gracz);
+			gracz = enterCheatMenu(gracz);
 			break;
 		}
 		default:

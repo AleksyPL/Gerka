@@ -2,14 +2,14 @@
 #include "boost_syf.h"
 #include "tabelka.h"
 
-void boost_nerf(player &gracz)
+void boostNerf(player &gracz)
 {
 	if (gracz.counter_nerf_str != 0)
 	{
 		gracz.counter_nerf_str--;
 		if (gracz.counter_nerf_str == 0)
 		{
-			remove_nerf_str(gracz);
+			removeNerfStrenght(gracz);
 		}
 	}
 	if (gracz.counter_boost_str != 0)
@@ -17,7 +17,7 @@ void boost_nerf(player &gracz)
 		gracz.counter_boost_str--;
 		if (gracz.counter_boost_str == 0)
 		{
-			remove_boost_str(gracz);
+			removeBoostStrenght(gracz);
 		}
 	}
 	if (gracz.counter_nerf_agility != 0)
@@ -25,7 +25,7 @@ void boost_nerf(player &gracz)
 		gracz.counter_nerf_agility--;
 		if (gracz.counter_nerf_agility == 0)
 		{
-			remove_nerf_agility(gracz);
+			removeNerfAgility(gracz);
 		}
 	}
 	if (gracz.counter_boost_agility != 0)
@@ -33,7 +33,7 @@ void boost_nerf(player &gracz)
 		gracz.counter_boost_agility--;
 		if (gracz.counter_boost_agility == 0)
 		{
-			remove_boost_agility(gracz);
+			removeBoostAgility(gracz);
 		}
 	}
 	if (gracz.counter_nerf_intel != 0)
@@ -41,7 +41,7 @@ void boost_nerf(player &gracz)
 		gracz.counter_nerf_intel--;
 		if (gracz.counter_nerf_intel == 0)
 		{
-			remove_nerf_intel(gracz);
+			removeNerfIntelligence(gracz);
 		}
 	}
 	if (gracz.counter_boost_intel != 0)
@@ -49,7 +49,7 @@ void boost_nerf(player &gracz)
 		gracz.counter_boost_intel--;
 		if (gracz.counter_boost_intel == 0)
 		{
-			remove_boost_intel(gracz);
+			removeBoostIntelligence(gracz);
 		}
 	}
 	if (gracz.counter_nerf_charisma != 0)
@@ -57,7 +57,7 @@ void boost_nerf(player &gracz)
 		gracz.counter_nerf_charisma--;
 		if (gracz.counter_nerf_charisma == 0)
 		{
-			remove_nerf_charisma(gracz);
+			removeNerfCharisma(gracz);
 		}
 	}
 	if (gracz.counter_boost_charisma != 0)
@@ -65,7 +65,7 @@ void boost_nerf(player &gracz)
 		gracz.counter_boost_charisma--;
 		if (gracz.counter_boost_charisma == 0)
 		{
-			remove_boost_charisma(gracz);
+			removeBoostCharisma(gracz);
 		}
 	}
 	if (gracz.counter_nerf_luck != 0)
@@ -73,7 +73,7 @@ void boost_nerf(player &gracz)
 		gracz.counter_nerf_luck--;
 		if (gracz.counter_nerf_luck == 0)
 		{
-			remove_nerf_luck(gracz);
+			removeNerfLuck(gracz);
 		}
 	}
 	if (gracz.counter_boost_luck != 0)
@@ -81,32 +81,32 @@ void boost_nerf(player &gracz)
 		gracz.counter_boost_luck--;
 		if (gracz.counter_boost_luck == 0)
 		{
-			remove_boost_luck(gracz);
+			removeBoostLuck(gracz);
 		}
 	}
 }
-void hungry_and_sober(int height, int startPoint, player &gracz, int off_hunger, int off_sobering)
+void hungryAndSober(int height, int startPoint, player &gracz, int off_hunger, int off_sobering)
 {
 	if (gracz.hour % 2 == 0)
 	{
 		if (off_sobering == 0)
 		{
-			gracz.a_bit_sober();
+			gracz.aBitSober();
 		}
 		if (off_hunger == 0)
 		{
-			gracz.a_bit_hungry(height, startPoint, 1);
+			gracz.aBitHungry(height, startPoint, 1);
 		}
 	}
 	else
 	{
 		if (off_sobering == 0)
 		{
-			gracz.a_bit_sober();
+			gracz.aBitSober();
 		}
 	}
 }
-void change_time(int height, int startPoint, player &gracz, int hours, int minutes, int off_hunger, int off_sobering)
+void changeTime(int height, int startPoint, player &gracz, int hours, int minutes, int off_hunger, int off_sobering)
 {
 	gracz.minute = gracz.minute + minutes;
 	while (gracz.minute >= 60)
@@ -122,8 +122,8 @@ void change_time(int height, int startPoint, player &gracz, int hours, int minut
 			gracz.licznik_dnia = gracz.licznik_dnia + 1;
 			gracz.hour = 0;
 		}
-		hungry_and_sober(height, startPoint, gracz, off_hunger, off_sobering);
-		boost_nerf(gracz);
+		hungryAndSober(height, startPoint, gracz, off_hunger, off_sobering);
+		boostNerf(gracz);
 	}
 }
 int waitingDamage(int height, int startPoint, player gracz, int hour, int minute)
@@ -180,7 +180,7 @@ int waitingDamage(int height, int startPoint, player gracz, int hour, int minute
 		return 0;
 	}
 }
-void wait_n_hours(int height, int startPoint, player& gracz)
+void waitNHours(int height, int startPoint, player& gracz)
 {
 	vector <string> message;
 	vector <string> options;
@@ -297,7 +297,7 @@ void wait_n_hours(int height, int startPoint, player& gracz)
 		highlight = waitingDamage(height, startPoint, gracz, tempH, tempM);
 		if (highlight == 0)
 		{
-			change_time(height, startPoint, gracz, tempH, tempM);
+			changeTime(height, startPoint, gracz, tempH, tempM);
 		}
 	}
 }

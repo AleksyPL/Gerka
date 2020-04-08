@@ -5,10 +5,10 @@
 #include "czas.h"
 
 
-player enter_brothel(player gracz)
+player enterBrothel(player gracz)
 {
 	int highlight = 0;
-	change_time(23,32,gracz, 0, 5);
+	changeTime(23,32,gracz, 0, 5);
 	while (1)
 	{
 		if (gracz.hp <= 0)
@@ -121,12 +121,12 @@ player enter_brothel(player gracz)
 		}
 		case 0:
 		{
-			change_time(23,32,gracz, 0, 5);
+			changeTime(23,32,gracz, 0, 5);
 			return gracz;
 		}
 		case 1:
 		{
-			wait_n_hours(23, 32, gracz);
+			waitNHours(23, 32, gracz);
 			break;
 		}
 		}

@@ -8,7 +8,7 @@
 player enterBladesmithShop(player gracz, bladesmith miecznik)
 {
 	int highlight = 0;
-	change_time(23, 32, gracz, 0, 5);
+	changeTime(23, 32, gracz, 0, 5);
 	if (gracz.hour >= 20 || gracz.hour < 6)
 	{
 		vector<string> message;
@@ -25,7 +25,7 @@ player enterBladesmithShop(player gracz, bladesmith miecznik)
 			vector<string> message;
 			message.push_back("You have to go. We're closing.");
 			tabSubmenuFancyTextOnly(23, 32, message, 50);
-			change_time(23, 32, gracz, 0, 5);
+			changeTime(23, 32, gracz, 0, 5);
 			return gracz;
 		}
 		if (gracz.hp <= 0)
@@ -131,7 +131,7 @@ player enterBladesmithShop(player gracz, bladesmith miecznik)
 			if (tryb == 0)
 			{
 				tryb = 1;
-				change_time(23, 32, gracz, 0, 1);
+				changeTime(23, 32, gracz, 0, 1);
 			}
 			else
 			{
@@ -141,20 +141,20 @@ player enterBladesmithShop(player gracz, bladesmith miecznik)
 		}
 		case 1:
 		{
-			wait_n_hours(23, 32, gracz);
+			waitNHours(23, 32, gracz);
 			break;
 		}
 		case 0:
 		{
 			if (tryb == 0)
 			{
-				change_time(23, 32, gracz, 0, 5);
+				changeTime(23, 32, gracz, 0, 5);
 				return gracz;
 			}
 			else if (tryb == 1)
 			{
 				tryb = 0;
-				change_time(23, 32, gracz, 0, 1);
+				changeTime(23, 32, gracz, 0, 1);
 				break;
 			}
 		}

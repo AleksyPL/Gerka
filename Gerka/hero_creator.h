@@ -2,4 +2,4 @@
 //#include "biblioteki.h"
 #include "player.h"
 
-player enterBrothel(player gracz);
+void enterHeroCreator(player& gracz);

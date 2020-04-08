@@ -4,10 +4,10 @@
 #include "level_up.h"
 #include "czas.h"
 
-player enter_forge(player gracz,blacksmith kowal)
+player enterForge(player gracz,blacksmith kowal)
 {
 	int highlight = 0;
-	change_time(23,32,gracz, 0, 5);
+	changeTime(23,32,gracz, 0, 5);
 	if (gracz.hour >= 20 || gracz.hour <6)
 	{
 		vector<string> message;
@@ -24,7 +24,7 @@ player enter_forge(player gracz,blacksmith kowal)
 			vector<string> message;
 			message.push_back("You have to go. We're closing.");
 			tabSubmenuFancyTextOnly(23, 32, message, 50);
-			change_time(23,32,gracz, 0, 5);
+			changeTime(23,32,gracz, 0, 5);
 			return gracz;
 		}
 		if (gracz.hp <= 0)
@@ -38,7 +38,7 @@ player enter_forge(player gracz,blacksmith kowal)
 		string local = "Forge";
 		if (tryb == 1)
 		{
-			kowal.load_player_points(gracz);
+			kowal.loadPlayerPoints(gracz);
 			for (int i = 0; i < 20; i++)
 			{
 				menu[i] = kowal.menu[i];
@@ -125,7 +125,7 @@ player enter_forge(player gracz,blacksmith kowal)
 		tab(gracz, highlight, local, info, menu, ceny);
 		if (highlight >= 20 && highlight <= 25 && tryb == 1)
 		{
-			kowal.power_up(23, 32, gracz, highlight - 20);
+			kowal.powerUp(23, 32, gracz, highlight - 20);
 		}
 		else
 		{
@@ -136,7 +136,7 @@ player enter_forge(player gracz,blacksmith kowal)
 				if (tryb == 0)
 				{
 					tryb = 1;
-					change_time(23,32,gracz, 0, 1);
+					changeTime(23,32,gracz, 0, 1);
 				}
 				else
 				{
@@ -146,20 +146,20 @@ player enter_forge(player gracz,blacksmith kowal)
 			}
 			case 1:
 			{
-				wait_n_hours(23, 32, gracz);
+				waitNHours(23, 32, gracz);
 				break;
 			}
 			case 0:
 			{
 				if (tryb == 0)
 				{
-					change_time(23,32,gracz, 0, 5);
+					changeTime(23,32,gracz, 0, 5);
 					return gracz;
 				}
 				else if (tryb == 1)
 				{
 					tryb = 0;
-					change_time(23,32,gracz, 0, 1);
+					changeTime(23,32,gracz, 0, 1);
 					break;
 				}
 			}

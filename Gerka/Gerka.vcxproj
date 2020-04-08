@@ -30,6 +30,7 @@
     <ClCompile Include="dungeon.cpp" />
     <ClCompile Include="dwellers.cpp" />
     <ClCompile Include="game_over.cpp" />
+    <ClCompile Include="hero_creator.cpp" />
     <ClCompile Include="inventory.cpp" />
     <ClCompile Include="items.cpp" />
     <ClCompile Include="karty.cpp" />
@@ -38,6 +39,7 @@
     <ClCompile Include="load.cpp" />
     <ClCompile Include="mobki1.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="playerTransport.cpp" />
     <ClCompile Include="quest.cpp" />
     <ClCompile Include="save.cpp" />
     <ClCompile Include="shamans_house.cpp" />
@@ -65,6 +67,7 @@
     <ClInclude Include="dungeon.h" />
     <ClInclude Include="dwellers.h" />
     <ClInclude Include="game_over.h" />
+    <ClInclude Include="hero_creator.h" />
     <ClInclude Include="inventory.h" />
     <ClInclude Include="items.h" />
     <ClInclude Include="karty.h" />
@@ -73,6 +76,7 @@
     <ClInclude Include="load.h" />
     <ClInclude Include="mobki1.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="playerTransport.h" />
     <ClInclude Include="quest.h" />
     <ClInclude Include="save.h" />
     <ClInclude Include="shamans_house.h" />
@@ -89,18 +93,45 @@
     <ClInclude Include="zakres.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="txt\bladesmith\image_upgrade.txt" />
+    <Text Include="txt\bladesmith\weapons.txt" />
+    <Text Include="txt\dungeons\fullfog.txt" />
     <Text Include="txt\dungeons\lvl1.txt" />
     <Text Include="txt\dungeons\lvl1items.txt" />
     <Text Include="txt\dungeons\lvl1monsters.txt" />
+    <Text Include="txt\mix\credits.txt" />
+    <Text Include="txt\mix\game_over.txt" />
+    <Text Include="txt\mix\game_over0.txt" />
+    <Text Include="txt\mix\game_over1.txt" />
+    <Text Include="txt\mix\Items_alchemy.txt" />
+    <Text Include="txt\mix\Items_prices.txt" />
+    <Text Include="txt\mix\Items_smithery.txt" />
+    <Text Include="txt\mix\Items_usable.txt" />
+    <Text Include="txt\mix\logo0.txt" />
+    <Text Include="txt\mix\logo1.txt" />
+    <Text Include="txt\mix\logo2.txt" />
+    <Text Include="txt\mix\pseudo.txt" />
     <Text Include="txt\mix\Zapis_gry_backpack.txt" />
     <Text Include="txt\mix\Zapis_gry_basic.txt" />
     <Text Include="txt\mix\Zapis_gry_boost.txt" />
     <Text Include="txt\mix\Zapis_gry_chest.txt" />
     <Text Include="txt\mix\Zapis_gry_eq.txt" />
     <Text Include="txt\mix\Zapis_gry_npc.txt" />
+    <Text Include="txt\mobki\bandit.txt" />
     <Text Include="txt\mobki\citizen_high.txt" />
     <Text Include="txt\mobki\citizen_medium.txt" />
     <Text Include="txt\mobki\citizen_small.txt" />
+    <Text Include="txt\mobki\default.txt" />
+    <Text Include="txt\mobki\dog.txt" />
+    <Text Include="txt\mobki\skeleton.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Brothel\MyDLL.vcxproj">
+      <Project>{3ab31e7c-1bfc-44b3-8afb-dc8a9032321f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Tavern\Tavern.vcxproj">
+      <Project>{e30bf038-4a0e-49ad-9029-80fc0c28d52a}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

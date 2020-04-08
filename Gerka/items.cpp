@@ -3,17 +3,17 @@
 
 void rejection_use()
 {
-	sound_rejection();
+	soundRejection();
 	//cout << endl << "Nie mo¿esz u¿yæ tego przedmiotu w tym momencie" << endl;
 	system("PAUSE");
 }
 
-//void use_hp_potion(player &gracz)
+//void useHpPotion(player &gracz)
 //{
-//	int index = gracz.find_usage_item_index("Mikstura ¿ycia");
+//	int index = gracz.findUsageItem_index("Mikstura ¿ycia");
 //	if (gracz.hp >= gracz.max_hp)
 //	{
-//		sound_rejection();
+//		soundRejection();
 //		cout << "Nie potrzebujesz siê leczyæ" << endl;
 //		system("PAUSE");
 //	}
@@ -34,13 +34,13 @@ void rejection_use()
 //	}
 //}
 
-void info_hp_potion(int height, int startPoint)
+void infoHpPotion(int height, int startPoint)
 {
 	vector <string> message = { "The healing potion heals wounds and injuries" };
 	tabSubmenuTextOnly(height, startPoint, message);
 }
 
-void use_item(int height, int startPoint, string item, int useDropInfo,player &gracz)
+void useItem(int height, int startPoint, string item, int useDropInfo,player &gracz)
 {
 	if (item == "Mikstura ¿ycia")
 	{
@@ -59,7 +59,7 @@ void use_item(int height, int startPoint, string item, int useDropInfo,player &g
 				}
 				FreeLibrary(cos);
 			}
-			sound_rejection();
+			soundRejection();
 		}
 		else if (useDropInfo == 2)
 		{
@@ -67,7 +67,7 @@ void use_item(int height, int startPoint, string item, int useDropInfo,player &g
 		}
 		else if (useDropInfo == 3)
 		{
-			info_hp_potion(height,startPoint);
+			infoHpPotion(height,startPoint);
 		}
 	}
 }

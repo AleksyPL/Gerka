@@ -7,7 +7,7 @@ void sleep(player &gracz, int cena,int hours, int minutes, int height, int start
 	//string tab[2];
 	if (gracz.gold < cena)
 	{
-		message.push_back(no_money());
+		message.push_back(noMoney());
 	}
 	else
 	{
@@ -36,7 +36,7 @@ void sleep(player &gracz, int cena,int hours, int minutes, int height, int start
 			{
 				gracz.hp = gracz.max_hp;
 			}
-			change_time(height, startPoint, gracz, hours, minutes);
+			changeTime(height, startPoint, gracz, hours, minutes);
 			range(gracz);
 		}
 	}

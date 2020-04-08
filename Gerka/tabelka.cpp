@@ -832,116 +832,6 @@ int tabSubmenuOneColumnChoice(int height, int startPoint, vector<string> message
 	}
 	
 }
-/*
-int tabSubmenuTwoColumnChoice(int height, int startPoint, int optionsLeftStart, int optionsRightStart, vector<string> message, vector<string> optionsLeft, vector<string> optionsRight)
-{
-	int maxX, maxY;
-	getyx(stdscr, maxY, maxX);
-	WINDOW* win = newwin(height, maxX, startPoint, 0);
-	wborder(win, 0, 0, 0, 0, ACS_LTEE, ACS_RTEE, ACS_LLCORNER, ACS_LRCORNER);
-	int highlight = 0;
-	int choice;
-	keypad(win, true);
-	for (int i = 0; i < optionsLeft.size(); i++)
-	{
-		if (optionsLeft[i].empty())
-		{
-			optionsLeft.erase(optionsLeft.begin() + i);
-			i--;
-		}
-	}
-	for (int i = 0; i < optionsRight.size(); i++)
-	{
-		if (optionsRight[i].empty())
-		{
-			optionsRight.erase(optionsRight.begin() + i);
-			i--;
-		}
-	}
-	if (optionsLeft.size() > optionsRight.size())
-	{
-		if (message.size() + optionsLeft.size() + 1 > height)
-		{
-			optionsLeft.resize(height - message.size() - 3);
-			while (optionsRight.size() > optionsLeft.size())
-			{
-				optionsRight.resize(optionsRight.size()-1);
-			}
-		}
-	}
-	else if (optionsLeft.size() < optionsRight.size())
-	{
-		if (message.size() + optionsRight.size() + 1 > height)
-		{
-			optionsRight.resize(height - message.size() - 3);
-			while (optionsLeft.size() > optionsRight.size())
-			{
-				optionsLeft.resize(optionsLeft.size() - 1);
-			}
-		}
-	}
-	else if ((optionsLeft.size() == optionsRight.size()))
-	{
-		if (message.size() + optionsLeft.size() + 1 > height)
-		{
-			optionsLeft.resize(height - message.size() - 3);
-			optionsRight.resize(height - message.size() - 3);
-		}
-	}
-	int lineHelper = message.size() + 2;
-	while (1)
-	{
-		for (int i = 0; i < message.size(); i++)
-		{
-			mvwprintw(win, i + 1, 2, message[i].c_str());
-		}
-		for (int i = 0; i < optionsLeft.size(); i++)
-		{
-			mvwprintw(win, lineHelper + i, optionsLeftStart, optionsLeft[i].c_str());
-		}
-		for (int i = 0; i < optionsRight.size(); i++)
-		{
-			mvwprintw(win, lineHelper + i, optionsRightStart, optionsRight[i].c_str());
-		}
-		choice = wgetch(win);
-		switch (choice)
-		{
-		case KEY_UP:
-		{
-			highlight--;
-			
-			break;
-		}
-		case KEY_DOWN:
-		{
-			highlight++;
-			
-			break;
-		}
-		case KEY_LEFT:
-		{
-			highlight = 20;
-			
-			break;
-		}
-		case KEY_RIGHT:
-		{
-			highlight += 20;
-			
-			break;
-		}
-		default:
-		{
-			break;
-		}
-		}
-		if (choice == 10)
-		{
-			return highlight;
-		}
-	}
-}
-*/
 int tabTrade(int highlight, string top_side[3], string left_side[21], string right_side[21], vector <string> bottom_side)
 {
 	int leftSideBorder = 19;
@@ -1457,7 +1347,7 @@ int tabDungeon(player gracz, bool &mode, string local, string shorty[20], char t
 						}
 						case '0':
 						{
-							mvwprintw(display, i + 1, j + 1, "%c", '=');
+							mvwprintw(display, i + 1, j + 1, "%c", '&');
 							break;
 						}
 						case '-':

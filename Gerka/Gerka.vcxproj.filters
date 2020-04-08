@@ -37,6 +37,18 @@
     <Filter Include="Pliki nagłówkowe\Lokacje">
       <UniqueIdentifier>{16c30e0f-628e-4ad9-87fb-68a551ce9730}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pliki zasobów\Mobki">
+      <UniqueIdentifier>{99bf8845-8da0-402a-bfcd-06ece3dac786}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki zasobów\Dungeons">
+      <UniqueIdentifier>{c31d89ab-61ac-4821-a014-236975365fb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki zasobów\Bladesmith">
+      <UniqueIdentifier>{01fbf51b-8380-4986-8084-a7472af8a68d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki zasobów\Mix">
+      <UniqueIdentifier>{a0c6a449-af8b-4823-a0a2-b3bbdc8e1ad4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="burdel.cpp">
@@ -137,6 +149,12 @@
     </ClCompile>
     <ClCompile Include="bladesmithShop.cpp">
       <Filter>Pliki źródłowe\Lokacje</Filter>
+    </ClCompile>
+    <ClCompile Include="hero_creator.cpp">
+      <Filter>Pliki źródłowe\Lokacje</Filter>
+    </ClCompile>
+    <ClCompile Include="playerTransport.cpp">
+      <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,43 +257,106 @@
     <ClInclude Include="bladesmithShop.h">
       <Filter>Pliki nagłówkowe\Lokacje</Filter>
     </ClInclude>
+    <ClInclude Include="hero_creator.h">
+      <Filter>Pliki nagłówkowe\Inne</Filter>
+    </ClInclude>
+    <ClInclude Include="playerTransport.h">
+      <Filter>Pliki nagłówkowe\Funkcje</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="txt\dungeons\lvl1items.txt">
-      <Filter>Pliki zasobów</Filter>
-    </Text>
-    <Text Include="txt\dungeons\lvl1monsters.txt">
-      <Filter>Pliki zasobów</Filter>
-    </Text>
     <Text Include="txt\mobki\citizen_high.txt">
-      <Filter>Pliki zasobów</Filter>
+      <Filter>Pliki zasobów\Mobki</Filter>
     </Text>
     <Text Include="txt\mobki\citizen_medium.txt">
-      <Filter>Pliki zasobów</Filter>
+      <Filter>Pliki zasobów\Mobki</Filter>
     </Text>
     <Text Include="txt\mobki\citizen_small.txt">
-      <Filter>Pliki zasobów</Filter>
+      <Filter>Pliki zasobów\Mobki</Filter>
+    </Text>
+    <Text Include="txt\mobki\bandit.txt">
+      <Filter>Pliki zasobów\Mobki</Filter>
+    </Text>
+    <Text Include="txt\mobki\default.txt">
+      <Filter>Pliki zasobów\Mobki</Filter>
+    </Text>
+    <Text Include="txt\mobki\dog.txt">
+      <Filter>Pliki zasobów\Mobki</Filter>
+    </Text>
+    <Text Include="txt\mobki\skeleton.txt">
+      <Filter>Pliki zasobów\Mobki</Filter>
     </Text>
     <Text Include="txt\dungeons\lvl1.txt">
-      <Filter>Pliki zasobów</Filter>
+      <Filter>Pliki zasobów\Dungeons</Filter>
+    </Text>
+    <Text Include="txt\dungeons\lvl1monsters.txt">
+      <Filter>Pliki zasobów\Dungeons</Filter>
+    </Text>
+    <Text Include="txt\dungeons\lvl1items.txt">
+      <Filter>Pliki zasobów\Dungeons</Filter>
+    </Text>
+    <Text Include="txt\dungeons\fullfog.txt">
+      <Filter>Pliki zasobów\Dungeons</Filter>
+    </Text>
+    <Text Include="txt\bladesmith\weapons.txt">
+      <Filter>Pliki zasobów\Bladesmith</Filter>
+    </Text>
+    <Text Include="txt\bladesmith\image_upgrade.txt">
+      <Filter>Pliki zasobów\Bladesmith</Filter>
     </Text>
     <Text Include="txt\mix\Zapis_gry_backpack.txt">
-      <Filter>Pliki zasobów</Filter>
+      <Filter>Pliki zasobów\Mix</Filter>
     </Text>
     <Text Include="txt\mix\Zapis_gry_basic.txt">
-      <Filter>Pliki zasobów</Filter>
+      <Filter>Pliki zasobów\Mix</Filter>
     </Text>
     <Text Include="txt\mix\Zapis_gry_boost.txt">
-      <Filter>Pliki zasobów</Filter>
+      <Filter>Pliki zasobów\Mix</Filter>
     </Text>
     <Text Include="txt\mix\Zapis_gry_chest.txt">
-      <Filter>Pliki zasobów</Filter>
+      <Filter>Pliki zasobów\Mix</Filter>
     </Text>
     <Text Include="txt\mix\Zapis_gry_eq.txt">
-      <Filter>Pliki zasobów</Filter>
+      <Filter>Pliki zasobów\Mix</Filter>
     </Text>
     <Text Include="txt\mix\Zapis_gry_npc.txt">
-      <Filter>Pliki zasobów</Filter>
+      <Filter>Pliki zasobów\Mix</Filter>
+    </Text>
+    <Text Include="txt\mix\credits.txt">
+      <Filter>Pliki zasobów\Mix</Filter>
+    </Text>
+    <Text Include="txt\mix\game_over.txt">
+      <Filter>Pliki zasobów\Mix</Filter>
+    </Text>
+    <Text Include="txt\mix\game_over0.txt">
+      <Filter>Pliki zasobów\Mix</Filter>
+    </Text>
+    <Text Include="txt\mix\game_over1.txt">
+      <Filter>Pliki zasobów\Mix</Filter>
+    </Text>
+    <Text Include="txt\mix\Items_alchemy.txt">
+      <Filter>Pliki zasobów\Mix</Filter>
+    </Text>
+    <Text Include="txt\mix\Items_prices.txt">
+      <Filter>Pliki zasobów\Mix</Filter>
+    </Text>
+    <Text Include="txt\mix\Items_smithery.txt">
+      <Filter>Pliki zasobów\Mix</Filter>
+    </Text>
+    <Text Include="txt\mix\Items_usable.txt">
+      <Filter>Pliki zasobów\Mix</Filter>
+    </Text>
+    <Text Include="txt\mix\logo0.txt">
+      <Filter>Pliki zasobów\Mix</Filter>
+    </Text>
+    <Text Include="txt\mix\logo1.txt">
+      <Filter>Pliki zasobów\Mix</Filter>
+    </Text>
+    <Text Include="txt\mix\logo2.txt">
+      <Filter>Pliki zasobów\Mix</Filter>
+    </Text>
+    <Text Include="txt\mix\pseudo.txt">
+      <Filter>Pliki zasobów\Mix</Filter>
     </Text>
   </ItemGroup>
 </Project>

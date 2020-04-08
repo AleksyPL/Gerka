@@ -5,10 +5,10 @@
 #include "czas.h"
 #include "quest.h"
 
-player enter_shaman_house(player gracz, shaman szaman)
+player enterShamanHouse(player gracz, shaman szaman)
 {
 	int highlight = 0;
-	change_time(23,32,gracz, 0, 5);
+	changeTime(23,32,gracz, 0, 5);
 	if (gracz.hour >= 20 || gracz.hour <6)
 	{
 		vector<string> message;
@@ -19,14 +19,14 @@ player enter_shaman_house(player gracz, shaman szaman)
 	int tryb = 0;
 	while (1)
 	{
-		check_quest_status(gracz);
+		checkQuestStatus(gracz);
 		if (gracz.hour >= 20 || gracz.hour < 6)
 		{
 			szaman.weAreClosing(gracz);
 			vector<string> message;
 			message.push_back("You have to go. I'm closing.");
 			tabSubmenuFancyTextOnly(23, 32, message, 50);
-			change_time(23,32,gracz, 0, 5);
+			changeTime(23,32,gracz, 0, 5);
 			return gracz;
 		}
 		if (gracz.hp <= 0)
@@ -128,7 +128,7 @@ player enter_shaman_house(player gracz, shaman szaman)
 		tab(gracz, highlight, local, info, menu, ceny);
 		if (tryb == 1 && highlight >= 20 && highlight <= 24)
 		{
-			szaman.add_boost(23,32, gracz, highlight-20);
+			szaman.addBoost(23,32, gracz, highlight-20);
 		}
 		else
 		{
@@ -138,7 +138,7 @@ player enter_shaman_house(player gracz, shaman szaman)
 			{
 				if (tryb == 0)
 				{
-					change_time(23,32,gracz, 0, 1);
+					changeTime(23,32,gracz, 0, 1);
 					tryb = 1;
 				}
 				else
@@ -155,26 +155,26 @@ player enter_shaman_house(player gracz, shaman szaman)
 				}
 				else
 				{
-					szaman.everything_about_quests(23,32,gracz);
+					szaman.everythingAboutQuests(23,32,gracz);
 				}
 				break;
 			}
 			case 1:
 			{
-				wait_n_hours(23, 32, gracz);
+				waitNHours(23, 32, gracz);
 				break;
 			}
 			case 0:
 			{
 				if (tryb == 0)
 				{
-					change_time(23,32,gracz, 0, 5);
+					changeTime(23,32,gracz, 0, 5);
 					return gracz;
 				}
 				else if (tryb == 1)
 				{
 					tryb = 0;
-					change_time(23,32,gracz, 0, 1);
+					changeTime(23,32,gracz, 0, 1);
 					break;
 				}
 			}

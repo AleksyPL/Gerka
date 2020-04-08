@@ -3,7 +3,7 @@
 #include "level_up.h"
 #include "items.h"
 
-player enter_inventory(player &gracz)
+player enterInventory(player &gracz)
 {
 	int leftSideCard = 0;
 	int rightSideCard = 0;
@@ -22,7 +22,7 @@ player enter_inventory(player &gracz)
 		if (leftSideCard == 0)
 		{
 			leftSide[20] = "Items - Usable";
-			if (gracz.count_free_fields_usage() == 20)
+			if (gracz.countFreeFieldsUsage() == 20)
 			{
 				leftSide[0] = "No items";
 			}
@@ -44,7 +44,7 @@ player enter_inventory(player &gracz)
 		else if (leftSideCard == 1)
 		{
 			leftSide[20] = "Items - Alchemy";
-			if (gracz.count_free_fields_alchemy() == 20)
+			if (gracz.countFreeFieldsAlchemy() == 20)
 			{
 				leftSide[0] = "No items";
 			}
@@ -66,7 +66,7 @@ player enter_inventory(player &gracz)
 		else if (leftSideCard == 2)
 		{
 			leftSide[20] = "Items - Smithery";
-			if (gracz.count_free_fields_forge() == 20)
+			if (gracz.countFreeFieldsForge() == 20)
 			{
 				leftSide[0] = "No items";
 			}
@@ -240,17 +240,17 @@ player enter_inventory(player &gracz)
 			{
 			case 0:
 			{
-				use_item(27,28,item_name, 1, gracz);
+				useItem(27,28,item_name, 1, gracz);
 				break;
 			}
 			case 1:
 			{
-				use_item(27,28,item_name, 2, gracz);
+				useItem(27,28,item_name, 2, gracz);
 				break;
 			}
 			case 2:
 			{
-				use_item(27,28,item_name, 3, gracz);
+				useItem(27,28,item_name, 3, gracz);
 				break;
 			}
 			}

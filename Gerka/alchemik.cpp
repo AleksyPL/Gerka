@@ -4,10 +4,10 @@
 #include "alchemik.h"
 #include "czas.h"
 
-player enter_laboratory(player gracz,alchemist alchemik)
+player enterLaboratory(player gracz,alchemist alchemik)
 {
 	int highlight = 0;
-	change_time(23,32,gracz, 0, 5);
+	changeTime(23,32,gracz, 0, 5);
 	if (gracz.hour >= 20 || gracz.hour <6)
 	{
 		vector<string> message;
@@ -24,7 +24,7 @@ player enter_laboratory(player gracz,alchemist alchemik)
 			vector<string> message;
 			message.push_back("You have to go. We're closing.");
 			tabSubmenuFancyTextOnly(23, 32, message, 50);
-			change_time(23,32,gracz, 0, 5);
+			changeTime(23,32,gracz, 0, 5);
 			return gracz;
 		}
 		if (gracz.hp <= 0)
@@ -137,11 +137,11 @@ player enter_laboratory(player gracz,alchemist alchemik)
 			if (tryb == 0)
 			{
 				tryb = 1;
-				change_time(23,32,gracz, 0, 1);
+				changeTime(23,32,gracz, 0, 1);
 			}
 			else
 			{
-				alchemik.buy_new_level_potion(23,32,gracz);
+				alchemik.buyNewLevelPotion(23,32,gracz);
 			}
 			break;
 		}
@@ -153,26 +153,26 @@ player enter_laboratory(player gracz,alchemist alchemik)
 			}
 			else
 			{
-				alchemik.buy_hp_potion(23,32,gracz);
+				alchemik.buyHpPotion(23,32,gracz);
 			}
 			break;
 		}
 		case 1:
 		{
-			wait_n_hours(23, 32, gracz);
+			waitNHours(23, 32, gracz);
 			break;
 		}
 		case 0:
 		{
 			if (tryb == 0)
 			{
-				change_time(23,32,gracz, 0, 5);
+				changeTime(23,32,gracz, 0, 5);
 				return gracz;
 			}
 			else if (tryb == 1)
 			{
 				tryb = 0;
-				change_time(23,32,gracz, 0, 1);
+				changeTime(23,32,gracz, 0, 1);
 				break;
 			}
 			break;
