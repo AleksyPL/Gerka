@@ -3,7 +3,7 @@ Aleksy
 Character level
 1
 Gold
-499005
+498905
 Health points
 50
 Max health points
@@ -23,15 +23,15 @@ Nutrition points
 Drunk level
 0
 Experience points
-0
+5
 Experience points to the next level
 100
 Day counter
 2
 Day hour
-12
+13
 Day minute
-44
+4
 Quest
 
 Character skill
