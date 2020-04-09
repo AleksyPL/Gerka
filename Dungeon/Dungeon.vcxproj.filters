@@ -18,7 +18,7 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="tavern.cpp">
+    <ClCompile Include="dungeon.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="..\Gerka\biblioteki.cpp">
@@ -27,28 +27,22 @@
     <ClCompile Include="..\Gerka\boost_syf.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="..\Gerka\chest.cpp">
+    <ClCompile Include="..\Gerka\fight_mode.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="..\Gerka\czas.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Gerka\dwellers.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Gerka\karty.cpp">
+    <ClCompile Include="..\Gerka\inventory.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="..\Gerka\level_up.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="..\Gerka\mobki1.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
     <ClCompile Include="..\Gerka\player.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="..\Gerka\quest.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Gerka\sleep.cpp">
+    <ClCompile Include="..\Gerka\playerTransport.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="..\Gerka\tabelka.cpp">
@@ -60,15 +54,15 @@
     <ClCompile Include="..\Gerka\zakres.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="..\Gerka\playerTransport.cpp">
+    <ClCompile Include="..\Gerka\items.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="..\Gerka\NPCTransport.cpp">
+    <ClCompile Include="..\Gerka\czas.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="tavern.h">
+    <ClInclude Include="dungeon.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="..\Gerka\biblioteki.h">
@@ -77,28 +71,22 @@
     <ClInclude Include="..\Gerka\boost_syf.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="..\Gerka\chest.h">
+    <ClInclude Include="..\Gerka\fight_mode.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="..\Gerka\czas.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Gerka\dwellers.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Gerka\karty.h">
+    <ClInclude Include="..\Gerka\inventory.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="..\Gerka\level_up.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="..\Gerka\mobki1.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
     <ClInclude Include="..\Gerka\player.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="..\Gerka\quest.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Gerka\sleep.h">
+    <ClInclude Include="..\Gerka\playerTransport.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="..\Gerka\tabelka.h">
@@ -110,10 +98,10 @@
     <ClInclude Include="..\Gerka\zakres.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="..\Gerka\playerTransport.h">
+    <ClInclude Include="..\Gerka\items.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="..\Gerka\NPCTransport.h">
+    <ClInclude Include="..\Gerka\czas.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
