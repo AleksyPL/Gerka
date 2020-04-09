@@ -44,8 +44,8 @@ Usable item number 15
 
 0
 Usable item number 16
-
-0
+Potion
+15
 Usable item number 17
 
 0
