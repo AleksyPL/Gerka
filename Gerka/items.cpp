@@ -46,8 +46,7 @@ void useItem(int height, int startPoint, string item, int useDropInfo,player &gr
 	{
 		if (useDropInfo == 1)
 		{
-			
-			typedef player(*Shit_fun)(player);
+			/*typedef player(*Shit_fun)(player);
 			Shit_fun shit;
 			HINSTANCE cos = LoadLibrary("./dll/MyDll.dll");
 			if (cos)
@@ -58,7 +57,7 @@ void useItem(int height, int startPoint, string item, int useDropInfo,player &gr
 					shit(gracz);
 				}
 				FreeLibrary(cos);
-			}
+			}*/
 			soundRejection();
 		}
 		else if (useDropInfo == 2)

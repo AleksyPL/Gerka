@@ -14,7 +14,6 @@ public:
 		positionY = 0;
 	}
 };
-
 class item
 {
 public:
@@ -46,7 +45,6 @@ public:
 		}
 	}
 };
-
 class monster
 {
 public:
@@ -62,7 +60,6 @@ public:
 		positionY = 0;
 	}
 };
-
 class dungeonSupervisior
 {
 public:

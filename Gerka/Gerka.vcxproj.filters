@@ -156,6 +156,9 @@
     <ClCompile Include="playerTransport.cpp">
       <Filter>Pliki źródłowe\Funkcje</Filter>
     </ClCompile>
+    <ClCompile Include="NPCTransport.cpp">
+      <Filter>Pliki źródłowe\Funkcje</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="burdel.h">
@@ -261,6 +264,9 @@
       <Filter>Pliki nagłówkowe\Inne</Filter>
     </ClInclude>
     <ClInclude Include="playerTransport.h">
+      <Filter>Pliki nagłówkowe\Funkcje</Filter>
+    </ClInclude>
+    <ClInclude Include="NPCTransport.h">
       <Filter>Pliki nagłówkowe\Funkcje</Filter>
     </ClInclude>
   </ItemGroup>

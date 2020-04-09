@@ -1450,7 +1450,7 @@ void alchemist::buyNewLevelPotion(int height, int startPoint, player &gracz)
 	{
 		message.push_back("You bought a level up potion");
 		message.push_back("");
-		gracz.addUsageItem("Mikstura nowego poziomu", (gracz.level * 100), 23,32,1);
+		gracz.addUsageItem("Mikstura nowego poziomu", (gracz.level * 100),1, 23,32);
 		changeTime(height, startPoint, gracz, 0, 5);
 		showImage(message);
 	}
@@ -1467,7 +1467,7 @@ void alchemist::buyHpPotion(int height, int startPoint, player &gracz)
 	{
 		message.push_back("You bought a health points potion");
 		message.push_back("");
-		gracz.addUsageItem("Mikstura ¿ycia", ceny[1], 23,32, 1);
+		gracz.addUsageItem("Mikstura ¿ycia", ceny[1], 1, 23,32);
 		changeTime(height, startPoint, gracz, 0, 5);
 		showImage(message);
 	}

@@ -1,8 +1,8 @@
 #include "town square.h"
-#include "tawerna.h"
+//#include "tawerna.h"
 #include "kowal.h"
 //#include "burdel.h"
-#include "alchemik.h"
+//#include "alchemik.h"
 #include "general_store.h"
 #include "game_over.h"
 #include "cheat_menu.h"
@@ -13,10 +13,11 @@
 #include "level_up.h"
 #include "tabelka.h"
 #include "quest.h"
-#include "dungeon.h"
+//#include "dungeon.h"
 #include "czas.h"
-#include "bladesmithShop.h"
+//#include "bladesmithShop.h"
 #include "playerTransport.h"
+#include "NPCTransport.h"
 
 int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blacksmith kowal, bladesmith miecznik, alchemist alchemik,shaman szaman, doctor lekarz, chest krzynka)
 {
@@ -115,7 +116,36 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 		{
 		case 20:
 		{
-			gracz = enterTavern(gracz,bobby,krzynka);
+			//gracz = enterTavern(gracz,bobby,krzynka);
+			typedef void(*Shit_fun)();
+			Shit_fun shit;
+			//HINSTANCE cos = LoadLibrary("../Debug/Tavern.dll");
+			HINSTANCE cos = LoadLibrary("./dll/Tavern.dll");
+			if (cos)
+			{
+				shit = (Shit_fun)GetProcAddress(cos, "enterTavern");
+				if (shit)
+				{
+					savePlayerTemp(gracz);
+					saveBarmanTemp(bobby);
+					saveChestTemp(krzynka);
+					shit();
+					loadPlayerTemp(gracz);
+					loadBarmanTemp(bobby);
+					loadChestTemp(krzynka);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(cos);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 21:
@@ -125,12 +155,66 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 		}
 		case 22:
 		{
-			gracz = enterBladesmithShop(gracz, miecznik);
+			//gracz = enterBladesmithShop(gracz, miecznik);
+			typedef void(*Shit_fun)();
+			Shit_fun shit;
+			//HINSTANCE cos = LoadLibrary("../Debug/BladesmithShop.dll");
+			HINSTANCE cos = LoadLibrary("./dll/BladesmithShop.dll");
+			if (cos)
+			{
+				shit = (Shit_fun)GetProcAddress(cos, "enterBladesmithShop");
+				if (shit)
+				{
+					savePlayerTemp(gracz);
+					saveBladesmithTemp(miecznik);
+					shit();
+					loadPlayerTemp(gracz);
+					loadBladesmithTemp(miecznik);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(cos);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 23:
 		{
-			gracz = enterLaboratory(gracz,alchemik);
+			//gracz = enterLaboratory(gracz,alchemik);
+			typedef void(*Shit_fun)();
+			Shit_fun shit;
+			//HINSTANCE cos = LoadLibrary("../Debug/AlchemistLab.dll");
+			HINSTANCE cos = LoadLibrary("./dll/AlchemistLab.dll");
+			if (cos)
+			{
+				shit = (Shit_fun)GetProcAddress(cos, "enterAlchemistLab");
+				if (shit)
+				{
+					savePlayerTemp(gracz);
+					saveAlchemistTemp(alchemik);
+					shit();
+					loadPlayerTemp(gracz);
+					loadAlchemistTemp(alchemik);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(cos);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 24:
@@ -138,7 +222,6 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 			typedef void(*Shit_fun)();
 			Shit_fun shit;
 			HINSTANCE cos = LoadLibrary("./dll/Brothel.dll");
-			//HINSTANCE cos = LoadLibrary("C:/Users/Aleksy/source/repos/Gerka/Debug/Brothel.dll");
 			if (cos)
 			{
 				shit = (Shit_fun)GetProcAddress(cos, "enterBrothel");
@@ -179,7 +262,32 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 		}
 		case 28:
 		{
-			gracz = enterDungeon(gracz);
+			//gracz = enterDungeon(gracz);
+			typedef void(*Shit_fun)();
+			Shit_fun shit;
+			//HINSTANCE cos = LoadLibrary("../Debug/Dungeon.dll");
+			HINSTANCE cos = LoadLibrary("./dll/Dungeon.dll");
+			if (cos)
+			{
+				shit = (Shit_fun)GetProcAddress(cos, "enterDungeon");
+				if (shit)
+				{
+					savePlayerTemp(gracz);
+					shit();
+					loadPlayerTemp(gracz);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(cos);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 0:

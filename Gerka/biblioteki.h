@@ -6,7 +6,6 @@
 #include<fstream>
 #include<algorithm>
 #include<curses.h>
-//#include"curses.h"
 #include<vector>
 //#pragma comment(lib, "winmm.lib")
 //#pragma comment(lib,"lib/pdcurses.lib")

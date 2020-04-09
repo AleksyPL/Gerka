@@ -14,7 +14,6 @@ void drunked(int height, int startPoint, player &gracz)
 	changeTime(height, startPoint, gracz, 8, 0);
 	robbery(height, startPoint, gracz, message);
 }
-
 void robbery(int height, int startPoint, player &gracz, vector <string> message)
 {
 	srand((unsigned int)time(NULL));
@@ -42,7 +41,6 @@ void robbery(int height, int startPoint, player &gracz, vector <string> message)
 	}
 	tabSubmenuTextOnly(height, startPoint, message);
 }
-
 void flirting(int height, int startPoint, player &gracz)
 {
 	vector <string> message;
@@ -90,7 +88,6 @@ void flirting(int height, int startPoint, player &gracz)
 	}
 	tabSubmenuTextOnly(height,startPoint,message);
 }
-
 player enterTavern(player gracz,barman bobby, chest &krzynka)
 {
 	changeTime(23,32,gracz, 0, 5);

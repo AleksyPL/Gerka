@@ -81,10 +81,19 @@ void showCredits(WINDOW * win)
 	getch();
 	wclear(win);
 }
+void copyDlls(bool value)
+{
+	if (value == true)
+	{
+		system("copy ../Debug/Tavern.dll ./dll/");
+		system("copy ../Debug/Brothel.dll ./dll/");
+	}
+}
 
 int main()
 {
 	//setlocale(LC_ALL, "polish");
+	//copyDlls(true);
 	system("MODE CON COLS=139 LINES=55");
 	HWND consoleWindow = GetConsoleWindow();
 	SetWindowPos(consoleWindow, 0, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER);

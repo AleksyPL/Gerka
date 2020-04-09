@@ -38,6 +38,7 @@
     <ClCompile Include="level_up.cpp" />
     <ClCompile Include="load.cpp" />
     <ClCompile Include="mobki1.cpp" />
+    <ClCompile Include="NPCTransport.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerTransport.cpp" />
     <ClCompile Include="quest.cpp" />
@@ -75,6 +76,7 @@
     <ClInclude Include="level_up.h" />
     <ClInclude Include="load.h" />
     <ClInclude Include="mobki1.h" />
+    <ClInclude Include="NPCTransport.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playerTransport.h" />
     <ClInclude Include="quest.h" />
@@ -126,8 +128,17 @@
     <Text Include="txt\mobki\skeleton.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AlchemistLab\AlchemistLab.vcxproj">
+      <Project>{08940877-aa05-4ce0-bf57-a5efecb17c80}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\BladesmithShop\BladesmithShop.vcxproj">
+      <Project>{e2d5f10a-00c0-4088-9c7c-a9d8611123ea}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Brothel\MyDLL.vcxproj">
       <Project>{3ab31e7c-1bfc-44b3-8afb-dc8a9032321f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dungeon\Dungeon.vcxproj">
+      <Project>{b1035492-b138-46ce-93e4-6b24bf393923}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Tavern\Tavern.vcxproj">
       <Project>{e30bf038-4a0e-49ad-9029-80fc0c28d52a}</Project>
