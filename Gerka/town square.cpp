@@ -1,14 +1,14 @@
 #include "town square.h"
 //#include "tawerna.h"
-#include "kowal.h"
+//#include "kowal.h"
 //#include "burdel.h"
 //#include "alchemik.h"
-#include "general_store.h"
+//#include "general_store.h"
 #include "game_over.h"
 #include "cheat_menu.h"
 #include "save.h"
-#include "shamans_house.h"
-#include "szpital.h"
+//#include "shamans_house.h"
+//#include "szpital.h"
 #include "inventory.h"
 #include "level_up.h"
 #include "tabelka.h"
@@ -150,7 +150,34 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 		}
 		case 21:
 		{
-			gracz = enterForge(gracz,kowal);
+			//gracz = enterForge(gracz,kowal);
+			typedef void(*Shit_fun)();
+			Shit_fun shit;
+			//HINSTANCE cos = LoadLibrary("../Debug/Armourer.dll");
+			HINSTANCE cos = LoadLibrary("./dll/Armourer.dll");
+			if (cos)
+			{
+				shit = (Shit_fun)GetProcAddress(cos, "enterArmourerShop");
+				if (shit)
+				{
+					savePlayerTemp(gracz);
+					saveBlacksmithTemp(kowal);
+					shit();
+					loadPlayerTemp(gracz);
+					loadBlacksmithTemp(kowal);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(cos);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 22:
@@ -247,17 +274,98 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 		}
 		case 25:
 		{
-			gracz = enterShop(gracz,handlarz);
+			//gracz = enterShop(gracz,handlarz);
+			typedef void(*Shit_fun)();
+			Shit_fun shit;
+			//HINSTANCE cos = LoadLibrary("../Debug/GeneralStore.dll");
+			HINSTANCE cos = LoadLibrary("./dll/GeneralStore.dll");
+			if (cos)
+			{
+				shit = (Shit_fun)GetProcAddress(cos, "enterGeneralStore");
+				if (shit)
+				{
+					savePlayerTemp(gracz);
+					saveAlchemistTemp(alchemik);
+					shit();
+					loadPlayerTemp(gracz);
+					loadAlchemistTemp(alchemik);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(cos);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 26:
 		{
-			gracz = enterShamanHouse(gracz,szaman);
+			//gracz = enterShamanHouse(gracz,szaman);
+			typedef void(*Shit_fun)();
+			Shit_fun shit;
+			//HINSTANCE cos = LoadLibrary("../Debug/ShamansHouse.dll");
+			HINSTANCE cos = LoadLibrary("./dll/ShamansHouse.dll");
+			if (cos)
+			{
+				shit = (Shit_fun)GetProcAddress(cos, "enterShamansHouse");
+				if (shit)
+				{
+					savePlayerTemp(gracz);
+					saveShamanTemp(szaman);
+					shit();
+					loadPlayerTemp(gracz);
+					loadShamanTemp(szaman);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(cos);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 27:
 		{
-			gracz = enterHospital(gracz, lekarz);
+			//gracz = enterHospital(gracz, lekarz);
+			typedef void(*Shit_fun)();
+			Shit_fun shit;
+			//HINSTANCE cos = LoadLibrary("../Debug/Hospital.dll");
+			HINSTANCE cos = LoadLibrary("./dll/Hospital.dll");
+			if (cos)
+			{
+				shit = (Shit_fun)GetProcAddress(cos, "enterHospital");
+				if (shit)
+				{
+					savePlayerTemp(gracz);
+					saveDoctorTemp(lekarz);
+					shit();
+					loadPlayerTemp(gracz);
+					loadDoctorTemp(lekarz);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(cos);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 28:

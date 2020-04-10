@@ -7,8 +7,8 @@
 player enterForge(player gracz,blacksmith kowal)
 {
 	int highlight = 0;
-	changeTime(23,32,gracz, 0, 5);
-	if (gracz.hour >= 20 || gracz.hour <6)
+	changeTime(23, 32, gracz, 0, 5);
+	if (gracz.hour >= 20 || gracz.hour < 6)
 	{
 		vector<string> message;
 		message.push_back("Forge closed");
@@ -24,14 +24,14 @@ player enterForge(player gracz,blacksmith kowal)
 			vector<string> message;
 			message.push_back("You have to go. We're closing.");
 			tabSubmenuFancyTextOnly(23, 32, message, 50);
-			changeTime(23,32,gracz, 0, 5);
+			changeTime(23, 32, gracz, 0, 5);
 			return gracz;
 		}
 		if (gracz.hp <= 0)
 		{
 			return gracz;
 		}
-		levelUp(23,32, gracz);
+		levelUp(23, 32, gracz);
 		string menu[20];
 		string info[20];
 		__int64 ceny[20];
@@ -136,7 +136,7 @@ player enterForge(player gracz,blacksmith kowal)
 				if (tryb == 0)
 				{
 					tryb = 1;
-					changeTime(23,32,gracz, 0, 1);
+					changeTime(23, 32, gracz, 0, 1);
 				}
 				else
 				{
@@ -153,18 +153,17 @@ player enterForge(player gracz,blacksmith kowal)
 			{
 				if (tryb == 0)
 				{
-					changeTime(23,32,gracz, 0, 5);
+					changeTime(23, 32, gracz, 0, 5);
 					return gracz;
 				}
 				else if (tryb == 1)
 				{
 					tryb = 0;
-					changeTime(23,32,gracz, 0, 1);
+					changeTime(23, 32, gracz, 0, 1);
 					break;
 				}
 			}
 			}
 		}
-		
 	}
 }

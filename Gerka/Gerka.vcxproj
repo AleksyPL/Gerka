@@ -131,6 +131,9 @@
     <ProjectReference Include="..\AlchemistLab\AlchemistLab.vcxproj">
       <Project>{08940877-aa05-4ce0-bf57-a5efecb17c80}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Armourer\Armourer.vcxproj">
+      <Project>{4795863f-f1e9-4ea1-93c4-71f517ea0b63}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\BladesmithShop\BladesmithShop.vcxproj">
       <Project>{e2d5f10a-00c0-4088-9c7c-a9d8611123ea}</Project>
     </ProjectReference>
@@ -139,6 +142,15 @@
     </ProjectReference>
     <ProjectReference Include="..\Dungeon\Dungeon.vcxproj">
       <Project>{b1035492-b138-46ce-93e4-6b24bf393923}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GeneralStore\GeneralStore.vcxproj">
+      <Project>{70ff3cdb-6645-4f0a-b252-25684de0eb52}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Hospital\Hospital.vcxproj">
+      <Project>{f6b22286-735d-459d-bb6a-835962137a8d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ShamansHouse\ShamansHouse.vcxproj">
+      <Project>{105463f3-2ef0-47d8-ad05-94a4370963de}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Tavern\Tavern.vcxproj">
       <Project>{e30bf038-4a0e-49ad-9029-80fc0c28d52a}</Project>
