@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{B1035492-B138-46CE-93E4-6B24BF393923}</ProjectGuid>
+    <ProjectGuid>{4795863F-F1E9-4EA1-93C4-71F517EA0B63}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Dungeon</RootNamespace>
+    <RootNamespace>Armourer</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -87,7 +87,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;DUNGEON_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;ARMOURER_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)Gerka;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -105,7 +105,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;DUNGEON_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;ARMOURER_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -122,7 +122,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;DUNGEON_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;ARMOURER_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir)include;$(SolutionDir)Gerka;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -144,7 +144,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;DUNGEON_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;ARMOURER_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -160,34 +160,32 @@
     <ClCompile Include="..\Gerka\biblioteki.cpp" />
     <ClCompile Include="..\Gerka\boost_syf.cpp" />
     <ClCompile Include="..\Gerka\czas.cpp" />
-    <ClCompile Include="..\Gerka\fight_mode.cpp" />
-    <ClCompile Include="..\Gerka\inventory.cpp" />
-    <ClCompile Include="..\Gerka\items.cpp" />
+    <ClCompile Include="..\Gerka\dwellers.cpp" />
     <ClCompile Include="..\Gerka\level_up.cpp" />
-    <ClCompile Include="..\Gerka\mobki1.cpp" />
+    <ClCompile Include="..\Gerka\NPCTransport.cpp" />
     <ClCompile Include="..\Gerka\player.cpp" />
     <ClCompile Include="..\Gerka\playerTransport.cpp" />
+    <ClCompile Include="..\Gerka\sleep.cpp" />
     <ClCompile Include="..\Gerka\tabelka.cpp" />
     <ClCompile Include="..\Gerka\tytul.cpp" />
     <ClCompile Include="..\Gerka\zakres.cpp" />
+    <ClCompile Include="armourer.cpp" />
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="dungeon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Gerka\biblioteki.h" />
     <ClInclude Include="..\Gerka\boost_syf.h" />
     <ClInclude Include="..\Gerka\czas.h" />
-    <ClInclude Include="..\Gerka\fight_mode.h" />
-    <ClInclude Include="..\Gerka\inventory.h" />
-    <ClInclude Include="..\Gerka\items.h" />
+    <ClInclude Include="..\Gerka\dwellers.h" />
     <ClInclude Include="..\Gerka\level_up.h" />
-    <ClInclude Include="..\Gerka\mobki1.h" />
+    <ClInclude Include="..\Gerka\NPCTransport.h" />
     <ClInclude Include="..\Gerka\player.h" />
     <ClInclude Include="..\Gerka\playerTransport.h" />
+    <ClInclude Include="..\Gerka\sleep.h" />
     <ClInclude Include="..\Gerka\tabelka.h" />
     <ClInclude Include="..\Gerka\tytul.h" />
     <ClInclude Include="..\Gerka\zakres.h" />
-    <ClInclude Include="dungeon.h" />
+    <ClInclude Include="armourer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
