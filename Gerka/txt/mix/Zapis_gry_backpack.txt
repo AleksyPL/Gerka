@@ -1,15 +1,15 @@
 Usable item number 1
-Mikstura nowego poziomu
-5
+
+0
 Usable item number 2
-Mikstura zycia
-1
+
+0
 Usable item number 3
-Talerz
-4
+
+0
 Usable item number 4
-Ludzki zab
-7
+
+0
 Usable item number 5
 
 0
@@ -71,8 +71,8 @@ Crafing item - alchemy number 4
 
 0
 Crafing item - alchemy number 5
-
-0
+Blood
+12
 Crafing item - alchemy number 6
 
 0
@@ -119,14 +119,14 @@ Crafing item - alchemy number 20
 
 0
 Crafing item - smithery number 1
-
-0
+Gold slab
+10
 Crafing item - smithery number 2
 
 0
 Crafing item - smithery number 3
-
-0
+Diamond
+10
 Crafing item - smithery number 4
 
 0

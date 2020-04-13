@@ -1,39 +1,34 @@
 #include "town square.h"
-#include "tawerna.h"
-#include "kowal.h"
-#include "burdel.h"
-#include "alchemik.h"
-#include "general_store.h"
 #include "game_over.h"
 #include "cheat_menu.h"
 #include "save.h"
-#include "shamans_house.h"
-#include "szpital.h"
 #include "inventory.h"
 #include "level_up.h"
 #include "tabelka.h"
 #include "quest.h"
-#include "dungeon.h"
 #include "czas.h"
-#include "bladesmithShop.h"
+#include "playerTransport.h"
+#include "NPCTransport.h"
 
 int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blacksmith kowal, bladesmith miecznik, alchemist alchemik,shaman szaman, doctor lekarz, chest krzynka)
 {
 	srand((unsigned int)time(NULL));
 	int highlight = 0;
+	string local;
+	string info[20];
+	string menu[20];
+	__int64 ceny[20];
 	while (1)
 	{
-		check_quest_status(gracz);
+		checkQuestStatus(gracz);
 		levelUp(23,32,gracz);
 		if (gracz.hp <= 0)
 		{
-			game_over(55,0);
+			gameOver(55,0);
 			return 0;
 		}
-		string local = "Town square";
-
-		string info[20];
-		info[0] = "Close game";
+		local = "Town square";
+		info[0] = "Back to main menu";
 		info[1] = "Save game";
 		info[2] = "Equipment & Stats";
 		info[3] = "Skills";
@@ -53,10 +48,8 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 		info[17] = "";
 		info[18] = "";
 		info[19] = "";
-
-		string menu[20];
 		/* 1*/menu[0] = "Go to the tavern";
-		/* 2*/menu[1] = "Go to the forge"; 
+		/* 2*/menu[1] = "Go to the armourer shop"; 
 		/* 3*/menu[2] = "Go to the bladesmith shop";
 		/* 4*/menu[3] = "Go to the alchemist's lab";
 		/* 5*/menu[4] = "Go to the brothel";
@@ -75,8 +68,6 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 		/*18*/menu[17] = "";
 		/*19*/menu[18] = "";
 		/*20*/menu[19] = "";
-
-		__int64 ceny[20];
 		ceny[0] = 0;
 		ceny[1] = 0;
 		ceny[2] = 0;
@@ -114,54 +105,277 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 		{
 		case 20:
 		{
-			gracz = enter_tavern(gracz,bobby,krzynka);
+			typedef void(*function)();
+			function pointer;
+			HINSTANCE libraryHandler = LoadLibrary("./dll/Tavern.dll");
+			if (libraryHandler)
+			{
+				pointer = (function)GetProcAddress(libraryHandler, "enterTavern");
+				if (pointer)
+				{
+					savePlayerTemp(gracz);
+					saveBarmanTemp(bobby);
+					saveChestTemp(krzynka);
+					pointer();
+					loadPlayerTemp(gracz);
+					loadBarmanTemp(bobby);
+					loadChestTemp(krzynka);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(libraryHandler);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 21:
 		{
-			gracz = enter_forge(gracz,kowal);
+			typedef void(*function)();
+			function pointer;
+			HINSTANCE libraryHandler = LoadLibrary("./dll/Armourer.dll");
+			if (libraryHandler)
+			{
+				pointer = (function)GetProcAddress(libraryHandler, "enterArmourerShop");
+				if (pointer)
+				{
+					savePlayerTemp(gracz);
+					saveBlacksmithTemp(kowal);
+					pointer();
+					loadPlayerTemp(gracz);
+					loadBlacksmithTemp(kowal);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(libraryHandler);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 22:
 		{
-			gracz = enterBladesmithShop(gracz, miecznik);
+			typedef void(*function)();
+			function pointer;
+			HINSTANCE libraryHandler = LoadLibrary("./dll/BladesmithShop.dll");
+			if (libraryHandler)
+			{
+				pointer = (function)GetProcAddress(libraryHandler, "enterBladesmithShop");
+				if (pointer)
+				{
+					savePlayerTemp(gracz);
+					saveBladesmithTemp(miecznik);
+					pointer();
+					loadPlayerTemp(gracz);
+					loadBladesmithTemp(miecznik);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(libraryHandler);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 23:
 		{
-			gracz = enter_laboratory(gracz,alchemik);
+			typedef void(*function)();
+			function pointer;
+			HINSTANCE libraryHandler = LoadLibrary("./dll/AlchemistLab.dll");
+			if (libraryHandler)
+			{
+				pointer = (function)GetProcAddress(libraryHandler, "enterAlchemistLab");
+				if (pointer)
+				{
+					savePlayerTemp(gracz);
+					saveAlchemistTemp(alchemik);
+					pointer();
+					loadPlayerTemp(gracz);
+					loadAlchemistTemp(alchemik);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(libraryHandler);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 24:
 		{
-			gracz = enter_brothel(gracz);
+			typedef void(*function)();
+			function pointer;
+			HINSTANCE libraryHandler = LoadLibrary("./dll/Brothel.dll");
+			if (libraryHandler)
+			{
+				pointer = (function)GetProcAddress(libraryHandler, "enterBrothel");
+				if (pointer)
+				{
+					savePlayerTemp(gracz);
+					pointer();
+					loadPlayerTemp(gracz);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(libraryHandler);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 25:
 		{
-			gracz = enter_shop(gracz,handlarz);
+			typedef void(*function)();
+			function pointer;
+			HINSTANCE libraryHandler = LoadLibrary("./dll/GeneralStore.dll");
+			if (libraryHandler)
+			{
+				pointer = (function)GetProcAddress(libraryHandler, "enterGeneralStore");
+				if (pointer)
+				{
+					savePlayerTemp(gracz);
+					saveGeneralStoreSellerTemp(handlarz);
+					pointer();
+					loadPlayerTemp(gracz);
+					loadGeneralStoreSellerTemp(handlarz);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(libraryHandler);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 26:
 		{
-			gracz = enter_shaman_house(gracz,szaman);
+			typedef void(*function)();
+			function pointer;
+			HINSTANCE libraryHandler = LoadLibrary("./dll/ShamansHouse.dll");
+			if (libraryHandler)
+			{
+				pointer = (function)GetProcAddress(libraryHandler, "enterShamansHouse");
+				if (pointer)
+				{
+					savePlayerTemp(gracz);
+					saveShamanTemp(szaman);
+					pointer();
+					loadPlayerTemp(gracz);
+					loadShamanTemp(szaman);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(libraryHandler);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 27:
 		{
-			gracz = enter_hospital(gracz, lekarz);
+			typedef void(*function)();
+			function pointer;
+			HINSTANCE libraryHandler = LoadLibrary("./dll/Hospital.dll");
+			if (libraryHandler)
+			{
+				pointer = (function)GetProcAddress(libraryHandler, "enterHospital");
+				if (pointer)
+				{
+					savePlayerTemp(gracz);
+					saveDoctorTemp(lekarz);
+					pointer();
+					loadPlayerTemp(gracz);
+					loadDoctorTemp(lekarz);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(libraryHandler);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 28:
 		{
-			gracz = enterDungeon(gracz);
+			typedef void(*function)();
+			function pointer;
+			HINSTANCE libraryHandler = LoadLibrary("./dll/Dungeon.dll");
+			if (libraryHandler)
+			{
+				pointer = (function)GetProcAddress(libraryHandler, "enterDungeon");
+				if (pointer)
+				{
+					savePlayerTemp(gracz);
+					pointer();
+					loadPlayerTemp(gracz);
+				}
+				else
+				{
+					vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+					tabSubmenuTextOnly(23, 32, message);
+				}
+				FreeLibrary(libraryHandler);
+			}
+			else
+			{
+				vector <string> message = { "This location is unavailable, you have to buy a expansion." };
+				tabSubmenuTextOnly(23, 32, message);
+			}
 			break;
 		}
 		case 0:
 		{
 			vector <string> message;
 			vector <string> options;
-			message.push_back("Are you sure you want to close the game?");
+			message.push_back("Are you sure you want to back to the main menu?");
 			message.push_back("The progress will not be saved.");
 			options.push_back("Yes");
 			options.push_back("No");
@@ -179,12 +393,12 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 		}
 		case 2:
 		{
-			gracz = enter_inventory(gracz);
+			enterInventory(gracz);
 			break;
 		}
 		case 6:
 		{
-			wait_n_hours(23, 32, gracz);
+			waitNHours(23, 32, gracz);
 			break;
 		}
 		case 5:
@@ -193,7 +407,7 @@ int enterTownSquare(player gracz,barman bobby, generalStoreSeller handlarz, blac
 		}
 		case 7:
 		{
-			gracz = enter_cheat_menu(gracz);
+			enterCheatMenu(gracz);
 			break;
 		}
 		default:

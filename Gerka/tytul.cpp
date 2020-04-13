@@ -1,7 +1,7 @@
 #include "level_up.h"
 #include "tytul.h"
 
-void give_the_title(player &gracz)
+void giveTheTitle(player &gracz)
 {
 	int pomoc = gracz.level / 5;
 	string linia;

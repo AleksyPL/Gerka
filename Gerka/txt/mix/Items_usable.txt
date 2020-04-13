@@ -1,6 +1,5 @@
-Durexy
-Garnek
-Talerz
-Butelka piwa
-Ludzki zab
 Lockpick
+Human's tooth
+Apple
+Level up potion
+Healing potion

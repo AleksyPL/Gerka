@@ -115,21 +115,22 @@ __int64 loadValue__int64(int height, int startPoint, bool& succes, string commen
 	}
 	return number;
 }
-player enter_cheat_menu(player &gracz)
+void enterCheatMenu(player &gracz)
 {
 	int leftSideCard = 0;
 	int rightSideCard = 0;
 	int highlight = 0;
-	while (1)
+	string leftSide[21];
+	string rightSide[21];
+	bool exit = false;
+	while (exit == false)
 	{
 		if (gracz.hp <= 0)
 		{
-			return gracz;
+			exit = true;
 		}
 		range(gracz);
 		levelUp(23, 32, gracz);
-		string leftSide[21];
-		string rightSide[21];
 		vector <string> bottomSide = { "<-","->","Return","<-","->" };
 		for (int i = 0; i < 20; i++)
 		{
@@ -256,8 +257,8 @@ player enter_cheat_menu(player &gracz)
 				rightSide[5] = "Weapon name: " + gracz.weaponName;
 			}
 			rightSide[6] = "Weapon points: " + to_string(gracz.weaponDamage);
-			rightSide[7] = "Gold: " + to_string(gracz.gold);
-			rightSide[8] = "";
+			rightSide[7] = "Available weapon upgrade points: " + to_string(gracz.availableWeaponUpgradePoints);
+			rightSide[8] = "Gold: " + to_string(gracz.gold);
 			rightSide[9] = "";
 			rightSide[10] = "";
 			rightSide[11] = "";
@@ -271,305 +272,308 @@ player enter_cheat_menu(player &gracz)
 			rightSide[19] = "";
 		}
 		range(gracz);
-		highlight = tabItemsLeftOnly(highlight, "Cheat Menu", leftSide, rightSide, bottomSide);
-		bool succes = true;
-		if (highlight < 20)
+		if (exit == false)
 		{
-			switch (highlight)
+			highlight = tabItemsLeftOnly(highlight, "Cheat Menu", leftSide, rightSide, bottomSide);
+			bool succes = true;
+			if (highlight < 20)
 			{
-			case 0:
-			{
-				if (leftSideCard == 0)
+				switch (highlight)
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new health points value: ", 1, "<", 0, 1, ">", gracz.max_hp);
-					if (succes == true)
+				case 0:
+				{
+					if (leftSideCard == 0)
 					{
-						gracz.hp = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new health points value: ", 1, "<", 0, 1, ">", gracz.max_hp);
+						if (succes == true)
+						{
+							gracz.hp = temp;
+						}
+
 					}
-					
+					break;
 				}
-				break;
-			}
-			case 1:
-			{
-				if (leftSideCard == 0)
+				case 1:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new maximum health points value: ", 1, "<", 0, 1, ">", gracz.hp);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.max_hp = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new maximum health points value: ", 1, "<", 0, 1, ">", gracz.hp);
+						if (succes == true)
+						{
+							gracz.max_hp = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 2:
-			{
-				if (leftSideCard == 0)
+				case 2:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new experience points value: ", 1, "<", 0);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.exp = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new experience points value: ", 1, "<", 0);
+						if (succes == true)
+						{
+							gracz.exp = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 3:
-			{
-				if (leftSideCard == 0)
+				case 3:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new maximum experience points value: ", 1, "<", 0);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.exp_to_next_level = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new maximum experience points value: ", 1, "<", 0);
+						if (succes == true)
+						{
+							gracz.exp_to_next_level = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 4:
-			{
-				if (leftSideCard == 0)
+				case 4:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new nutrition level value: ", 1, "<", 0, 1, ">", 10);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.hunger = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new nutrition level value: ", 1, "<", 0, 1, ">", 10);
+						if (succes == true)
+						{
+							gracz.hunger = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 5:
-			{
-				if (leftSideCard == 0)
+				case 5:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new drunk level value: ", 1, "<", 0, 1, ">", 10);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.alko = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new drunk level value: ", 1, "<", 0, 1, ">", 10);
+						if (succes == true)
+						{
+							gracz.alko = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 6:
-			{
-				if (leftSideCard == 0)
+				case 6:
 				{
-					__int64 temp = loadValue__int64(27, 28, succes, "Enter the new gold amount value: ", 1, "<", 0);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.gold = temp;
+						__int64 temp = loadValue__int64(27, 28, succes, "Enter the new gold amount value: ", 1, "<", 0);
+						if (succes == true)
+						{
+							gracz.gold = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 7:
-			{
-				if (leftSideCard == 0)
+				case 7:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new character level value: ", 1, "<", 0);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.level = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new character level value: ", 1, "<", 0);
+						if (succes == true)
+						{
+							gracz.level = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 8:
-			{
-				if (leftSideCard == 0)
+				case 8:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new strength level value: ", 1, "<", 0);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.str = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new strength level value: ", 1, "<", 0);
+						if (succes == true)
+						{
+							gracz.str = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 9:
-			{
-				if (leftSideCard == 0)
+				case 9:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new agility level value: ", 1, "<", 0);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.agility = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new agility level value: ", 1, "<", 0);
+						if (succes == true)
+						{
+							gracz.agility = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 10:
-			{
-				if (leftSideCard == 0)
+				case 10:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new inteligence level value: ", 1, "<", 0);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.intel = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new inteligence level value: ", 1, "<", 0);
+						if (succes == true)
+						{
+							gracz.intel = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 11:
-			{
-				if (leftSideCard == 0)
+				case 11:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new charisma level value: ", 1, "<", 0);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.charisma = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new charisma level value: ", 1, "<", 0);
+						if (succes == true)
+						{
+							gracz.charisma = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 12:
-			{
-				if (leftSideCard == 0)
+				case 12:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new luck level value: ", 1, "<", 0);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.luck = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new luck level value: ", 1, "<", 0);
+						if (succes == true)
+						{
+							gracz.luck = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 13:
-			{
-				if (leftSideCard == 0)
+				case 13:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new weapon damage value: ", 1, "<", 0);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.weaponDamage = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new weapon damage value: ", 1, "<", 0);
+						if (succes == true)
+						{
+							gracz.weaponDamage = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 14:
-			{
-				if (leftSideCard == 0)
+				case 14:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new helmet level value: ", 1, "<", 0);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.helmet = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new helmet level value: ", 1, "<", 0);
+						if (succes == true)
+						{
+							gracz.helmet = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 15:
-			{
-				if (leftSideCard == 0)
+				case 15:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new chestplate level value: ", 1, "<", 0);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.chestplate = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new chestplate level value: ", 1, "<", 0);
+						if (succes == true)
+						{
+							gracz.chestplate = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 16:
-			{
-				if (leftSideCard == 0)
+				case 16:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new gloves level value: ", 1, "<", 0);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.gloves = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new gloves level value: ", 1, "<", 0);
+						if (succes == true)
+						{
+							gracz.gloves = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 17:
-			{
-				if (leftSideCard == 0)
+				case 17:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new pants level value: ", 1, "<", 0);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.pants = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new pants level value: ", 1, "<", 0);
+						if (succes == true)
+						{
+							gracz.pants = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 18:
-			{
-				if (leftSideCard == 0)
+				case 18:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new shoes level value: ", 1, "<", 0);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.shoes = temp;
+						int temp = loadValueInt(27, 28, succes, "Enter the new shoes level value: ", 1, "<", 0);
+						if (succes == true)
+						{
+							gracz.shoes = temp;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			case 19:
-			{
-				if (leftSideCard == 0)
+				case 19:
 				{
-					int temp = loadValueInt(27, 28, succes, "Enter the new hour: ", 1, "<", 0, 1, ">", 23);
-					int temp2 = loadValueInt(27, 28, succes, "Enter the new minute: ", 1, "<", 0, 1, ">", 59);
-					if (succes == true)
+					if (leftSideCard == 0)
 					{
-						gracz.hour = temp;
-						gracz.minute = temp2;
+						int temp = loadValueInt(27, 28, succes, "Enter the new hour: ", 1, "<", 0, 1, ">", 23);
+						int temp2 = loadValueInt(27, 28, succes, "Enter the new minute: ", 1, "<", 0, 1, ">", 59);
+						if (succes == true)
+						{
+							gracz.hour = temp;
+							gracz.minute = temp2;
+						}
 					}
+					break;
 				}
-				break;
-			}
-			}
-			if (succes == true)
-			{
-				sound_cheat_activated();
-			}
-		}
-		else
-		{
-			switch (highlight)
-			{
-			case 20:
-			{
-				if (leftSideCard != 0)
+				}
+				if (succes == true)
 				{
-					leftSideCard--;
+					soundCheatActivated();
 				}
-				break;
 			}
-			case 21:
+			else
 			{
-				if (leftSideCard != 0)
+				switch (highlight)
 				{
-					leftSideCard++;
-				}
-				break;
-			}
-			case 22:
-			{
-				return gracz;
-			}
-			case 23:
-			{
-				if (rightSideCard != 0)
+				case 20:
 				{
-					rightSideCard--;
+					if (leftSideCard != 0)
+					{
+						leftSideCard--;
+					}
+					break;
 				}
-				break;
-			}
-			case 24:
-			{
-				if (rightSideCard < 1)
+				case 21:
 				{
-					rightSideCard++;
+					if (leftSideCard != 0)
+					{
+						leftSideCard++;
+					}
+					break;
 				}
-				break;
-			}
-			default:
-			{
-				break;
-			}
+				case 22:
+				{
+					exit = true;
+				}
+				case 23:
+				{
+					if (rightSideCard != 0)
+					{
+						rightSideCard--;
+					}
+					break;
+				}
+				case 24:
+				{
+					if (rightSideCard < 1)
+					{
+						rightSideCard++;
+					}
+					break;
+				}
+				default:
+				{
+					break;
+				}
+				}
 			}
 		}
 	}

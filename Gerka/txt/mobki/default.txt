@@ -16,3 +16,11 @@ Dropped Item
 Lockpick
 Drop rate for item
 20
+Base hit rate
+10
+Additional hit rate
+10
+Base getting hit rate
+10
+Additional getting hit rate
+50

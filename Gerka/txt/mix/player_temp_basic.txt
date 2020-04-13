@@ -1,0 +1,37 @@
+Character name
+Aleksy
+Character level
+1
+Gold
+498905
+Health points
+50
+Max health points
+50
+Strength level
+10
+Agility level
+5
+Inteligence level
+5
+Charisma level
+5
+Luck level
+5
+Nutrition points
+7
+Drunk level
+0
+Experience points
+5
+Experience points to the next level
+100
+Day counter
+2
+Day hour
+13
+Day minute
+4
+Quest
+
+Character skill

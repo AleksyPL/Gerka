@@ -1,6 +1,6 @@
 Usable item number 1
-
-0
+Level up potion
+11
 Usable item number 2
 
 0

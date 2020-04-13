@@ -1,6 +1,6 @@
 #pragma once
-#include "biblioteki.h"
+//#include "biblioteki.h"
 #include "player.h"
 #include "dwellers.h"
 
-void enter_chest_mode(player &gracz,chest &krzynka);
+void enterChestMode(player &gracz,chest &krzynka);

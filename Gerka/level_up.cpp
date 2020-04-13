@@ -7,23 +7,23 @@ void removeNegativeEffects(player& gracz)
 {
 	if (gracz.counter_nerf_str != 0)
 	{
-		remove_nerf_str(gracz);
+		removeNerfStrenght(gracz);
 	}
 	if (gracz.counter_nerf_agility != 0)
 	{
-		remove_nerf_agility(gracz);
+		removeNerfAgility(gracz);
 	}
 	if (gracz.counter_nerf_intel != 0)
 	{
-		remove_nerf_intel(gracz);
+		removeNerfIntelligence(gracz);
 	}
 	if (gracz.counter_nerf_luck != 0)
 	{
-		remove_nerf_luck(gracz);
+		removeNerfLuck(gracz);
 	}
 	if (gracz.counter_nerf_charisma != 0)
 	{
-		remove_nerf_charisma(gracz);
+		removeNerfCharisma(gracz);
 	}
 }
 
@@ -35,11 +35,10 @@ void levelUp(int height, int startPoint, player& gracz, int skipCheckingXP)
 		vector <string> options;
 		removeNegativeEffects(gracz);
 		message.push_back("You are promoted to level " + to_string(gracz.level + 1));
-		gracz.exp_to_next_level = gracz.level * 1000;
+		gracz.exp_to_next_level = gracz.level * 100;
 		gracz.level = gracz.level + 1;
 		gracz.hp = gracz.max_hp + 10;
 		gracz.max_hp = gracz.hp;
-		give_the_title(gracz);
 		message.push_back("You get a skill point, which statistic you want to add it to?");
 		options.push_back("Strength");
 		options.push_back("Agility");
@@ -89,7 +88,6 @@ void levelUp(int height, int startPoint, player& gracz, int skipCheckingXP)
 			gracz.level = gracz.level + 1;
 			gracz.hp = gracz.max_hp + 10;
 			gracz.max_hp = gracz.hp;
-			give_the_title(gracz);
 			message.push_back("You get a skill point, which statistic you want to add it to?");
 			options.push_back("Strength");
 			options.push_back("Agility");
@@ -127,4 +125,5 @@ void levelUp(int height, int startPoint, player& gracz, int skipCheckingXP)
 			}
 		}
 	}
+	giveTheTitle(gracz);
 }

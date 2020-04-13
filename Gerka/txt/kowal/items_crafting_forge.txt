@@ -1,2 +1,2 @@
-Sztabka z³ota
-2000
+Gold slab
+100

@@ -19,88 +19,124 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="alchemik.cpp" />
     <ClCompile Include="biblioteki.cpp" />
-    <ClCompile Include="bladesmithShop.cpp" />
     <ClCompile Include="boost_syf.cpp" />
-    <ClCompile Include="burdel.cpp" />
     <ClCompile Include="cheat_menu.cpp" />
     <ClCompile Include="chest.cpp" />
     <ClCompile Include="czas.cpp" />
-    <ClCompile Include="dungeon.cpp" />
     <ClCompile Include="dwellers.cpp" />
     <ClCompile Include="game_over.cpp" />
+    <ClCompile Include="hero_creator.cpp" />
     <ClCompile Include="inventory.cpp" />
     <ClCompile Include="items.cpp" />
     <ClCompile Include="karty.cpp" />
-    <ClCompile Include="kowal.cpp" />
     <ClCompile Include="level_up.cpp" />
     <ClCompile Include="load.cpp" />
     <ClCompile Include="mobki1.cpp" />
+    <ClCompile Include="NPCTransport.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="playerTransport.cpp" />
     <ClCompile Include="quest.cpp" />
     <ClCompile Include="save.cpp" />
-    <ClCompile Include="shamans_house.cpp" />
     <ClCompile Include="sleep.cpp" />
-    <ClCompile Include="szpital.cpp" />
     <ClCompile Include="trade_mode.cpp" />
     <ClCompile Include="start.cpp" />
     <ClCompile Include="tabelka.cpp" />
-    <ClCompile Include="tawerna.cpp" />
-    <ClCompile Include="general_store.cpp" />
     <ClCompile Include="tytul.cpp" />
     <ClCompile Include="town square.cpp" />
     <ClCompile Include="fight_mode.cpp" />
     <ClCompile Include="zakres.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="alchemik.h" />
     <ClInclude Include="biblioteki.h" />
-    <ClInclude Include="bladesmithShop.h" />
     <ClInclude Include="boost_syf.h" />
-    <ClInclude Include="burdel.h" />
     <ClInclude Include="cheat_menu.h" />
     <ClInclude Include="chest.h" />
     <ClInclude Include="czas.h" />
-    <ClInclude Include="dungeon.h" />
     <ClInclude Include="dwellers.h" />
     <ClInclude Include="game_over.h" />
+    <ClInclude Include="hero_creator.h" />
     <ClInclude Include="inventory.h" />
     <ClInclude Include="items.h" />
     <ClInclude Include="karty.h" />
-    <ClInclude Include="kowal.h" />
     <ClInclude Include="level_up.h" />
     <ClInclude Include="load.h" />
     <ClInclude Include="mobki1.h" />
+    <ClInclude Include="NPCTransport.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="playerTransport.h" />
     <ClInclude Include="quest.h" />
     <ClInclude Include="save.h" />
-    <ClInclude Include="shamans_house.h" />
     <ClInclude Include="sleep.h" />
-    <ClInclude Include="szpital.h" />
     <ClInclude Include="trade_mode.h" />
     <ClInclude Include="start.h" />
     <ClInclude Include="tabelka.h" />
-    <ClInclude Include="tawerna.h" />
-    <ClInclude Include="general_store.h" />
     <ClInclude Include="tytul.h" />
     <ClInclude Include="town square.h" />
     <ClInclude Include="fight_mode.h" />
     <ClInclude Include="zakres.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="txt\bladesmith\image_upgrade.txt" />
+    <Text Include="txt\bladesmith\weapons.txt" />
+    <Text Include="txt\dungeons\fullfog.txt" />
     <Text Include="txt\dungeons\lvl1.txt" />
     <Text Include="txt\dungeons\lvl1items.txt" />
     <Text Include="txt\dungeons\lvl1monsters.txt" />
+    <Text Include="txt\mix\credits.txt" />
+    <Text Include="txt\mix\game_over.txt" />
+    <Text Include="txt\mix\game_over0.txt" />
+    <Text Include="txt\mix\game_over1.txt" />
+    <Text Include="txt\mix\Items_alchemy.txt" />
+    <Text Include="txt\mix\Items_prices.txt" />
+    <Text Include="txt\mix\Items_smithery.txt" />
+    <Text Include="txt\mix\Items_usable.txt" />
+    <Text Include="txt\mix\logo0.txt" />
+    <Text Include="txt\mix\logo1.txt" />
+    <Text Include="txt\mix\logo2.txt" />
+    <Text Include="txt\mix\pseudo.txt" />
     <Text Include="txt\mix\Zapis_gry_backpack.txt" />
     <Text Include="txt\mix\Zapis_gry_basic.txt" />
     <Text Include="txt\mix\Zapis_gry_boost.txt" />
     <Text Include="txt\mix\Zapis_gry_chest.txt" />
     <Text Include="txt\mix\Zapis_gry_eq.txt" />
     <Text Include="txt\mix\Zapis_gry_npc.txt" />
+    <Text Include="txt\mobki\bandit.txt" />
     <Text Include="txt\mobki\citizen_high.txt" />
     <Text Include="txt\mobki\citizen_medium.txt" />
     <Text Include="txt\mobki\citizen_small.txt" />
+    <Text Include="txt\mobki\default.txt" />
+    <Text Include="txt\mobki\dog.txt" />
+    <Text Include="txt\mobki\skeleton.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AlchemistLab\AlchemistLab.vcxproj">
+      <Project>{08940877-aa05-4ce0-bf57-a5efecb17c80}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Armourer\Armourer.vcxproj">
+      <Project>{4795863f-f1e9-4ea1-93c4-71f517ea0b63}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\BladesmithShop\BladesmithShop.vcxproj">
+      <Project>{e2d5f10a-00c0-4088-9c7c-a9d8611123ea}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Brothel\MyDLL.vcxproj">
+      <Project>{3ab31e7c-1bfc-44b3-8afb-dc8a9032321f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dungeon\Dungeon.vcxproj">
+      <Project>{b1035492-b138-46ce-93e4-6b24bf393923}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GeneralStore\GeneralStore.vcxproj">
+      <Project>{70ff3cdb-6645-4f0a-b252-25684de0eb52}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Hospital\Hospital.vcxproj">
+      <Project>{f6b22286-735d-459d-bb6a-835962137a8d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ShamansHouse\ShamansHouse.vcxproj">
+      <Project>{105463f3-2ef0-47d8-ad05-94a4370963de}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Tavern\Tavern.vcxproj">
+      <Project>{e30bf038-4a0e-49ad-9029-80fc0c28d52a}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

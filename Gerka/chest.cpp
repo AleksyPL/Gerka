@@ -1,24 +1,17 @@
 #include "chest.h"
 #include "tabelka.h"
 
-void enter_chest_mode(player &gracz, chest &krzynka)
+
+void enterChestMode(player &gracz, chest &krzynka)
 {
-	/*int tryb = 0;
-	string info[7];
-	info[0] = "W:ZAMKNIJ SKRZYNIÊ ";
-	info[1] = "";
-	info[2] = "";
-	info[3] = "";
-	info[4] = "";
-	info[5] = "";
-	info[6] = "";*/
 	int highlight = 0;
 	int card = 0;
 	string leftSide[21];
 	string rightSide[21];
 	vector <string> bottomSide = {"<-","Return","->"};
-	bool leaveWhile = false;
-	do
+	bool exit = false;
+	bool anythingMoved = false;
+	while (exit == false)
 	{
 		for (int i = 0; i < 20; i++)
 		{
@@ -28,7 +21,7 @@ void enter_chest_mode(player &gracz, chest &krzynka)
 		if (card == 0)
 		{
 			leftSide[20] = "Items - Usable";
-			if (gracz.count_free_fields_usage() == 20)
+			if (gracz.countFreeFieldsUsage() == 20)
 			{
 				leftSide[0] = "No items";
 			}
@@ -47,7 +40,7 @@ void enter_chest_mode(player &gracz, chest &krzynka)
 				}
 			}
 			rightSide[20] = "Chest - Usable";
-			if (krzynka.count_free_fields_usage() == 20)
+			if (krzynka.countFreeFieldsUsage() == 20)
 			{
 				rightSide[0] = "No items";
 			}
@@ -69,7 +62,7 @@ void enter_chest_mode(player &gracz, chest &krzynka)
 		else if (card == 1)
 		{
 			leftSide[20] = "Items - Alchemy";
-			if (gracz.count_free_fields_alchemy() == 20)
+			if (gracz.countFreeFieldsAlchemy() == 20)
 			{
 				leftSide[0] = "No items";
 			}
@@ -88,7 +81,7 @@ void enter_chest_mode(player &gracz, chest &krzynka)
 				}
 			}
 			rightSide[20] = "Chest - Alchemy";
-			if (krzynka.count_free_fields_alchemy() == 20)
+			if (krzynka.countFreeFieldsAlchemy() == 20)
 			{
 				rightSide[0] = "No items";
 			}
@@ -110,7 +103,7 @@ void enter_chest_mode(player &gracz, chest &krzynka)
 		else if (card == 2)
 		{
 			leftSide[20] = "Items - Smithery";
-			if (gracz.count_free_fields_forge() == 20)
+			if (gracz.countFreeFieldsSmithery() == 20)
 			{
 				leftSide[0] = "No items";
 			}
@@ -129,7 +122,7 @@ void enter_chest_mode(player &gracz, chest &krzynka)
 				}
 			}
 			rightSide[20] = "Chest - Smithery";
-			if (krzynka.count_free_fields_forge() == 20)
+			if (krzynka.countFreeFieldsSmithery() == 20)
 			{
 				rightSide[0] = "No items";
 			}
@@ -148,14 +141,20 @@ void enter_chest_mode(player &gracz, chest &krzynka)
 				}
 			}
 		}
+		if (anythingMoved == true)
+		{
+			findANewHighlight(highlight, leftSide, rightSide);
+		}
 		highlight = tabItemsLeftAndRight(highlight, "Chest", leftSide, rightSide, bottomSide);
 		if (highlight < 20)
 		{
-			krzynka.move_to_chest(27,28,highlight*(card+1), gracz);
+			krzynka.moveToChest(27, 28, (card * 20) + highlight, gracz);
+			anythingMoved = true;
 		}
 		else if (highlight >= 20 && highlight < 40)
 		{
-			krzynka.move_to_player(27, 28, (highlight-20) * (card + 1), gracz);
+			krzynka.moveToPlayer(27, 28, (card * 20) + (highlight - 20), gracz);
+			anythingMoved = true;
 		}
 		else
 		{
@@ -171,7 +170,7 @@ void enter_chest_mode(player &gracz, chest &krzynka)
 			}
 			case 41:
 			{
-				leaveWhile = true;
+				exit = true;
 			}
 			case 42:
 			{
@@ -183,5 +182,5 @@ void enter_chest_mode(player &gracz, chest &krzynka)
 			}
 			}
 		}
-	} while (leaveWhile == false);
+	}
 }

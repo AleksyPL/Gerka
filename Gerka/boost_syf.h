@@ -1,23 +1,23 @@
 #pragma once
 #include "player.h"
 
-void add_nerf_str(player &gracz, int ilosc_godzin, int minus);
-void add_boost_str(player &gracz, int ilosc_godzin, int plus);
-void remove_nerf_str(player &gracz);
-void remove_boost_str(player &gracz);
-void add_nerf_agility(player &gracz, int ilosc_godzin, int minus);
-void add_boost_agility(player &gracz, int ilosc_godzin, int plus);
-void remove_nerf_agility(player &gracz);
-void remove_boost_agility(player &gracz);
-void add_nerf_intel(player &gracz, int ilosc_godzin, int minus);
-void add_boost_intel(player &gracz, int ilosc_godzin, int plus);
-void remove_nerf_intel(player &gracz);
-void remove_boost_intel(player &gracz);
-void add_nerf_luck(player &gracz, int ilosc_godzin, int minus);
-void add_boost_luck(player &gracz, int ilosc_godzin, int plus);
-void remove_nerf_luck(player &gracz);
-void remove_boost_luck(player &gracz);
-void add_nerf_charisma(player &gracz, int ilosc_godzin, int minus);
-void add_boost_charisma(player &gracz, int ilosc_godzin, int plus);
-void remove_nerf_charisma(player &gracz);
-void remove_boost_charisma(player &gracz);
+void addNerfStrenght(player &gracz, int ilosc_godzin, int minus);
+void addBoostStrenght(player &gracz, int ilosc_godzin, int plus);
+void removeNerfStrenght(player &gracz);
+void removeBoostStrenght(player &gracz);
+void addNerfAgility(player &gracz, int ilosc_godzin, int minus);
+void addBoostAgility(player &gracz, int ilosc_godzin, int plus);
+void removeNerfAgility(player &gracz);
+void removeBoostAgility(player &gracz);
+void addNerfIntelligence(player &gracz, int ilosc_godzin, int minus);
+void addBoostIntelligence(player &gracz, int ilosc_godzin, int plus);
+void removeNerfIntelligence(player& gracz);
+void removeBoostIntelligence(player &gracz);
+void addNerfLuck(player &gracz, int ilosc_godzin, int minus);
+void addBoostLuck(player &gracz, int ilosc_godzin, int plus);
+void removeNerfLuck(player &gracz);
+void removeBoostLuck(player &gracz);
+void addNerfCharisma(player &gracz, int ilosc_godzin, int minus);
+void addBoostCharisma(player &gracz, int ilosc_godzin, int plus);
+void removeNerfCharisma(player &gracz);
+void removeBoostCharisma(player &gracz);

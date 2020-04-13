@@ -1,5 +1,5 @@
 #pragma once
-#include "biblioteki.h"
+//#include "biblioteki.h"
 #include "player.h"
 
 class Mob
@@ -17,17 +17,19 @@ public:
 	int dropRateForItem;
 	int baseDroppedGold;
 	int additionalDroppedGold;
-	string fightInfo[18];
+	int baseDealingDamageRate;
+	int additionalDealingDamageRate;
+	int baseGettingHitRate;
+	int additionalGettingHitRate;
+	vector <string> fightInfo;
+	bool stunned;
+	bool bleeding;
+	bool bonesCrushed;
 	void isThisMobCanDropTheItem();
 	void loadData(string path);
+	void updateFightInfo();
 	int returnDroppedGold();
-	Mob(string path)
-	{
-		for (int i = 0; i < 18; i++)
-		{
-			this->fightInfo[i] = "";
-		}
-		loadData(path);
-		isThisMobCanDropTheItem();
-	}
+	int returnDealingDamageRate();
+	int returnGettingHitRate();
+	Mob(string path);
 };

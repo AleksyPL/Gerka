@@ -1,0 +1,16 @@
+Helmet points
+0
+Chestplate points
+0
+Gloves points
+0
+Pants points
+0
+Shoes points
+0
+Weapon damage
+1
+Weapon name
+FistsWeapon priceWeapon price
+0Is the weapon rare?
+0

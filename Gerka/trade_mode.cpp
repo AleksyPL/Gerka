@@ -1,51 +1,6 @@
 #include "tabelka.h"
 #include "trade_mode.h"
 
-void findANewHighlight(int& highlight, string left_side[20], string right_side[20])
-{
-	int leftSideBorder = 19;
-	int rightSideBorder = 19;
-	for (int i = 0; i < 20; i++)
-	{
-		if (left_side[i] == "")
-		{
-			leftSideBorder--;
-		}
-		if (right_side[i] == "")
-		{
-			rightSideBorder--;
-		}
-	}
-	if (highlight < 20)
-	{
-		while (highlight > leftSideBorder)
-		{
-			highlight--;
-		}
-		if (leftSideBorder == 0 && left_side[0] == "")
-		{
-			highlight = 40;
-		}
-	}
-	else if (highlight >= 20 && highlight < 40)
-	{
-		while (highlight>20+ rightSideBorder)
-		{
-			highlight--;
-		}
-		if (rightSideBorder == 0 && right_side[0] == "")
-		{
-			while (highlight < leftSideBorder)
-			{
-				highlight--;
-			}
-			if (leftSideBorder == 0 && left_side[0] == "")
-			{
-				highlight = 40;
-			}
-		}
-	}
-}
 
 void changeData(string whichFunction, string whichSide,string (&array)[21], int card)
 {
@@ -59,7 +14,7 @@ void changeData(string whichFunction, string whichSide,string (&array)[21], int 
 	}
 }
 
-player tradeModeGeneralStore(player &gracz, generalStoreSeller &handlarz)
+void tradeModeGeneralStore(player &gracz, generalStoreSeller &handlarz)
 {
 	string functionToSwitchData = "General Store";
 	bool anythingSoldOrBought = false;
@@ -70,8 +25,9 @@ player tradeModeGeneralStore(player &gracz, generalStoreSeller &handlarz)
 	string left_side[21];
 	string right_side[21];
 	int right_side_prices[20];
+	bool exit = false;
 	vector <string> bottomSide = { "<-","->","Return","<-","->" };
-	while (1)
+	while (exit == false)
 	{
 		for (int i = 0; i < 20; i++)
 		{
@@ -166,7 +122,7 @@ player tradeModeGeneralStore(player &gracz, generalStoreSeller &handlarz)
 				}
 			}
 		}
-		top_side[0] = handlarz.name + "'s gold: " + to_string(handlarz.gold_info());
+		top_side[0] = handlarz.name + "'s gold: " + to_string(handlarz.goldInfo());
 		top_side[1] = "Trade";
 		top_side[2] = gracz.nazwa + "'s gold: " + to_string(gracz.gold);
 		if (anythingSoldOrBought==true)
@@ -204,7 +160,7 @@ player tradeModeGeneralStore(player &gracz, generalStoreSeller &handlarz)
 			}
 			case 42:
 			{
-				return gracz;
+				exit = true;
 			}
 			case 43:
 			{
@@ -226,7 +182,7 @@ player tradeModeGeneralStore(player &gracz, generalStoreSeller &handlarz)
 		}
 	}
 }
-player tradeModeBladesmithShop(player &gracz, bladesmith &miecznik)
+void tradeModeBladesmithShop(player &gracz, bladesmith &miecznik)
 {
 	string functionToSwitchData = "Bladesmith Shop";
 	bool anythingSoldOrBought = false;
@@ -240,9 +196,10 @@ player tradeModeBladesmithShop(player &gracz, bladesmith &miecznik)
 	miecznik.generateMerch(gracz);
 	vector <string> bottomSide = { "<-","->","Return","<-","->" };
 	top_side[1] = "Trade";
-	while (1)
+	bool exit = false;
+	while (exit == false)
 	{
-		top_side[0] = miecznik.name + "'s gold: " + to_string(miecznik.gold_info());
+		top_side[0] = miecznik.name + "'s gold: " + to_string(miecznik.goldInfo());
 		top_side[2] = gracz.nazwa + "'s gold: " + to_string(gracz.gold);
 		for (int i = 0; i < 20; i++)
 		{
@@ -357,7 +314,7 @@ player tradeModeBladesmithShop(player &gracz, bladesmith &miecznik)
 			}*/
 			case 42:
 			{
-				return gracz;
+				exit = true;
 			}
 			/*case 43:
 			{

@@ -1,0 +1,5 @@
+Monsters per level
+6
+Dog
+Bandit
+Skeleton
