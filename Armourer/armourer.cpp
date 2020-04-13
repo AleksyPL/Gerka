@@ -1,6 +1,5 @@
 #include "armourer.h"
 #include "zakres.h"
-#include "kowal.h"
 #include "level_up.h"
 #include "czas.h"
 #include "player.h"
@@ -52,7 +51,7 @@ extern "C" DLLFUNCEX void enterArmourerShop()
 			saveBlacksmithTemp(kowal);
 		}
 		levelUp(23, 32, gracz);
-		local = "Forge";
+		local = "Armourer Shop";
 		if (tryb == 1)
 		{
 			kowal.loadPlayerPoints(gracz);
@@ -105,7 +104,7 @@ extern "C" DLLFUNCEX void enterArmourerShop()
 			ceny[17] = 0;
 			ceny[18] = 0;
 			ceny[19] = 0;
-			info[0] = "Leave forge";
+			info[0] = "Leave Armourer shop";
 			info[1] = "Wait";
 			info[2] = "";
 			info[3] = "";

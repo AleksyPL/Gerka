@@ -150,7 +150,19 @@ extern "C" DLLFUNCEX void enterBladesmithShop()
 			}
 			else
 			{
-				gracz = tradeModeBladesmithShop(gracz, miecznik);
+				tradeModeBladesmithShop(gracz, miecznik);
+			}
+			break;
+		}
+		case 21:
+		{
+			if (tryb == 0)
+			{
+				;
+			}
+			else
+			{
+				miecznik.upgradeWeapon(23,32,gracz,100);
 			}
 			break;
 		}

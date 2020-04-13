@@ -3,7 +3,6 @@
 #include "czas.h"
 #include "level_up.h"
 #include "tabelka.h"
-#include "zakres.h"
 #include "chest.h"
 #include "karty.h"
 #include "playerTransport.h"
@@ -247,7 +246,6 @@ extern "C" DLLFUNCEX void enterTavern()
 			if (tryb == 0)
 			{
 				gambling(23, 32, gracz);
-				range(gracz);
 			}
 			else
 			{

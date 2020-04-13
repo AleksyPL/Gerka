@@ -5,6 +5,7 @@
 #include "inventory.h"
 #include "fight_mode.h"
 #include "czas.h"
+#include "items.h"
 
 dungeonSupervisior::dungeonSupervisior(player gracz)
 {
@@ -96,8 +97,8 @@ bool dungeonSupervisior::loadDungeon(character& hero)
 				}
 			}
 		}
-		loadMonsters(dungeonLevel, hero);
 		loadDecorItems();
+		loadMonsters(dungeonLevel, hero);
 		return true;
 	}
 	else
@@ -201,53 +202,57 @@ void dungeonSupervisior::loadDecorItems()
 		{
 			for (int j = 0; j < sizeof(tabOriginal[i]); j++)
 			{
-				if (tabOriginal[i][j] == '1' && tabOriginal[i + 1][j + 1] == ' ')
+				int lanternEnabled = rand() % 2;
+				if (lanternEnabled == 0)
 				{
-					tabOriginal[i + 1][j + 1] = 'l';
-				}
-				else if (tabOriginal[i][j] == '2' && tabOriginal[i + 1][j - 1] == ' ')
-				{
-					tabOriginal[i + 1][j - 1] = 'l';
-				}
-				else if (tabOriginal[i][j] == '3' && tabOriginal[i - 1][j + 1] == ' ')
-				{
-					tabOriginal[i - 1][j + 1] = 'l';
-				}
-				else if (tabOriginal[i][j] == '4' && tabOriginal[i - 1][j - 1] == ' ')
-				{
-					tabOriginal[i - 1][j - 1] = 'l';
-				}
-				if (tabOriginal[i][j] == '5' && tabOriginal[i - 1][j] == ' ')
-				{
-					tabOriginal[i - 1][j] = 'l';
-				}
-				if (tabOriginal[i][j] == '5' && tabOriginal[i + 1][j] == ' ')
-				{
-					tabOriginal[i + 1][j] = 'l';
-				}
-				if (tabOriginal[i][j] == '6' && tabOriginal[i - 1][j] == ' ')
-				{
-					tabOriginal[i - 1][j] = 'l';
-				}
-				if (tabOriginal[i][j] == '6' && tabOriginal[i + 1][j] == ' ')
-				{
-					tabOriginal[i + 1][j] = 'l';
-				}
-				if (tabOriginal[i][j] == '7' && tabOriginal[i][j - 1] == ' ')
-				{
-					tabOriginal[i][j - 1] = 'l';
-				}
-				if (tabOriginal[i][j] == '7' && tabOriginal[i][j + 1] == ' ')
-				{
-					tabOriginal[i][j + 1] = 'l';
-				}
-				if (tabOriginal[i][j] == '8' && tabOriginal[i][j - 1] == ' ')
-				{
-					tabOriginal[i][j - 1] = 'l';
-				}
-				if (tabOriginal[i][j] == '8' && tabOriginal[i][j + 1] == ' ')
-				{
-					tabOriginal[i][j + 1] = 'l';
+					if (tabOriginal[i][j] == '1' && tabOriginal[i + 1][j + 1] == ' ')
+					{
+						tabOriginal[i + 1][j + 1] = 'l';
+					}
+					else if (tabOriginal[i][j] == '2' && tabOriginal[i + 1][j - 1] == ' ')
+					{
+						tabOriginal[i + 1][j - 1] = 'l';
+					}
+					else if (tabOriginal[i][j] == '3' && tabOriginal[i - 1][j + 1] == ' ')
+					{
+						tabOriginal[i - 1][j + 1] = 'l';
+					}
+					else if (tabOriginal[i][j] == '4' && tabOriginal[i - 1][j - 1] == ' ')
+					{
+						tabOriginal[i - 1][j - 1] = 'l';
+					}
+					if (tabOriginal[i][j] == '5' && tabOriginal[i - 1][j] == ' ')
+					{
+						tabOriginal[i - 1][j] = 'l';
+					}
+					if (tabOriginal[i][j] == '5' && tabOriginal[i + 1][j] == ' ')
+					{
+						tabOriginal[i + 1][j] = 'l';
+					}
+					if (tabOriginal[i][j] == '6' && tabOriginal[i - 1][j] == ' ')
+					{
+						tabOriginal[i - 1][j] = 'l';
+					}
+					if (tabOriginal[i][j] == '6' && tabOriginal[i + 1][j] == ' ')
+					{
+						tabOriginal[i + 1][j] = 'l';
+					}
+					if (tabOriginal[i][j] == '7' && tabOriginal[i][j - 1] == ' ')
+					{
+						tabOriginal[i][j - 1] = 'l';
+					}
+					if (tabOriginal[i][j] == '7' && tabOriginal[i][j + 1] == ' ')
+					{
+						tabOriginal[i][j + 1] = 'l';
+					}
+					if (tabOriginal[i][j] == '8' && tabOriginal[i][j - 1] == ' ')
+					{
+						tabOriginal[i][j - 1] = 'l';
+					}
+					if (tabOriginal[i][j] == '8' && tabOriginal[i][j + 1] == ' ')
+					{
+						tabOriginal[i][j + 1] = 'l';
+					}
 				}
 			}
 		}
@@ -363,7 +368,7 @@ void dungeonSupervisior::pickUpItem(int height, int startPoint, int itemY, int i
 	{
 		if (itemX == levelItems[i].positionX && itemY == levelItems[i].positionY && levelItems[i].symbol == '?')
 		{
-			if (levelItems[i].itemName != "" && findItemOnList(levelItems[i].itemName) == "Usable")
+			/*if (levelItems[i].itemName != "" && findItemOnList(levelItems[i].itemName) == "Usable")
 			{
 				if (gracz.countFreeFieldsUsage() != 0)
 				{
@@ -401,13 +406,13 @@ void dungeonSupervisior::pickUpItem(int height, int startPoint, int itemY, int i
 			}
 			else if (levelItems[i].itemName != "" && findItemOnList(levelItems[i].itemName) == "Smithery")
 			{
-				if (gracz.countFreeFieldsForge() != 0)
+				if (gracz.countFreeFieldsSmithery() != 0)
 				{
 					vector <string> message = { "Do you want to take " + levelItems[i].itemName + "?" };
 					int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
 					if (highlight == 0)
 					{
-						gracz.addCraftingForgeItem(levelItems[i].itemName, 0, 1, height, startPoint);
+						gracz.addCraftingSmitheryItem(levelItems[i].itemName, 0, 1, height, startPoint);
 						tabOriginal[itemY][itemX] = ' ';
 						levelItems.erase(levelItems.begin() + i);
 					}
@@ -424,41 +429,20 @@ void dungeonSupervisior::pickUpItem(int height, int startPoint, int itemY, int i
 			if (message.size() != 0)
 			{
 				tabSubmenuTextOnly(height, startPoint, message);
+			}*/
+			if (gracz.pickUpItemWithNotificationMenu(levelItems[i].itemName, 1, height, startPoint) == true)
+			{
+				tabOriginal[itemY][itemX] = ' ';
+				levelItems.erase(levelItems.begin() + i);
 			}
 		}
 	}
 }
 void dungeonSupervisior::openDoor(int height, int startPoint, int doorY, int doorX, player& gracz)
 {
-	if (gracz.findUsageItem("Lockpick") == true)
+	if (useItem(height, startPoint, "Lockpick", 0, gracz) == true)
 	{
-		vector <string> message = { "Do you want to open this door with a lockpick" };
-		vector <string> options = { "Yes","No" };
-		int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
-		if (highlight == 0)
-		{
-			int test = rand() % 100;
-			int playerTestValue = rand() % 100 + gracz.luck + gracz.agility;
-			if (playerTestValue > test)
-			{
-				message.clear();
-				message.push_back("You managed to open the door without destroying the lockpick.");
-				tabSubmenuTextOnly(height, startPoint, message);
-				tabOriginal[doorY][doorX] = ' ';
-			}
-			else
-			{
-				message.clear();
-				message.push_back("You broke the lockpick while you opened the door, you throw it away.");
-				gracz.removeItemWithoutNotification("Lockpick");
-				tabSubmenuTextOnly(height, startPoint, message);
-			}
-		}
-	}
-	else
-	{
-		vector <string> message = { "You don't have a lockpick in your inventory" };
-		tabSubmenuTextOnly(height, startPoint, message);
+		tabOriginal[doorY][doorX] = ' ';
 	}
 }
 int dungeonSupervisior::movement(int height, int startPoint, player& gracz, int impulse, character& hero)
@@ -529,12 +513,10 @@ int dungeonSupervisior::movement(int height, int startPoint, player& gracz, int 
 	{
 		if (symbol == 'd')
 		{
-			//destroyDecorItem(11, 44, newY, newX, tabOriginal, levelItems);
 			destroyDecorItem(11, 44, newY, newX);
 		}
 		else if (symbol == '?')
 		{
-			//pickUpItem(11, 44, newY, newX, tabOriginal, levelItems, gracz);
 			pickUpItem(11, 44, newY, newX, gracz);
 		}
 		else if (symbol == '0')
@@ -547,7 +529,7 @@ int dungeonSupervisior::movement(int height, int startPoint, player& gracz, int 
 			{
 				bool victory;
 				string itemName = "";
-				gracz = enterFightMode(gracz, levelMonsters[i].name, true, victory, itemName);
+				enterFightMode(gracz, levelMonsters[i].name, true, victory, itemName);
 				if (victory == true)
 				{
 					levelMonsters.erase(levelMonsters.begin() + i);
@@ -572,13 +554,12 @@ int dungeonSupervisior::movement(int height, int startPoint, player& gracz, int 
 		}
 	}
 	tabOriginal[hero.positionY][hero.positionX] = '!';
-	//int monsterIndex = moveMonster(height, startPoint, tabOriginal, levelMonsters);
 	int monsterIndex = moveMonster(height, startPoint);
 	if (monsterIndex != -1)
 	{
 		bool victory;
 		string itemName = "";
-		gracz = enterFightMode(gracz, levelMonsters[monsterIndex].name, false, victory, itemName);
+		enterFightMode(gracz, levelMonsters[monsterIndex].name, false, victory, itemName);
 		if (victory == true)
 		{
 			levelMonsters.erase(levelMonsters.begin() + monsterIndex);
@@ -768,7 +749,7 @@ extern "C" DLLFUNCEX void enterDungeon()
 			}
 			else if (menuMode == true && highlight == 1)
 			{
-				gracz = enterInventory(gracz);
+				enterInventory(gracz);
 			}
 			else if (menuMode == true && highlight == 4)
 			{

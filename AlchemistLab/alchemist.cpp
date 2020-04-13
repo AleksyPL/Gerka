@@ -8,6 +8,8 @@
 #include "tabelka.h"
 #include "level_up.h"
 #include "zakres.h"
+#include "inventory.h"
+#include "items.h"
 
 extern "C" DLLFUNCEX void enterAlchemistLab()
 {
@@ -112,8 +114,8 @@ extern "C" DLLFUNCEX void enterAlchemistLab()
 			ceny[18] = 0;
 			ceny[19] = 0;
 			info[0] = "Leave tavern";
-			info[1] = "Wait";
-			info[2] = "";
+			info[1] = "Equipment & Stats";
+			info[2] = "Wait";
 			info[3] = "";
 			info[4] = "";
 			info[5] = "";
@@ -172,11 +174,6 @@ extern "C" DLLFUNCEX void enterAlchemistLab()
 			}
 			break;
 		}
-		case 1:
-		{
-			waitNHours(23, 32, gracz);
-			break;
-		}
 		case 0:
 		{
 			if (tryb == 0)
@@ -192,6 +189,16 @@ extern "C" DLLFUNCEX void enterAlchemistLab()
 				changeTime(23, 32, gracz, 0, 1);
 				break;
 			}
+			break;
+		}
+		case 1:
+		{
+			enterInventory(gracz);
+			break;
+		}
+		case 2:
+		{
+			waitNHours(23, 32, gracz);
 			break;
 		}
 		}

@@ -148,7 +148,7 @@ extern "C" DLLFUNCEX void enterGeneralStore()
 			}
 			else
 			{
-				gracz = tradeModeGeneralStore(gracz, handlarz);
+				tradeModeGeneralStore(gracz, handlarz);
 			}
 			break;
 		}

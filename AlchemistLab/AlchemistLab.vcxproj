@@ -161,6 +161,8 @@
     <ClCompile Include="..\Gerka\boost_syf.cpp" />
     <ClCompile Include="..\Gerka\czas.cpp" />
     <ClCompile Include="..\Gerka\dwellers.cpp" />
+    <ClCompile Include="..\Gerka\inventory.cpp" />
+    <ClCompile Include="..\Gerka\items.cpp" />
     <ClCompile Include="..\Gerka\level_up.cpp" />
     <ClCompile Include="..\Gerka\NPCTransport.cpp" />
     <ClCompile Include="..\Gerka\player.cpp" />
@@ -177,6 +179,8 @@
     <ClInclude Include="..\Gerka\boost_syf.h" />
     <ClInclude Include="..\Gerka\czas.h" />
     <ClInclude Include="..\Gerka\dwellers.h" />
+    <ClInclude Include="..\Gerka\inventory.h" />
+    <ClInclude Include="..\Gerka\items.h" />
     <ClInclude Include="..\Gerka\level_up.h" />
     <ClInclude Include="..\Gerka\NPCTransport.h" />
     <ClInclude Include="..\Gerka\player.h" />
