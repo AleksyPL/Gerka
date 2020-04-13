@@ -1,0 +1,32 @@
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX7                           
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|                           
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|                           
+5-----------2XXXXXXXXXXXXXXXXXXXXXXXX1---------------------------------------------7--4            1----------2   
+            |XXXXXXXXXXXXXXXXXXXXXXXX|                                             |               |XXXXXXXXXX|   
+  e         |XXXXXXXXXXXXXXXXXXXXXXXX|                                             |               |XXXXXXXXXX|   
+            |XXXXXXXXXXXXXXXXXXXXXXXX|                                             9               |XXXXXXXXXX|   
+            5------------------2XXXXX|                                                             3----------4   
+            |                  |XXXXX|               1--9 9---7---9 9--2                                          
+            |                  |XXXXX|               |        |        |                                          
+            9                  |XXXXX|               |        |        |           9               1----------7--6
+                               |XXXXX|               |        |        |           |               |          |XXX
+                               |XXXXX|               3--------8--------4           |               |     E    |XXX
+                               |XXXXX|                                       1-----8----9 9--2     |          |XXX
+    1-------2                  |XXXXX|                                       |               |     |          |XXX
+    |XXXXXXX|                  |XXXXX|                                       |               5-----4          |XXX
+    |XXXXXXX|                  |XXXXX|                                       |               |                |XXX
+    |XXXXXXX|                  |XXXXX|                               1-------8----------9 9--6                |XXX
+    |XXXXXXX|                  |XXXXX|         1---2                 |                       |                |XXX
+    |XXXXXXX|                  |XXXXX|         |XXX|                 |                       |                |XXX
+    |XXXXXXX|                  |XXXXX|         3---4                 |                       |                |XXX
+    |XXXXXXX3------------------4XXXXX|                               |                       |                |XXX
+    |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|                          1----8--9 9------------------8---2            |XXX
+    |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|                          |                                |            |XXX
+    |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|                          |                                9            |XXX
+    3--------------------------------4                          |                                             |XXX
+                                                                |                                9            |XXX
+                                                                |                                |            |XXX
+5---9 1----9 1----9 1----9 1----9 9----2 9----2 9----2 9----7---8--------------------------------8------------4XXX
+      |      |      |      |           |      |      |      |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      |      |      |      |           |      |      |      |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      8      8      8      8           8      8      8      8XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

@@ -2,9 +2,5 @@ Decor items per level
 10
 Lockpick
 20
-Talerz
-50
-Butelka piwa
-50
-Ludzki zab
+Apple
 50

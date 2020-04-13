@@ -15,4 +15,6 @@ Fists
 Weapon price
 0
 Is the weapon rare?
-false
+0
+Available weapon upgrade points
+0
