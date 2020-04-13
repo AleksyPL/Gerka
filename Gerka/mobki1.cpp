@@ -1,5 +1,14 @@
 #include "mobki1.h"
 
+Mob::Mob(string path)
+{
+	/*for (int i = 0; i < 18; i++)
+	{
+		this->fightInfo[i] = "";
+	}*/
+	loadData(path);
+	isThisMobCanDropTheItem();
+}
 void Mob::isThisMobCanDropTheItem()
 {
 	srand((unsigned int)time(NULL));
@@ -42,46 +51,17 @@ void Mob::loadData(string path)
 	plik.close();
 	this->maxHP = this->HP;
 	{
-		this->fightInfo[0] = "Health points: " + to_string(this->HP) + "/" + to_string(this->maxHP);
-		this->fightInfo[1] = "Damage: " + to_string(this->damage);
-		this->fightInfo[2] = "Defence: " + to_string(this->defence);
-		this->fightInfo[3] = "";
-		this->fightInfo[4] = "";
-		this->fightInfo[5] = "";
-		this->fightInfo[6] = "";
-		this->fightInfo[7] = "";
-		this->fightInfo[8] = "";
-		this->fightInfo[9] = "";
-		this->fightInfo[10] = "";
-		this->fightInfo[11] = "";
-		this->fightInfo[12] = "";
-		this->fightInfo[13] = "";
-		this->fightInfo[14] = "";
-		this->fightInfo[15] = "";
-		this->fightInfo[16] = "";
-		this->fightInfo[17] = "";
+		this->fightInfo.push_back("Health points: " + to_string(this->HP) + "/" + to_string(this->maxHP));
+		this->fightInfo.push_back("Damage: " + to_string(this->damage));
+		this->fightInfo.push_back("Defence: " + to_string(this->defence));
 	}
 }
 void Mob::updateFightInfo()
 {
-	this->fightInfo[0] = "Health points: " + to_string(this->HP) + "/" + to_string(this->maxHP);
-	this->fightInfo[1] = "Damage: " + to_string(this->damage);
-	this->fightInfo[2] = "Defence: " + to_string(this->defence);
-	this->fightInfo[3] = "";
-	this->fightInfo[4] = "";
-	this->fightInfo[5] = "";
-	this->fightInfo[6] = "";
-	this->fightInfo[7] = "";
-	this->fightInfo[8] = "";
-	this->fightInfo[9] = "";
-	this->fightInfo[10] = "";
-	this->fightInfo[11] = "";
-	this->fightInfo[12] = "";
-	this->fightInfo[13] = "";
-	this->fightInfo[14] = "";
-	this->fightInfo[15] = "";
-	this->fightInfo[16] = "";
-	this->fightInfo[17] = "";
+	fightInfo.clear();
+	this->fightInfo.push_back("Health points: " + to_string(this->HP) + "/" + to_string(this->maxHP));
+	this->fightInfo.push_back("Damage: " + to_string(this->damage));
+	this->fightInfo.push_back("Defence: " + to_string(this->defence));
 }
 int Mob::returnDroppedGold()
 {

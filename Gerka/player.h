@@ -28,6 +28,7 @@ class player
 		bool isTheWeaponRare;
 		string weaponName;
 		int weaponPrice;
+		int availableWeaponUpgradePoints;
 		string skill;						//specjalna umiejêtnoœæ
 		int hunger;							//punkty g³odu
 		string inventory_usage[20];			//tablica na przedmioty u¿ytkowe
@@ -70,23 +71,22 @@ class player
 		void aBitHungry(int height, int startPoint, int number = 0);
 		bool findUsageItem(string nazwa);
 		bool findCraftingAlchemyItem(string nazwa);
-		bool findCraftingForgeItem(string nazwa);
+		bool findCraftingSmitheryItem(string nazwa);
 		int findUsageItemIndex(string nazwa);
 		int findCraftingAlchemyItemIndex(string nazwa);
-		int findCraftingForgeItemIndex(string nazwa);
-		bool dropItem(int height, int startPoint, string item);
-		bool removeItemWithoutNotification(string item);
-		void useItem(int height, int startPoint, string item, string message);
-		void addUsageItem(string nazwa, int cena, int ilosc, int height, int startPoint,int skipBackpackChecking = 0);
-		void addCraftingAlchemyItem(string nazwa, int cena, int ilosc, int height, int startPoint, int skipBackpackChecking = 0);
-		void addCraftingForgeItem(string nazwa, int cena, int ilosc, int height, int startPoint, int skipBackpackChecking = 0);
-		void removeUsageItem(int height, int startPoint, string item, int amount);
+		int findCraftingSmitheryItemIndex(string nazwa);
+		bool removeItem(int height, int startPoint, vector <string> message, string item, int amount);
+		bool removeItemWithoutNotification(string item, int amount);
+		bool pickUpItemWithNotificationMenu(string itemName, int amount, int height, int startPoint, int price = 0);
+		bool addUsageItem(string itemName, int price, int amount, int height, int startPoint);
+		bool addCraftingAlchemyItem(string itemName, int price, int amount, int height, int startPoint);
+		bool addCraftingSmitheryItem(string itemName, int price, int amount, int height, int startPoint);
 		void sortUsageBackpack();
 		void sortCraftingAlchemyBackpack();
-		void sortCraftingForgeBackpack();
+		void sortCraftingSmitheryBackpack();
 		int countFreeFieldsUsage();
 		int countFreeFieldsAlchemy();
-		int countFreeFieldsForge();
+		int countFreeFieldsSmithery();
 		void addQuest(string nazwa,string id);
 		void removeQuest();
 		void resetFightStatus();

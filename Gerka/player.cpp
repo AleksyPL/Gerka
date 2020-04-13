@@ -28,6 +28,7 @@ player::player()
 	weaponName = "Fists";
 	isTheWeaponRare = false;
 	weaponPrice = 0;
+	availableWeaponUpgradePoints = 0;
 	skill = "";
 	hunger = 10;
 	pseudonym = "";
@@ -124,7 +125,7 @@ bool player::findCraftingAlchemyItem(string nazwa)
 	}
 	return false;
 }
-bool player::findCraftingForgeItem(string nazwa)
+bool player::findCraftingSmitheryItem(string nazwa)
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -159,7 +160,7 @@ int player::findCraftingAlchemyItemIndex(string nazwa)
 		}
 	}
 }
-int player::findCraftingForgeItemIndex(string nazwa)
+int player::findCraftingSmitheryItemIndex(string nazwa)
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -169,18 +170,87 @@ int player::findCraftingForgeItemIndex(string nazwa)
 		}
 	}
 }
-bool player::dropItem(int height, int startPoint, string item)
+bool player::removeItem(int height, int startPoint, vector <string> message, string item, int amount)
 {
-	int index = -1;
-	if (findItemOnList(item) == "Usable")
+	if (findItemOnList(item) == "Usable" && findUsageItem(item) == true)
 	{
-		index = findUsageItemIndex(item);
-		if (inventory_usage_amount[index] > 0)
+		int index = findUsageItemIndex(item);
+		if (amount > inventory_usage_amount[index])
 		{
-			inventory_usage_amount[index] = inventory_usage_amount[index] - 1;
-			soundDropItem();
-			vector <string> message = { "You are dropping one " + item };
-			tabSubmenuTextOnly(height, startPoint, message);
+			string temp = "You don't have that many items, enter the correct amount: ";
+			amount = stoi(tabSubmenuInputField(height, startPoint, temp));
+			while (amount <= 0 || amount > inventory_usage_amount[index])
+			{
+				amount = stoi(tabSubmenuInputField(height, startPoint, temp));
+			}
+		}
+		inventory_usage_amount[index] -= amount;
+		soundDropItem();
+		tabSubmenuTextOnly(height, startPoint, message);
+		if (inventory_usage_amount[index] == 0)
+		{
+			inventory_usage[index] = "";
+			sortUsageBackpack();
+		}
+		return true;
+	}
+	else if (findItemOnList(item) == "Alchemy" && findCraftingAlchemyItem(item) == true)
+	{
+		int index = findCraftingAlchemyItemIndex(item);
+		if (amount > inventory_crafting_amount[index])
+		{
+			string temp = "You don't have that many items, enter the correct amount: ";
+			amount = stoi(tabSubmenuInputField(height, startPoint, temp));
+			while (amount <= 0 || amount > inventory_crafting_amount[index])
+			{
+				amount = stoi(tabSubmenuInputField(height, startPoint, temp));
+			}
+		}
+		inventory_crafting_amount[index] -= amount;
+		soundDropItem();
+		tabSubmenuTextOnly(height, startPoint, message);
+		if (inventory_crafting_amount[index] == 0)
+		{
+			inventory_crafting[index] = "";
+			sortCraftingAlchemyBackpack();
+		}
+		return true;
+	}
+	else if (findItemOnList(item) == "Smithery" && findCraftingSmitheryItem(item) == true)
+	{
+		int index = findCraftingSmitheryItemIndex(item);
+		if (amount > inventory_crafting_amount[20 + index])
+		{
+			string temp = "You don't have that many items, enter the correct amount: ";
+			amount = stoi(tabSubmenuInputField(height, startPoint, temp));
+			while (amount <= 0 || amount > inventory_crafting_amount[20 + index])
+			{
+				amount = stoi(tabSubmenuInputField(height, startPoint, temp));
+			}
+		}
+		inventory_crafting_amount[20 + index] -= amount;
+		soundDropItem();
+		tabSubmenuTextOnly(height, startPoint, message);
+		if (inventory_crafting_amount[20 + index] == 0)
+		{
+			inventory_crafting[20 + index] = "";
+			sortCraftingSmitheryBackpack();
+		}
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+bool player::removeItemWithoutNotification(string item,int amount)
+{
+	if (findItemOnList(item) == "Usable" && findUsageItem(item) == true)
+	{
+		int index = findUsageItemIndex(item);
+		if (inventory_usage_amount[index] >= amount)
+		{
+			inventory_usage_amount[index] -= amount;
 			if (inventory_usage_amount[index] == 0)
 			{
 				inventory_usage[index] = "";
@@ -193,15 +263,12 @@ bool player::dropItem(int height, int startPoint, string item)
 			return false;
 		}
 	}
-	else if (findItemOnList(item) == "Alchemy")
+	else if (findItemOnList(item) == "Alchemy" && findCraftingAlchemyItem(item) == true)
 	{
-		index = findCraftingAlchemyItemIndex(item);
-		if (inventory_crafting_amount[index] > 0)
+		int index = findCraftingAlchemyItemIndex(item);
+		if (inventory_crafting_amount[index] >= amount)
 		{
-			inventory_crafting_amount[index] = inventory_crafting_amount[index] - 1;
-			soundDropItem();
-			vector <string> message = { "You are dropping one " + item };
-			tabSubmenuTextOnly(height, startPoint, message);
+			inventory_crafting_amount[index] -= amount;
 			if (inventory_crafting_amount[index] == 0)
 			{
 				inventory_crafting[index] = "";
@@ -214,19 +281,16 @@ bool player::dropItem(int height, int startPoint, string item)
 			return false;
 		}
 	}
-	else if (findItemOnList(item) == "Smithery")
+	else if (findItemOnList(item) == "Smithery" && findCraftingSmitheryItem(item) == true)
 	{
-		index = findCraftingForgeItemIndex(item);
-		if (inventory_crafting_amount[20 + index] > 0)
+		int index = findCraftingSmitheryItemIndex(item);
+		if (inventory_crafting_amount[20 + index] >= amount)
 		{
-			inventory_crafting_amount[20 + index] = inventory_crafting_amount[20 + index] - 1;
-			soundDropItem();
-			vector <string> message = { "You are dropping one " + item };
-			tabSubmenuTextOnly(height, startPoint, message);
+			inventory_crafting_amount[20 + index] -= amount;
 			if (inventory_crafting_amount[20 + index] == 0)
 			{
 				inventory_crafting[20 + index] = "";
-				sortCraftingForgeBackpack();
+				sortCraftingSmitheryBackpack();
 			}
 			return true;
 		}
@@ -240,250 +304,162 @@ bool player::dropItem(int height, int startPoint, string item)
 		return false;
 	}
 }
-bool player::removeItemWithoutNotification(string item)
+bool player::pickUpItemWithNotificationMenu(string itemName, int amount, int height, int startPoint, int price)
 {
-	int index = -1;
-	if (findItemOnList(item) == "Usable")
+	vector <string> message;
+	vector <string> options = { "Yes","No" };
+	if (itemName != "" && amount != 0 && findItemOnList(itemName) == "Usable")
 	{
-		index = findUsageItemIndex(item);
-		if (inventory_usage_amount[index] > 0)
+		message.push_back("Do you want to take " + itemName + "?");
+		if (countFreeFieldsUsage() != 0)
 		{
-			inventory_usage_amount[index] = inventory_usage_amount[index] - 1;
-			if (inventory_usage_amount[index] == 0)
+			int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
+			if (highlight == 0)
 			{
-				inventory_usage[index] = "";
-				sortUsageBackpack();
+				return addUsageItem(itemName, price, amount, height, startPoint);
 			}
-			return true;
 		}
 		else
 		{
-			return false;
+			message.push_back("Your backpack is full");
 		}
 	}
-	else if (findItemOnList(item) == "Alchemy")
+	else if (itemName != "" && amount != 0 && findItemOnList(itemName) == "Alchemy")
 	{
-		index = findCraftingAlchemyItemIndex(item);
-		if (inventory_crafting_amount[index] > 0)
+		message.push_back("Do you want to take " + itemName + "?");
+		if (countFreeFieldsAlchemy() != 0)
 		{
-			inventory_crafting_amount[index] = inventory_crafting_amount[index] - 1;
-			if (inventory_crafting_amount[index] == 0)
+			int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
+			if (highlight == 0)
 			{
-				inventory_crafting[index] = "";
-				sortCraftingAlchemyBackpack();
+				return addCraftingAlchemyItem(itemName, price, amount, height, startPoint);
 			}
-			return true;
 		}
 		else
 		{
-			return false;
+			message.push_back("Your backpack is full");
 		}
 	}
-	else if (findItemOnList(item) == "Smithery")
+	else if (itemName != "" && amount != 0 && findItemOnList(itemName) == "Smithery")
 	{
-		index = findCraftingForgeItemIndex(item);
-		if (inventory_crafting_amount[20 + index] > 0)
+		message.push_back("Do you want to take " + itemName + "?");
+		if (countFreeFieldsSmithery() != 0)
 		{
-			inventory_crafting_amount[20 + index] = inventory_crafting_amount[20 + index] - 1;
-			if (inventory_crafting_amount[20 + index] == 0)
+			int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
+			if (highlight == 0)
 			{
-				inventory_crafting[20 + index] = "";
-				sortCraftingForgeBackpack();
+				return addCraftingSmitheryItem(itemName, price, amount, height, startPoint);
 			}
-			return true;
 		}
 		else
 		{
-			return false;
+			message.push_back("Your backpack is full");
 		}
 	}
 	else
 	{
+		message.push_back("Error");
 		return false;
 	}
-}
-void player::useItem(int height, int startPoint, string item, string message)
-{
-	vector <string> temp = { message };
-	int index = findUsageItemIndex(item);
-	tabSubmenuTextOnly(height, startPoint, temp);
-	inventory_usage_amount[index] = inventory_usage_amount[index] - 1;
-	if (inventory_usage_amount[index] == 0)
+	if (message.size() != 0)
 	{
-		inventory_usage[index] = "";
-		sortUsageBackpack();
+		tabSubmenuTextOnly(height, startPoint, message);
+		return false;
 	}
+	return false;
 }
-void player::addUsageItem(string nazwa, int cena, int ilosc, int height, int startPoint, int skipBackpackChecking)
+bool player::addUsageItem(string itemName, int price, int amount, int height, int startPoint)
 {
-	if (skipBackpackChecking == 1)
+	vector <string> message;
+	if (countFreeFieldsUsage() == 0)
+	{
+		message.push_back("You cannot take this item, your backpack is full.");
+		tabSubmenuTextOnly(height, startPoint, message);
+		return false;
+	}
+	else
 	{
 		for (int i = 0; i < 20; i++)
 		{
-			if (inventory_usage[i] == nazwa)
+			if (inventory_usage[i] == itemName)
 			{
-				gold = gold - cena;
-				inventory_usage_amount[i] = inventory_usage_amount[i] + ilosc;
+				gold -= price;
+				inventory_usage_amount[i] += amount;
 				break;
 			}
 			else if (inventory_usage[i] == "")
 			{
-				gold = gold - cena;
-				inventory_usage[i] = nazwa;
-				inventory_usage_amount[i] = ilosc;
+				gold -= price;
+				inventory_usage[i] = itemName;
+				inventory_usage_amount[i] = amount;
 				break;
-			}
-		}
-	}
-	else
-	{
-		vector <string> message;
-		if (countFreeFieldsUsage() == 0)
-		{
-			message.push_back("You cannot take this item, your backpack is full.");
-			tabSubmenuTextOnly(height, startPoint, message);
-		}
-		else
-		{
-			for (int i = 0; i < 20; i++)
-			{
-				if (inventory_usage[i] == nazwa)
-				{
-					gold = gold - cena;
-					inventory_usage_amount[i] = inventory_usage_amount[i] + ilosc;
-					break;
-				}
-				else if (inventory_usage[i] == "")
-				{
-					gold = gold - cena;
-					inventory_usage[i] = nazwa;
-					inventory_usage_amount[i] = ilosc;
-					break;
-				}
 			}
 		}
 	}
 	sortUsageBackpack();
+	return true;
 }
-void player::addCraftingAlchemyItem(string nazwa, int cena, int ilosc, int height, int startPoint, int skipBackpackChecking)
+bool player::addCraftingAlchemyItem(string itemName, int price, int amount, int height, int startPoint)
 {
-	if (skipBackpackChecking == 1)
+	vector <string> message;
+	if (countFreeFieldsAlchemy() == 0)
+	{
+		message.push_back("You cannot take this item, your backpack is full.");
+		tabSubmenuTextOnly(height, startPoint, message);
+		return false;
+	}
+	else
 	{
 		for (int i = 0; i < 20; i++)
 		{
-			if (inventory_crafting[i] == nazwa)
+			if (inventory_crafting[i] == itemName)
 			{
-				gold = gold - cena;
-				inventory_crafting_amount[i] = inventory_crafting_amount[i] + ilosc;
+				gold -= price;
+				inventory_crafting_amount[i] += amount;
 				break;
 			}
 			else if (inventory_crafting[i] == "")
 			{
-				gold = gold - cena;
-				inventory_crafting[i] = nazwa;
-				inventory_crafting_amount[i] = ilosc;
+				gold -= price;
+				inventory_crafting[i] = itemName;
+				inventory_crafting_amount[i] = amount;
 				break;
 			}
 		}
 	}
-	else
-	{
-		vector <string> message;
-		if (countFreeFieldsAlchemy() == 0)
-		{
-			message.push_back("You cannot take this item, your backpack is full.");
-			tabSubmenuTextOnly(height, startPoint, message);
-		}
-		else
-		{
-			for (int i = 0; i < 20; i++)
-			{
-				if (inventory_crafting[i] == nazwa)
-				{
-					gold = gold - cena;
-					inventory_crafting_amount[i] = inventory_crafting_amount[i] + ilosc;
-					break;
-				}
-				else if (inventory_crafting[i] == "")
-				{
-					gold = gold - cena;
-					inventory_crafting[i] = nazwa;
-					inventory_crafting_amount[i] = ilosc;
-					break;
-				}
-			}
-		}
-	}
+	sortCraftingAlchemyBackpack();
+	return true;
 }
-void player::addCraftingForgeItem(string nazwa, int cena, int ilosc, int height, int startPoint, int skipBackpackChecking)
+bool player::addCraftingSmitheryItem(string itemName, int price, int amount, int height, int startPoint)
 {
-	if (skipBackpackChecking == 1)
+	vector <string> message;
+	if (countFreeFieldsSmithery() == 0)
+	{
+		message.push_back("You cannot take this item, your backpack is full.");
+		tabSubmenuTextOnly(height, startPoint, message);
+		return false;
+	}
+	else
 	{
 		for (int i = 0; i < 20; i++)
 		{
-			if (inventory_crafting[20 + i] == nazwa)
+			if (inventory_crafting[20 + i] == itemName)
 			{
-				gold = gold - cena;
-				inventory_crafting_amount[20 + i] = inventory_crafting_amount[20 + i] + ilosc;
+				gold -= price;
+				inventory_crafting_amount[20 + i] += amount;
 				break;
 			}
 			else if (inventory_crafting[20 + i] == "")
 			{
-				gold = gold - cena;
-				inventory_crafting[20 + i] = nazwa;
-				inventory_crafting_amount[20 + i] = ilosc;
+				gold -= price;
+				inventory_crafting[20 + i] = itemName;
+				inventory_crafting_amount[20 + i] = amount;
 				break;
 			}
 		}
 	}
-	else
-	{
-		vector <string> message;
-		if (countFreeFieldsForge() == 0)
-		{
-			message.push_back("You cannot take this item, your backpack is full.");
-			tabSubmenuTextOnly(height, startPoint, message);
-		}
-		else
-		{
-			for (int i = 0; i < 20; i++)
-			{
-				if (inventory_crafting[20 + i] == nazwa)
-				{
-					gold = gold - cena;
-					inventory_crafting_amount[20 + i] = inventory_crafting_amount[20 + i] + ilosc;
-					break;
-				}
-				else if (inventory_crafting[20 + i] == "")
-				{
-					gold = gold - cena;
-					inventory_crafting[20 + i] = nazwa;
-					inventory_crafting_amount[20 + i] = ilosc;
-					break;
-				}
-			}
-		}
-	}
-}
-void player::removeUsageItem(int height, int startPoint, string item, int amount)
-{
-	int i=findUsageItemIndex(item);
-	if (amount > inventory_usage_amount[i])
-	{
-		string temp = "You want to delete more items than you have, enter the correct amount: ";
-		amount = stoi(tabSubmenuInputField(height, startPoint, temp));
-		while (amount<=0 || amount>inventory_usage_amount[i])
-		{
-			amount = stoi(tabSubmenuInputField(height, startPoint, temp));
-		}
-	}
-	inventory_usage_amount[i] = inventory_usage_amount[i] - amount;
-	if (inventory_usage_amount[i] == 0)
-	{
-		inventory_usage[i] = "";
-		inventory_usage_price[i] = 0;
-		sortUsageBackpack();
-	}
+	sortCraftingSmitheryBackpack();
+	return true;
 }
 void player::sortUsageBackpack()
 {
@@ -537,11 +513,11 @@ void player::sortCraftingAlchemyBackpack()
 		}
 	}
 }
-void player::sortCraftingForgeBackpack()
+void player::sortCraftingSmitheryBackpack()
 {
 	for (int i = 0; i < 20; i++)
 	{
-		if (inventory_crafting[i] != "")
+		if (inventory_crafting[20 + i] != "")
 		{
 			continue;
 		}
@@ -549,7 +525,7 @@ void player::sortCraftingForgeBackpack()
 		{
 			for (int j = i + 1; j < 20; j++)
 			{
-				if (inventory_crafting[j] != "")
+				if (inventory_crafting[20 + j] != "")
 				{
 					inventory_crafting[20 + i] = inventory_crafting[20 + j];
 					inventory_crafting_amount[20 + i] = inventory_crafting_amount[20 + j];
@@ -587,7 +563,7 @@ int player::countFreeFieldsAlchemy()
 	}
 	return counter;
 }
-int player::countFreeFieldsForge()
+int player::countFreeFieldsSmithery()
 {
 	int counter = 0;
 	for (int i = 0; i < 20; i++)
@@ -661,11 +637,11 @@ int player::returnChancesOfGettingHit()
 	int chances = 99;
 	if (this->hp == this->max_hp)
 	{
-		chances = 0.1 * agility;
+		chances = int(0.1 * agility);
 	}
 	else
 	{
-		chances = (1 - (hp / max_hp)) * agility;
+		chances = int((1 - (hp / max_hp)) * agility);
 	}
 	if (chances > 99)
 	{

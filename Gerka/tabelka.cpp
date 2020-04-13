@@ -17,6 +17,51 @@ string return_progress_bar(int min, int max, int how_long)
 	temp += "]";
 	return temp;
 }
+void findANewHighlight(int& highlight, string left_side[20], string right_side[20])
+{
+	int leftSideBorder = 19;
+	int rightSideBorder = 19;
+	for (int i = 0; i < 20; i++)
+	{
+		if (left_side[i] == "")
+		{
+			leftSideBorder--;
+		}
+		if (right_side[i] == "")
+		{
+			rightSideBorder--;
+		}
+	}
+	if (highlight < 20)
+	{
+		while (highlight > leftSideBorder)
+		{
+			highlight--;
+		}
+		if (leftSideBorder == 0 && left_side[0] == "")
+		{
+			highlight = 40;
+		}
+	}
+	else if (highlight >= 20 && highlight < 40)
+	{
+		while (highlight > 20 + rightSideBorder)
+		{
+			highlight--;
+		}
+		if (rightSideBorder == 0 && right_side[0] == "")
+		{
+			while (highlight < leftSideBorder)
+			{
+				highlight--;
+			}
+			if (leftSideBorder == 0 && left_side[0] == "")
+			{
+				highlight = 40;
+			}
+		}
+	}
+}
 int tab(player gracz, int &highlight, string local, string shorty[20], string menu[20], __int64 ceny[20])
 {
 	int context_menu_border = 0;
@@ -37,7 +82,7 @@ int tab(player gracz, int &highlight, string local, string shorty[20], string me
 	string citymap[18];
 	citymap[0] = "Town square";
 	citymap[1] = "Tavern";
-	citymap[2] = "Forge";
+	citymap[2] = "Armourer Shop";
 	citymap[3] = "Bladesmith Shop";
 	citymap[4] = "Alchemist lab";
 	citymap[5] = "Brothel";
@@ -1303,9 +1348,9 @@ int tabDungeon(player gracz, bool &mode, string local, string shorty[20], char t
 						}
 						case '6':
 						{
-							if (j == sizeof(tab[i]))
+							if (j == (sizeof(tab[i])-1))
 							{
-								mvwaddch(display, i + 1, j + 2, ACS_TTEE);
+								mvwaddch(display, i + 1, j + 2, ACS_RTEE);
 								mvwaddch(display, i + 1, j + 1, ACS_HLINE);
 							}
 							else
@@ -1480,7 +1525,7 @@ int tabDungeon(player gracz, bool &mode, string local, string shorty[20], char t
 		}
 	}
 }
-int tabFight(player gracz, Mob enemy, int& highlight, string playerInfo[18], string shortcuts[20], string actions[20])
+int tabFight(player gracz, string mobName, vector <string> monsterInfo, int& highlight, string playerInfo[18], string shortcuts[20], string actions[20])
 {
 	int shortcutsBorder = 19;
 	int actionsBorder = 19;
@@ -1513,7 +1558,7 @@ int tabFight(player gracz, Mob enemy, int& highlight, string playerInfo[18], str
 		{
 			wborder(topBar, 0, 0, 0, 0, ACS_ULCORNER, ACS_URCORNER, ACS_LTEE, ACS_RTEE);
 			windowDrawOnCenter(topBar, 1, 67, gracz.nazwa);
-			windowDrawOnCenter(topBar, 1, 67, enemy.mobName, 70);
+			windowDrawOnCenter(topBar, 1, 67, mobName, 70);
 			mvwaddch(topBar, 0, 69, ACS_TTEE);
 			mvwaddch(topBar, 1, 69, ACS_VLINE);
 			mvwaddch(topBar, 2, 69, ACS_BTEE);
@@ -1531,9 +1576,9 @@ int tabFight(player gracz, Mob enemy, int& highlight, string playerInfo[18], str
 		//monster info
 		{
 			wborder(enemySide, 0, 0, 0, 0, ACS_PLUS, ACS_RTEE, ACS_LTEE, ACS_BTEE);
-			for (int i = 0; i < 18; i++)
+			for (int i = 0; i < monsterInfo.size(); i++)
 			{
-				windowDrawOnCenter(enemySide, i + 1, 68, enemy.fightInfo[i]);
+				windowDrawOnCenter(enemySide, i + 1, 68, monsterInfo[i]);
 			}
 			wrefresh(enemySide);
 		}

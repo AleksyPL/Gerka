@@ -46,26 +46,27 @@ void save(int height, int startPoint, player gracz,barman bobby,generalStoreSell
 		plik << "Weapon damage" << endl << gracz.weaponDamage << endl;//11-12
 		plik << "Weapon name" << endl << gracz.weaponName << endl;//13-14
 		plik << "Weapon price" << endl << gracz.weaponPrice << endl;//15-16
-		plik << "Is the weapon rare?" << endl << gracz.isTheWeaponRare;//17-18
+		plik << "Is the weapon rare?" << endl << gracz.isTheWeaponRare << endl;//17-18
+		plik << "Available weapon upgrade points" << endl << gracz.availableWeaponUpgradePoints;//19-20
 		plik.close();
 		remove("./txt/mix/Zapis_gry_backpack.txt");
 		plik.open("./txt/mix/Zapis_gry_backpack.txt", ios::out);
-		for (int i = 0; i++; i < 20)
+		for (int i = 0; i < 20; i++)
 		{
-			plik << "Usable item number " + (i+1) << endl << gracz.inventory_usage[i] << endl << gracz.inventory_usage_amount[i] << endl;
+			plik << "Usable item number " + to_string(1 + i) << endl << gracz.inventory_usage[i] << endl << gracz.inventory_usage_amount[i] << endl;
 		}
-		for (int i = 0; i++; i < 20)
+		for (int i = 0; i < 20; i++)
 		{
-			plik << "Crafing item - alchemy number " + (i+1) << endl << gracz.inventory_crafting[i] << endl << gracz.inventory_crafting_amount[i] << endl;
+			plik << "Crafing item - alchemy number " + to_string(1 + i) << endl << gracz.inventory_crafting[i] << endl << gracz.inventory_crafting_amount[i] << endl;
 		}
-		for (int i = 0; i++; i < 20)
+		for (int i = 0; i < 20; i++)
 		{
-			plik << "Crafing item - smithery number " + (i+1) << endl << gracz.inventory_crafting[20 + i] << endl << gracz.inventory_crafting_amount[20 + i] << endl;
+			plik << "Crafing item - smithery number " + to_string(1 + i) << endl << gracz.inventory_crafting[20 + i] << endl << gracz.inventory_crafting_amount[20 + i] << endl;
 		}
 		plik.close();
 		gracz.sortUsageBackpack();
 		gracz.sortCraftingAlchemyBackpack();
-		gracz.sortCraftingForgeBackpack();
+		gracz.sortCraftingSmitheryBackpack();
 		remove("./txt/mix/Zapis_gry_npc.txt");
 		plik.open("./txt/mix/Zapis_gry_npc.txt", ios::out);
 		plik << "Barman - reputation level" << endl << bobby.repLevelInfo() << endl;//1-2
@@ -113,20 +114,20 @@ void save(int height, int startPoint, player gracz,barman bobby,generalStoreSell
 		plik.open("./txt/mix/Zapis_gry_chest.txt", ios::out);
 		for (int i = 0; i < 20; i++)
 		{
-			plik << "Usable item number " + (i+1) << endl << krzynka.menu[i] << endl << krzynka.menu_amount[i] << endl;
+			plik << "Usable item number " + to_string(i+1) << endl << krzynka.menu[i] << endl << krzynka.menu_amount[i] << endl;
 		}
 		for (int i = 0; i < 20; i++)
 		{
-			plik << "Crafing item - alchemy number " + (i+1) << endl << krzynka.menu[20 + i] << endl << krzynka.menu_amount[20 + i] << endl;
+			plik << "Crafing item - alchemy number " + to_string(i+1) << endl << krzynka.menu[20 + i] << endl << krzynka.menu_amount[20 + i] << endl;
 		}
 		for (int i = 0; i < 20; i++)
 		{
-			plik << "Crafing item - smithery number " + (i+1) << endl << krzynka.menu[40 + i] << endl << krzynka.menu_amount[40 + i] << endl;
+			plik << "Crafing item - smithery number " + to_string(i+1) << endl << krzynka.menu[40 + i] << endl << krzynka.menu_amount[40 + i] << endl;
 		}
 		plik.close();
 		krzynka.sortUsage();
 		krzynka.sortAlchemy();
-		krzynka.sortForge();
+		krzynka.sortSmithery();
 		message.clear();
 		message.push_back("Your gameplay has been saved");
 		tabSubmenuTextOnly(height, startPoint, message);

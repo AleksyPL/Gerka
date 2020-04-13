@@ -2,4 +2,4 @@
 //#include "biblioteki.h"
 #include "player.h"
 
-player enterInventory(player &gracz);
+void enterInventory(player &gracz);

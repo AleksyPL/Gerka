@@ -19,22 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="alchemik.cpp" />
     <ClCompile Include="biblioteki.cpp" />
-    <ClCompile Include="bladesmithShop.cpp" />
     <ClCompile Include="boost_syf.cpp" />
-    <ClCompile Include="burdel.cpp" />
     <ClCompile Include="cheat_menu.cpp" />
     <ClCompile Include="chest.cpp" />
     <ClCompile Include="czas.cpp" />
-    <ClCompile Include="dungeon.cpp" />
     <ClCompile Include="dwellers.cpp" />
     <ClCompile Include="game_over.cpp" />
     <ClCompile Include="hero_creator.cpp" />
     <ClCompile Include="inventory.cpp" />
     <ClCompile Include="items.cpp" />
     <ClCompile Include="karty.cpp" />
-    <ClCompile Include="kowal.cpp" />
     <ClCompile Include="level_up.cpp" />
     <ClCompile Include="load.cpp" />
     <ClCompile Include="mobki1.cpp" />
@@ -43,36 +38,27 @@
     <ClCompile Include="playerTransport.cpp" />
     <ClCompile Include="quest.cpp" />
     <ClCompile Include="save.cpp" />
-    <ClCompile Include="shamans_house.cpp" />
     <ClCompile Include="sleep.cpp" />
-    <ClCompile Include="szpital.cpp" />
     <ClCompile Include="trade_mode.cpp" />
     <ClCompile Include="start.cpp" />
     <ClCompile Include="tabelka.cpp" />
-    <ClCompile Include="tawerna.cpp" />
-    <ClCompile Include="general_store.cpp" />
     <ClCompile Include="tytul.cpp" />
     <ClCompile Include="town square.cpp" />
     <ClCompile Include="fight_mode.cpp" />
     <ClCompile Include="zakres.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="alchemik.h" />
     <ClInclude Include="biblioteki.h" />
-    <ClInclude Include="bladesmithShop.h" />
     <ClInclude Include="boost_syf.h" />
-    <ClInclude Include="burdel.h" />
     <ClInclude Include="cheat_menu.h" />
     <ClInclude Include="chest.h" />
     <ClInclude Include="czas.h" />
-    <ClInclude Include="dungeon.h" />
     <ClInclude Include="dwellers.h" />
     <ClInclude Include="game_over.h" />
     <ClInclude Include="hero_creator.h" />
     <ClInclude Include="inventory.h" />
     <ClInclude Include="items.h" />
     <ClInclude Include="karty.h" />
-    <ClInclude Include="kowal.h" />
     <ClInclude Include="level_up.h" />
     <ClInclude Include="load.h" />
     <ClInclude Include="mobki1.h" />
@@ -81,14 +67,10 @@
     <ClInclude Include="playerTransport.h" />
     <ClInclude Include="quest.h" />
     <ClInclude Include="save.h" />
-    <ClInclude Include="shamans_house.h" />
     <ClInclude Include="sleep.h" />
-    <ClInclude Include="szpital.h" />
     <ClInclude Include="trade_mode.h" />
     <ClInclude Include="start.h" />
     <ClInclude Include="tabelka.h" />
-    <ClInclude Include="tawerna.h" />
-    <ClInclude Include="general_store.h" />
     <ClInclude Include="tytul.h" />
     <ClInclude Include="town square.h" />
     <ClInclude Include="fight_mode.h" />

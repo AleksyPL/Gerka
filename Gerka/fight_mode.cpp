@@ -78,13 +78,13 @@ void pickUpItemDroppedByEnemy(int height, int startPoint, Mob enemy, player& gra
 		}
 		else if (findItemOnList(enemy.droppedItem) == "Smithery")
 		{
-			if (gracz.countFreeFieldsForge() != 0)
+			if (gracz.countFreeFieldsSmithery() != 0)
 			{
 				vector <string> message = { "Do you want to take " + enemy.droppedItem + "?" };
 				int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
 				if (highlight == 0)
 				{
-					gracz.addCraftingForgeItem(enemy.droppedItem, 0, 1, height, startPoint);
+					gracz.addCraftingSmitheryItem(enemy.droppedItem, 0, 1, height, startPoint);
 				}
 				else
 				{
@@ -206,7 +206,7 @@ string makeString(int howLong, string function, int chances)
 	temp += chancesString;
 	return temp;
 }
-player enterFightMode(player gracz, string monsterName, bool playerGoesFirst, bool &victory, string &itemName)
+void enterFightMode(player gracz, string monsterName, bool playerGoesFirst, bool &victory, string &itemName)
 {
 	soundStartFight();
 	int highlight = 0;
@@ -216,6 +216,7 @@ player enterFightMode(player gracz, string monsterName, bool playerGoesFirst, bo
 	Mob enemy = loadMonsterData(monsterName);
 	bool isItThePlayersTurnNow = playerGoesFirst;
 	bool nonLethalFight;
+	bool exit = false;
 	if (enemy.mobName == "Citizen")
 	{
 		nonLethalFight = true;
@@ -225,11 +226,11 @@ player enterFightMode(player gracz, string monsterName, bool playerGoesFirst, bo
 		nonLethalFight = false;
 	}
 	victoryCondition(12, 43, enemy, gracz, victory, itemName);
-	while (victory==false)
+	while (victory == false || exit == false)
 	{
 		if (gracz.hp <= 0)
 		{
-			return gracz;
+			exit = true;
 		}
 		//inserting data
 		{
@@ -354,17 +355,23 @@ player enterFightMode(player gracz, string monsterName, bool playerGoesFirst, bo
 			actions[18] = "";
 			actions[19] = "";
 		}
-		tabFight(gracz, enemy, highlight, playerInfo, shortcuts, actions);
-		if (highlight == 20)
+		if (exit == false)
 		{
-			dealingDamage(12, 43, gracz, enemy, isItThePlayersTurnNow);
-		}
-		victoryCondition(12, 43, enemy, gracz, victory, itemName);
-		if (victory == false)
-		{
-			dealingDamage(12, 43, gracz, enemy, isItThePlayersTurnNow);
+			tabFight(gracz, enemy.mobName, enemy.fightInfo, highlight, playerInfo, shortcuts, actions);
+			if (highlight == 20)
+			{
+				dealingDamage(12, 43, gracz, enemy, isItThePlayersTurnNow);
+			}
 			victoryCondition(12, 43, enemy, gracz, victory, itemName);
+			if (victory == false)
+			{
+				dealingDamage(12, 43, gracz, enemy, isItThePlayersTurnNow);
+				victoryCondition(12, 43, enemy, gracz, victory, itemName);
+			}
+			else
+			{
+				exit = true;
+			}
 		}
 	}
-	return gracz;
 }

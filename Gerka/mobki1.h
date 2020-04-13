@@ -21,7 +21,7 @@ public:
 	int additionalDealingDamageRate;
 	int baseGettingHitRate;
 	int additionalGettingHitRate;
-	string fightInfo[18];
+	vector <string> fightInfo;
 	bool stunned;
 	bool bleeding;
 	bool bonesCrushed;
@@ -31,13 +31,5 @@ public:
 	int returnDroppedGold();
 	int returnDealingDamageRate();
 	int returnGettingHitRate();
-	Mob(string path)
-	{
-		for (int i = 0; i < 18; i++)
-		{
-			this->fightInfo[i] = "";
-		}
-		loadData(path);
-		isThisMobCanDropTheItem();
-	}
+	Mob(string path);
 };

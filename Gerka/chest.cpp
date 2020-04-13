@@ -1,6 +1,7 @@
 #include "chest.h"
 #include "tabelka.h"
 
+
 void enterChestMode(player &gracz, chest &krzynka)
 {
 	int highlight = 0;
@@ -8,8 +9,9 @@ void enterChestMode(player &gracz, chest &krzynka)
 	string leftSide[21];
 	string rightSide[21];
 	vector <string> bottomSide = {"<-","Return","->"};
-	bool leaveWhile = false;
-	do
+	bool exit = false;
+	bool anythingMoved = false;
+	while (exit == false)
 	{
 		for (int i = 0; i < 20; i++)
 		{
@@ -101,7 +103,7 @@ void enterChestMode(player &gracz, chest &krzynka)
 		else if (card == 2)
 		{
 			leftSide[20] = "Items - Smithery";
-			if (gracz.countFreeFieldsForge() == 20)
+			if (gracz.countFreeFieldsSmithery() == 20)
 			{
 				leftSide[0] = "No items";
 			}
@@ -120,7 +122,7 @@ void enterChestMode(player &gracz, chest &krzynka)
 				}
 			}
 			rightSide[20] = "Chest - Smithery";
-			if (krzynka.countFreeFieldsForge() == 20)
+			if (krzynka.countFreeFieldsSmithery() == 20)
 			{
 				rightSide[0] = "No items";
 			}
@@ -139,14 +141,20 @@ void enterChestMode(player &gracz, chest &krzynka)
 				}
 			}
 		}
+		if (anythingMoved == true)
+		{
+			findANewHighlight(highlight, leftSide, rightSide);
+		}
 		highlight = tabItemsLeftAndRight(highlight, "Chest", leftSide, rightSide, bottomSide);
 		if (highlight < 20)
 		{
-			krzynka.moveToChest(27,28,highlight*(card+1), gracz);
+			krzynka.moveToChest(27, 28, (card * 20) + highlight, gracz);
+			anythingMoved = true;
 		}
 		else if (highlight >= 20 && highlight < 40)
 		{
-			krzynka.moveToPlayer(27, 28, (highlight-20) * (card + 1), gracz);
+			krzynka.moveToPlayer(27, 28, (card * 20) + (highlight - 20), gracz);
+			anythingMoved = true;
 		}
 		else
 		{
@@ -162,7 +170,7 @@ void enterChestMode(player &gracz, chest &krzynka)
 			}
 			case 41:
 			{
-				leaveWhile = true;
+				exit = true;
 			}
 			case 42:
 			{
@@ -174,5 +182,5 @@ void enterChestMode(player &gracz, chest &krzynka)
 			}
 			}
 		}
-	} while (leaveWhile == false);
+	}
 }

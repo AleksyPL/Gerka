@@ -3,16 +3,17 @@
 #include "level_up.h"
 #include "items.h"
 
-player enterInventory(player &gracz)
+void enterInventory(player &gracz)
 {
 	int leftSideCard = 0;
 	int rightSideCard = 0;
 	int highlight = 0;
 	string leftSide[21];
 	string rightSide[21];
+	bool exit = false;
 	vector <string> bottomSide = { "<-","->","Return","<-","->" };
 	levelUp(23, 32, gracz);
-	while (1)
+	while (exit == false)
 	{
 		for (int i = 0; i < 20; i++)
 		{
@@ -66,7 +67,7 @@ player enterInventory(player &gracz)
 		else if (leftSideCard == 2)
 		{
 			leftSide[20] = "Items - Smithery";
-			if (gracz.countFreeFieldsForge() == 20)
+			if (gracz.countFreeFieldsSmithery() == 20)
 			{
 				leftSide[0] = "No items";
 			}
@@ -181,7 +182,7 @@ player enterInventory(player &gracz)
 				rightSide[5] = "Weapon name: " + gracz.weaponName;
 			}
 			rightSide[6] = "Weapon damage: " + to_string((int)(0.2 * gracz.str * gracz.agility)+gracz.weaponDamage);
-			rightSide[7] = "";
+			rightSide[7] = "Available weapon upgrade points: " + to_string(gracz.availableWeaponUpgradePoints);
 			rightSide[8] = "";
 			rightSide[9] = "";
 			rightSide[10] = "";
@@ -236,24 +237,7 @@ player enterInventory(player &gracz)
 			{
 				item_name = gracz.inventory_crafting[highlight + 20];
 			}
-			switch (highlight2)
-			{
-			case 0:
-			{
-				useItem(27,28,item_name, 1, gracz);
-				break;
-			}
-			case 1:
-			{
-				useItem(27,28,item_name, 2, gracz);
-				break;
-			}
-			case 2:
-			{
-				useItem(27,28,item_name, 3, gracz);
-				break;
-			}
-			}
+			useItem(27, 28, item_name, highlight2, gracz);
 		}
 		else
 		{
@@ -277,7 +261,7 @@ player enterInventory(player &gracz)
 			}
 			case 22:
 			{
-				return gracz;
+				exit = true;
 			}
 			case 23:
 			{
@@ -302,5 +286,4 @@ player enterInventory(player &gracz)
 			}
 		}
 	}
-	return gracz;
 }

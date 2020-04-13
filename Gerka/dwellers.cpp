@@ -470,7 +470,7 @@ void generalStoreSeller::buyItem(int height, int startPoint, player& gracz, stri
 	}
 	else if (item != "" && findItemOnList(item) == "Smithery" && amount != 0)
 	{
-		if (gracz.countFreeFieldsForge() != 0)
+		if (gracz.countFreeFieldsSmithery() != 0)
 		{
 			if (price > gracz.gold)
 			{
@@ -478,7 +478,7 @@ void generalStoreSeller::buyItem(int height, int startPoint, player& gracz, stri
 			}
 			else
 			{
-				gracz.addCraftingForgeItem(item, price, amount, height, startPoint);
+				gracz.addCraftingSmitheryItem(item, price, amount, height, startPoint);
 				gold += price;
 				soundCash();
 			}
@@ -740,7 +740,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 		}
 	}
 	}
-	else if(item != "" && gracz.findCraftingForgeItem(item) == 1 && amount != 0)
+	else if(item != "" && gracz.findCraftingSmitheryItem(item) == 1 && amount != 0)
 	{
 	if (price > 0)
 	{
@@ -758,7 +758,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 		int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
 		if (highlight == 0)
 		{
-			int index = gracz.findCraftingForgeItemIndex(item);
+			int index = gracz.findCraftingSmitheryItemIndex(item);
 			if (amount > 1)
 			{
 				temp = "How many " + item + " you want to sell? ";
@@ -777,7 +777,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 				{
 					gracz.inventory_crafting[20 + index] = "";
 					gracz.inventory_crafting_amount[20 + index] = 0;
-					gracz.sortCraftingForgeBackpack();
+					gracz.sortCraftingSmitheryBackpack();
 				}
 				else
 				{
@@ -795,7 +795,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 					{
 						gracz.inventory_crafting[20 + index] = "";
 						gracz.inventory_crafting_amount[20 + index] = 0;
-						gracz.sortCraftingForgeBackpack();
+						gracz.sortCraftingSmitheryBackpack();
 					}
 					else
 					{
@@ -821,7 +821,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 		int highlight = tabSubmenuOneColumnChoice(height, startPoint, message, options);
 		if (highlight == 0)
 		{
-			int index = gracz.findCraftingForgeItemIndex(item);
+			int index = gracz.findCraftingSmitheryItemIndex(item);
 			if (amount > 1)
 			{
 				string temp = "How many " + item + " you want to give? ";
@@ -834,7 +834,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 				{
 					gracz.inventory_crafting[20 + index] = "";
 					gracz.inventory_crafting_amount[20 + index] = 0;
-					gracz.sortCraftingForgeBackpack();
+					gracz.sortCraftingSmitheryBackpack();
 				}
 				else
 				{
@@ -848,7 +848,7 @@ void generalStoreSeller::sellItem(int height, int startPoint, player &gracz, str
 				{
 					gracz.inventory_crafting[20 + index] = "";
 					gracz.inventory_crafting_amount[20 + index] = 0;
-					gracz.sortCraftingForgeBackpack();
+					gracz.sortCraftingSmitheryBackpack();
 				}
 				else
 				{
@@ -894,7 +894,7 @@ blacksmith::blacksmith()
 	menu[2] = "Upgrade gloves";
 	menu[3] = "Upgrade pants";
 	menu[4] = "Upgrade shoes";
-	menu[5] = "Upgrade weapon";
+	menu[5] = "";
 	menu[6] = "";
 	menu[7] = "";
 	menu[8] = "";
@@ -914,7 +914,7 @@ blacksmith::blacksmith()
 	ceny[2] = 500;
 	ceny[3] = 500;
 	ceny[4] = 500;
-	ceny[5] = 500;
+	ceny[5] = 0;
 	ceny[6] = 0;
 	ceny[7] = 0;
 	ceny[8] = 0;
@@ -937,13 +937,12 @@ void blacksmith::loadPlayerPoints(player gracz)
 	menu[2] = "Upgrade gloves";
 	menu[3] = "Upgrade pants";
 	menu[4] = "Upgrade shoes";
-	menu[5] = "Upgrade weapon";
+	menu[5] = "";
 	ceny[0] = 500;
 	ceny[1] = 500;
 	ceny[2] = 500;
 	ceny[3] = 500;
 	ceny[4] = 500;
-	ceny[5] = 500;
 	this->menu[0] = menu[0] + " (" + to_string(gracz.helmet) + ")";
 	this->ceny[0] = ceny[0] + (100*gracz.helmet);
 	this->menu[1] = menu[1] + " (" + to_string(gracz.chestplate) + ")";
@@ -954,8 +953,6 @@ void blacksmith::loadPlayerPoints(player gracz)
 	this->ceny[3] = ceny[3] + (100 * gracz.pants);
 	this->menu[4] = menu[4] + " (" + to_string(gracz.shoes) + ")";
 	this->ceny[4] = ceny[4] + (100 * gracz.shoes);
-	this->menu[5] = menu[5] + " (" + to_string(gracz.weaponDamage) + ")";
-	this->ceny[5] = ceny[5] + (100 * gracz.weaponDamage);
 }
 void blacksmith::printImage(vector <string>& message)
 {
@@ -1060,23 +1057,6 @@ void blacksmith::powerUp(int height, int startPoint, player &gracz, int tryb)
 		}
 		break;
 	}
-	case 5:
-	{
-		if (gracz.gold >= ceny[5])
-		{
-			message.push_back("The weapon (" + gracz.weaponName + ") have been strengthened");
-			message.push_back("");
-			printImage(message);
-			gracz.weaponDamage ++;
-			gracz.gold -= ceny[5];
-			changeTime(height, startPoint, gracz, 1, 0);
-		}
-		else
-		{
-			message.push_back(noMoney());
-		}
-		break;
-	}
 	}
 	tabSubmenuTextOnly(23, 32, message);
 }
@@ -1125,7 +1105,7 @@ bladesmith::bladesmith()
 	menu[18] = "";
 	menu[19] = "";
 	ceny[0] = 0;
-	ceny[1] = 0;
+	ceny[1] = 100;
 	ceny[2] = 0;
 	ceny[3] = 0;
 	ceny[4] = 0;
@@ -1234,17 +1214,41 @@ void bladesmith::generateMerch(player gracz)
 		}
 	}
 }
-void bladesmith::upgradeWeapon(int height, int startPoint, player& gracz)
+void bladesmith::upgradeWeapon(int height, int startPoint, player& gracz, int price)
 {
+	vector <string> message;
 	if (gracz.weaponName == "Fists")
 	{
-		vector <string> message = {"You don't have a weapon to upgrade."};
-		tabSubmenuTextOnly(height, startPoint, message);
+		message.push_back("You cannot upgrade your fists.");
+		if (gracz.availableWeaponUpgradePoints != 0)
+		{
+			gracz.availableWeaponUpgradePoints = 0;
+		}
 	}
 	else
 	{
-
+		if (gracz.gold >= price && gracz.availableWeaponUpgradePoints!=0)
+		{
+			
+			message.push_back("The weapon (" + gracz.weaponName + ") have been strengthened.");
+			message.push_back("");
+			printImage(message);
+			gracz.weaponDamage++;
+			gracz.gold -= price;
+			gracz.availableWeaponUpgradePoints--;
+			changeTime(height, startPoint, gracz, 1, 0);
+		}
+		else if (gracz.gold >= price && gracz.availableWeaponUpgradePoints == 0)
+		{
+			message.push_back("The weapon (" + gracz.weaponName + ") cannot be more upgraded.");
+			soundRejection();
+		}
+		else
+		{
+			message.push_back(noMoney());
+		}
 	}
+	tabSubmenuTextOnly(height, startPoint, message);
 }
 void bladesmith::printImage(vector <string>& message)
 {
@@ -1291,6 +1295,12 @@ void bladesmith::buyItem(int height, int startPoint, player& gracz, int index)
 			if (weaponsRarity[index] == true)
 			{
 				gracz.isTheWeaponRare = true;
+				gracz.availableWeaponUpgradePoints = 4;
+			}
+			else
+			{
+				gracz.isTheWeaponRare = false;
+				gracz.availableWeaponUpgradePoints = 3;
 			}
 			gracz.weaponDamage = weaponsDamage[index];
 			gracz.weaponPrice = (int)(0.8 * itemPrice[index]);
@@ -1390,7 +1400,7 @@ alchemist::alchemist()
 	info[18] = "";
 	info[19] = "";
 	menu[0] = "Buy a level up potion";
-	menu[1] = "Buy health points potion";
+	menu[1] = "Buy a healing potion";
 	menu[2] = "";
 	menu[3] = "";
 	menu[4] = "";
@@ -1450,7 +1460,7 @@ void alchemist::buyNewLevelPotion(int height, int startPoint, player &gracz)
 	{
 		message.push_back("You bought a level up potion");
 		message.push_back("");
-		gracz.addUsageItem("Mikstura nowego poziomu", (gracz.level * 100),1, 23,32);
+		gracz.addUsageItem("Level up potion", (gracz.level * 100),1, 23,32);
 		changeTime(height, startPoint, gracz, 0, 5);
 		showImage(message);
 	}
@@ -1465,9 +1475,9 @@ void alchemist::buyHpPotion(int height, int startPoint, player &gracz)
 	vector <string> message;
 	if (gracz.gold > ceny[1])
 	{
-		message.push_back("You bought a health points potion");
+		message.push_back("You bought a healing potion");
 		message.push_back("");
-		gracz.addUsageItem("Mikstura ¿ycia", ceny[1], 1, 23,32);
+		gracz.addUsageItem("Healing potion", ceny[1], 1, 23,32);
 		changeTime(height, startPoint, gracz, 0, 5);
 		showImage(message);
 	}
@@ -1705,7 +1715,7 @@ void shaman::everythingAboutQuests(int height, int startPoint, player &gracz)
 			tabSubmenuFancyTextOnly(height, startPoint, message, 50);
 			if (dialogBox(height,startPoint) == 0)
 			{
-				gracz.addQuest("Zdob¹dŸ trzy ludzkie zêby", "s00");
+				gracz.addQuest("Get three human teeth", "s00");
 			}
 			else
 			{
@@ -1728,14 +1738,16 @@ void shaman::everythingAboutQuests(int height, int startPoint, player &gracz)
 				message.clear();
 				message.push_back("Thank you, this is your gold.");
 				tabSubmenuFancyTextOnly(height, startPoint, message, 50);
-				gracz.removeUsageItem(height,startPoint,"Ludzki z¹b",3);
-				questIDSet("s01");
+				if (gracz.removeItemWithoutNotification("Human's teeth", 3) == true)
+				{
+					questIDSet("s01");
+					gracz.gold = gracz.gold + this->goldForCompleteQuestInfo();
+					this->goldForCompleteQuestSet(0);
+					gracz.exp = gracz.exp + this->expForCompleteQuestInfo();
+					this->expForCompleteQuestSet(0);
+					gracz.removeQuest();
+				}
 			}
-			gracz.gold = gracz.gold + this->goldForCompleteQuestInfo();
-			this->goldForCompleteQuestSet(0);
-			gracz.exp = gracz.exp + this->expForCompleteQuestInfo();
-			this->expForCompleteQuestSet(0);
-			gracz.removeQuest();
 		}
 		else if(gracz.quest_complete == 0 && gracz.quest_failed == 1)
 		{
@@ -1822,7 +1834,7 @@ void doctor::showImage(vector <string>& message)
 		message.push_back(linia);
 	}
 	plik.close();
-	soundHealUp;
+	soundHealUp();
 }
 void doctor::heal(int height, int startPoint, player &gracz)
 {
@@ -2047,7 +2059,7 @@ int chest::countFreeFieldsAlchemy()
 	}
 	return licznik;
 }
-int chest::countFreeFieldsForge()
+int chest::countFreeFieldsSmithery()
 {
 	int licznik = 0;
 	for (int i = 0; i < 20; i++)
@@ -2059,19 +2071,50 @@ int chest::countFreeFieldsForge()
 	}
 	return licznik;
 }
-int chest::isInChestUsage(player gracz,string nazwa)
+bool chest::isInChest(string itemName)
 {
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 60; i++)
 	{
-		if (menu[i]==nazwa)
+		if (menu[i] == itemName)
 		{
-			return 1;
-		}
-		else
-		{
-			return 0;
+			return true;
 		}
 	}
+	return false;
+}
+int chest::findSelectedItemInChestIndex(string itemName)
+{
+	if (findItemOnList(itemName) == "Usable")
+	{
+		for (int i = 0; i < 20; i++)
+		{
+			if (menu[i] == itemName)
+			{
+				return i;
+			}
+		}
+	}
+	else if (findItemOnList(itemName) == "Alchemy")
+	{
+		for (int i = 0; i < 20; i++)
+		{
+			if (menu[20 + i] == itemName)
+			{
+				return (20 + i);
+			}
+		}
+	}
+	else if (findItemOnList(itemName) == "Smithery")
+	{
+		for (int i = 0; i < 20; i++)
+		{
+			if (menu[40 + i] == itemName)
+			{
+				return (40 + i);
+			}
+		}
+	}
+	return -1;
 }
 int chest::findFreeUsageIndex()
 {
@@ -2082,30 +2125,7 @@ int chest::findFreeUsageIndex()
 			return i;
 		}
 	}
-}
-int chest::findSelectedUsageIndex(string nazwa)
-{
-	for (int i = 0; i < 20; i++)
-	{
-		if (menu[i] == nazwa)
-		{
-			return i;
-		}
-	}
-}
-int chest::isInChestAlchemy(player gracz, string nazwa)
-{
-	for (int i = 0; i < 20; i++)
-	{
-		if (menu[20 + i] == nazwa)
-		{
-			return 1;
-		}
-		else
-		{
-			return 0;
-		}
-	}
+	return 0;
 }
 int chest::findFreeAlchemyIndex()
 {
@@ -2116,32 +2136,9 @@ int chest::findFreeAlchemyIndex()
 			return (20 + i);
 		}
 	}
+	return 0;
 }
-int chest::findSelectedAlchemyIndex(string nazwa)
-{
-	for (int i = 0; i < 20; i++)
-	{
-		if (menu[20 + i] == nazwa)
-		{
-			return (20 + i);
-		}
-	}
-}
-int chest::isInChestForge(player gracz, string nazwa)
-{
-	for (int i = 0; i < 20; i++)
-	{
-		if (menu[40 + i] == nazwa)
-		{
-			return 1;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-}
-int chest::findFreeForgeIndex()
+int chest::findFreeSmitheryIndex()
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -2150,16 +2147,7 @@ int chest::findFreeForgeIndex()
 			return (40 + i);
 		}
 	}
-}
-int chest::findSelectedForgeIndex(string nazwa)
-{
-	for (int i = 0; i < 20; i++)
-	{
-		if (menu[40 + i] == nazwa)
-		{
-			return (40 + i);
-		}
-	}
+	return 0;
 }
 void chest::sortUsage()
 {
@@ -2209,7 +2197,7 @@ void chest::sortAlchemy()
 		}
 	}
 }
-void chest::sortForge()
+void chest::sortSmithery()
 {
 	for (int i = 0; i < 20; i++)
 	{
@@ -2248,31 +2236,22 @@ void chest::moveToPlayer(int height, int startPoint, int numer, player &gracz)
 		}
 		else
 		{
-			if (menu_amount[numer] > 1)
+			int itemToTransfer = 1;
+			if (menu_amount[numer] > itemToTransfer)
 			{
-				string temp = "In the chest is more than one item of this type (" + to_string(gracz.inventory_usage_amount[numer]) + "), how many of them you want to transfer to your inventory? ";
-				int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-				while (ile<0 || ile>menu_amount[numer])
+				string temp = "In the chest is more than one item of this type (" + to_string(menu_amount[numer]) + "), how many of them you want to transfer to your inventory? ";
+				itemToTransfer = stoi(tabSubmenuInputField(height, startPoint, temp));
+				while (itemToTransfer < 0 || itemToTransfer > menu_amount[numer])
 				{
-					ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-				}
-				menu_amount[numer] = menu_amount[numer] - ile;
-				gracz.addUsageItem(menu[numer], 0,ile, height, startPoint, 1);
-				if (menu_amount[numer] == 0)
-				{
-					menu[numer] = "";
-					sortUsage();
+					itemToTransfer = stoi(tabSubmenuInputField(height, startPoint, temp));
 				}
 			}
-			else
+			menu_amount[numer] -= itemToTransfer;
+			gracz.addUsageItem(menu[numer], 0, itemToTransfer, height, startPoint);
+			if (menu_amount[numer] == 0)
 			{
-				menu_amount[numer]--;
-				gracz.addUsageItem(menu[numer], 0,1, height, startPoint, 1);
-				if (menu_amount[numer] == 0)
-				{
-					menu[numer] = "";
-					sortUsage();
-				}
+				menu[numer] = "";
+				sortUsage();
 			}
 		}
 	}
@@ -2288,37 +2267,28 @@ void chest::moveToPlayer(int height, int startPoint, int numer, player &gracz)
 		}
 		else
 		{
-			if (menu_amount[numer] > 1)
+			int itemToTransfer = 1;
+			if (menu_amount[numer] > itemToTransfer)
 			{
-				string temp = "In the chest is more than one item of this type (" + to_string(gracz.inventory_usage_amount[numer - 40]) + "), how many of them you want to transfer to your inventory? ";
-				int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-				while (ile<0 || ile>menu_amount[numer])
+				string temp = "In the chest is more than one item of this type (" + to_string(menu_amount[numer]) + "), how many of them you want to transfer to your inventory? ";
+				itemToTransfer = stoi(tabSubmenuInputField(height, startPoint, temp));
+				while (itemToTransfer < 0 || itemToTransfer > menu_amount[numer])
 				{
-					ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-				}
-				menu_amount[numer] = menu_amount[numer] - ile;
-				gracz.addCraftingAlchemyItem(menu[numer], 0, ile, height, startPoint, 1);
-				if (menu_amount[numer] == 0)
-				{
-					menu[numer] = "";
-					sortAlchemy();
+					itemToTransfer = stoi(tabSubmenuInputField(height, startPoint, temp));
 				}
 			}
-			else
+			menu_amount[numer] -= itemToTransfer;
+			gracz.addCraftingAlchemyItem(menu[numer], 0, itemToTransfer, height, startPoint);
+			if (menu_amount[numer] == 0)
 			{
-				menu_amount[numer]--;
-				gracz.addCraftingAlchemyItem(menu[numer], 0, 1, height, startPoint, 1);
-				if (menu_amount[numer] == 0)
-				{
-					menu[numer] = "";
-					sortAlchemy();
-				}
+				menu[numer] = "";
+				sortAlchemy();
 			}
 		}
 	}
 	else if (numer >= 40)
 	{
-		if (gracz.countFreeFieldsForge() == 0)
+		if (gracz.countFreeFieldsSmithery() == 0)
 		{
 			message.push_back("You cannot move this item to your inventory because it is full.");
 		}
@@ -2328,31 +2298,22 @@ void chest::moveToPlayer(int height, int startPoint, int numer, player &gracz)
 		}
 		else
 		{
-			if (menu_amount[numer] > 1)
+			int itemToTransfer = 1;
+			if (menu_amount[numer] > itemToTransfer)
 			{
-				string temp = "In the chest is more than one item of this type (" + to_string(gracz.inventory_usage_amount[40 - numer]) + "), how many of them you want to transfer to your inventory? "; 
-				int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-				while (ile<0 || ile>menu_amount[numer])
+				string temp = "In the chest is more than one item of this type (" + to_string(menu_amount[numer]) + "), how many of them you want to transfer to your inventory? ";
+				itemToTransfer = stoi(tabSubmenuInputField(height, startPoint, temp));
+				while (itemToTransfer < 0 || itemToTransfer > menu_amount[numer])
 				{
-					ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-				}
-				menu_amount[numer] = menu_amount[numer] - ile;
-				gracz.addCraftingForgeItem(menu[numer], 0, ile, height, startPoint, 1);
-				if (menu_amount[numer] == 0)
-				{
-					menu[numer] = "";
-					sortForge();
+					itemToTransfer = stoi(tabSubmenuInputField(height, startPoint, temp));
 				}
 			}
-			else
+			menu_amount[numer] -= itemToTransfer;
+			gracz.addCraftingSmitheryItem(menu[numer], 0, itemToTransfer, height, startPoint);
+			if (menu_amount[numer] == 0)
 			{
-				menu_amount[numer]--;
-				gracz.addCraftingForgeItem(menu[numer], 0, 1, height, startPoint, 1);
-				if (menu_amount[numer] == 0)
-				{
-					menu[numer] = "";
-					sortForge();
-				}
+				menu[numer] = "";
+				sortSmithery();
 			}
 		}
 	}
@@ -2376,75 +2337,27 @@ void chest::moveToChest(int height, int startPoint, int numer, player &gracz)
 		}
 		else
 		{
-			if (isInChestUsage(gracz, gracz.inventory_usage[numer]) == 1)
+			int itemsToTransfer = 1;
+			if (gracz.inventory_usage_amount[numer] > itemsToTransfer)
 			{
-				if (gracz.inventory_usage_amount[numer] > 1)
+				string temp = "You have more than one item of this type (" + to_string(gracz.inventory_usage_amount[numer]) + "), how many of them you want to transfer to the chest? ";
+				itemsToTransfer = stoi(tabSubmenuInputField(height, startPoint, temp));
+				while (itemsToTransfer < 0 || itemsToTransfer > gracz.inventory_usage_amount[numer])
 				{
-					string temp = "You have more than one item of this type (" + to_string(gracz.inventory_usage_amount[numer]) + "), how many of them you want to transfer to the chest? ";
-					int ile = stoi(tabSubmenuInputField(height, startPoint,temp));
-					while (ile<0 || ile>gracz.inventory_usage_amount[numer])
-					{
-						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-					}
-					gracz.inventory_usage_amount[numer] = gracz.inventory_usage_amount[numer] - ile;
-					menu_amount[findSelectedUsageIndex(gracz.inventory_usage[numer])] = menu_amount[findSelectedUsageIndex(gracz.inventory_usage[numer])] + ile;
-					if (gracz.inventory_usage_amount[numer] == 0)
-					{
-						gracz.inventory_usage[numer] = "";
-						gracz.inventory_usage_price[numer] = 0;
-						gracz.sortUsageBackpack();
-					}
-				}
-				else
-				{
-					gracz.inventory_usage_amount[numer]--;
-					menu_amount[findSelectedUsageIndex(gracz.inventory_usage[numer])]++;
-					if (gracz.inventory_usage_amount[numer] == 0)
-					{
-						gracz.inventory_usage[numer] = "";
-						gracz.inventory_usage_price[numer] = 0;
-						gracz.sortUsageBackpack();
-					}
+					itemsToTransfer = stoi(tabSubmenuInputField(height, startPoint, temp));
 				}
 			}
-			else
+			if (isInChest(gracz.inventory_usage[numer]) == false)
 			{
-				if (gracz.inventory_usage_amount[numer] > 1)
-				{
-					string temp = "You have more than one item of this type (" + to_string(gracz.inventory_usage_amount[numer]) + "), how many of them you want to transfer to the chest? ";
-					int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-					while (ile<0 || ile>gracz.inventory_usage_amount[numer])
-					{
-						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-					}
-					gracz.inventory_usage_amount[numer] = gracz.inventory_usage_amount[numer] - ile;
-					menu_amount[findFreeUsageIndex()] = menu_amount[findFreeUsageIndex()] + ile;
-					menu[findFreeUsageIndex()] = gracz.inventory_usage[numer];
-					if (gracz.inventory_usage_amount[numer] == 0)
-					{
-						gracz.inventory_usage[numer] = "";
-						gracz.inventory_usage_price[numer] = 0;
-						gracz.sortUsageBackpack();
-					}
-				}
-				else
-				{
-					gracz.inventory_usage_amount[numer]--;
-					menu_amount[findFreeUsageIndex()]++;
-					menu[findFreeUsageIndex()] = gracz.inventory_usage[numer];
-					if (gracz.inventory_usage_amount[numer] == 0)
-					{
-						gracz.inventory_usage[numer] = "";
-						gracz.inventory_usage_price[numer] = 0;
-						gracz.sortUsageBackpack();
-					}
-				}
+				menu[findFreeUsageIndex()] = gracz.inventory_usage[numer];
 			}
+			menu_amount[findSelectedItemInChestIndex(gracz.inventory_usage[numer])] += itemsToTransfer;
+			gracz.removeItemWithoutNotification(gracz.inventory_usage[numer], itemsToTransfer);
 		}
 	}
 	else if (numer < 40 && numer >= 20)
 	{
-		numer = numer - 20;
+		numer -= 20;
 		if (countFreeFieldsAlchemy() == 0)
 		{
 			message.push_back("You cannot move this item to the chest because the chest is full.");
@@ -2455,149 +2368,53 @@ void chest::moveToChest(int height, int startPoint, int numer, player &gracz)
 		}
 		else
 		{
-			if (isInChestAlchemy(gracz, gracz.inventory_crafting[numer]) == 1)
+			int itemsToTransfer = 1;
+			if (gracz.inventory_crafting_amount[numer] > itemsToTransfer)
 			{
-				if (gracz.inventory_crafting_amount[numer] > 1)
+				string temp = "You have more than one item of this type (" + to_string(gracz.inventory_crafting_amount[numer]) + "), how many of them you want to transfer to the chest? ";
+				itemsToTransfer = stoi(tabSubmenuInputField(height, startPoint, temp));
+				while (itemsToTransfer < 0 || itemsToTransfer > gracz.inventory_crafting_amount[numer])
 				{
-					string temp = "You have more than one item of this type (" + to_string(gracz.inventory_crafting_amount[numer]) + "), how many of them you want to transfer to the chest? ";
-					int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-					while (ile<0 || ile>gracz.inventory_crafting_amount[numer])
-					{
-						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-					}
-					gracz.inventory_crafting_amount[numer] = gracz.inventory_crafting_amount[numer] - ile;
-					menu_amount[findSelectedAlchemyIndex(gracz.inventory_crafting[numer])] = menu_amount[findSelectedAlchemyIndex(gracz.inventory_crafting[numer])] + ile;
-					if (gracz.inventory_crafting_amount[numer] == 0)
-					{
-						gracz.inventory_crafting[numer] = "";
-						gracz.inventory_crafting_price[numer] = 0;
-						gracz.sortCraftingAlchemyBackpack();
-					}
-				}
-				else
-				{
-					gracz.inventory_crafting_amount[numer]--;
-					menu_amount[findSelectedAlchemyIndex(gracz.inventory_crafting[numer])]++;
-					if (gracz.inventory_crafting_amount[numer] == 0)
-					{
-						gracz.inventory_crafting[numer] = "";
-						gracz.inventory_crafting_price[numer] = 0;
-						gracz.sortCraftingAlchemyBackpack();
-					}
+					itemsToTransfer = stoi(tabSubmenuInputField(height, startPoint, temp));
 				}
 			}
-			else
+			if (isInChest(gracz.inventory_crafting[numer]) == false)
 			{
-				if (gracz.inventory_crafting_amount[numer] > 1)
-				{
-					string temp = "You have more than one item of this type (" + to_string(gracz.inventory_crafting_amount[numer]) + "), how many of them you want to transfer to the chest? ";
-					int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-					while (ile<0 || ile>gracz.inventory_crafting_amount[numer])
-					{
-						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-					}
-					gracz.inventory_crafting_amount[numer] = gracz.inventory_crafting_amount[numer] - ile;
-					menu_amount[findFreeAlchemyIndex()] = menu_amount[findFreeAlchemyIndex()] + ile;
-					menu[findFreeAlchemyIndex()] = gracz.inventory_crafting[numer];
-					if (gracz.inventory_crafting_amount[numer] == 0)
-					{
-						gracz.inventory_crafting[numer] = "";
-						gracz.inventory_crafting_price[numer] = 0;
-						gracz.sortCraftingAlchemyBackpack();
-					}
-				}
-				else
-				{
-					gracz.inventory_crafting_amount[numer]--;
-					menu_amount[findFreeAlchemyIndex()]++;
-					menu[findFreeAlchemyIndex()] = gracz.inventory_crafting[numer];
-					if (gracz.inventory_crafting_amount[numer] == 0)
-					{
-						gracz.inventory_crafting[numer] = "";
-						gracz.inventory_crafting_price[numer] = 0;
-						gracz.sortCraftingAlchemyBackpack();
-					}
-				}
+				menu[findFreeAlchemyIndex()] = gracz.inventory_crafting[numer];
 			}
+			menu_amount[findSelectedItemInChestIndex(gracz.inventory_crafting[numer])] += itemsToTransfer;
+			gracz.removeItemWithoutNotification(gracz.inventory_crafting[numer], itemsToTransfer);
 		}
 	}
 	else if(numer >= 40)
 	{
-		numer -= 40;
-		if (countFreeFieldsForge() == 0)
+		numer -= 20;
+		if (countFreeFieldsSmithery() == 0)
 		{
 			message.push_back("You cannot move this item to the chest because the chest is full.");
 		}
-		else if (gracz.inventory_crafting[numer+20] == "")
+		else if (gracz.inventory_crafting[numer] == "")
 		{
 			message.push_back("No item");
 		}
 		else
 		{
-			if (isInChestForge(gracz, gracz.inventory_crafting[20 + numer]) == 1)
+			int itemsToTransfer = 1;
+			if (gracz.inventory_crafting_amount[numer] > itemsToTransfer)
 			{
-				if (gracz.inventory_crafting_amount[20 + numer] > 1)
+				string temp = "You have more than one item of this type (" + to_string(gracz.inventory_crafting_amount[numer]) + "), how many of them you want to transfer to the chest? ";
+				itemsToTransfer = stoi(tabSubmenuInputField(height, startPoint, temp));
+				while (itemsToTransfer < 0 || itemsToTransfer > gracz.inventory_crafting_amount[numer])
 				{
-					string temp = "You have more than one item of this type (" + to_string(gracz.inventory_crafting_amount[20 + numer]) + "), how many of them you want to transfer to the chest? ";
-					int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-					while (ile<0 || ile>gracz.inventory_crafting_amount[20 + numer])
-					{
-						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-					}
-					gracz.inventory_crafting_amount[20 + numer] = gracz.inventory_crafting_amount[20 + numer] - ile;
-					menu_amount[findSelectedForgeIndex(gracz.inventory_crafting[20 + numer])] = menu_amount[findSelectedForgeIndex(gracz.inventory_crafting[20 + numer])] + ile;
-					if (gracz.inventory_crafting_amount[20 + numer] == 0)
-					{
-						gracz.inventory_crafting[20 + numer] = "";
-						gracz.inventory_crafting_price[20 + numer] = 0;
-						gracz.sortCraftingForgeBackpack();
-					}
-				}
-				else
-				{
-					gracz.inventory_crafting_amount[20 + numer]--;
-					menu_amount[findSelectedForgeIndex(gracz.inventory_crafting[20 + numer])]++;
-					if (gracz.inventory_crafting_amount[20 + numer] == 0)
-					{
-						gracz.inventory_crafting[20 + numer] = "";
-						gracz.inventory_crafting_price[20 + numer] = 0;
-						gracz.sortCraftingForgeBackpack();
-					}
+					itemsToTransfer = stoi(tabSubmenuInputField(height, startPoint, temp));
 				}
 			}
-			else
+			if (isInChest(gracz.inventory_crafting[numer]) == false)
 			{
-				if (gracz.inventory_crafting_amount[20 + numer] > 1)
-				{
-					string temp = "You have more than one item of this type (" + to_string(gracz.inventory_crafting_amount[20 + numer]) + "), how many of them you want to transfer to the chest? ";
-					int ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-					while (ile<0 || ile>gracz.inventory_crafting_amount[20 + numer])
-					{
-						ile = stoi(tabSubmenuInputField(height, startPoint, temp));
-					}
-					gracz.inventory_crafting_amount[20 + numer] = gracz.inventory_crafting_amount[20 + numer] - ile;
-					menu_amount[findFreeForgeIndex()] = menu_amount[findFreeForgeIndex()] + ile;
-					menu[findFreeForgeIndex()] = gracz.inventory_crafting[20 + numer];
-					if (gracz.inventory_crafting_amount[20 + numer] == 0)
-					{
-						gracz.inventory_crafting[20 + numer] = "";
-						gracz.inventory_crafting_price[20 + numer] = 0;
-						gracz.sortCraftingForgeBackpack();
-					}
-				}
-				else
-				{
-					gracz.inventory_crafting_amount[20 + numer]--;
-					menu_amount[findFreeForgeIndex()]++;
-					menu[findFreeForgeIndex()] = gracz.inventory_crafting[20 + numer];
-					if (gracz.inventory_crafting_amount[20 + numer] == 0)
-					{
-						gracz.inventory_crafting[20 + numer] = "";
-						gracz.inventory_crafting_price[20 + numer] = 0;
-						gracz.sortCraftingForgeBackpack();
-					}
-				}
+				menu[findFreeSmitheryIndex()] = gracz.inventory_crafting[numer];
 			}
+			menu_amount[findSelectedItemInChestIndex(gracz.inventory_crafting[numer])] += itemsToTransfer;
+			gracz.removeItemWithoutNotification(gracz.inventory_crafting[numer], itemsToTransfer);
 		}
 	}
 	if (message.size() != 0)

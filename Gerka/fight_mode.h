@@ -7,4 +7,4 @@ void victoryCondition(int height, int startPoint, Mob enemy, player& gracz, bool
 void pickUpItemDroppedByEnemy(int height, int startPoint, Mob enemy, player& gracz, string& itemName);
 void dealingDamage(int height, int startPoint, player& gracz, Mob& enemy, bool& isItThePlayersTurnNow);
 string makeString(int howLong, string function, int chances);
-player enterFightMode(player gracz, string monsterName, bool playerGoesFirst, bool& victory, string& itemName);
+void enterFightMode(player gracz, string monsterName, bool playerGoesFirst, bool& victory, string& itemName);

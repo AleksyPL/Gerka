@@ -85,15 +85,31 @@ void copyDlls(bool value)
 {
 	if (value == true)
 	{
-		system("copy ../Debug/Tavern.dll ./dll/");
-		system("copy ../Debug/Brothel.dll ./dll/");
+		remove("./dll/AlchemistLab.dll");
+		remove("./dll/Armourer.dll");
+		remove("./dll/BladesmithShop.dll");
+		remove("./dll/Brothel.dll");
+		remove("./dll/Dungeon.dll");
+		remove("./dll/GeneralStore.dll");
+		remove("./dll/Hospital.dll");
+		remove("./dll/ShamansHouse.dll");
+		remove("./dll/Tavern.dll");
+		rename("../Debug/AlchemistLab.dll", "./dll/AlchemistLab.dll");
+		rename("../Debug/Armourer.dll", "./dll/Armourer.dll");
+		rename("../Debug/BladesmithShop.dll", "./dll/BladesmithShop.dll");
+		rename("../Debug/Brothel.dll", "./dll/Brothel.dll");
+		rename("../Debug/Dungeon.dll", "./dll/Dungeon.dll");
+		rename("../Debug/GeneralStore.dll", "./dll/GeneralStore.dll");
+		rename("../Debug/Hospital.dll", "./dll/Hospital.dll");
+		rename("../Debug/ShamansHouse.dll", "./dll/ShamansHouse.dll");
+		rename("../Debug/Tavern.dll", "./dll/Tavern.dll");
 	}
 }
 
 int main()
 {
 	//setlocale(LC_ALL, "polish");
-	//copyDlls(true);
+	copyDlls(true);
 	system("MODE CON COLS=139 LINES=55");
 	HWND consoleWindow = GetConsoleWindow();
 	SetWindowPos(consoleWindow, 0, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
@@ -177,7 +193,7 @@ int main()
 			loadGame(gracz, bobby, handlarz, kowal, alchemik, krzynka);
 			krzynka.sortUsage();
 			krzynka.sortAlchemy();
-			krzynka.sortForge();
+			krzynka.sortSmithery();
 			range(gracz);
 			giveTheTitle(gracz);
 			enterTownSquare(gracz, bobby, handlarz, kowal, miecznik, alchemik, szaman, lekarz, krzynka);
